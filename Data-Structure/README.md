@@ -3,9 +3,9 @@
 ## Union-Find木
 2つの集合を統合して1つにすること(Union)と、ある要素が属する集合を求めること(Find)が高速にできる。
 
-- [Union-Find木](https://github.com/tokusakurai/data-structure/blob/main/Union_Find_Tree.cpp)
+- [Union-Find木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Union_Find_Tree.cpp)
 
-- [重み付きUnion-Find木](https://github.com/tokusakurai/data-structure/blob/main/Weighted_Union_Find_Tree.cpp) (各頂点に重みを与えたとき、weight(y)-weight(x) = wの制約を扱える)
+- [重み付きUnion-Find木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Weighted_Union_Find_Tree.cpp) (各頂点に重みを与えたとき、weight(y)-weight(x) = wの制約を扱える)
 
 - [部分永続Union-Find木](https://github.com/tokusakurai/data-structure/blob/main/Partitially_Persistent_Union_Find_Tree.cpp) (各Union操作に時刻を与えたとき、任意の時刻でのFindクエリを扱える)
 
