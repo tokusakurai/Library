@@ -1,0 +1,89 @@
+
+//各種ナップザック問題
+//計算量 01ナップザック1・個数制限なしナップザック・個数制限付きナップザック:O(N*W)、01ナップザック2:O(N*Σv_i)
+
+//verified with
+//http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_1_B&lang=ja
+//http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_1_F&lang=ja
+//http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_1_C&lang=ja
+//http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_1_G&lang=ja
+
+#include <bits/stdc++.h>
+using namespace std;
+
+template<typename T>
+T knapsack_01_1(vector<T> v, vector<int> w, int W){
+    int n = v.size();
+    assert(w.size() == n);
+    vector<T> dp(W+1, 0);
+    for(int i = 0; i < n; i++){
+        for(int j = W; j >= w[i]; j--){
+            dp[j] = max(dp[j], dp[j-w[i]]+v[i]);
+        }
+    }
+    return dp[W];
+}
+
+template<typename T>
+int knapsack_01_2(vector<int> v, vector<T> w, T W){
+    int n = v.size();
+    assert(w.size() == n);
+    int V = accumulate(begin(v), end(v), 0);
+    vector<T> dp(V+1, W+1);
+    dp[0] = T(0);
+    for(int i = 0; i < n; i++){
+        for(int j = V; j >= v[i]; j--){
+            dp[j] = min(dp[j], dp[j-v[i]]+w[i]);
+        }
+    }
+    int ret = 0;
+    for(int i = 0; i <= V; i++) if(dp[i] <= W) ret = i;
+    return ret;
+}
+
+template<typename T>
+T knapsack(vector<T> v, vector<int> w, int W){
+    int n = v.size();
+    assert(w.size() == n);
+    vector<T> dp(W+1, 0);
+    for(int i = 0; i <= W; i++){
+        for(int j = 0; j < n; j++){
+            if(i >= w[j]) dp[i] = max(dp[i], dp[i-w[j]]+v[j]);
+        }
+    }
+    return dp[W];
+}
+
+template<typename T>
+T knapsack_limitation(vector<T> v, vector<int> w, vector<int> m, int W){
+    int n = v.size();
+    assert(w.size() == n && m.size() == n);
+    vector<T> dp(W+1, 0);
+    for(int i = 0; i < n; i++){
+        if(m[i] == 0) continue;
+        vector<T> tmp(W+1);
+        for(int j = 0; j < w[i]; j++){
+            deque<int> que;
+            for(int k = 0; j+w[i]*k <= W; k++){
+                int p = j+w[i]*k;
+                dp[p] -= v[i]*k;
+                while(!que.empty() && dp[que.back()] <= dp[p]) que.pop_back();
+                que.push_back(p);
+                tmp[p] = dp[que.front()]+v[i]*k;
+                if(que.front() == p-w[i]*m[i]) que.pop_front();
+            }
+        }
+        swap(dp, tmp);
+    }
+    return dp[W];
+}
+
+int main(){
+    int N, W; cin >> N >> W;
+
+    vector<long long> v(N);
+    vector<int> w(N), m(N);
+    for(int i = 0; i < N; i++) cin >> v[i] >> w[i] >> m[i];
+
+    cout << knapsack_limitation(v, w, m, W) << '\n';
+}
