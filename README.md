@@ -13,3 +13,5 @@
 - [文字列](https://github.com/tokusakurai/Library/tree/main/String)
 
 - [幾何](https://github.com/tokusakurai/Library/tree/main/Geometry)
+
+- [その他](https://github.com/tokusakurai/Library/tree/main/Other)
