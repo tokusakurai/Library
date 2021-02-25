@@ -1,7 +1,10 @@
 
 //双対セグメント木
-//計算量 構築:O(N)、区間更新・1点取得:O(log(N))
+//計算量 構築：O(N)、区間更新・1点取得：O(log(N))
 //空間計算量 O(N)
+
+//概要
+//遅延評価を用いることでセグメント木と逆の流れの操作ができる。
 
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_D&lang=ja
@@ -10,7 +13,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template<typename T, typename Operator_Monoid>
+template<typename T, typename Operator_Monoid> //要素、作用素の型
 struct Dual_Segment_Tree{
     using G = function<T(T, Operator_Monoid)>;
     using H = function<Operator_Monoid(Operator_Monoid, Operator_Monoid)>;

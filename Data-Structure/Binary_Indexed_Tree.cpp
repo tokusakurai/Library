@@ -1,7 +1,10 @@
 
 //Binary-Indexed木
-//計算量 構築:O(N)、1点加算・区間和取得・二分探索:O(log(N))
+//計算量 構築：O(N)、1点加算・区間和取得・二分探索：O(log(N))
 //空間計算量 O(N)
+
+//概要
+//ノードを区間に対応させることで、任意の区間がO(log(N))個のノードが表す区間のdisjointな和集合として表現される。
 
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_B&lang=ja

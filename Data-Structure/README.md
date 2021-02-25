@@ -33,7 +33,7 @@
 - [スパーステーブル](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Sparse_Table.cpp)
 
 ## 平方分割
-配列を適当なサイズごとのバケットに分割することで、区間クエリを行ったときに、全体にクエリがかかる区間と一部のみにクエリがかかる区間に分かれることを利用した高速化。セグメント木と比べて計算量は落ちるが、扱えるクエリの幅が大きい。
+配列を適当なサイズごとのバケットに分割することで、区間クエリを行ったときに全体にクエリがかかる区間と一部のみにクエリがかかる区間に分かれることを利用した高速化。セグメント木と比べて計算量は落ちるが、扱えるクエリの幅が大きい。
 
 - [平方分割(雛形)](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Sqrt_Decomposition_Template.cpp)
 

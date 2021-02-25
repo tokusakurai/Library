@@ -1,7 +1,10 @@
 
 //遅延評価付きセグメント木
-//計算量 構築:O(N)、区間更新・区間取得・二分探索:O(log(N))
+//計算量 構築：O(N)、区間更新・区間取得・二分探索：O(log(N))
 //空間計算量 O(N)
+
+//概要
+//セグメント木と双対セグメント木の操作を合わせている。
 
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_H&lang=ja
