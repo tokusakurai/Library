@@ -16,3 +16,13 @@
 - [トライ木](https://github.com/tokusakurai/Library/blob/main/String/Trie.cpp)
 
 - [Aho-Corasick法](https://github.com/tokusakurai/Library/blob/main/String/Trie.cpp) (トライ木に、パターンが存在しない場合の後退辺を新たに付け加えたもの)
+
+## ローリングハッシュ
+文字列や配列をハッシュ値に置き換えることによって、いくつかの文字列が一致しているかどうかを高速に判定できるようにするアルゴリズム。
+
+- [ローリングハッシュ](https://github.com/tokusakurai/Library/blob/main/String/Rolling_Hash.cpp)
+
+## 接尾辞配列
+文字列の全ての接尾辞を辞書順にソートしたものを高速に記録するアルゴリズム。
+
+- [接尾辞配列・高さ配列](https://github.com/tokusakurai/Library/blob/main/String/Suffix_Array.cpp)
