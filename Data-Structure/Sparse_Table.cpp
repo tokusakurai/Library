@@ -1,7 +1,13 @@
 
 //スパーステーブル
-//計算量 構築:O(N*log(N))、区間取得:(O(1))
+//計算量 構築：O(N*log(N))、区間取得：(O(1))
 //空間計算量 O(N*log(N))
+
+//概要
+//ダブリングを用いて、各頂点から右に2^j個の区間に対して演算を行った結果を記録する。
+//取得したい区間が[l,r)であるとすると(r>l)、2^k<=(r-l)<2^(k+1)を満たす非負整数kが存在するので、区間[l,l+2^k)と区間[r-2^k,r)の演算結果をマージすればよい。
+//kはr-lに依存する整数であるから、前計算が可能。
+//区間はoverlapするので、monoidであれば適用できるというわけではない。
 
 //verified with
 //https://judge.yosupo.jp/problem/staticrmq
@@ -13,7 +19,8 @@ template<typename T>
 struct Sparse_Table{
     using F = function<T(T, T)>;
     const int n;
-    vector<vector<T>> st; //st[j][i] := 区間[i,i+2^j)での演算の結果
+    int height;
+    vector<vector<T>> st; //st[i][j] := 区間[j,j+2^i)での演算の結果
     vector<int> lookup;
     const F f; //二項演算
     const T e; //単位元
@@ -22,10 +29,10 @@ struct Sparse_Table{
     //例えばminやgcdはこれらを満たすが、+や*は満たさない
 
     Sparse_Table(const vector<T> &table, const F &f, const T &e) : n((int)table.size()), f(f), e(e){ //tableは配列の初期状態
-        int log_n = 32-__builtin_popcount(n);
-        st.assign(log_n, vector<T>(n));
+        height = 32-__builtin_popcount(n);
+        st.assign(height, vector<T>(n));
         for(int i = 0; i < n; i++) st[0][i] = table[i];
-        for(int j = 0; j < log_n-1; j++){
+        for(int j = 0; j < height-1; j++){
             for(int i = 0; i < n; i++){
                 if(i+(1<<j) < n) st[j+1][i] = f(st[j][i], st[j][i+(1<<j)]);
                 else st[j+1][i] = st[j][i];

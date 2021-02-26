@@ -1,7 +1,11 @@
 
 //Undo可能Union-Find木
-//計算量 構築:O(N)、併合・結合判定・サイズ:O(log(N))、undo:O(1)
+//計算量 構築：O(N)、併合・結合判定・サイズ：O(log(N))、Undo：O(1)
 //空間計算量 O(N)
+
+//概要
+//まず、縮約は諦める。
+//すると、各union操作においてdata配列が変更されるのは高々2箇所だけであるから、変更箇所を記録しておけばO(1)でUndoできる。
 
 //verified with
 //https://codeforces.com/contest/1445/problem/E

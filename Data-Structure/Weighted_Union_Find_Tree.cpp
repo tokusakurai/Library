@@ -1,9 +1,12 @@
 
-//重み付きUnion-Find-木(等式差分制約を扱えるUnion-Find-木)
-//計算量 構築:O(N)、併合:O(α(N))、結合判定:O(α(N))、サイズ:O(α(N))、ポテンシャル取得:O(α(N))
+//重み付きUnion-Find木(等式差分制約を扱える)
+//計算量 構築:O(N)、併合、結合判定、サイズ、ポテンシャル取得：(ならし)O(α(N))
+
+//概要
+//各頂点の(自分の重み)-(親の重み)を記録することによって、(自分の重み)-(根の重み)を簡単に計算できる。
 
 //verified with
-//http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_1_B
+//http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_1_B&lang=ja
 //https://atcoder.jp/contests/arc090/tasks/arc090_b
 
 #include <bits/stdc++.h>
@@ -12,7 +15,7 @@ using namespace std;
 template<typename T>
 struct Weighted_Union_Find_Tree{
     vector<int> data;
-    vector<T> ws;
+    vector<T> ws; //(自分の重み)-(親の重み)を記録
     const int n;
 
     Weighted_Union_Find_Tree(int n) : data(n, -1), ws(n, 0), n(n) {}

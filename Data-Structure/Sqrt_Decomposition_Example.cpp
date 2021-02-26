@@ -1,6 +1,14 @@
 
 //列の平方分割(例)
-//計算量 各種クエリ:O(√(N*log(N)))
+//計算量 各種クエリ：O(√(N*log(N)))
+
+//概要
+//バケットサイズをKとする。クエリの計算量は、
+//クエリがバケットの一部の箇所にしかかからない所：O(K+log(K)) = O(K)
+//クエリがバケットの全体にかかる箇所：O(log(K))
+//トータルで見ると：O((N/K)*log(K)+K)
+//K = √NとするよりK = √(N*log(N))としたほうが計算量は良くなる。
+//ただし、定数倍の重さは考慮しなければならない。
 
 //verified with
 //https://judge.yosupo.jp/problem/range_chmin_chmax_add_range_sum
@@ -83,7 +91,7 @@ struct Sqrt_Decomposition{
         T query_sum_all(){
             int L = lower_bound(begin(sorted), end(sorted), d-base)-begin(sorted);
             int R = lower_bound(begin(sorted), end(sorted), u-base)-begin(sorted);
-            return s[R]-s[L] + base*(R-L) +  d*L + u*(r-l-R);
+            return s[R]-s[L]+base*(R-L)+d*L+u*(r-l-R);
         }
     };
 
