@@ -1,6 +1,6 @@
 # その他
 
-- [テンプレート](https://github.com/tokusakurai/Library/tree/main/Other)
+- [テンプレート](https://github.com/tokusakurai/Library/blob/main/Other/Template.cpp)
 
 - [乱数発生](https://github.com/tokusakurai/Library/blob/main/Other/Random.cpp)
 
