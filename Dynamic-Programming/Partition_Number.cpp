@@ -2,6 +2,9 @@
 //分割数テーブル
 //計算量 O(N*K)
 
+//概要
+//dp[i][j]:=i個の区別できない玉をj個の区別できない箱に分割する場合の数
+
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_5_J&lang=jp
 

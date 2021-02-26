@@ -2,6 +2,11 @@
 //ヒストグラム中の最大長方形
 //計算量 O(N)
 
+//概要
+//left[i]:=j<iかつmin(h[j],h[j+1],...,h[i-1])>=h[i]を満たす最小のj
+//stackに入っているindexは、前のものほどそのindexに対応するヒストグラムが高い。
+//stackから取り除かれるときが右端に相当する。
+
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_3_C&lang=ja
 

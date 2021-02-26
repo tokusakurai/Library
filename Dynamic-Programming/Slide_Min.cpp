@@ -2,6 +2,10 @@
 //配列のスライド最小値
 //計算量 O(N)
 
+//概要
+//dequeに入っているindexは、前のものほどそのindexに対応する配列の値が小さい。
+//dequeの先頭に残ったものが区間の最小値のindex。
+
 #include <bits/stdc++.h>
 using namespace std;
 

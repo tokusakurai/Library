@@ -2,6 +2,10 @@
 //最長増加部分列(LIS)
 //計算量 O(N*log(N))
 
+//概要
+//dp[i][j]:=前からi個の要素までみたとき、長さj+1の増加部分列での最終要素の最小値
+//配列dp[i]と配列dp[i+1]で値が異なる箇所は高々1個であるため、配列を使い回すことで計算量が落ちる。
+
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_1_D&lang=ja
 

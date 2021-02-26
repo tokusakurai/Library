@@ -2,6 +2,9 @@
 //編集距離(挿入、削除、置換ができる)
 //計算量 O(N*M)
 
+//概要
+//dp[i][j]:=aの前からi文字とbの前からj文字の編集距離
+
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_1_E&lang=ja
 

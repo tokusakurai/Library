@@ -2,6 +2,9 @@
 //Moのアルゴリズム(例)
 //計算量 O((N+Q)*√N)
 
+//概要
+//区間の伸縮をO(1)で行えるため、計算量はO((N+Q)*√N)
+
 //verified with
 //https://atcoder.jp/contests/abc174/tasks/abc174_f
 
