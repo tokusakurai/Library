@@ -12,7 +12,7 @@
 - [Undo可能Union-Find木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Undo_Union_Find_Tree.cpp) (Union操作を巻き戻すことができる)
 
 ## Binary-Indexed木
-配列に対して1点加算と区間和取得が高速にできる。セグメント木と比べてメモリや計算量のが定数倍が軽いというメリットがある。
+配列に対して1点加算と区間和取得が高速にできる。セグメント木と比べてメモリや計算量の定数倍が軽いというメリットがある。
 
 - [Binary-Indexed木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Binary_Indexed_Tree.cpp)
 
@@ -28,12 +28,12 @@
 - [遅延評価付きセグメント木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Lazy_Segment_Tree.cpp) (上記2つを組み合わせることで区間更新と区間演算を扱える)
 
 ## スパーステーブル
-配列が不変であり演算が結合則と冪等性を満たすとき、区間演算が高速にできる。セグメント木と比べて区間演算を高速に扱えるが、メモリ消費が大きいことと扱える演算の幅が小さくなることに注意。
+配列が静的であり演算が結合則と冪等性を満たすとき、区間演算が高速にできる。セグメント木と比べてクエリ計算量は小さいが、メモリ消費が大きいことと扱える演算の幅が小さくなることに注意。
 
 - [スパーステーブル](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Sparse_Table.cpp)
 
 ## 平方分割
-配列を適当なサイズごとのバケットに分割することで、区間クエリを行ったときに全体にクエリがかかる区間と一部のみにクエリがかかる区間に分かれることを利用した高速化。セグメント木と比べて計算量は落ちるが、扱えるクエリの幅が大きい。
+配列を適当なサイズごとのバケットに分割することで、区間クエリを行ったときに全体にクエリがかかるバケットと一部のみにクエリがかかるバケットに分かれることを利用した高速化。セグメント木と比べて計算量は落ちるが、扱えるクエリの幅が大きい。
 
 - [平方分割(雛形)](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Sqrt_Decomposition_Template.cpp)
 
