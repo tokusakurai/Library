@@ -2,6 +2,12 @@
 //sからtへの流量fのフローの最小費用流を求める(最初のグラフに負の閉路が存在しない場合)
 //計算量 O(E*V+F*E*log(V))、初期状態でコストが負の辺が存在しない場合:O(F*E*log(V))
 
+//概要
+//最初にBellman-Ford法で始点から各点の最短路を確定する。
+//ポテンシャルを用いることで全ての辺のコストを非負とみなすことができる。
+//残余グラフにおいてDijkstra法で最短路を求め、流せるだけ流し、ポテンシャルを更新する。
+//ステップ回数は最大でF回。
+
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_6_B&lang=ja
 

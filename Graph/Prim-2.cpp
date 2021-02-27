@@ -2,6 +2,12 @@
 //プリム法(最小全域木)
 //計算量 O(E*log(V))
 
+//概要
+//ある頂点から始めて1つずつ辺を加えて木を構成する。
+//今木に含まれている頂点と木に含まれていない頂点を結ぶ辺のうち、もっともコストが小さいものを採用する。
+//昇順のpriority_queueを用いる。
+//新たに木に加えた頂点と木に入っていない頂点を結ぶ辺をpriority_queueに入れる。(この操作は合計で最大E回となる)
+
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_2_A&lang=ja
 

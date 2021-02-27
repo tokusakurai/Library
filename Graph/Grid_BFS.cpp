@@ -2,6 +2,9 @@
 //グリッド上のBFS
 //計算量 O(H*W)
 
+//概要
+//BFSをグリッド(上下左右に1マスずつ動ける)上で行う。
+
 //verified with
 //https://atcoder.jp/contests/abc007/tasks/abc007_3
 

@@ -2,6 +2,12 @@
 //Hopcroft-Karp法(2部グラフの最大マッチング)
 //計算量 O(E*√V)
 
+//概要
+//左側のマッチングに含まれない点の深さを0としてBFSで各点の深さを決定する。
+//このとき左→右の移動では現在マッチングに使われていない辺を、右→左の移動では現在マッチングに使われている辺のみを用いる。
+//左側のマッチングに含まれていない点から右側のマッチングに含まれていない点へのパスをDFSで見つけ、パス上の辺の使用不使用を反転させる。
+//ステップ回数は最大でO(√V)回。
+
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_7_A&lang=ja
 //https://judge.yosupo.jp/problem/bipartitematching

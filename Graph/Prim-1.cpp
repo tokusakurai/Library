@@ -2,6 +2,11 @@
 //プリム法(最小全域木)
 //計算量 O(V^2)
 
+//概要
+//ある頂点から始めて1つずつ辺を加えて木を構成する。
+//今木に含まれている頂点と木に含まれていない頂点を結ぶ辺のうち、もっともコストが小さいものを採用する。
+//各ステップで、木に含まれていない頂点を全てチェックする。
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -30,7 +35,7 @@ struct Table{
     }
 
     T prim(){
-        vector<T> mincost(n, INF_T);
+        vector<T> mincost(n, INF_T); //木に含まれる頂点と自身を結ぶ辺のコストの最小値
         vector<bool> used(n, false);
         mincost[0] = 0;
         T ret = 0;

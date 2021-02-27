@@ -2,6 +2,10 @@
 //Bellman-Ford法(負辺があっても動作する単一始点最短路)
 //計算量 O(E*V)
 
+//概要
+//各ステップで全ての辺を用いて最短距離を更新する。
+//負の閉路がなければステップ回数はV-1回行えばよい。(V回目のステップでも更新が発生したら負閉路が存在する)
+
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_1_B&lang=ja
 

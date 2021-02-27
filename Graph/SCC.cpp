@@ -2,6 +2,10 @@
 //強連結成分分解(分解後はDAGになる)
 //計算量 O(E+V)
 
+//概要
+//1回目のDFSでは適当な頂点から始めて帰りがけの順で頂点を並べる。
+//2回目のDFSでは帰りがけの逆順に頂点を見ていき、逆辺を使って到達できる未訪問の頂点があれば、それらは同じ強連結成分となる。
+
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_3_C&lang=ja
 //https://judge.yosupo.jp/problem/scc
@@ -65,7 +69,7 @@ struct Strongly_Connected_Components{
         }
     }
 
-    Graph<true> decompose(){
+    Graph<true> decompose(){ //分解後のグラフを返す
         fill(begin(used), end(used), false);
         for(int i = 0; i < n; i++){
             if(!used[i]) topological_sort(i);
@@ -85,7 +89,7 @@ struct Strongly_Connected_Components{
         return G;
     }
 
-    int operator [] (int k) const {return comp[k];} //kは何番目に来るか
+    int operator [] (int k) const {return comp[k];} //kは何番目か
 };
 
 int main(){

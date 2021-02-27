@@ -2,6 +2,11 @@
 //Warshall_Floyed法(負辺があっても動作する全点対最短路)
 //計算量 O(V^3)
 
+//概要
+//dp[k][i][j]:=頂点0~k-1と頂点i,jのみを使うときのiからjへの最短路
+//このdpをメモリ省略で行うことができる。
+//dp[i][i]<0となるiが存在する場合、頂点iを含む負閉路が存在する。
+
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_1_C&lang=ja
 

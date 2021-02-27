@@ -2,6 +2,11 @@
 //Shortest-Path-Fast-Algorithm(負辺があっても動作する単一始点最短路)
 //計算量 O(E*V)
 
+//概要
+//queueを用いる。
+//始点から始めて最短路が更新される点があればqueueに入れる。(既に入っていれば入れない)
+//負閉路が存在しない場合、各頂点についてqueueに入れられる回数は最大でV-1回になる。(V回入れられたら負閉路が存在する)
+
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_1_B&lang=ja
 
@@ -65,7 +70,7 @@ int main(){
     if(G.shortest_path_faster_algorithm(s) == -(INT_MAX/2)) cout << "NEGATIVE CYCLE\n";
     else{
         for(auto &e: G.d){
-            if(e == (INT_MAX)/2) cout << "INF\n";
+            if(e == INT_MAX/2) cout << "INF\n";
             else cout << e << '\n';
         }
     } 

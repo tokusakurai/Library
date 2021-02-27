@@ -2,6 +2,11 @@
 //クラスカル法(最小全域木)
 //計算量 O(E*log(E))
 
+//概要
+//辺をコストの昇順にソートする。
+//Union-Find木を用いる。
+//上から辺を見ていって、両端が別の連結成分に属していればその辺を採用し、そうでなければ棄却する。
+
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_2_A&lang=jp
 

@@ -2,6 +2,11 @@
 //Dijkstra法(負辺がないグラフにおける単一始点最短路)
 //計算量 O(E*log(V))
 
+//概要
+//始点から近い順に最短路を確定させる。
+//昇順のpriority_queueを用いる。
+//最短距離が更新されたときにpriority_queueに入れる。(この操作は合計で最大E回となる)
+
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_1_A&lang=ja
 //https://judge.yosupo.jp/problem/shortest_path

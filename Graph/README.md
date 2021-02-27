@@ -6,20 +6,18 @@
 - [グラフ(雛形)](https://github.com/tokusakurai/Library/blob/main/Graph/Graph_Template.cpp)
 
 ## 深さ優先探索(DFS)
-再帰関数を用いて簡潔に実装できる場合が多いため、汎用性が非常に高い。
+深さ優先探索。再帰関数を用いて簡潔に実装できる場合が多く、汎用性が非常に高い。
 
 - [DFS(無向グラフ)](https://github.com/tokusakurai/Library/blob/main/Graph/Undirected_Graph_DFS.cpp) (パス検出・閉路検出)
 
 - [DFS(有向グラフ)](https://github.com/tokusakurai/Library/blob/main/Graph/Directed_Graph_DFS.cpp) (パス検出・トポロジカルソート・閉路検出)
 
 ## 幅優先探索(BFS)
-辺のコストが全て等しいときの単一始点最短路を求めるのに利用される場合が多い。
+幅優先探索。辺のコストが全て等しいときの単一始点最短路を求めるのに利用される場合が多い。
 
 - [BFS](https://github.com/tokusakurai/Library/blob/main/Graph/BFS.cpp) (単一始点最短路)
 
 - [グリッド上のBFS](https://github.com/tokusakurai/Library/blob/main/Graph/Grid_BFS.cpp) (単一始点最短路)
-
-辺のコストが0または1であるとき、dequeなどの先頭と末尾の挿入・削除が扱えるデータ構造を用いれば高速にBFSを回すことができる。
 
 - [01-BFS](https://github.com/tokusakurai/Library/blob/main/Graph/01-BFS.cpp) (辺のコストが0または1のときの単一始点最短路)
 
@@ -43,7 +41,7 @@
 - [Warshall-Floyd法](https://github.com/tokusakurai/Library/blob/main/Graph/Warshall-Floyd.cpp) (負辺があってもよい)
 
 ## 最小全域木問題
-辺のコストが全て非負のときに全域木を構成するための最小コストを求めるアルゴリズム。負辺が存在する場合は、それらを全て採用してから同様の手順を行えば良い。
+辺のコストが全て非負のときに全域木を構成するための最小コストを求めるアルゴリズム。
 
 - [Prim法-1](https://github.com/tokusakurai/Library/blob/main/Graph/Prim-1.cpp) (頂点数が小さい場合に高速に動作する)
 

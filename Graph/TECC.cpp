@@ -2,6 +2,10 @@
 //二重辺連結成分分解(分解後は森になる)
 //計算量 O(E+V)
 
+//概要
+//Low-Linkを用いる。
+//辺(u,v)が橋であればuとvは別の連結成分、そうでなければuとvは同じ連結成分に含まれる。
+
 //verified with
 //https://atcoder.jp/contests/arc039/tasks/arc039_d
 //https://judge.yosupo.jp/problem/two_edge_connected_components
@@ -100,7 +104,7 @@ struct Two_Edge_Connected_Components : Low_Link<directed>{
         return k;
     }
 
-    Graph<directed> decompose(){
+    Graph<directed> decompose(){ //分解後のグラフを返す
         this->build();
         fill(begin(comp), end(comp), -1);
         int k = 0;

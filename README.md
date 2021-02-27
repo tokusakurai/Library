@@ -2,7 +2,7 @@
 
 - [データ構造](https://github.com/tokusakurai/Library/tree/main/Data-Structure)
 
-- [動的計画法](https://github.com/tokusakurai/Library/tree/main/Dynamic-Programming)
+- [動的計画法(DP)](https://github.com/tokusakurai/Library/tree/main/Dynamic-Programming)
 
 - [グラフ](https://github.com/tokusakurai/Library/tree/main/Graph)
 

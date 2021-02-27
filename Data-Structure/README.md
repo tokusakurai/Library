@@ -17,18 +17,18 @@
 - [Binary-Indexed木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Binary_Indexed_Tree.cpp)
 
 ## セグメント木
-配列に対して1点更新と区間演算が高速にできる。ただし、演算はモノイドとしての性質を満たさなければならない。
+配列に対して1点更新と区間演算が高速にできる。ただし、二項演算はモノイドとしての性質を満たさなければならない。
 
 - [セグメント木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Segment_Tree.cpp)
 
 遅延評価(必要になるまで更新を保留すること)を用いることによって区間更新を扱うこともできる。
 
-- [双対セグメント木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Dual_Segment_Tree.cpp) (作用素の演算がモノイドの性質を満たすとき、区間更新と1点取得を扱える)
+- [双対セグメント木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Dual_Segment_Tree.cpp) (作用素の二項演算がモノイドの性質を満たすとき、区間更新と1点取得を扱える)
 
 - [遅延評価付きセグメント木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Lazy_Segment_Tree.cpp) (上記2つを組み合わせることで区間更新と区間演算を扱える)
 
 ## スパーステーブル
-配列が静的であり演算が結合則と冪等性を満たすとき、区間演算が高速にできる。セグメント木と比べてクエリ計算量は小さいが、メモリ消費が大きいことと扱える演算の幅が小さくなることに注意。
+配列が静的であり二項演算が結合則と冪等性を満たすとき、区間演算が高速にできる。セグメント木と比べてクエリ計算量は小さいが、メモリ消費が大きいことと扱える演算の幅が小さくなることに注意。
 
 - [スパーステーブル](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Sparse_Table.cpp)
 

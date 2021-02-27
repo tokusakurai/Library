@@ -2,6 +2,9 @@
 //最大安定集合(どの2点も隣接しない点集合で最大のもの)
 //計算量 O(1.381^V*V)
 
+//概要
+//次数が1以下の頂点があれば必ず採用し、なければ残っている頂点で次数が最大のものについて採用するかしないかで分岐する。
+
 //verified with
 //https://atcoder.jp/contests/code-thanks-festival-2017-open/tasks/code_thanks_festival_2017_g
 //https://judge.yosupo.jp/problem/maximum_independent_set
