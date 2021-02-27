@@ -5,6 +5,9 @@
 
 //概要
 //ノードを区間に対応させることで、任意の区間がO(log(N))個のノードが表す区間のdisjointな和集合として表現される。
+//各点を被覆するノードはO(log(N))個。
+//1点更新：その点を含むノードの値を全て更新する。
+//区間取得：区間をちょうど被覆するノードたちの値を用いて演算を行う。
 
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_A&lang=ja

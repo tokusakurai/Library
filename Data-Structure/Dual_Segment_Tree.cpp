@@ -4,7 +4,8 @@
 //空間計算量 O(N)
 
 //概要
-//遅延評価を用いることでセグメント木と逆の流れの操作ができる。
+//区間更新：まず更新される各ノードについて遅延評価を解消してから、遅延配列を更新する。
+//1点取得：取得する点の遅延評価を解消する。
 
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_D&lang=ja
@@ -35,7 +36,7 @@ struct Dual_Segment_Tree{
         seg = v;
     }
 
-    inline void eval(int i){
+    inline void eval(int i){ //ノードiでストップしている遅延評価を解消して1つ下に流す
         if(i < n && lazy[i] != e2){
             lazy[2*i] = h(lazy[2*i], lazy[i]);
             lazy[2*i+1] = h(lazy[2*i+1], lazy[i]);
@@ -43,7 +44,7 @@ struct Dual_Segment_Tree{
         }
     }
 
-    inline void thrust(int i){
+    inline void thrust(int i){ //i番目のノードの区間を被覆するノードについて上から遅延評価を解消する
         for(int j = height; j > 0; j--) eval(i>>j);
     }
 

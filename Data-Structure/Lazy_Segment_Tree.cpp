@@ -4,7 +4,8 @@
 //空間計算量 O(N)
 
 //概要
-//セグメント木と双対セグメント木の操作を合わせている。
+//区間更新：まず更新される各ノードについて遅延評価を解消してから、遅延配列を更新し、最後に本配列を更新する。
+//区間取得：取得する区間の遅延評価を解消する。(ここでは本配列は更新しなくてもよい)
 
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_H&lang=ja
@@ -43,11 +44,11 @@ struct Lazy_Segment_Tree{
         for(int i = n-1; i > 0; i--) seg[i] = f(seg[2*i], seg[2*i+1]);
     }
 
-    inline Monoid reflect(int i) const{
+    inline Monoid reflect(int i) const{ //ノードiの実際の値
         return (lazy[i] == e2? seg[i] : g(seg[i], lazy[i]));
     }
 
-    inline void recalc(int i){
+    inline void recalc(int i){ //本配列の更新
         while(i >>= 1) seg[i] = f(reflect(2*i), reflect(2*i+1));
     }
 
