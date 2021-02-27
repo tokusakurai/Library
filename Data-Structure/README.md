@@ -12,7 +12,7 @@
 - [Undo可能Union-Find木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Undo_Union_Find_Tree.cpp) (Union操作を巻き戻すことができる)
 
 ## Binary-Indexed木
-配列に対して1点加算と区間和取得が高速にできる。セグメント木と比べてメモリが軽い、定数倍が速いというメリットがある。
+配列に対して1点加算と区間和取得が高速にできる。セグメント木と比べてメモリや計算量のが定数倍が軽いというメリットがある。
 
 - [Binary-Indexed木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Binary_Indexed_Tree.cpp)
 
@@ -21,7 +21,7 @@
 
 - [セグメント木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Segment_Tree.cpp)
 
-遅延評価(求値クエリが来るまで値の更新を保留すること)を用いることによって区間更新を扱うこともできる。
+遅延評価(必要になるまで更新を保留すること)を用いることによって区間更新を扱うこともできる。
 
 - [双対セグメント木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Dual_Segment_Tree.cpp) (作用素の演算がモノイドの性質を満たすとき、区間更新と1点取得を扱える)
 
