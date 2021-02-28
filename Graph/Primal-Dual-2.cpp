@@ -14,22 +14,23 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template<typename T>
+template<typename F, typename T = F> //流量の型、費用の型
 struct Min_Cost_Flow{
     struct edge{
-        int to; T cap, cost; int rev;
-        edge(int to, T cap, T cost, int rev) : to(to), cap(cap), cost(cost), rev(rev) {}
+        int to; F cap; T cost; int rev;
+        edge(int to, F cap, T cost, int rev) : to(to), cap(cap), cost(cost), rev(rev) {}
     };
 
     vector<vector<edge>> es;
     vector<T> d, h;
     vector<int> pre_v, pre_e;
+    const F INF_F;
     const T INF_T;
     const int n;
 
-    Min_Cost_Flow(int n) : es(n), d(n), h(n), pre_v(n), pre_e(n), INF_T(numeric_limits<T>::max()), n(n) {}
+    Min_Cost_Flow(int n) : es(n), d(n), h(n), pre_v(n), pre_e(n), INF_F(numeric_limits<F>::max()), INF_T(numeric_limits<T>::max()/2), n(n) {}
 
-    void add_edge(int from, int to, T cap, T cost){
+    void add_edge(int from, int to, F cap, T cost){
         es[from].emplace_back(to, cap, cost, (int)es[to].size());
         es[to].emplace_back(from, 0, -cost, (int)es[from].size()-1);
     }
@@ -55,7 +56,7 @@ struct Min_Cost_Flow{
     void dijkstra(int s){
         fill(begin(d), end(d), INF_T);
         using P = pair<T, int>;
-        priority_queue<P, vector<P>, greater<P> > que;
+        priority_queue<P, vector<P>, greater<P>> que;
         que.emplace(d[s] = 0, s);
         while(!que.empty()){
             auto [p, i] = que.top(); que.pop();
@@ -71,9 +72,9 @@ struct Min_Cost_Flow{
         }
     }
 
-    T min_cost_flow(int s, int t, T flow){
+    T min_cost_flow(int s, int t, F flow){ //流量flowのs-t最小費用流を求める
         T ret = 0;
-        bellman_ford(s); //初期状態でコストが負の辺が存在しない場合は行わなくて良い
+        bellman_ford(s); //初期状態で負辺が存在しない場合はコメントアウトする
         while(flow > 0){
             dijkstra(s);
             if(d[t] == INF_T) return -1;
@@ -81,11 +82,11 @@ struct Min_Cost_Flow{
                 if(h[i] == INF_T || d[i] == INF_T) h[i] = INF_T;
                 else h[i] += d[i];
             }
-            T f = flow;
+            F f = flow;
             for(int now = t; now != s; now = pre_v[now]){
                 f = min(f, es[pre_v[now]][pre_e[now]].cap);
             }
-            ret += f*h[t], flow -= f;
+            ret += h[t]*f, flow -= f;
             for(int now = t; now != s; now = pre_v[now]){
                 edge &e = es[pre_v[now]][pre_e[now]];
                 e.cap -= f, es[now][e.rev].cap += f;

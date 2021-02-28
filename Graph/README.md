@@ -51,24 +51,27 @@
 
 - [Boruvka法](https://github.com/tokusakurai/Library/blob/main/Graph/Boruvka.cpp)
 
-## 最大流問題
+## ネットワークフロー
+グラフ上のフローを扱うアルゴリズム。
+
+### 最大流問題
 始点と終点との間におけるフローの最大流量を求めるアルゴリズム。
 
-- [Ford-Fulkerson法](https://github.com/tokusakurai/Library/blob/main/Graph/Ford_Fulkerson.cpp) (最悪計算量と比べて高速に動作することも多い)
+- [Ford-Fulkerson法](https://github.com/tokusakurai/Library/blob/main/Graph/Ford_Fulkerson.cpp)
 
-- [Dinic法](https://github.com/tokusakurai/Library/blob/main/Graph/Dinic.cpp) (最悪計算量と比べて高速に動作することも多い)
+- [Dinic法](https://github.com/tokusakurai/Library/blob/main/Graph/Dinic.cpp) (最悪計算量と比べて非常に高速に動作することが多い)
 
-## 最小費用流問題
+### 最小費用流問題
 始点と終点との間におけるある流量のフローの最小コストを求めるアルゴリズム。
 
 - [Primal-Dual法-1](https://github.com/tokusakurai/Library/blob/main/Graph/Primal-Dual-1.cpp)
 
 - [Primal-Dual法-2](https://github.com/tokusakurai/Library/blob/main/Graph/Primal-Dual-2.cpp) (ポテンシャルを用いた高速化)
 
-## 2部グラフの最大マッチング
+### 2部グラフの最大マッチング
 2部グラフにおける最大マッチングを構成するアルゴリズム。
 
-- [Hopcroft-Karp法](https://github.com/tokusakurai/Library/blob/main/Graph/Hopcroft_Karp.cpp) (最大流と比べて最悪計算量が小さい)
+- [Hopcroft-Karp法](https://github.com/tokusakurai/Library/blob/main/Graph/Hopcroft_Karp.cpp)
 
 ## 強連結成分分解
 有向グラフの強連結成分(誘導部分グラフにおいて互いに行き来可能な点集合)を1つにまとめるアルゴリズム。
