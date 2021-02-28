@@ -19,7 +19,7 @@ struct Bipartite_Matching{
     vector<vector<int>> es;
     vector<int> d, match;
     vector<bool> used, used2;
-    const int n, m;
+    const int n, m; //左側、右側の頂点数
 
     Bipartite_Matching(int n, int m) : es(n), d(n), match(m), used(n), used2(n), n(n), m(m) {}
 
@@ -56,7 +56,7 @@ struct Bipartite_Matching{
         return false;
     }
 
-    int bipartite_matching(){
+    int bipartite_matching(){ //最大マッチングのサイズを求める(左側のiと右側のmatch[i]を結ぶ辺がマッチングに使われる)
         fill(begin(match), end(match), -1), fill(begin(used), end(used), false);
         int ret = 0;
         while(true){
