@@ -1,7 +1,12 @@
 
 //最近共通祖先(LCA)
-//計算量 構築:O(V*log(V))、2頂点のLCA・距離:O(log(V))
+//計算量 構築：O(V*log(V))、2頂点のLCA・距離：O(log(V))
 //空間計算量 O(V*log(V))
+
+//概要
+//par[i][j]:=頂点jの2^i個前の祖先とすると、ダブリングでテーブルを埋めることができる。
+//頂点u,vで根からuの方がvより深いとする。
+//まずuをvと同じ深さになるまで引き上げ、その後uとvが同じ頂点に来ない範囲で両者を同じ高さだけ引き上げる。
 
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_5_C&lang=ja

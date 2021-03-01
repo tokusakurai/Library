@@ -1,6 +1,9 @@
 
 //木の重心分解(例)
-//計算量 1回の重心分解:O(V)、再帰の深さ:O(log(V))、全体の計算量:O(V*log(V))
+//計算量 重心検出：O(V)、再帰の深さ：O(log(V))、全体の計算量：O(V*log(V))
+
+//概要
+//一回の分割で新たにできる木のサイズは元の木の半分以下であるから、分割統治したときの再帰の深さは最大でO(log(V))となる。
 
 //verified with
 //https://atcoder.jp/contests/yahoo-procon2018-final-open/tasks/yahoo_procon2018_final_c
@@ -58,6 +61,11 @@ struct Graph{
         return ret;
     }
 
+    int centroid(int s){ //頂点sを含む連結成分の重心を返す
+        calc_size(s);
+        return search_centroid(s, si[s]).second;
+    }
+
     void solve(int i){
         for(auto &q: query[i]){
             if(q.first >= depth[i]) ans[q.second] += cnt[q.first-depth[i]];
@@ -84,8 +92,7 @@ struct Graph{
     }
 
     void decompose(int root = 0){
-        calc_size(root);
-        int c = search_centroid(root, si[root]).second;
+        int c = centroid(root);
 
         dfs1(c, -1, false);
         solve(c);

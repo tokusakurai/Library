@@ -15,18 +15,18 @@
 - [オイラーツアー(辺)](https://github.com/tokusakurai/Library/blob/main/Tree/Euler_Tour-2.cpp) (逆向きの辺が打ち消されるようにすることでパスに対するクエリを扱える)
 
 ## 最近共通祖先
-根付き木の2点の共通の祖先で最も深いものを高速に求めるアルゴリズム。
+根付き木の2点の共通の祖先で最も根から深いものを求めるアルゴリズム。
 
 - [最近共通祖先](https://github.com/tokusakurai/Library/blob/main/Tree/LCA.cpp) (ダブリングを用いる)
 
 ## 重心分解
-木の重心(取り除いたときに残る全ての部分木のサイズが元の木のサイズの半分以下となるような頂点)を取り除くことによって分解を繰り返すことで、効率的に分割統治を行うことができる。
+木の重心(取り除いたときに残る全ての部分木のサイズが元の木のサイズの半分以下となるような頂点)を取り除いて分割を繰り返すことで、効率的に分割統治を行うことができる。
 
 - [重心分解(雛形)](https://github.com/tokusakurai/Library/blob/main/Tree/Centroid_Template.cpp)
 
 - [重心分解(例)](https://github.com/tokusakurai/Library/blob/main/Tree/Centroid_Example.cpp) (ある頂点からある距離の点の個数を求めるクエリを扱える)
 
 ## Heavy-Light分解
-木をうまく列に分解することでパスを少ない個数の列の区間をつなげたものとして表現し、効率的にパスクエリを扱うことができる。
+木をいくつかの列に分割し、単純パスをいくつかの列の一部区間をつなげたものとして表現することで効率的にパスクエリを扱うことができる。
 
 - [Heavy-Light分解](https://github.com/tokusakurai/Library/blob/main/Tree/HLD.cpp)
