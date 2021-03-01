@@ -4,11 +4,11 @@
 
 - [各種ナップザック問題](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/Knapsack.cpp) (01ナップザック問題、個数制限なしナップザック問題、個数制限付きナップザック問題)
 
-- [最長共通部分列](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/LCS.cpp)
+- [最長共通部分列(LCS)](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/LCS.cpp)
 
 - [編集距離](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/Edit_Distance.cpp)
 
-- [最長増加部分列](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/LIS.cpp) (DP配列の再利用で計算量が落ちるインラインDP)
+- [最長増加部分列(LIS)](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/LIS.cpp) (DP配列の再利用で計算量が落ちるインラインDP)
 
 - [分割数テーブル](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/Partition_Number.cpp)
 
@@ -27,7 +27,7 @@
 - [Convex-Hull-Trick](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/Convex_Hull_Trick.cpp)
 
 ## Moのアルゴリズム
-配列が静的であり、区間クエリの先読みが出来る場合、クエリを適切にソートすることで区間の伸縮によって高速にクエリを処理できる。
+配列が静的かつ区間クエリの先読みが出来る場合、処理するクエリの順番を工夫することで効率的にクエリを処理できる。
 
 - [Moのアルゴリズム(雛形)](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/Mo_Template.cpp)
 
