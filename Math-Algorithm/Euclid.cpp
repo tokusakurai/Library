@@ -12,7 +12,7 @@
 //modinv：ax+my=1を満たすxをextgcdで求める。
 //floor_sum：領域内の格子点の数とみなし、A<Mなら縦横をひっくり返すなどする。
 //中国剰余定理：解が存在する⇔a_1≡a_2(mod gcd(m_1,m_2))
-//Garnerの定理：絵画存在する⇔任意のi,jについてa_i≡a_j(mod gcd(m_i,m_j))
+//Garnerの定理：解が存在する⇔任意のi,jについてa_i≡a_j(mod gcd(m_i,m_j))
 
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_1_B&lang=ja
