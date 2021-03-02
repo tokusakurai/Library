@@ -1,6 +1,13 @@
 
 //剰余演算(累乗、オイラーのφ関数、離散対数、位数、原始根)
-//計算量 K乗:O(log(K))、オイラーのφ関数・離散対数・位数:O(√M)、原始根:O(log(M))
+//計算量 K乗：O(log(K))、オイラーのφ関数・離散対数・位数：O(√M)、原始根：O(φ(M-1)*log(M))
+
+//概要
+//累乗；ダブリング
+//オイラーのφ関数：Mの素因数を全て列挙し、M以下の自然数のうちMと互いに素なものの割合を考える。
+//離散対数：Baby-step Giant-step
+//位数：φ(M)の約数を全て考える。
+//原始根：乱数で発生させて、その位数がM-1であるかどうか判定する。原始根は最低でもφ(M-1)個存在する。
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -39,7 +46,7 @@ T Euler_Totient(T m){ //オイラーのφ関数(xとmが互いに素ならば、
     return ret;
 }
 
-int modlog(const int &x, long long y, const int &m){ //x^k=y(mod m)となる最小の非負整数k(xとmは互いに素)
+int modlog(const int &x, long long y, const int &m){ //x^k≡y(mod m)となる最小の非負整数k(xとmは互いに素)
     unordered_map<int, int> mp;
     int n = 0; long long now = 1;
     for(; n*n < m; n++){
@@ -54,7 +61,7 @@ int modlog(const int &x, long long y, const int &m){ //x^k=y(mod m)となる最�
     return -1;
 }
 
-template<typename T> T order(T x, const T &m){ //x^k=1(mod m)となる最小の正整数k(xとmは互いに素)
+template<typename T> T order(T x, const T &m){ //x^k≡1(mod m)となる最小の正整数k(xとmは互いに素)
     T n = Euler_Totient(m);
     vector<T> ds;
     for(T i = 1; i*i <= n; i++){

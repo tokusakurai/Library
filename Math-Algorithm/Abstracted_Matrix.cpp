@@ -1,6 +1,11 @@
 
 //抽象化された行列
-//計算量 積:O(N*M*P)、K乗:O(N^3*log(K))
+//計算量 積：O(N*M*P)、K乗：O(N^3*log(K))
+
+//概要
+//半環(R,+,*)に対して行列の積演算を行える。
+//単位行列は、対角成分は1元、それ以外は0元。
+//累乗：ダブリング
 
 //verified with
 //https://atcoder.jp/contests/abc009/tasks/abc009_4

@@ -1,6 +1,9 @@
 
 //二元体での行列
-//計算量 簡約化:O(N*M^2/64)
+//計算量 簡約化：O(N*M^2/64)
+
+//概要
+//行iに行jを足す操作は行iに行jをXORする操作と同値なので、bitsetで高速化できる。
 
 #include <bits/stdc++.h>
 using namespace std;

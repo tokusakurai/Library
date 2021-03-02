@@ -1,9 +1,18 @@
 
 //ユークリッドの互除法を用いた種々の計算
-//計算量 gcd・lcm・extgcd・modinv・floor_sum・中国剰余定理:O(log(max(a, b)))、Garner:O(N^2+N*log(M))
+//計算量 gcd・lcm・extgcd・modinv・floor_sum・中国剰余定理：O(log(max(a, b)))、Garner：O(N^2+N*log(M))
 
-//中国剰余定理 : x ≡ a_1(mod m_1), x ≡ a_2(mod m_2)を満たす最小の非負整数xを求める
-//Garner : x ≡ a_i(mod m_i)を満たす最小の非負整数xをMで割った余りを求める
+//extgcd：ax+by=gcd(a,b)を満たす(x,y)の組の1つ
+//floor_sum：Σfloor((A*i+B)/M) (i=0,1,2,....,N-1)
+//中国剰余定理：x ≡ a_1(mod m_1), x ≡ a_2(mod m_2)を満たす最小の非負整数x
+//Garner：x ≡ a_i(mod m_i) (i=0,1,2,....,N-1)を満たす最小の非負整数xをMで割った余り
+
+//概要
+//gcd・lcm・extgcd：ユークリッドの互除法を使って再帰的に解く。
+//modinv：ax+my=1を満たすxをextgcdで求める。
+//floor_sum：領域内の格子点の数とみなし、A<Mなら縦横をひっくり返すなどする。
+//中国剰余定理：解が存在する⇔a_1≡a_2(mod gcd(m_1,m_2))
+//Garnerの定理：絵画存在する⇔任意のi,jについてa_i≡a_j(mod gcd(m_i,m_j))
 
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_1_B&lang=ja
@@ -26,7 +35,7 @@ template<typename T>
 T lcm(const T &a, const T &b) {return a*(b/gcd(a,b));}
 
 template<typename T>
-T extgcd(const T &a, const T &b, T &x, T &y){
+T extgcd(const T &a, const T &b, T &x, T &y){ //|x|と|y|は結果としてmax(a,b)以下になる。
     if(b == 0) {x = 1, y = 0; return a;}
     T g = extgcd(b, a%b, y, x);
     y -= (a/b)*x;

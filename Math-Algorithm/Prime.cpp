@@ -1,12 +1,15 @@
 
 //素数・約数に関する計算
-//計算量 約数列挙・素因数分解・素数判定:O(√N)、エラトステネスの篩:O(N*log(log(N)))
+//計算量 約数列挙・素因数分解・素数判定：O(√N)、エラトステネスの篩：O(N*log(log(N)))
+
+//概要
+//約数列挙・素因数分解・素数判定：自然数Nの素因数で√Nより大きいものは高々1つなので、√N以下の数全てについて割り切れるか調べる。
+//エラトステネスの篩：前から順番に見て、注目している数が素数ならその数の倍数(その数は含めない)は全て素数ではないことになるので、テーブルをfalseに切り替える。
 
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=NTL_1_A&lang=jp
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_1_C&lang=jp
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_1_C
-
 
 #include <bits/stdc++.h>
 using namespace std;
