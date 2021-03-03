@@ -2,6 +2,10 @@
 //数論変換(高速剰余変換)(modはx*(2^y)+1で表されるもの(N+M<=2^y))
 //計算量 O((N+M)*log(N+M))
 
+//概要
+//modをPとして、P=x*2^y+1と表したとき、2^y>=N+M-1が成立すればFFTが行える。
+//rをPの原子根とすれば、剰余環での1の2^k乗根はr^(x*2^(y-k))として得られる。
+
 //verified with
 //https://atcoder.jp/contests/practice2/tasks/practice2_f
 //https://judge.yosupo.jp/problem/convolution_mod
@@ -67,7 +71,7 @@ struct Mod_Int{
 
     bool operator != (const Mod_Int &p) const {return x != p.x;}
 
-    Mod_Int inverse() const {
+    Mod_Int inverse() const{
         assert(*this != Mod_Int(0));
         return pow(mod-2);
     }
@@ -102,8 +106,8 @@ struct Number_Theorem_Transform{
     Number_Theorem_Transform(){
         r.resize(30), ir.resize(30);
         for(int i = 0; i < 30; i++){
-            r[i] = -T(primitive_root).pow((mod-1)>>(i+2));
-            ir[i] = r[i].inverse();
+            r[i] = -T(primitive_root).pow((mod-1)>>(i+2)); //r[i]:=1の2^(i+2)乗根
+            ir[i] = r[i].inverse(); //ir[i]:=1/r[i]
         }
     }
 

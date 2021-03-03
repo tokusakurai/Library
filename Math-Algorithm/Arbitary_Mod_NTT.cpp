@@ -2,6 +2,10 @@
 //数論変換(高速剰余変換)(任意mod)
 //計算量 O((N+M)*log(N+M))
 
+//概要
+//modをPとすると、剰余を取らない場合の畳込みをした結果の各項の最大値はP^2*max(N,M)程度となる。
+//P<=2*10^9、N,M<=10^6であったとしても、3種類のNTTmod(10^9程度)での畳み込みの結果から復元することができる。
+
 //verified with
 //https://atcoder.jp/contests/practice2/tasks/practice2_f
 //https://judge.yosupo.jp/problem/convolution_mod_1000000007
@@ -151,6 +155,7 @@ struct Number_Theorem_Transform{
     }
 };
 
+//(NTT素数、原始根)
 const int m1 = 1045430273, r1 = 3;
 const int m2 = 1051721729, r2 = 6;
 const int m3 = 1053818881, r3 = 7;

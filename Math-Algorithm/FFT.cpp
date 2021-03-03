@@ -2,6 +2,11 @@
 //高速フーリエ変換を用いた多項式の畳み込み
 //計算量 O((N+M)*log(N+M))
 
+//概要
+//StockhamのFFTを用いる。
+//通常のFFT(Cooley Turkey)ではビットを反転して並べ替えているが、その部分を省略している。
+//そのため、DFTした後の配列は順番が入れ替わったもの(ビット反転したときの昇順)となっている。
+
 //verified with
 //https://atcoder.jp/contests/atc001/tasks/fft_c
 
@@ -18,8 +23,8 @@ struct Fast_Foulier_Transform{
     Fast_Foulier_Transform(){
         r.resize(30), ir.resize(30);
         for(int i = 0; i < 30; i++){
-            r[i] = -polar(1.0, pi/(1<<(i+1)));
-            ir[i] = -polar(1.0, -pi/(1<<(i+1)));
+            r[i] = -polar(1.0, pi/(1<<(i+1))); //r[i]:=1の2^(i+2)乗根
+            ir[i] = -polar(1.0, -pi/(1<<(i+1))); //ir[i]:=1/r[i]
         }
     };
 
@@ -31,7 +36,7 @@ struct Fast_Foulier_Transform{
 
     vector<T> to_T(const vector<comp> &a) const{
         vector<T> ret(a.size(), 0);
-        for(int i = 0; i < (int)a.size(); i++) ret[i] = a[i].real()+0.1;
+        for(int i = 0; i < (int)a.size(); i++) ret[i] = a[i].real()+0.1; //誤差をケア
         //for(int i = 0; i < (int)a.size(); i++) ret[i] = a[i].real();
         return ret;
     }
