@@ -71,7 +71,7 @@ struct Mod_Int{
 
     bool operator != (const Mod_Int &p) const {return x != p.x;}
 
-    Mod_Int inverse() const {
+    Mod_Int inverse() const{
         assert(*this != Mod_Int(0));
         return pow(mod-2);
     }
