@@ -1,8 +1,15 @@
 
 //形式的冪級数
-//計算量 加算・減算・微分・積分:O(N)、除算・inv・log・exp・pow:O(N*log(N))
+//計算量 加算・減算・微分・積分：O(N)、積・除算・inv・log・exp・pow：O(N*log(N))
 
 //各種演算はテイラー展開を用いて定義される(詳しくは下のverify url)
+
+//概要
+//積：NTT
+//inv・exp：ニュートン法を用いた漸化式を立てて計算する。
+//除算：invを用いて計算する。
+//log：invを用いて計算する。
+//pow：logとexpを用いて計算する。
 
 //verified with
 //https://judge.yosupo.jp/problem/inv_of_formal_power_series
@@ -71,7 +78,7 @@ struct Mod_Int{
 
     bool operator != (const Mod_Int &p) const {return x != p.x;}
 
-    Mod_Int inverse() const {
+    Mod_Int inverse() const{
         assert(*this != Mod_Int(0));
         return pow(mod-2);
     }
