@@ -1,6 +1,10 @@
 
-//ローリングハッシュ、配列ハッシュ(mod:(2^61)-1、基数:modの原始根からランダムに取る)
-//計算量 構築:O(N)、ハッシュクエリ:O(1)
+//ローリングハッシュ、配列ハッシュ(mod：(2^61)-1、基数：modの原始根からランダムに取る)
+//計算量 構築：O(N)、ハッシュクエリ：O(1)
+
+//概要
+//文字列や配列にハッシュ値をつける。
+//modをできるだけ大きい素数、基数をその原始根に取ることで衝突が起こる確率が小さくなる。
 
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_14_B&lang=ja
@@ -75,7 +79,7 @@ struct Rolling_Hash{
         }
     }
 
-    ull query(int l, int r) const{
+    ull query(int l, int r) const{ //文字列の[l,r)の部分のハッシュ値
         ull ret = hashed[r] + mod - mul(hashed[l], pw[r-l]);
         return ret - (ret >= mod? mod : 0);
     }

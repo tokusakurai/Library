@@ -1,6 +1,11 @@
 
 //manachar(文字列Sの文字iを中心とする奇数長の最長回分の半径を記録した配列を求める)
-//計算量 O(N)
+//計算量 O(|S|)
+
+//概要
+//求める配列をRとする。
+//j+R[i-j]<R[i]ならばR[i-j]=R[i+j]となる。j+R[i-j]>=R[i+j]の場合でもはみ出た部分だけ判定し直せばよい。
+//偶数長の回文は、元の文字列の各文字の間に適当な文字を挟めばよい。
 
 //verified with
 //https://judge.yosupo.jp/problem/enumerate_palindromes
