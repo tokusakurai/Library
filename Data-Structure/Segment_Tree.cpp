@@ -67,7 +67,7 @@ struct Segment_Tree{
     }
  
     template<typename C>
-    int find_first(int l, const C &check, const Monoid &x) const{ //区間[l,r)での演算の結果がxとcで与えられる条件を満たす最小のr
+    int find_first(int l, const C &check, const Monoid &x) const{ //区間[l,r]での演算の結果がxとcで与えられる条件を満たす最小のr
         Monoid L = e1;
         int a = l+n, b = n+n;
         while(a < b){
@@ -82,7 +82,7 @@ struct Segment_Tree{
     }
  
     template<typename C>
-    int find_last(int r, const C &check, const Monoid &x) const{ //区間[l,r)での演算の結果がxとcで与えられる条件を満たす最大のl
+    int find_last(int r, const C &check, const Monoid &x) const{ //区間[l,r]での演算の結果がxとcで与えられる条件を満たす最大のl
         Monoid R = e1;
         int a = n, b = r+n;
         while(a < b){
