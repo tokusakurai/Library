@@ -1,6 +1,6 @@
 
 //乱数発生
-//計算量 : O(1)
+//計算量 O(1)
 
 #include <bits/stdc++.h>
 using namespace std;
