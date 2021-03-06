@@ -1,9 +1,9 @@
 
 //行列計算
-//計算量 積：O(N*M*P)、K乗：O(N^3*log(K))、簡約化・ガウスの消去法：O(N*M^2)
+//計算量 積：O(M*N*P)、K乗：O(N^3*log(K))、簡約化・ガウスの消去法：O(M*N^2)
 
 //累乗：ダブリング
-//ガウスの消去法：行基本変形を繰り返す。
+//ガウスの消去法：行基本変形を繰り返すことで連立一次方程式の解を求める。
 
 //verified with
 //https://judge.yosupo.jp/problem/matrix_det
@@ -16,7 +16,7 @@ template<typename T>
 struct Matrix{
     vector<vector<T>> A;
 
-    Matrix(int n, int m) : A(n, vector<T>(m, 0)) {}
+    Matrix(int m, int n) : A(m, vector<T>(n, 0)) {}
 
     int height() const {return A.size();}
 
@@ -33,11 +33,11 @@ struct Matrix{
     }
 
     Matrix &operator *= (const Matrix &B){
-        int n = height(), m = width(), p = B.width();
-        assert(m == B.height());
-        Matrix ret(n, p);
-        for(int i = 0; i < n; i++){
-            for(int k = 0; k < m; k++){
+        int m = height(), n = width(), p = B.width();
+        assert(n == B.height());
+        Matrix ret(m, p);
+        for(int i = 0; i < m; i++){
+            for(int k = 0; k < n; k++){
                 for(int j = 0; j < p; j++){
                     ret[i][j] += A[i][k]*B[k][j];
                 }
@@ -49,9 +49,9 @@ struct Matrix{
 
     Matrix operator * (const Matrix &B) const {return Matrix(*this) *= B;}
 
-    Matrix pow(long long k){
-        int n = height(), m = width();
-        assert(n == m);
+    Matrix pow(long long k) const{
+        int m = height(), n = width();
+        assert(m == n);
         Matrix now = *this, ret = I(n);
         for(; k > 0; k >>= 1, now *= now){
             if(k&1) ret *= now;
@@ -61,62 +61,68 @@ struct Matrix{
 
     bool eq(const T &a, const T &b) const{
         return a == b;
-        //return abs(a-b) <= EPS; //Tが小数の場合はこちら
+        //return abs(a-b) <= EPS;
     }
 
-    pair<int, T> row_reduction(){ //行基本変形を用いて簡約化を行い、(階数、行列式)の組を返す
-        int n = height(), m = width(), check = 0, rank = 0;
+    pair<int, T> row_reduction(vector<T> &b){ //行基本変形を用いて簡約化を行い、(階数、行列式)の組を返す
+        int m = height(), n = width(), check = 0, rank = 0;
         T det = 1;
-        for(int j = 0; j < m; j++){
+        assert(b.size() == m);
+        for(int j = 0; j < n; j++){
             int pivot = check;
-            for(int i = check; i < n; i++){
+            for(int i = check; i < m; i++){
                 if(A[i][j] != 0) pivot = i;
                 //if(abs(A[i][j]) > abs(A[pivot][j])) pivot = i; //Tが小数の場合はこちら
             }
             if(check != pivot) det *= T(-1);
-            swap(A[check], A[pivot]);
-            if(eq(A[check][j], 0)) {det = T(0); continue;}
+            swap(A[check], A[pivot]), swap(b[check], b[pivot]);
+            if(eq(A[check][j], T(0))) {det = T(0); continue;}
             rank++;
             det *= A[check][j];
-            for(int k = j+1; k < m; k++) A[check][k] /= A[check][j];
-            A[check][j] = 1;
-            for(int i = 0; i < n; i++){
+            for(int k = j+1; k < n; k++) A[check][k] /= A[check][j];
+            b[check] /= A[check][j];
+            A[check][j] = T(1);
+            for(int i = 0; i < m; i++){
                 if(i == check) continue;
-                for(int k = j+1; k < m; k++) A[i][k] -= A[i][j]*A[check][k];
-                A[i][j] = 0;
+                for(int k = j+1; k < n; k++) A[i][k] -= A[i][j]*A[check][k];
+                b[i] -= A[i][j]*b[check];
+                A[i][j] = T(0);
             }
-            if(++check == n) break;
+            if(++check == m) break;
         }
         return make_pair(rank, det);
     }
 
-    vector<vector<T>> Gausiann_elimination(const vector<T> &b){ //Ax=bの解の1つと解空間の基底の組を返す
-        int n = height(), m = width();
-        assert(b.size() == n);
-        for(int i = 0; i < n; i++) A[i].push_back(b[i]);
-        row_reduction();
+    pair<int, T> row_reduction(){
+        vector<T> b(height(), T(0));
+        return row_reduction(b);
+    }
+
+    vector<vector<T>> Gausiann_elimination(vector<T> b){ //Ax=bの解の1つと解空間の基底の組を返す
+        int m = height(), n = width();
+        row_reduction(b);
         vector<vector<T>> ret;
-        vector<int> p(n, m+1);
-        vector<bool> is_zero(m, true);
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j <= m; j++){
-                if(!eq(A[i][j], 0)) {p[i] = j; break;}
+        vector<int> p(m, n);
+        vector<bool> is_zero(n, true);
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(!eq(A[i][j], T(0))) {p[i] = j; break;}
             }
-            if(p[i] < m) is_zero[p[i]] = false;
-            if(p[i] == m) return ret;
+            if(p[i] < n) is_zero[p[i]] = false;
+            else if(!eq(b[i], T(0))) return {};
         }
-        vector<T> basis(m, 0);
-        for(int i = 0; i < n; i++){
-            if(p[i] < m) basis[p[i]] = A[i][m];
+        vector<T> x(n, T(0));
+        for(int i = 0; i < m; i++){
+            if(p[i] < n) x[p[i]] = b[i];
         }
-        ret.push_back(basis);
-        for(int j = 0; j < m; j++){
+        ret.push_back(x);
+        for(int j = 0; j < n; j++){
             if(!is_zero[j]) continue;
-            basis[j] = 1;
-            for(int i = 0; i < n; i++){
-                if(p[i] < m) basis[p[i]] = -A[i][j];
+            x[j] = T(1);
+            for(int i = 0; i < m; i++){
+                if(p[i] < n) x[p[i]] = -A[i][j];
             }
-            ret.push_back(basis), basis[j] = 0;
+            ret.push_back(x), x[j] = T(0);
         }
         return ret;
     }
@@ -210,16 +216,18 @@ struct Mod_Int{
 using mint = Mod_Int<MOD>;
 
 int main(){
-    int N, M; cin >> N >> M;
+    int M, N; cin >> M >> N;
 
-    Matrix<mint> A(N, M);
+    Matrix<mint> A(M, N);
 
-    for(int i = 0; i < N; i++){
-        for(int j = 0; j < M; j++) cin >> A[i][j];
+    for(int i = 0; i < M; i++){
+        for(int j = 0; j < N; j++){
+            cin >> A[i][j];
+        }
     }
 
-    vector<mint> b(N);
-    for(int i = 0; i < N; i++) cin >> b[i];
+    vector<mint> b(M);
+    for(int i = 0; i < M; i++) cin >> b[i];
 
     vector<vector<mint>> ans = A.Gausiann_elimination(b);
     cout << (int)ans.size()-1 << '\n';
