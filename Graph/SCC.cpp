@@ -48,36 +48,36 @@ struct Strongly_Connected_Components{
 
     Strongly_Connected_Components(int n) : es(n), rs(n), vs(n), comp(n), used(n), n(n), m(0) {}
 
-    void add_edge(int from, int to){ //fromからtoの順番
+    void add_edge(int from, int to){
         es[from].emplace_back(to, m), rs[to].emplace_back(from, m);
         if(!directed) es[to].emplace_back(from, m), rs[from].emplace_back(to, m);
         m++;
     }
 
-    void topological_sort(int now){
+    void _dfs(int now){
         used[now] = true;
         for(auto &e: es[now]){
-            if(!used[e.to]) topological_sort(e.to);
+            if(!used[e.to]) _dfs(e.to);
         }
         vs.push_back(now);
     }
 
-    void track_back(int now, int cnt){
+    void _rdfs(int now, int cnt){
         used[now] = true, comp[now] = cnt;
         for(auto &e: rs[now]){
-            if(!used[e.to]) track_back(e.to, cnt);
+            if(!used[e.to]) _rdfs(e.to, cnt);
         }
     }
 
-    Graph<true> decompose(){ //分解後のグラフを返す
+    Graph<true> decompose(){
         fill(begin(used), end(used), false);
         for(int i = 0; i < n; i++){
-            if(!used[i]) topological_sort(i);
+            if(!used[i]) _dfs(i);
         }
         fill(begin(used), end(used), false), reverse(begin(vs), end(vs));
         int cnt = 0;
         for(auto &e: vs){
-            if(!used[e]) track_back(e, cnt++);
+            if(!used[e]) _rdfs(e, cnt++);
         }
         Graph<true> G(cnt);
         for(int i = 0; i < n; i++){
@@ -89,7 +89,7 @@ struct Strongly_Connected_Components{
         return G;
     }
 
-    int operator [] (int k) const {return comp[k];} //kは何番目か
+    int operator [] (int k) const {return comp[k];}
 };
 
 int main(){

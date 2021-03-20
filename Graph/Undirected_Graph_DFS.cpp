@@ -22,7 +22,6 @@ struct Graph{
 
     vector<vector<edge>> es;
     vector<int> used;
-    vector<int> keep;
     const int n;
     int m;
 
@@ -34,52 +33,55 @@ struct Graph{
         m++;
     }
 
-    bool trace(int now, int t){
+    vector<int> ret_path;
+
+    bool detect_path(int now, int t, bool use_id = false){
         used[now] = true;
         if(now == t){
-            //keep.emplace_back(now) 
+            if(!use_id) ret_path.push_back(now);
             return true;
         }
         for(auto &e : es[now]){
             if(used[e.to]) continue;
-            if(trace(e.to, t)){
-                //keep.emplace_back(now);
-                keep.emplace_back(e.id);
+            if(detect_path(e.to, t, use_id)){
+                ret_path.push_back(use_id? e.id : now);
                 return true;
             }
         }
         return false;
     }
 
-    vector<int> find_path(int s, int t){ //sからtへのパスを検出
-        keep.clear(), fill(begin(used), end(used), 0);
-        trace(s, t), reverse(begin(keep), end(keep));
-        return keep;
+    vector<int> find_path(int s, int t, bool use_id = false){ //点素なs-tパスを1つ検出
+        ret_path.clear(), fill(begin(used), end(used), 0);
+        detect_path(s, t, use_id);
+        reverse(begin(ret_path), end(ret_path));
+        return ret_path;
     }
 
-    int detect(int now, int pre = -1){
+    vector<int> ret_cycle;
+
+    int detect_cycle(int now, int pre = -1, bool use_id = false){
         if(used[now]++) return 1;
         for(auto &e: es[now]){
             if(e.id == pre) continue;
-            int k = detect(e.to, e.id);
+            int k = detect_cycle(e.to, e.id, use_id);
             if(k == 2) return 2;
             if(k == 1){
-                //keep.emplace_back(now);
-                keep.emplace_back(e.id);
+                ret_cycle.push_back(use_id? e.id : now);
                 return used[now];
             }
         }
         return 0;
     }
 
-    vector<int> find_loop(){ //閉路を検出
-        keep.clear(), fill(begin(used), end(used), 0);
+    vector<int> find_cycle(bool use_id = false){ //点素な閉路を1つ検出
+        ret_cycle.clear(), fill(begin(used), end(used), 0);
         for(int i = 0; i < n; i++){
             if(used[i]) continue;
-            detect(i);
-            if(!keep.empty()){
-                reverse(begin(keep), end(keep));
-                return keep;
+            detect_cycle(i, -1, use_id);
+            if(!ret_cycle.empty()){
+                reverse(begin(ret_cycle), end(ret_cycle));
+                return ret_cycle;
             }
         }
         return {};
@@ -96,9 +98,9 @@ int main(){
         G.add_edge(u, v);
     }
     
-    vector<int> loop = G.find_loop();
+    vector<int> cycle = G.find_cycle(true);
 
-    cout << loop.size() << '\n';
-    for(auto &e: loop) cout << e+1 << ' ';
+    cout << cycle.size() << '\n';
+    for(auto &e: cycle) cout << e+1 << ' ';
     cout << '\n';
 }

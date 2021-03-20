@@ -23,7 +23,6 @@ struct Graph{
     vector<vector<edge>> es;
     vector<bool> used;
     vector<int> vs, topo;
-    vector<int> keep;
     const int n;
     int m;
 
@@ -35,48 +34,54 @@ struct Graph{
         m++;
     }
 
-    bool trace(int now, int t){
+    void _dfs(int now){
+        used[now] = true;
+        int s = 0;
+        for(auto &e: es[now]){
+            if(!used[e.to]) _dfs(e.to);
+        }
+        topo[now] = vs.size(), vs.push_back(now);
+    }
+
+    void topological_sort(){
+        fill(begin(used), end(used), false);
+        for(int i = 0; i < n; i++){
+            if(!used[i]) _dfs(i);
+        }
+    }
+
+    vector<int> ret_path;
+
+    bool detect_path(int now, int t, bool use_id = false){
         used[now] = true;
         if(now == t){
-            //keep.emplace_back(now)
+            if(!use_id) ret_path.push_back(now);
             return true;
         }
-        for(auto &e: es[now]){
+        for(auto &e : es[now]){
             if(used[e.to]) continue;
-            if(trace(e.to, t)){
-                //keep.emplace_back(now);
-                keep.emplace_back(e.id);
+            if(detect_path(e.to, t, use_id)){
+                ret_path.push_back(use_id? e.id : now);
                 return true;
             }
         }
         return false;
     }
 
-    vector<int> find_path(int s, int t){
-        keep.clear(), fill(begin(used), end(used), 0);
-        trace(s, t), reverse(begin(keep), end(keep));
-        return keep;
+    vector<int> find_path(int s, int t, bool use_id = false){
+        ret_path.clear(), fill(begin(used), end(used), false);
+        detect_path(s, t, use_id);
+        reverse(begin(ret_path), end(ret_path));
+        return ret_path;
     }
 
-    void topological_sort(int now){
-        used[now] = true;
-        int s = 0;
-        for(auto &e: es[now]){
-            if(!used[e.to]) topological_sort(e.to);
-        }
-        topo[now] = vs.size(), vs.push_back(now);
-    }
-
-    vector<int> find_loop(){
-        keep.clear(), fill(begin(used), end(used), 0);
-        for(int i = 0; i < n; i++){
-            if(!used[i]) topological_sort(i);
-        }
+    vector<int> find_cycle(bool use_id = false){
+        topological_sort();
         for(int i = 0; i < n; i++){
             for(auto &e: es[i]){
                 if(topo[i] <= topo[e.to]){
-                    vector<int> ret = find_path(e.to, i);
-                    ret.push_back(e.id);
+                    vector<int> ret = find_path(e.to, i, use_id);
+                    ret.push_back(use_id? e.id : e.to);
                     return ret;
                 }
             }
@@ -95,11 +100,11 @@ int main(){
         G.add_edge(u, v);
     }
     
-    vector<int> loop = G.find_loop();
+    vector<int> cycle = G.find_cycle(true);
 
-    if(loop.empty()) cout << -1 << endl;
+    if(cycle.empty()) cout << -1 << endl;
     else{
-        cout << loop.size() << '\n';
-        for(auto &e: loop) cout << e << '\n';
+        cout << cycle.size() << '\n';
+        for(auto &e: cycle) cout << e << '\n';
     }
 }
