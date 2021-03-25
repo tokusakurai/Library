@@ -55,7 +55,7 @@ struct Low_Link{
         m++;
     }
 
-    int dfs(int now, int pre, int k){
+    int _dfs(int now, int pre, int k){
         used[now] = true;
         ord[now] = low[now] = k++;
         bool is_articulation = false;
@@ -64,7 +64,7 @@ struct Low_Link{
             if(e.id == pre) continue;
             if(!used[e.to]){
                 cnt++;
-                k = dfs(e.to, e.id, k);
+                k = _dfs(e.to, e.id, k);
                 low[now] = min(low[now], low[e.to]);
                 if(pre != -1 && low[e.to] >= ord[now]) is_articulation = true;
                 if(ord[now] < low[e.to]) bridge.push_back(e.id);
@@ -82,7 +82,7 @@ struct Low_Link{
         fill(begin(used), end(used), false);
         int k = 0;
         for(int i = 0; i < n; i++){
-            if(!used[i]) k = dfs(i, -1, k);
+            if(!used[i]) k = _dfs(i, -1, k);
         }
     }
 };
@@ -95,21 +95,21 @@ struct Two_Edge_Connected_Components : Low_Link<directed>{
 
     Two_Edge_Connected_Components(int n) : L(n), comp(n), n(n) {}
 
-    int dfs(int now, int pre, int k){
+    int _dfs(int now, int pre, int k){
         if(pre != -1 && this->ord[pre] >= this->low[now]) comp[now] = comp[pre];
         else comp[now] = k++;
         for(auto &e: this->es[now]){
-            if(comp[e.to] == -1) k = dfs(e.to, now, k);
+            if(comp[e.to] == -1) k = _dfs(e.to, now, k);
         }
         return k;
     }
 
-    Graph<directed> decompose(){ //分解後のグラフを返す
+    Graph<directed> decompose(){
         this->build();
         fill(begin(comp), end(comp), -1);
         int k = 0;
         for(int i = 0; i < n; i++){
-            if(comp[i] == -1) k = dfs(i, -1, k);
+            if(comp[i] == -1) k = _dfs(i, -1, k);
         }
         Graph<directed> ret(k);
         vector<int> is_bridge(this->m, 0);

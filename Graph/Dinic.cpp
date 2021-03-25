@@ -32,7 +32,7 @@ struct Max_Flow{
         es[to].emplace_back(from, directed? 0 : cap, (int)es[from].size()-1);
     }
 
-    bool bfs(int s, int t){
+    bool _bfs(int s, int t){
         fill(begin(d), end(d), -1);
         queue<int> que;
         d[s] = 0, que.push(s);
@@ -47,12 +47,12 @@ struct Max_Flow{
         return d[t] != -1;
     }
 
-    F dfs(int now, int t, F flow){
+    F _dfs(int now, int t, F flow){
         if(now == t) return flow;
         for(int &i = pos[now]; i < (int)es[now].size(); i++){
             edge &e = es[now][i];
             if(e.cap > 0 && d[e.to] > d[now]){
-                F f = dfs(e.to, t, min(flow, e.cap));
+                F f = _dfs(e.to, t, min(flow, e.cap));
                 if(f > 0){
                     e.cap -= f;
                     es[e.to][e.rev].cap += f;
@@ -65,10 +65,10 @@ struct Max_Flow{
 
     F max_flow(int s, int t){ //s-t最大流を求める、操作後のd配列は最小カットの取り方の1つを表している
         F flow = 0;
-        while(bfs(s, t)){
+        while(_bfs(s, t)){
             fill(begin(pos), end(pos), 0);
             F f = 0;
-            while((f = dfs(s, t, INF_F)) > 0) flow += f;
+            while((f = _dfs(s, t, INF_F)) > 0) flow += f;
         }
         return flow;
     }

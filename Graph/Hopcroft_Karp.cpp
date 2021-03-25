@@ -19,7 +19,7 @@ struct Bipartite_Matching{
     vector<vector<int>> es;
     vector<int> d, match;
     vector<bool> used, used2;
-    const int n, m; //左側、右側の頂点数
+    const int n, m;
 
     Bipartite_Matching(int n, int m) : es(n), d(n), match(m), used(n), used2(n), n(n), m(m) {}
 
@@ -27,7 +27,7 @@ struct Bipartite_Matching{
         es[u].push_back(v);
     }
 
-    void bfs(){
+    void _bfs(){
         fill(begin(d), end(d), -1);
         queue<int> que;
         for(int i = 0; i < n; i++){
@@ -44,11 +44,11 @@ struct Bipartite_Matching{
         }
     }
 
-    bool dfs(int now){
+    bool _dfs(int now){
         used2[now] = true;
         for(auto &e: es[now]){
             int u = match[e];
-            if(u == -1 || (!used2[u] && d[u] == d[now]+1 && dfs(u))){
+            if(u == -1 || (!used2[u] && d[u] == d[now]+1 && _dfs(u))){
                 match[e] = now, used[now] = true;
                 return true;
             }
@@ -56,15 +56,15 @@ struct Bipartite_Matching{
         return false;
     }
 
-    int bipartite_matching(){ //最大マッチングのサイズを求める(左側のiと右側のmatch[i]を結ぶ辺がマッチングに使われる)
+    int bipartite_matching(){
         fill(begin(match), end(match), -1), fill(begin(used), end(used), false);
         int ret = 0;
         while(true){
-            bfs();
+            _bfs();
             fill(begin(used2), end(used2), false);
             int flow = 0;
             for(int i = 0; i < n; i++){
-                if(!used[i] && dfs(i)) flow++;
+                if(!used[i] && _dfs(i)) flow++;
             }
             if(flow == 0) break;
             ret += flow;

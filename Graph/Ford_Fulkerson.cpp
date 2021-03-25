@@ -31,12 +31,12 @@ struct Max_Flow{
         es[to].emplace_back(from, directed? 0 : cap, (int)es[from].size()-1);
     }
 
-    F dfs(int now, int t, F flow){
+    F _dfs(int now, int t, F flow){
         if(now == t) return flow;
         used[now] = true;
         for(auto &e: es[now]){
             if(!used[e.to] && e.cap > 0){
-                F f = dfs(e.to, t, min(flow, e.cap));
+                F f = _dfs(e.to, t, min(flow, e.cap));
                 if(f > 0){
                     e.cap -= f, es[e.to][e.rev].cap += f;
                     return f;
@@ -50,7 +50,7 @@ struct Max_Flow{
         F flow = 0;
         for(;;){
             fill(begin(used), end(used), false);
-            F f = dfs(s, t, INF_F);
+            F f = _dfs(s, t, INF_F);
             if(f == 0) return flow;
             flow += f;
         }
