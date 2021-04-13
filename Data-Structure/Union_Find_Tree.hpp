@@ -12,6 +12,7 @@
 //https://atcoder.jp/contests/atc001/tasks/unionfind_a
 //https://judge.yosupo.jp/problem/unionfind
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -42,15 +43,3 @@ struct Union_Find_Tree{
     
     void clear() {fill(begin(data), end(data), -1);}
 };
-
-int main(){
-    int N, Q; cin >> N >> Q;
-
-    Union_Find_Tree uf(N);
-    
-    while(Q--){
-        int q, x, y; cin >> q >> x >> y;
-        if(q == 0) uf.unite(x, y);
-        else cout << uf.same(x, y) << '\n';
-    }
-}
