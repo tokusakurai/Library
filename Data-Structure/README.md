@@ -5,16 +5,16 @@
 
 - [Union-Find木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Union_Find_Tree.hpp)
 
-- [重み付きUnion-Find木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Weighted_Union_Find_Tree.cpp) (各頂点に重みを与えたとき、weight(y)-weight(x) = wの制約を扱える)
+- [重み付きUnion-Find木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Weighted_Union_Find_Tree.hpp) (各頂点に重みを与えたとき、weight(y)-weight(x) = wの制約を扱える)
 
-- [部分永続Union-Find木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Partitially_Persistent_Union_Find_Tree.cpp) (各Union操作に時刻を与えたとき、任意の時刻でのFindクエリを扱える)
+- [部分永続Union-Find木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Partitially_Persistent_Union_Find_Tree.hpp) (各Union操作に時刻を与えたとき、任意の時刻でのFindクエリを扱える)
 
-- [Undo可能Union-Find木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Undo_Union_Find_Tree.cpp) (Union操作を巻き戻すことができる)
+- [Undo可能Union-Find木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Undo_Union_Find_Tree.hpp) (Union操作を巻き戻すことができる)
 
 ## Binary-Indexed木
 配列に対して1点加算と区間和取得ができる。セグメント木と比べてメモリや計算量の定数倍が軽いというメリットがある。
 
-- [Binary-Indexed木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Binary_Indexed_Tree.cpp)
+- [Binary-Indexed木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Binary_Indexed_Tree.hpp)
 
 ## セグメント木
 配列に対して1点更新と区間演算ができる。ただし、二項演算はモノイドとしての性質を満たさなければならない。
