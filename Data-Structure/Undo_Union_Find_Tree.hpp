@@ -1,6 +1,6 @@
 
 //Undo可能Union-Find木
-//計算量 構築：O(N)、併合・結合判定・サイズ：O(log(N))、Undo：O(1)
+//計算量 構築 : O(N)、併合・結合判定・サイズ : O(log(N))、Undo : O(1)
 //空間計算量 O(N)
 
 //概要
@@ -10,6 +10,7 @@
 //verified with
 //https://codeforces.com/contest/1445/problem/E
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -50,16 +51,3 @@ struct Undo_Union_Find_Tree{
     
     void clear() {while(!history.empty()) undo(1);}
 };
-
-int main(){
-    int N, Q; cin >> N >> Q;
-
-    Undo_Union_Find_Tree uf(N);
-    
-    while(Q--){
-        int q, x, y; cin >> q >> x >> y;
-        if(q == 0) uf.unite(x, y);
-        else if(q == 1) cout << uf.same(x, y) << '\n';
-        else uf.undo(1);
-    }
-}

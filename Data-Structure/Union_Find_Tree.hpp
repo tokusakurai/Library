@@ -1,6 +1,6 @@
 
 //Union-Find木
-//計算量 構築：O(N)、併合・結合判定・サイズ・ポテンシャル取得：(ならし)O(α(N))
+//計算量 構築 : O(N)、併合・結合判定・サイズ・ポテンシャル取得 : (ならし)O(α(N))
 //空間計算量 O(N)
 
 //概要
@@ -22,14 +22,14 @@ struct Union_Find_Tree{
     
     Union_Find_Tree(int n) : data(n, -1), n(n) {}
     
-    int root(int x){ //xの根
+    int root(int x){
         if(data[x] < 0) return x;
         return data[x] = root(data[x]);
     }
 
     int operator [] (int i) {return root(i);}
     
-    bool unite(int x, int y){ //xの属する集合とyの属する集合を併合(返り値は併合が行われたかどうか)
+    bool unite(int x, int y){
         x = root(x), y = root(y);
         if(x == y) return false;
         if(data[x] > data[y]) swap(x, y);
@@ -37,9 +37,9 @@ struct Union_Find_Tree{
         return true;
     }
     
-    int size(int x) {return -data[root(x)];} //xの属する集合の要素数
+    int size(int x) {return -data[root(x)];}
     
-    bool same(int x, int y) {return root(x) == root(y);} //xとyの属する集合が同じかどうか
+    bool same(int x, int y) {return root(x) == root(y);}
     
     void clear() {fill(begin(data), end(data), -1);}
 };
