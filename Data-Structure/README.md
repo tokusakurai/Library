@@ -3,7 +3,7 @@
 ## Union-Find木
 2つの集合を統合して1つにすること(Union)と、ある要素が属する集合を求めること(Find)ができる。
 
-- [Union-Find木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Union_Find_Tree.cpp)
+- [Union-Find木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Union_Find_Tree.hpp)
 
 - [重み付きUnion-Find木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Weighted_Union_Find_Tree.cpp) (各頂点に重みを与えたとき、weight(y)-weight(x) = wの制約を扱える)
 
