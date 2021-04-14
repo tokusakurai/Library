@@ -27,12 +27,28 @@ struct Mo{
 
     Mo(vector<T> a) : a(a), n(a.size()), l(0), r(0), ans(0), cnt(a.size(), 0) {}
 
-    void insert(T x){
-        if(cnt[x]++ == 0) ans++;
+    void insert(int x){
+        if(cnt[a[x]]++ == 0) ans++;
     }
 
-    void erase(T x){
-        if(--cnt[x] == 0) ans--;
+    void insert_left(int x){
+        insert(x);
+    }
+
+    void insert_right(int x){
+        insert(x);
+    }
+
+    void erase(int x){
+        if(--cnt[a[x]] == 0) ans--;
+    }
+
+    void erase_left(int x){
+        erase(x);
+    }
+
+    void erase_right(int x){
+        erase(x);
     }
 
     vector<Q> solve(int bucket_size, vector<query> qs){
@@ -44,10 +60,10 @@ struct Mo{
             return a.r > b.r;
         });
         for(auto &e: qs){
-            while(e.l < l) insert(a[--l]);
-            while(r < e.r) insert(a[r++]);
-            while(l < e.l) erase(a[l++]);
-            while(e.r < r) erase(a[--r]);
+            while(e.l < l) insert(--l);
+            while(r < e.r) insert(r++);
+            while(l < e.l) erase(l++);
+            while(e.r < r) erase(--r);
             ret[e.id] = ans;
         }
         return ret;

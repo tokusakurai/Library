@@ -28,14 +28,30 @@ struct Mo{
  
     Mo(vector<T> a) : a(a), n(a.size()), l(0), r(0), ans(0) {}
  
-    void add(T x){ //区間の拡大(左右で操作が異なる場合は分ける)
+    void insert(int x){
         
     }
- 
-    void erase(T x){ //区間の縮小(左右で操作が異なる場合は分ける)
+
+    void insert_left(int x){
         
     }
- 
+
+    void insert_right(int x){
+        
+    }
+
+    void erase(int x){
+        
+    }
+
+    void erase_left(int x){
+        
+    }
+
+    void erase_right(int x){
+        
+    }
+
     vector<Q> solve(int bucket_size, vector<query> qs){
         vector<Q> ret(qs.size());
         sort(begin(qs), end(qs), [&](query a, query b){
@@ -45,10 +61,10 @@ struct Mo{
             return a.r > b.r;
         });
         for(auto &e: qs){
-            while(e.l < l) add(a[--l]);
-            while(r < e.r) add(a[r++]);
-            while(l < e.l) erase(a[l++]);
-            while(e.r < r) erase(a[--r]);
+            while(e.l < l) insert(--l);
+            while(r < e.r) insert(r++);
+            while(l < e.l) erase(l++);
+            while(e.r < r) erase(--r);
             ret[e.id] = ans;
         }
         return ret;
