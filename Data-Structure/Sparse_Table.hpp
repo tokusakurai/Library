@@ -1,6 +1,6 @@
 
 //スパーステーブル
-//計算量 構築：O(N*log(N))、区間取得：(O(1))
+//計算量 構築 : O(N*log(N))、区間取得 : (O(1))
 //空間計算量 O(N*log(N))
 
 //概要
@@ -12,6 +12,7 @@
 //verified with
 //https://judge.yosupo.jp/problem/staticrmq
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -22,13 +23,13 @@ struct Sparse_Table{
     int height;
     vector<vector<T>> st; //st[i][j] := 区間[j,j+2^i)での演算の結果
     vector<int> lookup;
-    const F f; //二項演算
-    const T e; //単位元
+    const F f;
+    const T e;
     
-    //f(f(a,b),c) = f(a,f(b,c))、f(e,a) = f(a,e) = a、f(a,a) = a 
+    //f(f(a,b),c) = f(a,f(b,c)), f(e,a) = f(a,e) = a, f(a,a) = a 
     //例えばminやgcdはこれらを満たすが、+や*は満たさない
 
-    Sparse_Table(const vector<T> &table, const F &f, const T &e) : n((int)table.size()), f(f), e(e){ //tableは配列の初期状態
+    Sparse_Table(const vector<T> &table, const F &f, const T &e) : n((int)table.size()), f(f), e(e){
         height = 32-__builtin_popcount(n);
         st.assign(height, vector<T>(n));
         for(int i = 0; i < n; i++) st[0][i] = table[i];
@@ -42,7 +43,7 @@ struct Sparse_Table{
         for(int i = 1; i <= n; i++) lookup[i] = lookup[i/2]+1;
     }
 
-    T query(int l, int r) const{ //区間[l,r)での演算の結果
+    T query(int l, int r) const{
         if(l >= r) return e;
         int k = lookup[r-l];
         return f(st[k][l], st[k][r-(1<<k)]);
@@ -50,18 +51,3 @@ struct Sparse_Table{
 
     T operator [] (int i) const {return st[0][i];}
 };
-
-int main(){
-    int N, Q; cin >> N >> Q;
-
-    vector<int> table(N);
-    for(int i = 0; i < N; i++) cin >> table[i];
-
-    auto f = [](int a, int b) {return min(a, b);};
-    Sparse_Table<int> st(table, f, (1<<30)-1);
-
-    while(Q--){
-        int l, r; cin >> l >> r;
-        cout << st.query(l, r) << '\n';
-    }
-}

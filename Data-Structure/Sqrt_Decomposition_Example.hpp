@@ -1,6 +1,6 @@
 
 //列の平方分割(例)
-//計算量 各種クエリ：O(√(N*log(N)))
+//計算量 各種クエリ : O(√(N*log(N)))
 
 //概要
 //バケットサイズをKとする。クエリの計算量は、
@@ -13,6 +13,7 @@
 //verified with
 //https://judge.yosupo.jp/problem/range_chmin_chmax_add_range_sum
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -115,23 +116,3 @@ struct Sqrt_Decomposition{
         return ret;
     }
 };
-
-int main(){
-    int N, Q; cin >> N >> Q;
-
-    vector<long long> a(N);
-    for(int i = 0; i < N; i++) cin >> a[i];
-
-    Sqrt_Decomposition<long long> sq(a, 200);
-
-    while(Q--){
-        int q, l, r; cin >> q >> l >> r;
-        if(q == 3) cout << sq.query_sum(l, r) << '\n';
-        else{
-            long long x; cin >> x;
-            if(q == 0) sq.query_chmin(l, r, x);
-            if(q == 1) sq.query_chmax(l, r, x);
-            if(q == 2) sq.query_add(l, r, x);
-        }
-    }
-}

@@ -1,17 +1,18 @@
 
 //遅延評価付きセグメント木
-//計算量 構築：O(N)、区間更新・区間取得・二分探索：O(log(N))
+//計算量 構築 : O(N)、区間更新・区間取得・二分探索 : O(log(N))
 //空間計算量 O(N)
 
 //概要
-//区間更新：まず更新される各ノードについて遅延評価を解消してから、遅延配列を更新し、最後に本配列を更新する。
-//区間取得：取得する区間の遅延評価を解消する。(ここでは本配列は更新しなくてもよい)
+//区間更新 : まず更新される各ノードについて遅延評価を解消してから、遅延配列を更新し、最後に本配列を更新する。
+//区間取得 : 取得する区間の遅延評価を解消する。(ここでは本配列は更新しなくてもよい)
 
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_H&lang=ja
 //https://atcoder.jp/contests/practice2/tasks/practice2_k
 //https://codeforces.com/contest/1404/problem/C
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -23,14 +24,14 @@ struct Lazy_Segment_Tree{
     int n, height;
     vector<Monoid> seg;
     vector<Operator_Monoid> lazy;
-    const F f; //要素と要素の二項演算
-    const G g; //要素と作用素の二項演算
-    const H h; //作用素と作用素の二項演算
-    const Monoid e1; //fの単位元
-    const Operator_Monoid e2; //hの単位元
+    const F f;
+    const G g;
+    const H h;
+    const Monoid e1;
+    const Operator_Monoid e2;
     
-    //f(f(a,b),c) = f(a,f(b,c))、f(e1,a) = f(a,e1) = a
-    //h(h(p,q),r) = h(p,h(q,r))、h(e2,p) = h(p,e2) = p
+    //f(f(a,b),c) = f(a,f(b,c)), f(e1,a) = f(a,e1) = a
+    //h(h(p,q),r) = h(p,h(q,r)), h(e2,p) = h(p,e2) = p
     //g(f(a,b),p) = f(g(a,p),g(b,p))
     //g(g(a,p),q) = g(a,h(p,q))
     
@@ -44,11 +45,11 @@ struct Lazy_Segment_Tree{
         for(int i = n-1; i > 0; i--) seg[i] = f(seg[2*i], seg[2*i+1]);
     }
 
-    inline Monoid reflect(int i) const{ //ノードiの実際の値
+    inline Monoid reflect(int i) const{
         return (lazy[i] == e2? seg[i] : g(seg[i], lazy[i]));
     }
 
-    inline void recalc(int i){ //本配列の更新
+    inline void recalc(int i){
         while(i >>= 1) seg[i] = f(reflect(2*i), reflect(2*i+1));
     }
 
@@ -106,7 +107,7 @@ struct Lazy_Segment_Tree{
     }
  
     template<typename C>
-    int find_first(int l, const C &check, const Monoid &x){
+    int find_first(int l, const C &check, const Monoid &x){ //区間[l,r]での演算結果がxとcで与えられる条件を満たす最小のr
         Monoid L = e1;
         int a = l+n, b = n+n;
         thrust(a);
@@ -122,7 +123,7 @@ struct Lazy_Segment_Tree{
     }
  
     template<typename C>
-    int find_last(int r, const C &check, const Monoid &x){
+    int find_last(int r, const C &check, const Monoid &x){ //区間[l,r]での演算結果がxとcで与えられる条件を満たす最大のl
         Monoid R = e1;
         int a = n, b = r+n;
         thrust(b-1);
@@ -137,21 +138,3 @@ struct Lazy_Segment_Tree{
         return -1;
     }
 };
-
-int main(){
-    int N, Q; cin >> N >> Q;
-
-    auto f = [](int a, int b) {return min(a, b);};
-    auto g = [](int a, int b) {return a+b;};
-    auto h = [](int a, int b) {return a+b;};
-    Lazy_Segment_Tree<int, int> seg(vector<int>(N, 0), f, g, h, (1<<30)-1, 0);
-
-    while(Q--){
-        int q, x, y; cin >> q >> x >> y; y++;
-        if(q == 0){
-            int a; cin >> a;
-            seg.apply(x, y, a);
-        }
-        else cout << seg.query(x, y) << '\n';
-    }
-}

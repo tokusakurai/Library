@@ -1,31 +1,32 @@
 
 //双対セグメント木
-//計算量 構築：O(N)、区間更新・1点取得：O(log(N))
+//計算量 構築 : O(N)、区間更新・1点取得 : O(log(N))
 //空間計算量 O(N)
 
 //概要
-//区間更新：まず更新される各ノードについて遅延評価を解消してから、遅延配列を更新する。
-//1点取得：取得する点の遅延評価を解消する。
+//区間更新 : まず更新される各ノードについて遅延評価を解消してから、遅延配列を更新する。
+//1点取得 : 取得する点の遅延評価を解消する。
 
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_D&lang=ja
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_E&lang=ja
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
-template<typename T, typename Operator_Monoid> //要素、作用素の型
+template<typename T, typename Operator_Monoid>
 struct Dual_Segment_Tree{
     using G = function<T(T, Operator_Monoid)>;
     using H = function<Operator_Monoid(Operator_Monoid, Operator_Monoid)>;
     int n, height;
     vector<T> seg;
     vector<Operator_Monoid> lazy;
-    const G g; //要素と作用素の二項演算
-    const H h; //作用素と作用素の二項演算
-    const Operator_Monoid e2; //hの単位元
+    const G g;
+    const H h;
+    const Operator_Monoid e2;
     
-    //h(h(p,q),r) = h(p,h(q,r))、h(e2,p) = h(p,e2) = p
+    //h(h(p,q),r) = h(p,h(q,r)), h(e2,p) = h(p,e2) = p
     //g(g(a,p),q) = g(a,h(p,q))
 
     Dual_Segment_Tree(const vector<T> &v, const G &g, const H &h, const Operator_Monoid &e2) : g(g), h(h), e2(e2){
@@ -36,7 +37,7 @@ struct Dual_Segment_Tree{
         seg = v;
     }
 
-    inline void eval(int i){ //ノードiでストップしている遅延評価を解消して1つ下に流す
+    inline void eval(int i){
         if(i < n && lazy[i] != e2){
             lazy[2*i] = h(lazy[2*i], lazy[i]);
             lazy[2*i+1] = h(lazy[2*i+1], lazy[i]);
@@ -44,11 +45,11 @@ struct Dual_Segment_Tree{
         }
     }
 
-    inline void thrust(int i){ //i番目のノードの区間を被覆するノードについて上から遅延評価を解消する
+    inline void thrust(int i){
         for(int j = height; j > 0; j--) eval(i>>j);
     }
 
-    void apply(int l, int r, const Operator_Monoid &x){ //区間[l,r)に作用素xを適用
+    void apply(int l, int r, const Operator_Monoid &x){
         l = max(l, 0), r = min(r, n);
         if(l >= r) return;
         l += n, r += n;
@@ -60,27 +61,10 @@ struct Dual_Segment_Tree{
         }
     }
 
-    T get(int i){ //i番目の要素
+    T get(int i){
         thrust(i+n);
         return g(seg[i], lazy[i+n]);
     }
 
     T operator [] (int i) {return get(i);}
 };
-
-int main(){
-    int N, Q; cin >> N >> Q;
-
-    auto g = [](int a, int b) {return b == -1? a : b;};
-    auto h = [](int a, int b) {return b == -1? a : b;};
-    Dual_Segment_Tree<int, int> seg(vector<int>(N, INT_MAX), g, h, -1);
-
-    while(Q--){
-        int q, x; cin >> q >> x;
-        if(q == 0){
-            int y, a; cin >> y >> a; y++;
-            seg.apply(x, y, a);
-        }
-        else cout << seg.get(x) << '\n';
-    }
-}

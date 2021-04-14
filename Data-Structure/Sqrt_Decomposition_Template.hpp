@@ -5,6 +5,7 @@
 //概要
 //区間全体にクエリをかける操作が高速にできる場合、バケットサイズO(√N)で区間を分割することでクエリを高速化出来る。
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -20,37 +21,37 @@ struct Sqrt_Decomposition{
 
         }
 
-        T eval(const T &x) const {return ;} //各要素を遅延評価で更新
+        T eval(const T &x) const {return ;}
 
-        void eval_all(){ //全体を遅延評価で更新
+        void eval_all(){
             for(auto &e : v) e = eval(e);
             
         }
 
-        void query1(int a, int b, const T &x){ //区間[a,b)にxを適用
+        void query1(int a, int b, const T &x){
             a = max(a, l), b = min(b, r);
             if(a >= b) return;
             if(a == l && b == r) {query1_all(x); return;}
 
         }
 
-        void query1_all(const T &x){ //区間全体にxを適用
+        void query1_all(const T &x){
 
         }
 
-        T query2(int a, int b){ //区間[a,b)での演算の結果
+        T query2(int a, int b){
             a = max(a, l), b = min(b, r);
             if(a >= b) return;
             if(a == l && b == r) {return query2_all();}
 
         }
 
-        T query2_all(){ //区間全体での演算の結果
+        T query2_all(){
 
         }
     };
 
-    vector<Node> nodes; //配列をbucket_sizeごとに分割する
+    vector<Node> nodes;
 
     Sqrt_Decomposition(const vector<T> &a, int bucket_size){
         for(int i = 0; i < (int)a.size(); i += bucket_size){
@@ -58,15 +59,11 @@ struct Sqrt_Decomposition{
         }
     }
 
-    void query1(int a, int b, const T &x) {for(auto &e : nodes) query1(a, b, x);} //区間[a,b)にxを適用
+    void query1(int a, int b, const T &x) {for(auto &e : nodes) query1(a, b, x);}
 
-    T query2(int a, int b){ //区間[a,b)での演算の結果
+    T query2(int a, int b){
         T ret = ;
         for(auto &e : nodes) ;
         return ret;
     }
 };
-
-int main(){
-    
-}
