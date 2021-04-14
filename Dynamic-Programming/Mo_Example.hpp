@@ -8,6 +8,7 @@
 //verified with
 //https://atcoder.jp/contests/abc174/tasks/abc174_f
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -52,20 +53,3 @@ struct Mo{
         return ret;
     }
 };
-
-int main(){
-    int N, Q; cin >> N >> Q;
-
-    vector<int> a(N);
-    for(int i = 0; i < N; i++) {cin >> a[i]; a[i]--;}
-
-    Mo<int, int> mo(a);
-
-    vector<query> qs;
-    for(int i = 0; i < Q; i++){
-        int l, r; cin >> l >> r; l--;
-        qs.emplace_back(l, r, i);
-    }
-
-    for(auto &e: mo.solve(700, qs)) cout << e << '\n';
-}

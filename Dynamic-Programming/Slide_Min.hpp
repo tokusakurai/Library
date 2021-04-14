@@ -6,6 +6,7 @@
 //dequeに入っているindexは、前のものほどそのindexに対応する配列の値が小さい。
 //dequeの先頭に残ったものが区間の最小値のindex。
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -22,13 +23,4 @@ vector<T> slide_min(vector<T> v, int k){ //各iについてmin{v[i],v[i+1],...,v
         }
     }
     return ret;
-}
-
-int main(){
-    int N, K; cin >> N >> K;
-
-    vector<int> v(N);
-    for(int i = 0; i < N; i++) cin >> v[i];
-
-    for(auto &e: slide_min(v, K)) cout << e << '\n';
 }

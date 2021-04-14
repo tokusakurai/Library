@@ -3,11 +3,12 @@
 //計算量 O(N*M)
 
 //概要
-//dp[i][j]:=aの前からi文字とbの前からj文字の最長共通部分列の長さ
+//dp[i][j] := aの前からi文字とbの前からj文字の最長共通部分列の長さ
 
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_10_C&lang=ja
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -22,14 +23,4 @@ int longest_common_subsequence(T a, T b){
         }
     }
     return dp[n][m];
-}
-
-int main(){
-    int Q; cin >> Q;
-
-    while(Q--){
-        string a, b; cin >> a >> b;
-
-        cout << longest_common_subsequence(a, b) << '\n';
-    }
 }

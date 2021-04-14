@@ -1,12 +1,12 @@
 
 //各種ナップザック問題
-//計算量 01ナップザック1・個数制限なしナップザック・個数制限付きナップザック：O(N*W)、01ナップザック2：O(N*Σv_i)
+//計算量 01ナップザック1・個数制限なしナップザック・個数制限付きナップザック : O(N*W)、01ナップザック2 : O(N*Σv_i)
 
 //概要
-//01ナップザック1：dp[i][j]:=i個目まで取って重さがj以下になるときの価値の最大値
-//01ナップザック2：dp[i][j]:=i個目まで取って価値がjになるときの重さの最小値
-//個数制限なしナップザック：dp[i]:=重さがi以下になるときの価値の最大値
-//個数制限付きナップザック：dp[i][j]:=i種類目のものまで取って重さがj以下になるときの価値の最大値(スライド最大値を用いる)
+//01ナップザック1：dp[i][j] := i個目まで取って重さがj以下になるときの価値の最大値
+//01ナップザック2：dp[i][j] := i個目まで取って価値がjになるときの重さの最小値
+//個数制限なしナップザック：dp[i] := 重さがi以下になるときの価値の最大値
+//個数制限付きナップザック：dp[i][j] := i種類目のものまで取って重さがj以下になるときの価値の最大値(スライド最大値を用いる)
 
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_1_B&lang=ja
@@ -14,6 +14,7 @@
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_1_C&lang=ja
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_1_G&lang=ja
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -82,14 +83,4 @@ T knapsack_limitation(vector<T> v, vector<int> w, vector<int> m, int W){
         swap(dp, tmp);
     }
     return dp[W];
-}
-
-int main(){
-    int N, W; cin >> N >> W;
-
-    vector<long long> v(N);
-    vector<int> w(N), m(N);
-    for(int i = 0; i < N; i++) cin >> v[i] >> w[i] >> m[i];
-
-    cout << knapsack_limitation(v, w, m, W) << '\n';
 }

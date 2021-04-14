@@ -3,11 +3,12 @@
 //計算量 O(N*M)
 
 //概要
-//dp[i][j]:=aの前からi文字とbの前からj文字の編集距離
+//dp[i][j] := aの前からi文字とbの前からj文字の編集距離
 
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_1_E&lang=ja
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -24,10 +25,4 @@ int edit_distance(T a, T b){
         }
     }
     return dp[n][m];
-}
-
-int main(){
-    string a, b; cin >> a >> b;
-
-    cout << edit_distance(a, b) << '\n';
 }

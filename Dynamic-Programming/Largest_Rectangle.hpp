@@ -3,13 +3,14 @@
 //計算量 O(N)
 
 //概要
-//left[i]:=j<=iかつmin(h[j],h[j+1],...,h[i])=h[i]を満たす最小のj
+//left[i] := j<=iかつmin(h[j],h[j+1],...,h[i])=h[i]を満たす最小のj
 //stackに入っているindexは、前のものほどそのindexに対応するヒストグラムが高い。
 //stackから取り除かれるときが右端に相当する。
 
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_3_C&lang=ja
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -28,13 +29,4 @@ T largest_rectangle(vector<T> h){
         st.push(i);
     }
     return ret;
-}
-
-int main(){
-    int N; cin >> N;
-
-    vector<long long> h(N);
-    for(int i = 0; i < N; i++) cin >> h[i];
-
-    cout << largest_rectangle(h) << '\n';
 }

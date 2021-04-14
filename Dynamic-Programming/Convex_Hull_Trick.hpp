@@ -1,6 +1,6 @@
 
 //Convex-Hull-Trick(追加する直線の傾きが、最小値クエリなら単調非増加、最大値クエリなら単調非減少のときのみ)
-//計算量 直線追加：O(1)、最小値(最大値)クエリ：O(log(N))、単調な最小値(最大値)クエリ：O(1)(ならし)
+//計算量 直線追加 : O(1)、最小値(最大値)クエリ : O(log(N))、単調な最小値(最大値)クエリ : O(1)(ならし)
 
 //概要
 //直線を追加していく際、直線群の中で最も下になることがありえないようなものを除去していく。
@@ -10,6 +10,7 @@
 //verified with
 //https://atcoder.jp/contests/colopl2018-final/tasks/colopl2018_final_c
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -63,16 +64,3 @@ struct Convex_Hull_Trick{
         return ismin? f(que[que.size()-1], x) : -f(que[que.size()-1], x);
     }
 };
-
-int main(){
-    int N; cin >> N;
-
-    vector<long long> a(N);
-    for(int i = 0; i < N; i++) cin >> a[i];
-
-    Convex_Hull_Trick<long long> cht;
-
-    for(long long j = 0; j < N; j++) cht.add_line(-2*j, a[j]+j*j);
-    
-    for(long long i = 0; i < N; i++) cout << cht.query_monotone_inc(i)+i*i << '\n';
-}
