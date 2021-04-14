@@ -10,6 +10,8 @@
 
 - [最長増加部分列(LIS)](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/LIS.hpp) (DP配列の再利用で計算量が落ちるインラインDP)
 
+- [転倒数](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/Inversion_Number.hpp)
+
 - [分割数テーブル](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/Partition_Number.hpp)
 
 - [最大長方形](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/Largest_Rectangle.hpp)
