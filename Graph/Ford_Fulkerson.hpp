@@ -9,6 +9,7 @@
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_6_A&lang=ja
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -46,7 +47,7 @@ struct Max_Flow{
         return 0;
     }
 
-    F max_flow(int s, int t){ //s-t最大流を求める、操作後のused配列は最小カットの取り方の1つを表している
+    F max_flow(int s, int t){ //操作後のused配列は最小カットの1つを表す(trueならs側、falseならt側)
         F flow = 0;
         for(;;){
             fill(begin(used), end(used), false);
@@ -56,15 +57,3 @@ struct Max_Flow{
         }
     }
 };
-
-int main(){
-    int V, E; cin >> V >> E;
-
-    Max_Flow<int> G(V);
-    for(int i = 0; i < E; i++){
-        int u, v, c; cin >> u >> v >> c;
-        G.add_edge(u, v, c);
-    }
-
-    cout << G.max_flow(0, V-1) << '\n';
-}

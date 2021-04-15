@@ -6,16 +6,19 @@
 //始点から近い順に最短路を確定させる。
 //ステップでまだ使われてない頂点で始点から最も近いものを調べる。
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
 template<typename T, bool directed = false>
 struct Table{
     vector<vector<T>> es;
-    vector<T> d;
-    vector<bool> used;
     const T INF_T;
     const int n;
+
+    vector<T> d;
+    vector<int> pre_v;
+    vector<bool> used;
 
     inline const vector<T> &operator [] (int k) const{
         return es[k];
@@ -25,7 +28,7 @@ struct Table{
         return es[k];
     }
 
-    Table(int n) : es(n), d(n), used(n), INF_T(numeric_limits<T>::max()/2), n(n){
+    Table(int n) : es(n), INF_T(numeric_limits<T>::max()/2), n(n), d(n), pre_v(n), used(n){
         for(int i = 0; i < n; i++) es[i].assign(n, INF_T);
         for(int i = 0; i < n; i++) es[i][i] = 0;
     }
@@ -46,27 +49,21 @@ struct Table{
             used[u] = true;
             if(d[u] == INF_T) break;
             for(int j = 0; j < n; j++){
-                if(es[u][j] != INF_T) d[j] = min(d[j], d[u]+es[u][j]);
+                if(es[u][j] != INF_T){
+                    if(d[u]+es[u][j] < d[j]){
+                        d[j] = d[u]+es[u][j], pre_v[j] = u;
+                    }
+                }
             }
         }
         return d[t];
     }
+
+    vector<int> shortest_path(int s, int t){
+        if(dijkstra(s, t) == INF_T) return {};
+        vector<int> ret;
+        for(int now = t; now != s; now = pre_v[now]) ret.push_back(now);
+        ret.push_back(s), reverse(begin(ret), end(ret));
+        return ret;
+    }
 };
-
-int main(){
-    int V, E, s; cin >> V >> E >> s;
-
-    Table<int, true> G(V);
-
-    for(int i = 0; i < E; i++){
-        int u, v, c; cin >> u >> v >> c;
-        G.add_edge(u, v, c);
-    }
-
-    G.dijkstra(s);
-
-    for(int i = 0; i < V; i++){
-        if(G.d[i] == INT_MAX/2) cout << "INF" << '\n';
-        else cout << G.d[i] << '\n';
-    }
-}

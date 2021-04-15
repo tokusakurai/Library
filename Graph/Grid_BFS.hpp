@@ -8,6 +8,7 @@
 //verified with
 //https://atcoder.jp/contests/abc007/tasks/abc007_3
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -44,15 +45,3 @@ struct Grid{
         return d[tx][ty];
     }
 };
-
-int main(){
-    int H, W; cin >> H >> W;
-    int sx, sy, tx, ty; cin >> sx >> sy >> tx >> ty; sx--, sy--, tx--, ty--;
-
-    vector<string> S(H);
-    for(int i = 0; i < H; i++) cin >> S[i];
-
-    Grid G(S);
-
-    cout << G.bfs(sx, sy, tx, ty) << '\n';
-}

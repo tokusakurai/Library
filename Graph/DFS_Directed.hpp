@@ -4,12 +4,13 @@
 
 //概要
 //直前に使用した辺を戻らないようにしてDFSをする。
-//パス検出：目的の点に到達したら探索を打ち切って、来たパスを戻ることで復元する。
-//閉路検出：トポロジカルソートして、逆方向に戻る辺があれば閉路が存在する。
+//パス検出 : 目的の点に到達したら探索を打ち切って、来たパスを戻ることで復元する。
+//閉路検出 : トポロジカルソートして、逆方向に戻る辺があれば閉路が存在する。
 
 //verified with
 //https://judge.yosupo.jp/problem/cycle_detection
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -21,12 +22,13 @@ struct Graph{
     };
 
     vector<vector<edge>> es;
-    vector<bool> used;
-    vector<int> vs, topo;
     const int n;
     int m;
 
-    Graph(int n) : es(n), used(n), topo(n), n(n), m(0) {}
+    vector<bool> used;
+    vector<int> vs, topo;
+
+    Graph(int n) : es(n), n(n), m(0), used(n), topo(n) {}
 
     void add_edge(int from, int to){
         es[from].emplace_back(to, m);
@@ -89,22 +91,3 @@ struct Graph{
         return {};
     }
 };
-
-int main(){
-    int V, E; cin >> V >> E;
-
-    Graph G(V);
-
-    for(int i = 0; i < E; i++){
-        int u, v; cin >> u >> v;
-        G.add_edge(u, v);
-    }
-    
-    vector<int> cycle = G.find_cycle(true);
-
-    if(cycle.empty()) cout << -1 << endl;
-    else{
-        cout << cycle.size() << '\n';
-        for(auto &e: cycle) cout << e << '\n';
-    }
-}

@@ -1,7 +1,8 @@
 
 //隣接リスト、隣接リスト(重み付き)、隣接行列、辺集合
-//空間計算量 隣接リスト・隣接リスト(重み付き)：O(E+V)、隣接行列：O(V^2)、辺集合：O(E)
+//空間計算量 隣接リスト・隣接リスト(重み付き) : O(E+V)、隣接行列 : O(V^2)、辺集合 : O(E)
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -91,13 +92,3 @@ struct Edges{
         m++;
     }
 };
-
-int main(){
-    int V; cin >> V;
-
-    Table<int> G(V);
-    
-    for(int i = 0; i < V; i++){
-        for(int j = 0; j < V; j++) cin >> G.es[i][j];
-    }
-}

@@ -4,14 +4,15 @@
 
 //概要
 //グラフの独立集合からK個選んで頂点集合全体をちょうど被覆する場合の数を数え上げる。(これが0でなければK彩色可能)
-//g(S):=独立集合K個でSをちょうど被覆する場合の数(同じ頂点が複数個の独立集合に含まれていてもよい)
-//f(S):=Σg(T) (T⊆S)
-//I(S):=Sの部分集合で独立なものの個数
+//g(S) := 独立集合K個でSをちょうど被覆する場合の数(同じ頂点が複数個の独立集合に含まれていてもよい)
+//f(S) := Σg(T) (T⊆S)
+//I(S) := Sの部分集合で独立なものの個数
 //各I(S)はbitDPで求まり、f(S)=I(S)^Kであるから、g(S)は包除原理を用いて求められる。
 
 //verified with
 //https://atcoder.jp/contests/abc187/tasks/abc187_f
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -42,17 +43,4 @@ int chromatic_number(vector<vector<int>> G){
         }
     }
     return ret;
-}
-
-int main(){
-    int V, E; cin >> V >> E;
-
-    vector<vector<int>> es(V, vector<int>(V, 1));
-
-    for(int i = 0; i < E; i++){
-        int u, v; cin >> u >> v; u--, v--;
-        es[u][v] = 0, es[v][u] = 0;
-    }
-
-    cout << chromatic_number(es) << '\n';
 }

@@ -9,6 +9,7 @@
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_1_B&lang=ja
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -20,12 +21,14 @@ struct Weighted_Graph{
     };
 
     vector<vector<edge>> es;
-    vector<T> d;
     const T INF_T;
     const int n;
     int m;
 
-    Weighted_Graph(int n) : es(n), d(n), INF_T(numeric_limits<T>::max()/2), n(n), m(0) {}
+    vector<T> d;
+    vector<int> pre_v;
+
+    Weighted_Graph(int n) : es(n), INF_T(numeric_limits<T>::max()/2), n(n), m(0), d(n), pre_v(n) {}
 
     void add_edge(int from, int to, T cost){
         es[from].emplace_back(to, cost, m);
@@ -42,7 +45,7 @@ struct Weighted_Graph{
                 for(auto &e: es[j]){
                     if(d[j] == INF_T) continue;
                     if(d[j]+e.cost < d[e.to]){
-                        d[e.to] = d[j]+e.cost;
+                        d[e.to] = d[j]+e.cost, pre_v[e.to] = j;
                         if(i >= n-1) d[e.to] = -INF_T, ret = true;
                     }
                 }
@@ -64,22 +67,12 @@ struct Weighted_Graph{
             }
         }
     }
+
+    vector<int> shortest_path(int s, int t){
+        if(abs(bellman_ford(s, t)) == INF_T) return {};
+        vector<int> ret;
+        for(int now = t; now != s; now = pre_v[now]) ret.push_back(now);
+        ret.push_back(s), reverse(begin(ret), end(ret));
+        return ret;
+    }
 };
-
-int main(){
-    int V, E, s; cin >> V >> E >> s;
-
-    Weighted_Graph<int, true> G(V);
-
-    for(int i = 0; i < E; i++){
-        int u, v, c; cin >> u >> v >> c;
-        G.add_edge(u, v, c);
-    }
-
-    if(G.bellman_ford(s)) {cout << "NEGATIVE CYCLE\n"; return 0;}
-
-    for(int i = 0; i < V; i++){
-        if(G.d[i] == INT_MAX/2) cout << "INF" << '\n';
-        else cout << G.d[i] << '\n';
-    }
-}

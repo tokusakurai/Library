@@ -10,6 +10,7 @@
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_11_C&lang=ja
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -21,11 +22,13 @@ struct Graph{
     };
 
     vector<vector<edge>> es;
-    vector<int> d;
     const int n;
     int m;
 
-    Graph(int n) : es(n), d(n), n(n), m(0) {}
+    vector<int> d;
+    vector<int> pre_v;
+
+    Graph(int n) : es(n), n(n), m(0), d(n), pre_v(n) {}
 
     void add_edge(int from, int to){
         es[from].emplace_back(to, m);
@@ -41,31 +44,18 @@ struct Graph{
             int i = que.front(); que.pop();
             for(auto &e: es[i]){
                 if(d[i]+1 < d[e.to]){
-                    d[e.to] = d[i]+1, que.push(e.to);
+                    d[e.to] = d[i]+1, pre_v[e.to] = i, que.push(e.to);
                 }
             }
         }
         return d[t];
     }
+
+    vector<int> shortest_path(int s, int t){
+        if(bfs(s, t) == INT_MAX/2) return {};
+        vector<int> ret;
+        for(int now = t; now != s; now = pre_v[now]) ret.push_back(now);
+        ret.push_back(s), reverse(begin(ret), end(ret));
+        return ret;
+    }
 };
-
-int main(){
-    int V; cin >> V;
-
-    Graph<true> G(V);
-
-    for(int i = 0; i < V; i++){
-        int u, E; cin >> u >> E; u--;
-
-        for(int j = 0; j < E; j++){
-            int v; cin >> v; v--;
-            G.add_edge(u, v);
-        }
-    }
-
-    G.bfs(0);
-
-    for(int i = 0; i < V; i++){
-        cout << i+1 << ' ' << (G.d[i] >= V? -1 : G.d[i]) << '\n';
-    }
-}

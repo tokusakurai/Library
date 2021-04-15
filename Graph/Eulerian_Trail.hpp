@@ -2,48 +2,23 @@
 //オイラー閉路・オイラー路の検出
 //計算量 O(E+V)
 
-//オイラー路：全ての辺をちょうど一度通るパス
-//オイラー閉路：閉路になるオイラー路
+//オイラー路 : 全ての辺をちょうど一度通るパス
+//オイラー閉路 : 閉路になるオイラー路
 
 //連結グラフがオイラー閉路をもつ必要十分条件
-//有向グラフ：すべての頂点について(入次数)=(出次数)、無向グラフ：全ての頂点の次数が偶数
+//有向グラフ : すべての頂点について(入次数)=(出次数)、無向グラフ：全ての頂点の次数が偶数
 //連結グラフがオイラー路をもつ(かつオイラー閉路はもたない)必要十分条件
-//有向グラフ：(入次数)-(出次数)が1,-1である頂点がちょうど1つずつあり、それ以外は全て0、無向グラフ：次数が奇数である頂点がちょうど2つある
+//有向グラフ : (入次数)-(出次数)が1,-1である頂点がちょうど1つずつあり、それ以外は全て0、無向グラフ：次数が奇数である頂点がちょうど2つある
 
 //verified with
 //https://codeforces.com/contest/1361/problem/C
 //https://yukicoder.me/submissions/591125
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
-struct Union_Find_Tree{
-    vector<int> data;
-    const int n;
-    
-    Union_Find_Tree(int n) : data(n, -1), n(n) {}
-    
-    int root(int x){
-        if(data[x] < 0) return x;
-        return data[x] = root(data[x]);
-    }
-
-    int operator [] (int i) {return root(i);}
-    
-    bool unite(int x, int y){
-        x = root(x), y = root(y);
-        if(x == y) return false;
-        if(data[x] > data[y]) swap(x, y);
-        data[x] += data[y], data[y] = x;
-        return true;
-    }
-    
-    int size(int x) {return -data[root(x)];}
-    
-    bool same(int x, int y) {return root(x) == root(y);}
-    
-    void clear() {fill(begin(data), end(data), -1);}
-};
+#include "../Data-Structure/Union_Find_Tree.hpp"
 
 template<bool directed = false>
 struct Eulerian_Trail{
@@ -146,16 +121,3 @@ struct Eulerian_Trail{
         return ret;
     }
 };
-
-int main(){
-    int V, E; cin >> V >> E;
-
-    Eulerian_Trail<false> G(V);
-
-    for(int i = 0; i < E; i++){
-        int u, v; cin >> u >> v;
-        G.add_edge(u, v);
-    }
-
-    cout << (G.semi_eulerian_trail().size() == 1? "YES" : "NO") << '\n';
-}

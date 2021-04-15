@@ -11,6 +11,7 @@
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_1_A&lang=ja
 //https://judge.yosupo.jp/problem/shortest_path
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -22,14 +23,14 @@ struct Weighted_Graph{
     };
 
     vector<vector<edge>> es;
-    vector<T> d;
-    vector<int> pre_v;
-    vector<int> keep;
     const T INF_T;
     const int n;
     int m;
 
-    Weighted_Graph(int n) : es(n), d(n), pre_v(n), INF_T(numeric_limits<T>::max()/2), n(n), m(0) {}
+    vector<T> d;
+    vector<int> pre_v;
+
+    Weighted_Graph(int n) : es(n), INF_T(numeric_limits<T>::max()/2), n(n), m(0), d(n), pre_v(n) {}
 
     void add_edge(int from, int to, T cost){
         es[from].emplace_back(to, cost, m);
@@ -54,32 +55,11 @@ struct Weighted_Graph{
         return d[t];
     }
 
-    vector<int> shortest_path(int s, int t){ //経路復元
-        keep.clear();
-        if(dijkstra(s, t) == INF_T) return keep;
-        for(int now = t; now != s; now = pre_v[now]) keep.push_back(now);
-        keep.push_back(s), reverse(begin(keep), end(keep));
-        return keep;
+    vector<int> shortest_path(int s, int t){
+        if(dijkstra(s, t) == INF_T) return {};
+        vector<int> ret;
+        for(int now = t; now != s; now = pre_v[now]) ret.push_back(now);
+        ret.push_back(s), reverse(begin(ret), end(ret));
+        return ret;
     }
 };
-
-int main(){
-    int V, E, s, t; cin >> V >> E >> s >> t;
-
-    Weighted_Graph<long long, true> G(V);
-
-    for(int i = 0; i < E; i++){
-        int u, v; long long c; cin >> u >> v >> c;
-        G.add_edge(u, v, c);
-    }
-
-    vector<int> path = G.shortest_path(s, t);
-
-    if(path.empty()) cout << "-1\n";
-    else{
-        cout << G.d[t] << ' ' << (int)path.size()-1 << '\n';
-        for(int i = 0; i < (int)path.size()-1; i++){
-            cout << path[i] << ' ' << path[i+1] << '\n';
-        }
-    }
-}

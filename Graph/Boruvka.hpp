@@ -9,36 +9,11 @@
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_2_A&lang=ja
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
-struct Union_Find_Tree{
-    vector<int> data;
-    const int n;
-    
-    Union_Find_Tree(int n) : data(n, -1), n(n) {}
-    
-    int root(int x){
-        if(data[x] < 0) return x;
-        return data[x] = root(data[x]);
-    }
-
-    int operator [] (int i) {return root(i);}
-    
-    bool unite(int x, int y){
-        x = root(x), y = root(y);
-        if(x == y) return false;
-        if(data[x] > data[y]) swap(x, y);
-        data[x] += data[y], data[y] = x;
-        return true;
-    }
-    
-    int size(int x) {return -data[root(x)];}
-    
-    bool same(int x, int y) {return root(x) == root(y);}
-    
-    void clear() {fill(begin(data), end(data), -1);}
-};
+#include "../Data-Structure/Union_Find_Tree.hpp"
 
 template<typename T, bool directed = false>
 struct Edges{
@@ -82,15 +57,3 @@ struct Edges{
         return ret;
     }
 };
-
-int main(){
-    int V, E; cin >> V >> E;
-
-    Edges<int> G(V);
-    for(int i = 0; i < E; i++){
-        int u, v, c; cin >> u >> v >> c;
-        G.add_edge(u, v, c);
-    }
-
-    cout << G.boruvka() << '\n';
-}

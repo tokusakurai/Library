@@ -12,6 +12,7 @@
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_7_A&lang=ja
 //https://judge.yosupo.jp/problem/bipartitematching
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -56,7 +57,7 @@ struct Bipartite_Matching{
         return false;
     }
 
-    int bipartite_matching(){
+    int bipartite_matching(){ //操作後のmatch配列は最大マッチングの1つにおいて右側の各要素とマッチングする左側の要素を表す
         fill(begin(match), end(match), -1), fill(begin(used), end(used), false);
         int ret = 0;
         while(true){
@@ -72,20 +73,3 @@ struct Bipartite_Matching{
         return ret;
     }
 };
-
-int main(){
-    int N, M, E;
-    cin >> N >> M >> E;
-
-    Bipartite_Matching G(N, M);
-    while(E--){
-        int u, v; cin >> u >> v;
-        G.add_edge(u, v);
-    }
-    
-    cout << G.bipartite_matching() << '\n';
-    
-    for(int i = 0; i < M; i++){
-        if(G.match[i] != -1) cout << G.match[i] << ' ' << i << '\n';
-    }
-}
