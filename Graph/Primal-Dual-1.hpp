@@ -9,6 +9,7 @@
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_6_B&lang=ja
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -53,7 +54,7 @@ struct Min_Cost_Flow{
         }
     }
 
-    T min_cost_flow(int s, int t, F flow){ //流量flowのs-t最小費用流を求める
+    T min_cost_flow(int s, int t, F flow){
         T ret = 0;
         while(flow > 0){
             bellman_ford(s);
@@ -71,15 +72,3 @@ struct Min_Cost_Flow{
         return ret;
     }
 };
-
-int main(){
-    int V, E, F; cin >> V >> E >> F;
-
-    Min_Cost_Flow<int, int> G(V);
-    for(int i = 0; i < E; i++){
-        int u, v, c, d; cin >> u >> v >> c >> d;
-        G.add_edge(u, v, c, d);
-    }
-    
-    cout << G.min_cost_flow(0, V-1, F) << '\n';
-}

@@ -6,7 +6,8 @@
 //関節点：除くと誘導部分グラフが非連結になるような頂点
 
 //概要
-//ord[i]:=頂点iをDFSで何番目に探索したか、low[i]:=頂点iから後退辺を1回まで通ることで到達できる頂点のordの最小値
+//ord[i] := 頂点iをDFSで何番目に探索したか
+//low[i] := 頂点iから後退辺を1回まで通ることで到達できる頂点のordの最小値
 //辺(u,v)(ord[u]<ord[v])が橋⇔ord[u]<low[v]
 //根が関節点⇔子が2つ以上
 //根でない頂点uが関節点⇔uの子vでord[u]<=low[v]を満たすものが存在する
@@ -15,6 +16,7 @@
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_3_A&lang=ja
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_3_B&lang=ja
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -71,25 +73,3 @@ struct Low_Link{
         }
     }
 };
-
-int main(){
-    int V, E; cin >> V >> E;
-
-    vector<int> u(E), v(E);
-
-    Low_Link G(V);
-    for(int i = 0; i < E; i++){
-        cin >> u[i] >> v[i];
-        G.add_edge(u[i], v[i]);
-    }
-
-    G.build();
-    vector<pair<int, int>> ans;
-
-    for(auto &e: G.bridge){
-        ans.emplace_back(minmax(u[e], v[e]));
-    }
-
-    sort(begin(ans), end(ans));
-    for(auto &e: ans) cout << e.first << ' ' << e.second << '\n';
-}

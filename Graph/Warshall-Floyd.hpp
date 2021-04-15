@@ -3,13 +3,14 @@
 //計算量 O(V^3)
 
 //概要
-//dp[k][i][j]:=頂点0~k-1と頂点i,jのみを使うときのiからjへの最短路
+//dp[k][i][j] := 頂点0~k-1と頂点i,jのみを使うときのiからjへの最短路
 //このdpをメモリ省略で行うことができる。
 //dp[i][i]<0となるiが存在する場合、頂点iを含む負閉路が存在する。
 
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_1_C&lang=ja
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -48,30 +49,3 @@ struct Table{
         }
     }
 };
-
-int main(){
-    int V, E; cin >> V >> E;
-
-    Table<long long, true> G(V);
-
-    for(int i = 0; i < E; i++){
-        int u, v; long long c; cin >> u >> v >> c;
-        G.add_edge(u, v, c);
-    }
-
-    G.warshall_floyd();
-
-    for(int i = 0; i < V; i++){
-        if(G[i][i] < 0){
-            cout << "NEGATIVE CYCLE\n"; return 0;
-        }
-    }
-
-    for(int i = 0; i < V; i++){
-        for(int j = 0; j < V; j++){
-            if(G[i][j] == LLONG_MAX/2) cout << "INF";
-            else cout << G[i][j];
-            cout << (j == V-1? '\n' : ' ');
-        }
-    }
-}

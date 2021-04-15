@@ -10,28 +10,11 @@
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_3_C&lang=ja
 //https://judge.yosupo.jp/problem/scc
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
-template<bool directed = true>
-struct Graph{
-    struct edge{
-        int to, id;
-        edge(int to, int id) : to(to), id(id) {}
-    };
-
-    vector<vector<edge>> es;
-    const int n;
-    int m;
-
-    Graph(int n) : es(n), n(n), m(0) {}
-
-    void add_edge(int from, int to){
-        es[from].emplace_back(to, m);
-        if(!directed) es[to].emplace_back(from, m);
-        m++;
-    }
-};
+#include "../Graph/Graph_Template.hpp"
 
 template<bool directed = true>
 struct Strongly_Connected_Components{
@@ -91,26 +74,3 @@ struct Strongly_Connected_Components{
 
     int operator [] (int k) const {return comp[k];}
 };
-
-int main(){
-    int V, E; cin >> V >> E;
-
-    Strongly_Connected_Components G(V);
-
-    for(int i = 0; i < E; i++){
-        int u, v; cin >> u >> v;
-        G.add_edge(u, v);
-    }
-
-    int n = G.decompose().n;
-    cout << n << '\n';
-
-    vector<vector<int>> ans(n);
-    for(int i = 0; i < V; i++) ans[G[i]].push_back(i);
-
-    for(int i = 0; i < n; i++){
-        cout << ans[i].size() << ' ';
-        for(auto &e: ans[i]) cout << e << ' ';
-        cout << '\n';
-    }
-}

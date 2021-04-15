@@ -10,6 +10,7 @@
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_1_B&lang=ja
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -56,22 +57,3 @@ struct Weighted_Graph{
         return d[t];
     }
 };
-
-int main(){
-    int V, E, s; cin >> V >> E >> s;
-
-    Weighted_Graph<int, true> G(V);
-
-    for(int i = 0; i < E; i++){
-        int u, v, c; cin >> u >> v >> c;
-        G.add_edge(u, v, c);
-    }
-
-    if(G.shortest_path_faster_algorithm(s) == -(INT_MAX/2)) cout << "NEGATIVE CYCLE\n";
-    else{
-        for(auto &e: G.d){
-            if(e == INT_MAX/2) cout << "INF\n";
-            else cout << e << '\n';
-        }
-    } 
-}

@@ -11,6 +11,7 @@
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_2_A&lang=ja
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -55,16 +56,3 @@ struct Weighted_Graph{
         return ret;
     }
 };
-
-int main(){
-    int V, E; cin >> V >> E;
-
-    Weighted_Graph<int> G(V);
-
-    for(int i = 0; i < E; i++){
-        int u, v, c; cin >> u >> v >> c;
-        G.add_edge(u, v, c);
-    }
-
-    cout << G.prim() << '\n';
-}

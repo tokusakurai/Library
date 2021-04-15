@@ -1,6 +1,6 @@
 
 //sからtへの流量fのフローの最小費用流を求める(最初のグラフに負の閉路が存在しない場合)
-//計算量 O(E*V+F*E*log(V))、初期状態でコストが負の辺が存在しない場合:O(F*E*log(V))
+//計算量 O(E*V+F*E*log(V))、初期状態でコストが負の辺が存在しない場合 : O(F*E*log(V))
 
 //概要
 //最初にBellman-Ford法で始点から各点の最短路を確定する。
@@ -11,6 +11,7 @@
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_6_B&lang=ja
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -72,7 +73,7 @@ struct Min_Cost_Flow{
         }
     }
 
-    T min_cost_flow(int s, int t, F flow){ //流量flowのs-t最小費用流を求める
+    T min_cost_flow(int s, int t, F flow){
         T ret = 0;
         bellman_ford(s); //初期状態で負辺が存在しない場合はコメントアウトする
         while(flow > 0){
@@ -95,15 +96,3 @@ struct Min_Cost_Flow{
         return ret;
     }
 };
-
-int main(){
-    int V, E, F; cin >> V >> E >> F;
-
-    Min_Cost_Flow<int> G(V);
-    for(int i = 0; i < E; i++){
-        int u, v, c, d; cin >> u >> v >> c >> d;
-        G.add_edge(u, v, c, d);
-    }
-
-    cout << G.min_cost_flow(0, V-1, F) << '\n';
-}

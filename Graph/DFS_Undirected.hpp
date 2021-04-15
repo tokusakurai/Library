@@ -1,15 +1,16 @@
 
 //無向グラフでの基本的なDFS
-//計算量 パス検出・閉路検出:O(E+V)
+//計算量 パス検出・閉路検出 : O(E+V)
 
 //概要
 //直前に使用した辺を戻らないようにしてDFSをする。
-//パス検出：目的の点に到達したら探索を打ち切って、来たパスを戻ることで復元する。
-//閉路検出：同じ点に2回到達したら探索を打ち切って、その頂点に来るまで来たパスを戻ることで復元する。
+//パス検出 : 目的の点に到達したら探索を打ち切って、来たパスを戻ることで復元する。
+//閉路検出 : 同じ点に2回到達したら探索を打ち切って、その頂点に来るまで来たパスを戻ることで復元する。
 
 //verified with
 //https://yukicoder.me/problems/no/1254
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -21,11 +22,12 @@ struct Graph{
     };
 
     vector<vector<edge>> es;
-    vector<int> used;
     const int n;
     int m;
 
-    Graph(int n) : es(n), used(n), n(n), m(0) {}
+    vector<int> used;
+
+    Graph(int n) : es(n), n(n), m(0), used(n) {}
 
     void add_edge(int from, int to){
         es[from].emplace_back(to, m);

@@ -7,6 +7,7 @@
 //今木に含まれている頂点と木に含まれていない頂点を結ぶ辺のうち、もっともコストが小さいものを採用する。
 //各ステップで、木に含まれていない頂点を全てチェックする。
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -35,7 +36,7 @@ struct Table{
     }
 
     T prim(){
-        vector<T> mincost(n, INF_T); //木に含まれる頂点と自身を結ぶ辺のコストの最小値
+        vector<T> mincost(n, INF_T);
         vector<bool> used(n, false);
         mincost[0] = 0;
         T ret = 0;
@@ -56,16 +57,3 @@ struct Table{
         return ret;
     }
 };
-
-int main(){
-    int V, E; cin >> V >> E;
-
-    Table<int> G(V);
-
-    for(int i = 0; i < E; i++){
-        int u, v, c; cin >> u >> v >> c;
-        G.add_edge(u, v, c);
-    }
-
-    cout << G.prim() << '\n';
-}
