@@ -89,20 +89,3 @@ struct Graph{
         return {};
     }
 };
-
-int main(){
-    int V; cin >> V;
-
-    Graph G(V);
-
-    for(int i = 0; i < V; i++){
-        int u, v; cin >> u >> v; u--, v--;
-        G.add_edge(u, v);
-    }
-    
-    vector<int> cycle = G.find_cycle(true);
-
-    cout << cycle.size() << '\n';
-    for(auto &e: cycle) cout << e+1 << ' ';
-    cout << '\n';
-}
