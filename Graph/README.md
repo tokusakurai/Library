@@ -56,7 +56,7 @@
 
 ### 最大流問題
 
-- [Ford-Fulkerson法](https://github.com/tokusakurai/Library/blob/main/Graph/Ford_Fulkerson.hpp)
+- [Ford-Fulkerson法](https://github.com/tokusakurai/Library/blob/main/Graph/Ford-Fulkerson.hpp)
 
 - [Dinic法](https://github.com/tokusakurai/Library/blob/main/Graph/Dinic.hpp) (最悪計算量と比べて非常に高速に動作することが多い)
 
@@ -68,7 +68,7 @@
 
 ### 2部グラフの最大マッチング
 
-- [Hopcroft-Karp法](https://github.com/tokusakurai/Library/blob/main/Graph/Hopcroft_Karp.hpp)
+- [Hopcroft-Karp法](https://github.com/tokusakurai/Library/blob/main/Graph/Hopcroft-Karp.hpp)
 
 ## 強連結成分分解
 有向グラフの各頂点が属する強連結成分(誘導部分グラフにおいて互いに行き来可能な点集合)を求めるアルゴリズム。
