@@ -1,6 +1,6 @@
 
 //木の重心分解(例)
-//計算量 重心検出：O(V)、再帰の深さ：O(log(V))、全体の計算量：O(V*log(V))
+//計算量 重心検出 : O(V)、再帰の深さ : O(log(V))、全体の計算量 : O(V*log(V))
 
 //概要
 //一回の分割で新たにできる木のサイズは元の木の半分以下であるから、分割統治したときの再帰の深さは最大でO(log(V))となる。
@@ -8,6 +8,7 @@
 //verified with
 //https://atcoder.jp/contests/yahoo-procon2018-final-open/tasks/yahoo_procon2018_final_c
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -19,17 +20,17 @@ struct Graph{
     };
 
     vector<vector<edge>> es;
-    vector<int> si, depth;
-    vector<bool> used;
     const int n;
     int m;
 
+    vector<int> si, depth;
+    vector<bool> used;
     vector<int> cnt;
     vector<int> memo1, memo2;
     vector<vector<pair<int, int>>> query;
     vector<int> ans;
 
-    Graph(int n) : es(n), si(n), depth(n), used(n, false), n(n), m(0), cnt(n, 0), query(n) {}
+    Graph(int n) : es(n), n(n), m(0), si(n), depth(n), used(n, false), cnt(n, 0), query(n) {}
 
     void add_edge(int from, int to){
         es[from].emplace_back(to, m);
@@ -112,23 +113,3 @@ struct Graph{
         }
     }
 };
-
-int main(){
-    int V, Q; cin >> V >> Q;
-
-    Graph G(V);
-    for(int i = 0; i < V-1; i++){
-        int u, v; cin >> u >> v; u--, v--;
-        G.add_edge(u, v);
-    }
-
-    G.ans.resize(Q);
-    for(int i = 0; i < Q; i++){
-        int x, k; cin >> x >> k; x--;
-        G.query[x].emplace_back(k, i);
-    }
-
-    G.decompose();
-
-    for(int i = 0; i < Q; i++) cout << G.ans[i] << '\n';
-}

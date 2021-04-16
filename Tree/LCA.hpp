@@ -1,10 +1,10 @@
 
 //最近共通祖先(LCA)
-//計算量 構築：O(V*log(V))、2頂点のLCA・距離：O(log(V))
+//計算量 構築 : O(V*log(V))、2頂点のLCA・距離 : O(log(V))
 //空間計算量 O(V*log(V))
 
 //概要
-//par[i][j]:=頂点jの2^i個前の祖先とすると、ダブリングでテーブルを埋めることができる。
+//par[i][j] := 頂点jの2^i個前の祖先とすると、ダブリングでテーブルを埋めることができる。
 //頂点u,vで根からuの方がvより深いとする。
 //まずuをvと同じ深さになるまで引き上げ、その後uとvが同じ頂点に来ない範囲で両者を同じ高さだけ引き上げる。
 
@@ -13,6 +13,7 @@
 //https://judge.yosupo.jp/problem/lca
 //https://atcoder.jp/contests/abc014/tasks/abc014_4
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -24,12 +25,14 @@ struct Graph{
     };
 
     vector<vector<edge>> es;
-    vector<vector<int>> par; //par[i][j] := 頂点jの2^i個前の祖先
-    vector<int> depth;
-    const int n, height;
+    const int n;
     int m;
 
-    Graph(int n) : es(n), depth(n), n(n), height(32-__builtin_clz(n)), m(0){
+    vector<vector<int>> par; //par[i][j] := 頂点jの2^i個前の祖先
+    vector<int> depth;
+    const int height;
+
+    Graph(int n) : es(n), n(n), m(0), depth(n), height(32-__builtin_clz(n)){
         par.assign(height, vector<int>(n));
     }
 
@@ -60,7 +63,7 @@ struct Graph{
         }
     }
 
-    int lca(int u, int v){ //(u,v)のLCAを求める
+    int lca(int u, int v){
         if(depth[u] < depth[v]) swap(u, v);
         int D = depth[u]-depth[v];
         for(int i = 0; i < height; i++){
@@ -73,27 +76,7 @@ struct Graph{
         return par[0][u];
     }
 
-    int dist(int u, int v){ //(u,v)の距離を求める
+    int dist(int u, int v){
         return depth[u]+depth[v]-2*depth[lca(u, v)];
     }
 };
-
-int main(){
-    int V; cin >> V;
-
-    Graph G(V);
-
-    for(int i = 0; i < V-1; i++){
-        int u, v; cin >> u >> v; u--, v--;
-        G.add_edge(u, v);
-    }
-
-    G.build(0);
-
-    int Q; cin >> Q;
-
-    while(Q--){
-        int u, v; cin >> u >> v; u--, v--;
-        cout << G.dist(u, v)+1 << '\n';
-    }
-}

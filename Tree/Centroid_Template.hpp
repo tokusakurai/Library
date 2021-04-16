@@ -5,6 +5,7 @@
 //概要
 //DFSを用いて、各頂点についてその点を除いたときの残る部分木のサイズの最大値を列挙することで重心を求める。
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -16,12 +17,13 @@ struct Graph{
     };
 
     vector<vector<edge>> es;
-    vector<int> si;
-    vector<bool> used;
     const int n;
     int m;
 
-    Graph(int n) : es(n), si(n), used(n, false), n(n), m(0) {}
+    vector<int> si;
+    vector<bool> used;
+
+    Graph(int n) : es(n), n(n), m(0), si(n), used(n, false) {}
 
     void add_edge(int from, int to){
         es[from].emplace_back(to, m);
@@ -65,15 +67,3 @@ struct Graph{
         }
     }
 };
-
-int main(){
-    int V; cin >> V;
-
-    Graph G(V);
-    for(int i = 0; i < V-1; i++){
-        int u, v; cin >> u >> v;
-        G.add_edge(u, v);
-    }
-
-    G.decompose(0);
-}

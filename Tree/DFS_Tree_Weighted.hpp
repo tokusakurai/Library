@@ -1,17 +1,18 @@
 
 //重み付き木の基本的なDFS
-//計算量 根からの距離・部分木のサイズ・直径・パス検出：O(V)
+//計算量 根からの距離・部分木のサイズ・直径・パス検出 : O(V)
 
-//直径：最短距離が最大になるような2点間のパス
+//直径 : 最短距離が最大になるような2点間のパス
 
 //概要
 //根からの距離・部分木のサイズ：木上でDPを行っているとみることができる。
-//直径：適当に頂点を決めて、その頂点から最も遠い点をsとし、sから最も遠い点をtとすると、パスs-tは直径となる。
+//直径 : 適当に頂点を決めて、その頂点から最も遠い点をsとし、sから最も遠い点をtとすると、パスs-tは直径となる。
 
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_5_A&lang=ja
 //https://judge.yosupo.jp/problem/tree_diameter
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -23,14 +24,14 @@ struct Weighted_Graph{
     };
 
     vector<vector<edge>> es;
-    vector<T> d;
-    vector<int> si;
-    vector<int> keep;
     const T INF_T;
     const int n;
     int m;
 
-    Weighted_Graph(int n) : d(n), si(n), es(n), INF_T(numeric_limits<T>::max()/2), n(n), m(0) {}
+    vector<T> d;
+    vector<int> si;
+
+    Weighted_Graph(int n) : es(n), INF_T(numeric_limits<T>::max()/2), n(n), m(0), d(n), si(n) {}
 
     void add_edge(int from, int to, T cost){
         es[from].emplace_back(to, cost, m);
@@ -70,47 +71,27 @@ struct Weighted_Graph{
         return make_pair(d[b], make_pair(a, b));
     }
 
-    bool trace(int now, int t, int pre = -1){
+    vector<int> ret_path;
+
+    bool detect_path(int now, int t, bool use_id = false, int pre = -1){
         if(now == t){
-            keep.push_back(now);
+            if(!use_id) ret_path.push_back(now);
             return true;
         }
         for(auto &e: es[now]){
             if(e.to == pre) continue;
-            if(trace(e.to, t, now)){
-                keep.push_back(now);
-                //keep.push_back(e.id);
+            if(detect_path(e.to, t, use_id, now)){
+                ret_path.push_back(use_id? e.id : now);
                 return true;
             }
         }
         return false;
     }
 
-    vector<int> find_path(int s, int t){
-        keep.clear();
-        trace(s, t);
-        reverse(begin(keep), end(keep));
-        return keep;
+    vector<int> find_path(int s, int t, bool use_id = false){
+        ret_path.clear();
+        detect_path(s, t, use_id);
+        reverse(begin(ret_path), end(ret_path));
+        return ret_path;
     }
 };
-
-int main(){
-    int V; cin >> V;
-
-    Weighted_Graph<long long> G(V);
-    for(int i = 0; i < V-1; i++){
-        int u, v; long long c; cin >> u >> v >> c;
-        G.add_edge(u, v, c);
-    }
-
-    pair<long long, pair<int, int>> p = G.diameter();
-
-    auto [s, t] = p.second;
-    vector<int> path = G.find_path(s, t);
-
-    cout << p.first << ' ' << path.size() << '\n';
-
-    for(int i = 0; i < (int)path.size(); i++){
-        cout << path[i] << (i == (int)path.size()-1? '\n' : ' ');
-    }
-}
