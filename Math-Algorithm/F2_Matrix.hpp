@@ -1,6 +1,6 @@
 
 //二元体での行列
-//計算量 簡約化・ガウスの消去法：O(M*N^2/64)
+//計算量 簡約化・ガウスの消去法 : O(M*N^2/64)
 
 //概要
 //行iに行jを足す操作は行iに行jをXORする操作と同値なので、bitsetで高速化できる。
@@ -8,6 +8,7 @@
 //verified with
 //https://yukicoder.me/problems/no/1421
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -50,7 +51,7 @@ struct F2_Matrix{
         return row_reduction(b);
     }
 
-    vector<vector<int>> Gausiann_elimination(vector<int> b){
+    vector<vector<int>> Gausiann_elimination(vector<int> b){ //Ax=bの解の1つと解空間の基底の組を返す
         int m = height(), n = width();
         row_reduction(b);
         vector<vector<int>> ret;
@@ -79,41 +80,3 @@ struct F2_Matrix{
         return ret;
     }
 };
-
-int main(){
-    int N, M; cin >> N >> M;
-
-    vector<int> Y(M);
-    vector<vector<int>> B(M);
-
-    for(int i = 0; i < M; i++){
-        int K; cin >> K;
-        B[i].resize(K);
-        for(int j = 0; j < K; j++) {cin >> B[i][j]; B[i][j]--;}
-        cin >> Y[i];
-    }
-
-    using mat = F2_Matrix<bitset<50>>;
-
-    vector<int> ret(N, 0);
-
-    for(int i = 0; i < 30; i++){
-        mat A(M);
-        vector<int> b(M, 0);
-
-        for(int j = 0; j < M; j++){
-            for(auto &e: B[j]) A[j][e] = 1;
-            b[j] = (Y[j]>>i)&1;
-        }
-
-        vector<vector<int>> ans = A.Gausiann_elimination(b);
-
-        if(ans.empty()) {cout << "-1\n"; return 0;}
-
-        for(int j = 0; j < N; j++){
-            if(ans[0][j] == 1) ret[j] |= (1<<i);
-        }
-    }
-
-    for(int i = 0; i < N; i++) cout << ret[i] << '\n';
-}

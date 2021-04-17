@@ -2,6 +2,7 @@
 //乱数発生
 //計算量 O(1)
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -19,10 +20,3 @@ struct Random_Number_Generator{
         return (*this)(0, r);
     }
 };
-
-int main(){
-    Random_Number_Generator rnd;
-
-    int r; cin >> r;
-    cout << rnd(1LL<<r) << '\n';
-}

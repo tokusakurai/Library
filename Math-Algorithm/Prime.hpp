@@ -1,16 +1,17 @@
 
 //素数・約数に関する計算
-//計算量 約数列挙・素因数分解・素数判定：O(√N)、エラトステネスの篩：O(N*log(log(N)))
+//計算量 約数列挙・素因数分解・素数判定 : O(√N)、エラトステネスの篩 : O(N*log(log(N)))
 
 //概要
-//約数列挙・素因数分解・素数判定：自然数Nの素因数で√Nより大きいものは高々1つなので、√N以下の数全てについて割り切れるか調べる。
-//エラトステネスの篩：前から順番に見て、注目している数が素数ならその数の倍数(その数は含めない)は全て素数ではないことになるので、テーブルをfalseに切り替える。
+//約数列挙・素因数分解・素数判定 : 自然数Nの素因数で√Nより大きいものは高々1つなので、√N以下の数全てについて割り切れるか調べる。
+//エラトステネスの篩 : 前から順番に見て、注目している数が素数ならその数の倍数(その数は含めない)は全て素数ではないことになるので、テーブルをfalseに切り替える。
 
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=NTL_1_A&lang=jp
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_1_C&lang=jp
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_1_C
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -19,11 +20,11 @@ vector<T> divisors(const T &n){
     vector<T> ret;
     for(T i = 1; i*i <= n; i++){
         if(n%i == 0){
-            ret.pb(i);
-            if(i*i != n) ret.pb(n/i);
+            ret.push_back(i);
+            if(i*i != n) ret.push_back(n/i);
         }
     }
-    sort(all(ret));
+    sort(begin(ret), end(ret));
     return ret;
 }
 
@@ -59,7 +60,7 @@ vector<bool> Eratosthenes(const int &n){
     return ret;
 }
 
-vector<int> Eratosthenes2(const int &n){ //自身を割り切る最小の素数が記録された配列を返す
+vector<int> Eratosthenes2(const int &n){
     vector<int> ret(n+1);
     iota(begin(ret), end(ret), 0);
     if(n >= 0) ret[0] = -1;
@@ -69,17 +70,4 @@ vector<int> Eratosthenes2(const int &n){ //自身を割り切る最小の素数�
         for(int j = i+i; j <= n; j += i) ret[j] = min(ret[j], i);
     }
     return ret;
-}
-
-int main(){
-    int T; cin >> T;
-
-    vector<bool> p = Eratosthenes(100000000);
-
-    int ans = 0;
-    while(T--){
-        int N; cin >> N;
-        ans += p[N];
-    }
-    cout << ans << '\n';
 }

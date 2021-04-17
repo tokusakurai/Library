@@ -1,18 +1,18 @@
 
 //ユークリッドの互除法を用いた種々の計算
-//計算量 gcd・lcm・extgcd・modinv・floor_sum・中国剰余定理：O(log(max(a, b)))、Garner：O(N^2+N*log(M))
+//計算量 gcd・lcm・extgcd・modinv・floor_sum・中国剰余定理 : O(log(max(a, b)))、Garner : O(N^2+N*log(M))
 
-//extgcd：ax+by=gcd(a,b)を満たす(x,y)の組の1つ
-//floor_sum：Σfloor((A*i+B)/M) (i=0,1,2,....,N-1)
-//中国剰余定理：x ≡ a_1(mod m_1), x ≡ a_2(mod m_2)を満たす最小の非負整数x
-//Garner：x ≡ a_i(mod m_i) (i=0,1,2,....,N-1)を満たす最小の非負整数xをMで割った余り
+//extgcd : ax+by = gcd(a,b)を満たす(x,y)の組の1つ
+//floor_sum : Σfloor((A*i+B)/M) (i = 0,1,....,N-1)
+//中国剰余定理 : x ≡ a_1(mod m_1), x ≡ a_2(mod m_2)を満たす最小の非負整数x
+//Garner : x ≡ a_i(mod m_i) (i = 0,1,....,N-1)を満たす最小の非負整数xをMで割った余り
 
 //概要
-//gcd・lcm・extgcd：ユークリッドの互除法を使って再帰的に解く。
-//modinv：ax+my=1を満たすxをextgcdで求める。
-//floor_sum：領域内の格子点の数とみなし、A<Mなら縦横をひっくり返すなどする。
-//中国剰余定理：解が存在する⇔a_1≡a_2(mod gcd(m_1,m_2))
-//Garnerの定理：解が存在する⇔任意のi,jについてa_i≡a_j(mod gcd(m_i,m_j))
+//gcd・lcm・extgcd : ユークリッドの互除法を使って再帰的に解く。
+//modinv : ax+my = 1を満たすxをextgcdで求める。
+//floor_sum : 領域内の格子点の数とみなし、A<Mなら縦横をひっくり返すなどする。
+//中国剰余定理 : 解が存在する⇔a_1 ≡ a_2(mod gcd(m_1,m_2))
+//Garnerの定理 : 解が存在する⇔任意のi,jについてa_i ≡ a_j(mod gcd(m_i,m_j))
 
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_1_B&lang=ja
@@ -22,6 +22,7 @@
 //https://yukicoder.me/problems/no/186
 //https://yukicoder.me/problems/no/187
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -54,7 +55,7 @@ int modinv(const int &a, const int &m){ //aとmは互いに素
 }
 
 template<typename T>
-T floor_sum(const T &n, const T &m, T a, T b){ //Σ(floor((a*i+b)/m)) (0<=i<n)
+T floor_sum(const T &n, const T &m, T a, T b){ //Σ(floor((a*i+b)/m)) (i = 0,1,...,n-1)
     T ret = (a/m)*(n*(n-1)/2)+(b/m)*n;
     a %= m, b %= m;
     T y = (a*n+b)/m;
@@ -104,22 +105,4 @@ int Garner(vector<int> a, vector<int> m, const int &M){ //mの各要素はそれ
         }
     }
     return constants.back();
-}
-
-int main(){
-    const int MOD = 1000000007;
-    int N; cin >> N;
-
-    vector<int> a(N), m(N);
-    for(int i = 0; i < N; i++) cin >> a[i] >> m[i];
-
-    if(!prepare_Garner(a, m)) {cout << -1 << '\n'; return 0;}
-    long long l = 1;
-
-    for(int i = 0; i < N; i++) l *= m[i], l %= MOD;
-    bool flag = true;
-    for(int i = 0; i < N; i++) if(a[i] != 0) flag = false;
-    if(flag) {cout << l << '\n'; return 0;}
-    
-    cout << Garner(a, m, MOD) << '\n';
 }

@@ -10,6 +10,7 @@
 //verified with
 //https://atcoder.jp/contests/atc001/tasks/fft_c
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -23,8 +24,8 @@ struct Fast_Foulier_Transform{
     Fast_Foulier_Transform(){
         r.resize(30), ir.resize(30);
         for(int i = 0; i < 30; i++){
-            r[i] = -polar(1.0, pi/(1<<(i+1))); //r[i]:=1の2^(i+2)乗根
-            ir[i] = -polar(1.0, -pi/(1<<(i+1))); //ir[i]:=1/r[i]
+            r[i] = -polar(1.0, pi/(1<<(i+1))); //r[i] := 1の2^(i+2)乗根
+            ir[i] = -polar(1.0, -pi/(1<<(i+1))); //ir[i] := 1/r[i]
         }
     };
 
@@ -36,8 +37,8 @@ struct Fast_Foulier_Transform{
 
     vector<T> to_T(const vector<comp> &a) const{
         vector<T> ret(a.size(), 0);
-        for(int i = 0; i < (int)a.size(); i++) ret[i] = a[i].real()+0.1; //誤差をケア
-        //for(int i = 0; i < (int)a.size(); i++) ret[i] = a[i].real();
+        for(int i = 0; i < (int)a.size(); i++) ret[i] = a[i].real()+0.1; //整数の場合、誤差をケア
+        //for(int i = 0; i < (int)a.size(); i++) ret[i] = a[i].real(); //小数の場合
         return ret;
     }
 
@@ -72,7 +73,7 @@ struct Fast_Foulier_Transform{
         for(auto &e: a) e /= n;
     }
 
-    vector<T> convolve(const vector<T> &a, const vector<T> &b) const{ //畳み込み
+    vector<T> convolve(const vector<T> &a, const vector<T> &b) const{
         int k = (int)a.size()+(int)b.size()-1, n = 1;
         while(n < k) n <<= 1;
         vector<comp> A = to_comp(a), B = to_comp(b);
@@ -84,16 +85,3 @@ struct Fast_Foulier_Transform{
         return c;
     }
 };
-
-int main(){
-    int N; cin >> N;
-
-    Fast_Foulier_Transform<int> FFT;
-
-    vector<int> a(N+1), b(N+1);
-    a[0] = b[0] = 0;
-    for(int i = 1; i <= N; i++) cin >> a[i] >> b[i];
-
-    vector<int> c = FFT.convolve(a, b);
-    for(int i = 1; i <= 2*N; i++) cout << c[i] << '\n';
-}

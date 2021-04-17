@@ -1,14 +1,15 @@
 
 //行列計算
-//計算量 積：O(M*N*P)、K乗：O(N^3*log(K))、簡約化・ガウスの消去法：O(M*N^2)
+//計算量 積 : O(M*N*P)、K乗 : O(N^3*log(K))、簡約化・ガウスの消去法 : O(M*N^2)
 
 //累乗：ダブリング
-//ガウスの消去法：行基本変形を繰り返すことで連立一次方程式の解を求める。
+//ガウスの消去法 : 行基本変形を繰り返すことで連立一次方程式の解を求める。
 
 //verified with
 //https://judge.yosupo.jp/problem/matrix_det
 //https://judge.yosupo.jp/problem/system_of_linear_equations
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -61,7 +62,7 @@ struct Matrix{
 
     bool eq(const T &a, const T &b) const{
         return a == b;
-        //return abs(a-b) <= EPS;
+        //return abs(a-b) <= EPS; //少数の場合
     }
 
     pair<int, T> row_reduction(vector<T> &b){ //行基本変形を用いて簡約化を行い、(階数、行列式)の組を返す
@@ -72,7 +73,7 @@ struct Matrix{
             int pivot = check;
             for(int i = check; i < m; i++){
                 if(A[i][j] != 0) pivot = i;
-                //if(abs(A[i][j]) > abs(A[pivot][j])) pivot = i; //Tが小数の場合はこちら
+                //if(abs(A[i][j]) > abs(A[pivot][j])) pivot = i; //小数の場合
             }
             if(check != pivot) det *= T(-1);
             swap(A[check], A[pivot]), swap(b[check], b[pivot]);
@@ -127,113 +128,3 @@ struct Matrix{
         return ret;
     }
 };
-
-const int MOD = 998244353;
-
-template<int mod>
-struct Mod_Int{
-    int x;
-
-    Mod_Int() : x(0) {}
-
-    Mod_Int(long long y) : x(y >= 0 ? y % mod : (mod - (-y) % mod) % mod) {}
-
-    Mod_Int &operator += (const Mod_Int &p){
-        if((x += p.x) >= mod) x -= mod;
-        return *this;
-    }
-
-    Mod_Int &operator -= (const Mod_Int &p){
-        if((x += mod - p.x) >= mod) x -= mod;
-        return *this;
-    }
-
-    Mod_Int &operator *= (const Mod_Int &p){
-        x = (int) (1LL * x * p.x % mod);
-        return *this;
-    }
-
-    Mod_Int &operator /= (const Mod_Int &p){
-        *this *= p.inverse();
-        return *this;
-    }
-
-    Mod_Int &operator ++ () {return *this += Mod_Int(1);}
-
-    Mod_Int operator ++ (int){
-        Mod_Int tmp = *this;
-        ++*this;
-        return tmp;
-    }
-
-    Mod_Int &operator -- () {return *this -= Mod_Int(1);}
-
-    Mod_Int operator -- (int){
-        Mod_Int tmp = *this;
-        --*this;
-        return tmp;
-    }
-
-    Mod_Int operator - () const {return Mod_Int(-x);}
-
-    Mod_Int operator + (const Mod_Int &p) const {return Mod_Int(*this) += p;}
-
-    Mod_Int operator - (const Mod_Int &p) const {return Mod_Int(*this) -= p;}
-
-    Mod_Int operator * (const Mod_Int &p) const {return Mod_Int(*this) *= p;}
-
-    Mod_Int operator / (const Mod_Int &p) const {return Mod_Int(*this) /= p;}
-
-    bool operator == (const Mod_Int &p) const {return x == p.x;}
-
-    bool operator != (const Mod_Int &p) const {return x != p.x;}
-
-    Mod_Int inverse() const{
-        assert(*this != Mod_Int(0));
-        return pow(mod-2);
-    }
-
-    Mod_Int pow(long long k) const{
-        Mod_Int now = *this, ret = 1;
-        for(; k > 0; k >>= 1, now *= now){
-            if(k&1) ret *= now;
-        }
-        return ret;
-    }
-
-    friend ostream &operator << (ostream &os, const Mod_Int &p){
-        return os << p.x;
-    }
-
-    friend istream &operator >> (istream &is, Mod_Int &p){
-        long long a;
-        is >> a;
-        p = Mod_Int<mod>(a);
-        return is;
-    }
-};
-
-using mint = Mod_Int<MOD>;
-
-int main(){
-    int M, N; cin >> M >> N;
-
-    Matrix<mint> A(M, N);
-
-    for(int i = 0; i < M; i++){
-        for(int j = 0; j < N; j++){
-            cin >> A[i][j];
-        }
-    }
-
-    vector<mint> b(M);
-    for(int i = 0; i < M; i++) cin >> b[i];
-
-    vector<vector<mint>> ans = A.Gausiann_elimination(b);
-    cout << (int)ans.size()-1 << '\n';
-    
-    for(auto &e: ans){
-        for(auto &u : e) cout << u << ' ';
-        cout << '\n';
-    }
-}
