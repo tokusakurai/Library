@@ -1,6 +1,6 @@
 
-//ローリングハッシュ、配列ハッシュ(mod：(2^61)-1、基数：modの原始根からランダムに取る)
-//計算量 構築：O(N)、ハッシュクエリ：O(1)
+//ローリングハッシュ、配列ハッシュ(mod : (2^61)-1、基数 : modの原始根からランダムに取る)
+//計算量 構築 : O(N)、ハッシュクエリ : O(1)
 
 //概要
 //文字列や配列にハッシュ値をつける。
@@ -10,23 +10,11 @@
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_14_B&lang=ja
 //https://atcoder.jp/contests/arc024/tasks/arc024_3
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
-struct Random_Number_Generator{
-    mt19937_64 mt;
-
-    Random_Number_Generator() : mt(chrono::steady_clock::now().time_since_epoch().count()) {}
-
-    int64_t operator () (int64_t l, int64_t r){
-        uniform_int_distribution<int64_t> dist(l, r-1);
-        return dist(mt);
-    }
-
-    int64_t operator () (int64_t r){ 
-        return (*this)(0, r);
-    }
-};
+#include "../Other/Random.hpp"
 
 using ull = unsigned long long;
 
@@ -150,24 +138,3 @@ struct Array_Hash{
         return ret;
     }
 };
-
-int main(){
-    int N, K; string S; cin >> N >> K >> S;
-
-    Array_Hash<int> ah(26, N);
-
-    vector<int> cnt(26, 0);
-    for(int i = 0; i < K; i++) cnt[S[i]-'a']++;
-
-    map<ull, vector<int>> mp;
-    for(int i = 0; i < N-K; i++){
-        mp[ah.get_hash(cnt)].push_back(i);
-        cnt[S[K+i]-'a']++, cnt[S[i]-'a']--;
-    }
-    mp[ah.get_hash(cnt)].push_back(N-K);
-
-    for(auto &e: mp){
-        if(e.second.back() >= e.second.front()+K) {cout << "YES\n"; return 0;}
-    }
-    cout << "NO\n";
-}

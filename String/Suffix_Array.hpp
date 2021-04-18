@@ -1,15 +1,15 @@
 
 //接尾辞配列、高さ配列
-//計算量 接尾辞配列構築：O(|S|*log(|S|)), 二分探索：O(|T|*log(|S|))、 高さ配列構築：O(|S|)
+//計算量 接尾辞配列構築 : O(|S|*log(|S|)), 二分探索 : O(|T|*log(|S|))、 高さ配列構築 : O(|S|)
 
-//接尾辞配列(suffix array)：文字列の全ての接尾辞を辞書順にソートしたものを記録する(実際には何字目からの接尾辞かを記録する)。
-//高さ配列(longest common prefix array)：接尾辞配列の隣同士で接頭辞が何文字一致しているかを記録する。
+//接尾辞配列(suffix array) : 文字列の全ての接尾辞を辞書順にソートしたものを記録する(実際には何字目からの接尾辞かを記録する)。
+//高さ配列(longest common prefix array) : 接尾辞配列の隣同士で接頭辞が何文字一致しているかを記録する。
 
 //概要
-//sa[i]:=辞書順i番目(0-indexed)の接尾辞のスタート地点(0-indexed)
-//rank[i]:=i文字目(0-indexed)から始まる接尾辞は辞書順何番目か(0-indexed)
+//sa[i] := 辞書順i番目(0-indexed)の接尾辞のスタート地点(0-indexed)
+//rank[i] := i文字目(0-indexed)から始まる接尾辞は辞書順何番目か(0-indexed)
 //k文字分のsa配列を用いることで2k文字分のsa配列を構築できる。
-//lcp[i]:=Sのrank[i]文字目から始まる部分列とrank[i+1]文字目から始まる部分列の最長共通接頭辞のサイズ。
+//lcp[i] := Sのrank[i]文字目から始まる部分列とrank[i+1]文字目から始まる部分列の最長共通接頭辞のサイズ。
 
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_14_D&lang=ja
@@ -17,6 +17,7 @@
 //https://judge.yosupo.jp/problem/suffixarray
 //https://judge.yosupo.jp/problem/number_of_substrings
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -54,7 +55,7 @@ struct Suffix_Array{
 
     int size() const {return n;}
 
-    bool compare_substr(const string &t, int si = 0, int ti = 0) const{ //sのsi文字目以降とtのti文字目以降を比較
+    bool compare_substr(const string &t, int si = 0, int ti = 0) const{
         int m = t.size();
         while(si < n && ti < m){
             if(s[si] != t[ti]) return s[si] < t[ti];
@@ -99,15 +100,3 @@ struct Longest_Common_Prefix_Array{
 
     int operator [] (int i) const {return lcp[i];}
 };
-
-int main(){
-    string S; cin >> S;
-
-    Suffix_Array sa(S);
-    Longest_Common_Prefix_Array lcp(sa);
-
-    long long N = S.size(), ans = N*(N+1)/2;
-
-    for(int i = 0; i < N-1; i++) ans -= lcp[i];
-    cout << ans << '\n';
-}

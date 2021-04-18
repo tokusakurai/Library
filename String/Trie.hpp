@@ -1,15 +1,16 @@
 
 //トライ木
-//計算量 文字列追加・検索：O(|S|)
+//計算量 文字列追加・検索 : O(|S|)
 
 //概要
 //トライ木の各頂点は、次に各文字を使った際の行き先の情報を記録する。
-//追加：文字列を前から見て、トライ木を根から降りていく。該当する頂点がなくなったら新しい頂点を作る。
-//検索：文字列を前から見て、トライ木を根から降りていく。
+//追加 : 文字列を前から見て、トライ木を根から降りていく。該当する頂点がなくなったら新しい頂点を作る。
+//検索 : 文字列を前から見て、トライ木を根から降りていく。
 
 //verified with
 //https://atcoder.jp/contests/tenka1-2016-final/tasks/tenka1_2016_final_c
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -30,7 +31,7 @@ struct Trie{
 
     int size() const {return nodes.size();}
 
-    void insert(const string &s, int id){ //sを追加
+    void insert(const string &s, int id){
         int now = 0;
         for(int i = 0; i < (int)s.size(); i++){
             int &next = nodes[now].next[s[i]-base];
@@ -53,35 +54,3 @@ struct Trie{
         return (prefix)? true : !nodes[now].accept.empty();
     }
 };
-
-int main(){
-    string S; int M; cin >> S >> M;
-    int N = S.size();
-
-    Trie<26, 'a'> trie;
-
-    for(int i = 0; i < M; i++){
-        string P; cin >> P;
-        trie.insert(P);
-    }
-
-    vector<int> W(M);
-    for(int i = 0; i < M; i++) cin >> W[i];
-
-    vector<int> dp(N+1, 0);
-    
-    for(int i = 0; i < N; i++){
-        int now = 0;
-        for(int j = 0; j <= 200; j++){
-            if(now == -1) break;
-            for(auto &e: trie.nodes[now].accept){
-                dp[i+j] = max(dp[i+j], dp[i]+W[e]);
-            }
-            if(i+j == N) break;
-            now = trie.nodes[now].next[S[i+j]-'a'];
-        }
-        dp[i+1] = max(dp[i+1], dp[i]);
-    }
-
-    cout << dp[N] << '\n';
-}

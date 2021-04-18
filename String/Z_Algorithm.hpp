@@ -4,12 +4,13 @@
 
 //概要
 //求める配列をAとする。
-//j+A[j]<A[i]ならばA[j]=A[j+i]となる。j+A[j]>=A[i]の場合でもはみ出た部分だけまた判定し直せばよい。
+//j+A[j] < A[i]ならばA[j] = A[j+i]となる。j+A[j] >= A[i]の場合でもはみ出た部分だけまた判定し直せばよい。
 
 //verified with
 //https://atcoder.jp/contests/jag2013summer-day3/tasks/icpc2013summer_day3_h
 //https://judge.yosupo.jp/problem/zalgorithm
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -28,11 +29,4 @@ vector<int> z_algorithm(const T &s){
         i += k, j -= k;
     }
     return ret;
-}
-
-int main(){
-    string S; cin >> S;
-
-    for(auto &e: z_algorithm(S)) cout << e << ' ';
-    cout << '\n';
 }

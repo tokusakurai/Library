@@ -1,6 +1,6 @@
 
 //Aho-Corasick法(複数文字列についてパターンマッチするオートマトンを構築する)
-//計算量 構築：O(Σ|S_i|)、遷移：O(1)
+//計算量 構築 : O(Σ|S_i|)、遷移 : O(1)
 
 //概要
 //既に構築されているトライ木に情報を加える。
@@ -12,49 +12,11 @@
 //https://yukicoder.me/problems/no/1269
 //https://atcoder.jp/contests/jag2017autumn/tasks/jag2017autumn_h
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
-template<int char_size, char base>
-struct Trie{
-    struct Node{
-        vector<int> next, accept;
-        int count; //子以下に追加された文字列の数
-
-        Node() : next(char_size, -1), count(0) {}
-    };
-
-    vector<Node> nodes;
-
-    Trie() {nodes.emplace_back();}
-
-    int count() const {return nodes.front().count;}
-
-    int size() const {return nodes.size();}
-
-    void insert(const string &s, int id){
-        int now = 0;
-        for(int i = 0; i < (int)s.size(); i++){
-            int &next = nodes[now].next[s[i]-base];
-            if(next == -1){
-                next = size(), nodes.emplace_back();
-            }
-            nodes[now].count++, now = next;
-        }
-        nodes[now].count++, nodes[now].accept.push_back(id);
-    }
-
-    void insert(const string &s) {insert(s, count());}
-
-    bool search(const string &s, bool prefix = false) const{
-        int now = 0;
-        for(int i = 0; i < s.size(); i++){
-            now = nodes[now].next[s[i]-base];
-            if(now == -1) return false;
-        }
-        return (prefix)? true : !nodes[now].accept.empty();
-    }
-};
+#include "../String/Trie.hpp"
 
 template<int char_size, char base>
 struct Aho_Corasick : Trie<char_size+1, base>{
@@ -129,35 +91,3 @@ struct Aho_Corasick : Trie<char_size+1, base>{
 
     pair<long long, int> move(const string &s) const {return move(0, s);}
 };
-
-int main(){
-    int N; cin >> N;
-
-    Aho_Corasick<26, 'a'> trie;
-
-    vector<string> S(N);
-
-    for(int i = 0; i < N; i++){
-        cin >> S[i];
-        trie.insert(S[i]);
-    }
-
-    trie.build();
-
-    string T; cin >> T;
-
-    int ptr = 0, M = T.size();
-    vector<int> dp(M+1, 0);
-    dp[0] = 1;
-
-    int MOD = 1000000007;
-
-    for(int i = 0; i < M; i++){
-        ptr = trie.move(ptr, T[i]).second;
-        for(auto &e: trie.nodes[ptr].accept){
-            dp[i+1] += dp[i+1-S[e].size()], dp[i+1] %= MOD;
-        }
-    }
-
-    cout << dp[M] << '\n';
-}

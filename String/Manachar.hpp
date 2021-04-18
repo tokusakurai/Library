@@ -4,12 +4,13 @@
 
 //概要
 //求める配列をRとする。
-//j+R[i-j]<R[i]ならばR[i-j]=R[i+j]となる。j+R[i-j]>=R[i+j]の場合でもはみ出た部分だけ判定し直せばよい。
+//j+R[i-j] < R[i]ならばR[i-j] = R[i+j]となる。j+R[i-j] >= R[i+j]の場合でもはみ出た部分だけ判定し直せばよい。
 //偶数長の回文は、元の文字列の各文字の間に適当な文字を挟めばよい。
 
 //verified with
 //https://judge.yosupo.jp/problem/enumerate_palindromes
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -26,19 +27,4 @@ vector<int> manachar(const T &s){
         i += k, j -= k;
     }
     return ret;
-}
-
-int main(){
-    string S; cin >> S;
-    int N = S.size();
-
-    string T = ".";
-    for(int i = 0; i < N; i++){
-        T += S[i], T += '.';
-    }
-
-    vector<int> ans = manachar(T);
-
-    for(int i = 1; i < 2*N; i++) cout << ans[i]-1 << ' ';
-    cout << '\n';
 }
