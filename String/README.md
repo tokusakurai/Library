@@ -15,7 +15,7 @@
 
 - [トライ木](https://github.com/tokusakurai/Library/blob/main/String/Trie.hpp)
 
-- [Aho-Corasick法](https://github.com/tokusakurai/Library/blob/main/String/Trie.hpp) (トライ木に、パターンが存在しない場合の後退辺を新たに付け加えたもの)
+- [Aho-Corasick法](https://github.com/tokusakurai/Library/blob/main/String/Aho_Corasick.hpp) (トライ木に、パターンが存在しない場合の後退辺を新たに付け加えたもの)
 
 ## ローリングハッシュ
 文字列や配列をハッシュ値に置き換えるアルゴリズム。
