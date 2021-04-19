@@ -31,7 +31,3 @@ struct io_setup{
         cout << fixed << setprecision(15);
     }
 } io_setup;
-
-int main(){
-    
-}
