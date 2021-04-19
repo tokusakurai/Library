@@ -17,13 +17,13 @@
 
 - [円と点の接線・円と円の共通接線](https://github.com/tokusakurai/Library/blob/main/Geometry/Tangent.hpp)
 
-- [垂直二等分線・アポロニウスの円](https://github.com/tokusakurai/Library/blob/main/Geometry/Apollonius.hpp)(2点からの距離の比が一定になる点の軌跡)
+- [垂直二等分線・アポロニウスの円](https://github.com/tokusakurai/Library/blob/main/Geometry/Apollonius.hpp) (2点からの距離の比が一定になる点の軌跡)
 
 ## アルゴリズム
 多数の点を処理するアルゴリズム。
 
 - [多角形の面積](https://github.com/tokusakurai/Library/blob/main/Geometry/Area.hpp)
 
-- [凸包](https://github.com/tokusakurai/Library/blob/main/Geometry/Convex_Hull.hpp)(元の点集合を含む最小の凸多角形を構築する)
+- [凸包](https://github.com/tokusakurai/Library/blob/main/Geometry/Convex_Hull.hpp) (元の点集合を含む最小の凸多角形を構築する)
 
 - [最近点対](https://github.com/tokusakurai/Library/blob/main/Geometry/Structure.hpp)
