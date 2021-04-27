@@ -1,9 +1,10 @@
 
 //素数・約数に関する計算
-//計算量 約数列挙・素因数分解・素数判定 : O(√N)、エラトステネスの篩 : O(N*log(log(N)))
+//計算量 約数列挙・素因数分解・素数判定 : O(√N)、1,2,...,nのうちkと互いに素な自然数の数え上げ : O(2^|(kの素因数)|) エラトステネスの篩 : O(N*log(log(N)))
 
 //概要
 //約数列挙・素因数分解・素数判定 : 自然数Nの素因数で√Nより大きいものは高々1つなので、√N以下の数全てについて割り切れるか調べる。
+//1,2,...,nのうちkと互いに素な自然数の数え上げ : 約数包除
 //エラトステネスの篩 : 前から順番に見て、注目している数が素数ならその数の倍数(その数は含めない)は全て素数ではないことになるので、テーブルをfalseに切り替える。
 
 //verified with
@@ -47,6 +48,22 @@ bool is_prime(const T &n){
         if(n%i == 0) return false;
     }
     return true;
+}
+
+//1,2,...,nのうちkと互いに素である自然数の個数
+template<typename T>
+T coprime(T n, T k){
+    vector<pair<T, int>> ps = prime_factor(k);
+    int m = ps.size();
+    T ret = 0;
+    for(int i = 0; i < (1<<m); i++){
+        T prd = 1;
+        for(int j = 0; j < m; j++){
+            if((i>>j)&1) prd *= ps[j].first;
+        }
+        ret += (__builtin_parity(i)? -1 : 1)*(n/prd);
+    }
+    return ret;
 }
 
 vector<bool> Eratosthenes(const int &n){
