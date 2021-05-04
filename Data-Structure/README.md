@@ -38,3 +38,6 @@
 - [平方分割(雛形)](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Sqrt_Decomposition_Template.hpp)
 
 - [平方分割(例)](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Sqrt_Decomposition_Example.hpp) (区間chmin、区間chmax、区間add、区間sumクエリを扱える)
+
+## 二分探索木
+- [スプレー木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Splay_Tree.hpp) (スプレー操作を行うことで平衡を保つ二分木)
