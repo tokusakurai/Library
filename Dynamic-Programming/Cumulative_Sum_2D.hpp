@@ -1,0 +1,41 @@
+
+//2次元累積和
+//計算量 構築 : O(N*M)、長方形和クエリ : O(1)
+
+//概要
+//各要素について自分より左上の要素の和を累積和dpで求める。
+
+#pragma once
+#include <bits/stdc++.h>
+using namespace std;
+
+template<typename T>
+struct Cumulative_Sum_2D{
+    vector<vector<T>> v;
+    const int n, m;
+
+    Cumulative_Sum_2D(const vector<vector<T>> &v) : v(v), n((int)v.size()), m((int)v[0].size()){
+        build();
+    }
+
+    void build(){
+        for(int i = 0; i < n; i++){
+            for(int j = 1; j < m; j++){
+                v[i][j] += v[i][j-1];
+            }
+        }
+        for(int j = 0; j < m; j++){
+            for(int i = 1; i < n; i++){
+                v[i][j] += v[i-1][j];
+            }
+        }
+    }
+
+    T fold(int a, int b){
+        return (a <= 0 || b <= 0? 0 : v[min(a, n)-1][min(b, m)-1]);
+    }
+
+    T sum(int lx, int ly, int rx, int ry){
+        return fold(rx, ry)-fold(lx, ry)-fold(rx, ly)+fold(lx, ly);
+    }
+};
