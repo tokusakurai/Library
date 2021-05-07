@@ -13,23 +13,32 @@
 using namespace std;
 
 template<typename T>
-struct Cumurative_Sum_1D{
+struct Cumulative_Sum_1D{
     vector<T> v;
     const int n;
 
-    Cumurative_Sum_1D(const vector<T> &v) : v(v), n((int)v.size()){
-        build();
-    }
+    Cumulative_Sum_1D(const vector<T> &v) : v(v), n((int)v.size()) {}
+
+    Cumulative_Sum_1D(int n) : v(n, 0), n(n) {}
 
     void build(){
         for(int i = 1; i < n; i++) v[i] += v[i-1];
+    }
+
+    void add(int l, int r, T x){ //区間[l,r)にimos法で加算
+        l = max(l, 0), r = min(r, n);
+        if(r <= l) return;
+        v[l] += x;
+        if(r < n) v[r] -= x;
     }
 
     T fold(int a){
         return (a <= 0? 0 : v[min(n, a)-1]);
     }
 
-    T sum(int l, int r){
+    T sum(int l, int r){ //区間[l,r)の総和
+        l = max(l, 0), r = min(r, n);
+        if(r <= l) return 0;
         return fold(r)-fold(l);
     }
 };
