@@ -1,6 +1,6 @@
 
 //1次元累積和
-//計算量 構築 : O(N)、区間和クエリ : O(1)
+//計算量 構築 : O(N)、imos法を用いた加算・区間和クエリ : O(1)
 
 //概要
 //各要素について自分より前の要素の和を累積和dpで求める。
@@ -21,7 +21,7 @@ struct Cumulative_Sum_1D{
 
     Cumulative_Sum_1D(int n) : v(n, 0), n(n) {}
 
-    void build(){
+    void build(){ //累積和を構築
         for(int i = 1; i < n; i++) v[i] += v[i-1];
     }
 
