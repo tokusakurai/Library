@@ -13,6 +13,7 @@
 //verified with
 //https://atcoder.jp/contests/xmascontest2015/tasks/xmascontest2015_d
 
+#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
