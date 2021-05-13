@@ -10,6 +10,11 @@
 
 - [Manachar](https://github.com/tokusakurai/Library/blob/main/String/Manachar.hpp)
 
+## MP法・KMP法
+文字列のすべての接頭辞について、その共通する最長の接頭辞・接尾辞を求めるアルゴリズム。
+
+- [MP法・KMP法](https://github.com/tokusakurai/Library/blob/main/String/KMP.hpp)
+
 ## トライ木
 文字列集合に対してトライ木(各頂点は1文字を表していて、根から1文字ずつたどることで文字列が表現される木)を構築する。
 
