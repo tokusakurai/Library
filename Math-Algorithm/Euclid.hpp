@@ -99,7 +99,7 @@ int Garner(vector<int> a, vector<int> m, const int &M){ //mの各要素はそれ
     for(int k = 0; k < (int)a.size(); k++){
         long long x = a[k]-constants[k], y = modinv(coeffs[k], m[k]);
         long long t = mod(x*y, m[k]);
-        for(int i = k+1; i < m.size(); i++){
+        for(int i = k+1; i < (int)m.size(); i++){
             constants[i] += t*coeffs[i], constants[i] %= m[i];
             coeffs[i] *= m[k], coeffs[i] %= m[i];
         }
