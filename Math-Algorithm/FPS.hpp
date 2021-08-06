@@ -35,8 +35,9 @@ struct Formal_Power_Series : vector<Mod_Int<mod>>{
         return Formal_Power_Series(begin(*this), begin(*this)+min((int)this->size(), n));
     }
 
-    Formal_Power_Series rev() const{
+    Formal_Power_Series rev(int deg = -1) const{
         Formal_Power_Series ret = *this;
+        if(deg != -1) ret.resize(deg, T(0));
         reverse(begin(ret), end(ret));
         return ret;
     }
@@ -97,7 +98,7 @@ struct Formal_Power_Series : vector<Mod_Int<mod>>{
             this->clear();
             return *this;
         }
-        int n = this->size()-sz(v)+1;
+        int n = this->size()-v.size()+1;
         return *this = (rev().pre(n)*v.rev().inv(n)).pre(n).rev(n);
     }
 
