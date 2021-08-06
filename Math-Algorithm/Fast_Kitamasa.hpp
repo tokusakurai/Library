@@ -1,3 +1,10 @@
+
+//kitamasa法(D階の線形漸化式で与えられる数列の第N項を求める)
+//計算量 O(D*log(D)*log(N))
+
+//概要
+//FPSを用いてKitamasa法における多項式の積と除算を高速化する。
+
 #pragma once
 #include <bits/stdc++.h>
 using namespace std;
