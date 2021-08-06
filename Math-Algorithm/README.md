@@ -28,13 +28,17 @@
 
 - [抽象化行列](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Abstract_Matrix.hpp) (半環に対して行列積の演算を行うことができる)
 
-## Kitamasa法
+## 線形漸化式
 初期値と線形漸化式で与えられる数列の任意の項を求めるアルゴリズム。
 
 - [Kitamasa法](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Kitamasa.hpp)
 
+- [高速Kitamasa法](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Fast_Kitamasa.hpp) (Kitamasa法をFPSを用いて高速化)
+
+- [Bostan-Moriのアルゴリズム]((https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Bostan_Mori.hpp))
+
 ## 畳み込み
-畳み込み(ここでは多項式の掛け算)を行うアルゴリズム。
+畳み込み(ここでは多項式の乗算)を行うアルゴリズム。
 
 ### 高速フーリエ変換(FFT)
 2つの多項式の積は、それぞれを複素数上で離散フーリエ変換し、両者の各項の積を取ったものを逆離散フーリエ変換することで得られる。このとき離散フーリエ変換・逆離散フーリエ変換がボトルネックとなっており、次数が2冪のときにこれらを高速に行えるアルゴリズムとして高速フーリエ変換が知られている。
