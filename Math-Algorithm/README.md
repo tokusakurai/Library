@@ -35,7 +35,7 @@
 
 - [高速Kitamasa法](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Fast_Kitamasa.hpp) (Kitamasa法をFPSを用いて高速化)
 
-- [Bostan-Moriのアルゴリズム]((https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Bostan_Mori.hpp)
+- [Bostan-Moriのアルゴリズム](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Bostan_Mori.hpp)
 
 ## 畳み込み
 畳み込み(ここでは多項式の乗算)を行うアルゴリズム。
