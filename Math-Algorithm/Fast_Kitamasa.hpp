@@ -1,9 +1,12 @@
 
-//kitamasa法(D階の線形漸化式で与えられる数列の第N項を求める)
+//高速kitamasa法(D階の線形漸化式で与えられる数列の第N項を求める)
 //計算量 O(D*log(D)*log(N))
 
 //概要
-//FPSを用いてKitamasa法における多項式の積と除算を高速化する。
+//FPSを用いてkitamasa法における多項式の積と除算を高速化する。
+
+//verified with
+//https://judge.yosupo.jp/problem/kth_term_of_linearly_recurrent_sequence
 
 #pragma once
 #include <bits/stdc++.h>
