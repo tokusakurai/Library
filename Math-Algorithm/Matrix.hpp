@@ -6,6 +6,7 @@
 //ガウスの消去法 : 行基本変形を繰り返すことで連立一次方程式の解を求める。
 
 //verified with
+//https://judge.yosupo.jp/problem/matrix_product
 //https://judge.yosupo.jp/problem/matrix_det
 //https://judge.yosupo.jp/problem/system_of_linear_equations
 

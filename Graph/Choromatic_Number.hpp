@@ -10,7 +10,7 @@
 //各I(S)はbitDPで求まり、f(S)=I(S)^Kであるから、g(S)は包除原理を用いて求められる。
 
 //verified with
-//https://atcoder.jp/contests/abc187/tasks/abc187_f
+//https://judge.yosupo.jp/problem/chromatic_number
 
 #pragma once
 #include <bits/stdc++.h>
