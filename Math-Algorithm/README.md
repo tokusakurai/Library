@@ -37,6 +37,10 @@
 
 - [Bostan-Moriのアルゴリズム](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Bostan_Mori.hpp)
 
+線形漸化式で得られる数列の先頭の有限項が与えられたとき、それを与える階数最小の線形漸化式を求めることもできる。
+
+- [Berlekamp-Masseyのアルゴリズム](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Berlekamp_Massey.hpp)
+
 ## 畳み込み
 畳み込み(ここでは多項式の乗算)を行うアルゴリズム。
 
