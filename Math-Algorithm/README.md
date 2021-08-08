@@ -19,6 +19,10 @@
 
 - [写像12相](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Twelvefold_Way.hpp) (二項係数、第2種スターリング数、ベル数)
 
+## 2-SAT
+リテラル数が2以下のクロージャーの積で表される論理式の充足可能性を判定するアルゴリズム。
+- [2-SAT](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Two_SAT.hpp)
+
 ## 行列
 行列を用いた計算に関するアルゴリズム。加法と乗法の2つの二項演算を備えた集合が半環であるとき、行列積の演算を行うことができる。
 
