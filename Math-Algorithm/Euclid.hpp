@@ -18,7 +18,7 @@
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_1_B&lang=ja
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=NTL_1_C&lang=ja
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=NTL_1_E&lang=jp
-//https://atcoder.jp/contests/practice2/tasks/practice2_c
+//https://judge.yosupo.jp/problem/sum_of_floor_of_linear
 //https://yukicoder.me/problems/no/186
 //https://yukicoder.me/problems/no/187
 
