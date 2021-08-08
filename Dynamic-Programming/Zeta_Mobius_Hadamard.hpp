@@ -66,7 +66,7 @@ void Fast_Hadamard_Transform(vector<T> &f, bool inverse = false){
 }
 
 template<typename T>
-vector<T> bitwise_and_convolution(vector<T> f, vector<T> g){
+vector<T> bitwise_and_convolve(vector<T> f, vector<T> g){
     int n = f.size();
     assert(g.size() == n && (n&(n-1)) == 0);
     Fast_Zeta_Transform(f, true), Fast_Zeta_Transform(g, true);
@@ -76,7 +76,7 @@ vector<T> bitwise_and_convolution(vector<T> f, vector<T> g){
 }
 
 template<typename T>
-vector<T> bitwise_or_convolution(vector<T> f, vector<T> g){
+vector<T> bitwise_or_convolve(vector<T> f, vector<T> g){
     int n = f.size();
     assert(g.size() == n && (n&(n-1)) == 0);
     Fast_Zeta_Transform(f, false), Fast_Zeta_Transform(g, false);
@@ -86,7 +86,7 @@ vector<T> bitwise_or_convolution(vector<T> f, vector<T> g){
 }
 
 template<typename T>
-vector<T> bitwise_xor_convolution(vector<T> f, vector<T> g){
+vector<T> bitwise_xor_convolve(vector<T> f, vector<T> g){
     int n = f.size();
     assert(g.size() == n && (n&(n-1)) == 0);
     Fast_Hadamard_Transform(f), Fast_Hadamard_Transform(g);
