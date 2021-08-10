@@ -45,6 +45,16 @@ struct Lazy_Segment_Tree{
         for(int i = n-1; i > 0; i--) seg[i] = f(seg[2*i], seg[2*i+1]);
     }
 
+    Lazy_Segment_Tree(int m, const Monoid &x, const F &f, const G &g, const H &h, const Monoid &e1, const Operator_Monoid &e2)
+        : f(f), g(g), h(h), e1(e1), e2(e2){
+        n = 1, height = 0;
+        while(n < m) n <<= 1, height++;
+        seg.assign(2*n, e1), lazy.assign(2*n, e2);
+        vector<Monoid> v(m, x);
+        copy(begin(v), end(v), seg.begin()+n);
+        for(int i = n-1; i > 0; i--) seg[i] = f(seg[2*i], seg[2*i+1]);
+    }
+
     inline Monoid reflect(int i) const{
         return (lazy[i] == e2? seg[i] : g(seg[i], lazy[i]));
     }

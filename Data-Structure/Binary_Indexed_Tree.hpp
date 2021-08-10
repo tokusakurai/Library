@@ -32,6 +32,17 @@ struct Binary_Indexed_Tree{
             }
         }
     }
+
+    Binary_Indexed_Tree(int n, const T &x) : n(n){
+        bit.resize(n+1);
+        vector<T> v(n, x);
+        copy(begin(v), end(v), begin(bit)+1);
+        for(int a = 2; a <= n; a <<= 1){
+            for(int b = a; b <= n; b += a){
+                bit[b] += bit[b-a/2];
+            }
+        }
+    }
     
     void add(int i, const T &x){
         for(i++; i <= n; i += (i & -i)) bit[i] += x;

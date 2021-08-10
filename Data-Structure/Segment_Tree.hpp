@@ -36,6 +36,15 @@ struct Segment_Tree{
         copy(begin(v), end(v), seg.begin()+n);
         for(int i = n-1; i > 0; i--) seg[i] = f(seg[2*i], seg[2*i+1]);
     }
+
+    Segment_Tree(int m, const Monoid &x, const F &f, const Monoid &e1) : f(f), e1(e1){
+        n = 1;
+        while(n < m) n <<= 1;
+        seg.assign(2*n, e1);
+        vector<Monoid> v(m, x);
+        copy(begin(v), end(v), begin(seg)+n);
+        for(int i = n-1; i > 0; i--) seg[i] = f(seg[2*i], seg[2*i+1]);
+    }
     
     void change(int i, const Monoid &x){
         seg[i += n] = x;

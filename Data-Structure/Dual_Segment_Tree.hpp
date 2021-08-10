@@ -37,6 +37,13 @@ struct Dual_Segment_Tree{
         seg = v;
     }
 
+    Dual_Segment_Tree(int m, const T &x, const G &g, const H &h, const Operator_Monoid &e2) : g(g), h(h), e2(e2){
+        n = 1, height = 0;
+        while(n < m) n <<= 1, height++;
+        lazy.assign(2*n, e2);
+        seg.assign(m, x);
+    }
+
     inline void eval(int i){
         if(i < n && lazy[i] != e2){
             lazy[2*i] = h(lazy[2*i], lazy[i]);
