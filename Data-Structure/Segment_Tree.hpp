@@ -11,6 +11,7 @@
 
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_A&lang=ja
+//https://judge.yosupo.jp/problem/point_add_range_sum
 //https://atcoder.jp/contests/practice2/tasks/practice2_j
 //https://codeforces.com/contest/1407/problem/D
 
@@ -46,8 +47,10 @@ struct Segment_Tree{
         for(int i = n-1; i > 0; i--) seg[i] = f(seg[2*i], seg[2*i+1]);
     }
     
-    void change(int i, const Monoid &x){
-        seg[i += n] = x;
+    void change(int i, const Monoid &x, bool update = true){
+        if(update) seg[i+n] = x;
+        else seg[i+n] = f(seg[i+n], x);
+        i += n;
         while(i >>= 1){
             seg[i] = f(seg[2*i], seg[2*i+1]);
         }
