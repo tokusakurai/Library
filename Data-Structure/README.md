@@ -21,11 +21,15 @@
 
 - [セグメント木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Segment_Tree.hpp)
 
-遅延評価(必要になるまで更新を保留すること)を用いることによって区間更新を扱うこともできる。
+遅延評価(必要になるまで更新を保留すること)を用いることによって、区間更新を扱うこともできる。
 
 - [双対セグメント木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Dual_Segment_Tree.hpp) (作用素の二項演算がモノイドの性質を満たすとき、区間更新と1点取得を扱える)
 
 - [遅延評価付きセグメント木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Lazy_Segment_Tree.hpp) (上記2つを組み合わせることで区間更新と区間演算を扱える)
+
+セグメント木にセグメント木を乗せることで、1点更新と矩形演算を扱うこともできる。
+
+- [2次元セグメント木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Segment_Tree_2D.hpp)
 
 ## スパーステーブル
 配列が静的かつ二項演算が結合則と冪等性を満たすとき、区間演算ができる。セグメント木と比べてクエリ計算量は小さいが、メモリ消費が大きいことと扱える演算の幅が小さくなることに注意。
