@@ -18,12 +18,12 @@ void printn(const vector<T> &v, T x = 0){
 }
 
 template<typename T>
-int lb(vector<T> &v, T x){
+int lb(const vector<T> &v, T x){
     return lower_bound(begin(v), end(v), x)-begin(v);
 }
 
 template<typename T>
-int ub(vector<T> &v, T x){
+int ub(const vector<T> &v, T x){
     return upper_bound(begin(v), end(v), x)-begin(v);
 }
 
@@ -34,7 +34,7 @@ void unique(vector<T> &v){
 }
 
 template<typename T>
-vector<int> iota(const vector<T>&v, bool greater = false){
+vector<int> iota(const vector<T> &v, bool greater = false){
     int n = v.size();
     vector<int> ret(n);
     iota(begin(ret), end(ret), 0);
