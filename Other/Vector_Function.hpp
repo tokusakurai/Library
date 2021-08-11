@@ -18,6 +18,16 @@ void printn(const vector<T> &v, T x = 0){
 }
 
 template<typename T>
+int lb(vector<T> &v, T x){
+    return lower_bound(begin(v), end(v), x)-begin(v);
+}
+
+template<typename T>
+int ub(vector<T> &v, T x){
+    return upper_bound(begin(v), end(v), x)-begin(v);
+}
+
+template<typename T>
 void unique(vector<T> &v){
     sort(begin(v), end(v));
     v.erase(unique(begin(v), end(v)), end(v));
