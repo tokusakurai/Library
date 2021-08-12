@@ -12,6 +12,7 @@
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_A&lang=ja
 //https://judge.yosupo.jp/problem/point_add_range_sum
+//https://judge.yosupo.jp/problem/point_set_range_composite
 //https://atcoder.jp/contests/practice2/tasks/practice2_j
 //https://codeforces.com/contest/1407/problem/D
 

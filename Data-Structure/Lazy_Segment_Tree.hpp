@@ -9,7 +9,7 @@
 
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_H&lang=ja
-//https://atcoder.jp/contests/practice2/tasks/practice2_k
+//https://judge.yosupo.jp/problem/range_affine_range_sum
 //https://codeforces.com/contest/1404/problem/C
 
 #pragma once
