@@ -19,6 +19,8 @@
 
 - [写像12相](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Twelvefold_Way.hpp) (二項係数、第2種スターリング数、ベル数)
 
+- [スターリング数](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Stirling_Number.hpp) (第1種スターリング数、第2種スターリング数のテーブル)
+
 ## 2-SAT
 リテラル数が2以下のクロージャーの積で表される論理式の充足可能性を判定するアルゴリズム。
 - [2-SAT](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Two_SAT.hpp)
