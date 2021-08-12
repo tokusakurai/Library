@@ -63,7 +63,7 @@ struct Matrix{
 
     bool eq(const T &a, const T &b) const{
         return a == b;
-        //return abs(a-b) <= EPS; //少数の場合
+        //return abs(a-b) <= EPS;
     }
 
     pair<int, T> row_reduction(vector<T> &b){ //行基本変形を用いて簡約化を行い、(階数、行列式)の組を返す
@@ -74,20 +74,23 @@ struct Matrix{
             int pivot = check;
             for(int i = check; i < m; i++){
                 if(A[i][j] != 0) pivot = i;
-                //if(abs(A[i][j]) > abs(A[pivot][j])) pivot = i; //小数の場合
+                //if(abs(A[i][j]) > abs(A[pivot][j])) pivot = i; //Tが小数の場合はこちら
             }
             if(check != pivot) det *= T(-1);
             swap(A[check], A[pivot]), swap(b[check], b[pivot]);
             if(eq(A[check][j], T(0))) {det = T(0); continue;}
             rank++;
             det *= A[check][j];
-            for(int k = j+1; k < n; k++) A[check][k] /= A[check][j];
-            b[check] /= A[check][j];
+            T r = T(1)/A[check][j];
+            for(int k = j+1; k < n; k++) A[check][k] *= r;
+            b[check] *= r;
             A[check][j] = T(1);
             for(int i = 0; i < m; i++){
                 if(i == check) continue;
-                for(int k = j+1; k < n; k++) A[i][k] -= A[i][j]*A[check][k];
-                b[i] -= A[i][j]*b[check];
+                if(!eq(A[i][j], 0)){
+                    for(int k = j+1; k < n; k++) A[i][k] -= A[i][j]*A[check][k];
+                    b[i] -= A[i][j]*b[check];
+                }
                 A[i][j] = T(0);
             }
             if(++check == m) break;
@@ -98,6 +101,34 @@ struct Matrix{
     pair<int, T> row_reduction(){
         vector<T> b(height(), T(0));
         return row_reduction(b);
+    }
+
+    Matrix inverse(){ //行基本変形によって正方行列の逆行列を求める
+        if(height() != width()) return Matrix(0, 0);
+        int n = height();
+        Matrix ret = I(n);
+        for(int j = 0; j < n; j++){
+            int pivot = j;
+            for(int i = j; i < n; i++){
+                if(A[i][j] != 0) pivot = i;
+                //if(abs(A[i][j]) > abs(A[pivot][j])) pivot = i; //Tが小数の場合はこちら
+            }
+            swap(A[j], A[pivot]), swap(ret[j], ret[pivot]);
+            if(eq(A[j][j], T(0))) return Matrix(0, 0);
+            T r = T(1)/A[j][j];
+            for(int k = j+1; k < n; k++) A[j][k] *= r;
+            for(int k = 0; k < n; k++) ret[j][k] *= r;
+            A[j][j] = T(1);
+            for(int i = 0; i < n; i++){
+                if(i == j) continue;
+                if(!eq(A[i][j], T(0))){
+                    for(int k = j+1; k < n; k++) A[i][k] -= A[i][j]*A[j][k];
+                    for(int k = 0; k < n; k++) ret[i][k] -= A[i][j]*ret[j][k];
+                }
+                A[i][j] = T(0);
+            }
+        }
+        return ret;
     }
 
     vector<vector<T>> Gausiann_elimination(vector<T> b){ //Ax=bの解の1つと解空間の基底の組を返す
