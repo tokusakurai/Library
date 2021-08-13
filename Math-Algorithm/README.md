@@ -34,6 +34,8 @@
 
 - [抽象化行列](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Abstract_Matrix.hpp) (半環に対して行列積の演算を行うことができる)
 
+- [疎行列の行列式](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Sparse_Matrix_Determinant.hpp) (black box in linear algebra の適用例)
+
 ## 線形漸化式
 初期値と線形漸化式で与えられる数列の任意の項を求めるアルゴリズム。
 
