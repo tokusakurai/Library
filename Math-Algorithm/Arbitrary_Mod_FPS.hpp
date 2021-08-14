@@ -15,12 +15,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#include "../Math-Algorithm/Arbitary_Mod_NTT.hpp"
+#include "../Math-Algorithm/Arbitrary_Mod_NTT.hpp"
 
 template<int mod>
 struct Formal_Power_Series : vector<Mod_Int<mod>>{
     using T = Mod_Int<mod>;
-    Arbitary_Mod_Number_Theorem_Transform<mod> NTT;
+    Arbitrary_Mod_Number_Theorem_Transform<mod> NTT;
     using vector<T> :: vector;
 
     Formal_Power_Series(const vector<T> &v) : vector<T>(v) {}

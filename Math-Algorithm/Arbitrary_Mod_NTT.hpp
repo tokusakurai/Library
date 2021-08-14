@@ -22,7 +22,7 @@ const int m2 = 1051721729, r2 = 6;
 const int m3 = 1053818881, r3 = 7;
 
 template<int mod>
-struct Arbitary_Mod_Number_Theorem_Transform{
+struct Arbitrary_Mod_Number_Theorem_Transform{
     using T = Mod_Int<mod>;
     using mint1 = Mod_Int<m1>;
     using mint2 = Mod_Int<m2>;
@@ -31,7 +31,7 @@ struct Arbitary_Mod_Number_Theorem_Transform{
     Number_Theorem_Transform<m2, r2> ntt2;
     Number_Theorem_Transform<m3, r3> ntt3;
 
-    Arbitary_Mod_Number_Theorem_Transform() {}
+    Arbitrary_Mod_Number_Theorem_Transform() {}
 
     vector<T> convolve(const vector<T> &a, const vector<T> &b){
         int n = a.size(), m = b.size();
