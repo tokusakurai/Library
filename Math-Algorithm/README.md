@@ -15,11 +15,18 @@
 
 - [剰余演算](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Modulo.hpp) (累乗、オイラーのφ関数、離散対数、位数、原始根)
 
-- [modint構造体](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Mod_Int.hpp)
+- [mod-int構造体](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Mod_Int.hpp)
+
+- [実行時入力mod-int構造体](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Runtime_Mod_Int.hpp)
 
 - [写像12相](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Twelvefold_Way.hpp) (二項係数、第2種スターリング数、ベル数)
 
+## 数列
+各種数列のテーブルを計算するアルゴリズム。
+
 - [スターリング数](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Stirling_Number.hpp) (第1種スターリング数、第2種スターリング数のテーブル)
+
+- [モンモール数](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Montmort_Number.hpp) (完全順列の個数のテーブル)
 
 ## 2-SAT
 リテラル数が2以下のクロージャーの積で表される論理式の充足可能性を判定するアルゴリズム。
