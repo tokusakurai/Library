@@ -64,11 +64,11 @@ NTT素数を、自身から1引いたものが(配列の長さより)十分大�
 
 いくつかのNTT素数modを用意して、Garnerのアルゴリズムで復元することによって任意modで畳み込みを行うことができる。
 
-- [任意mod数論変換(NTT)](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Arbitary_Mod_NTT.hpp) (任意modにおける畳込み)
+- [任意mod数論変換(NTT)](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Arbitrary_Mod_NTT.hpp) (任意modにおける畳込み)
 
 ## 形式的冪級数(FPS)
 形式的冪級数(項の数が有限とは限らない多項式)の基本的な計算を行うアルゴリズム。
 
 - [形式的冪級数(FPS)](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/FPS.hpp) (NTT素数modにおける形式的冪級数)
 
-- [任意mod形式的冪級数(FPS)](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Arbitary_Mod_FPS.hpp) (任意modにおける形式的羃級数)
+- [任意mod形式的冪級数(FPS)](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Arbitrary_Mod_FPS.hpp) (任意modにおける形式的羃級数)
