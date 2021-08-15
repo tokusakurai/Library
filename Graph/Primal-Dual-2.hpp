@@ -25,6 +25,7 @@ struct Min_Cost_Flow{
     vector<vector<edge>> es;
     vector<T> d, h;
     vector<int> pre_v, pre_e;
+    bool negative = false;
     const F INF_F;
     const T INF_T;
     const int n;
@@ -34,6 +35,7 @@ struct Min_Cost_Flow{
     void add_edge(int from, int to, F cap, T cost){
         es[from].emplace_back(to, cap, cost, (int)es[to].size());
         es[to].emplace_back(from, 0, -cost, (int)es[from].size()-1);
+        if(cost < 0) negative = true;
     }
 
     void bellman_ford(int s){
@@ -75,7 +77,7 @@ struct Min_Cost_Flow{
 
     T min_cost_flow(int s, int t, F flow){
         T ret = 0;
-        bellman_ford(s); //初期状態で負辺が存在しない場合はコメントアウトする
+        if(negative) bellman_ford(s);
         while(flow > 0){
             dijkstra(s);
             if(d[t] == INF_T) return -1;
