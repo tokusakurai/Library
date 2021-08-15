@@ -45,9 +45,9 @@ struct Rolling_Hash{
     vector<ull> hashed, pw;
 
     void set_base(){ //基数は乱数を用いて生成する
-        Random_Number_Generator rnd;
+        Random_Number_Generator rng;
         while(true){
-            ull k = rnd(mod);
+            ull k = rng(mod);
             if(gcd(mod-1, k) != 1) continue;
             base = pow(3, k);
             if(base < 256) continue;
@@ -110,9 +110,9 @@ struct Array_Hash{
     vector<ull> pw;
 
     void set_base(T m){
-        Random_Number_Generator rnd;
+        Random_Number_Generator rng;
         while(true){
-            ull k = rnd(mod);
+            ull k = rng(mod);
             if(gcd(mod-1, k) != 1) continue;
             base = pow(3, k);
             if(base <= ull(m)) continue;

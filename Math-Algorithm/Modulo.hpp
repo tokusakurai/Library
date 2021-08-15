@@ -68,9 +68,9 @@ template<typename T> T primitive_root(const T &m){ //素数mの原始根
         if((m-1)%i == 0) ds.push_back(i), ds.push_back((m-1)/i);
     }
     sort(begin(ds), end(ds));
-    Random_Number_Generator rnd;
+    Random_Number_Generator rng;
     while(true){
-        T r = rnd(1, m);
+        T r = rng(1, m);
         for(auto &e: ds){
             if(e == m-1) return r;
             if(modpow(r, e, m) == 1) break;
