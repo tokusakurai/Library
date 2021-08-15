@@ -64,7 +64,7 @@ struct Min_Cost_Flow{
         while(!que.empty()){
             auto [p, i] = que.top(); que.pop();
             if(p > d[i]) continue;
-            for(int j = 0; j < es[i].size(); j++){
+            for(int j = 0; j < (int)es[i].size(); j++){
                 edge &e = es[i][j];
                 if(e.cap > 0 && d[i]+e.cost+h[i]-h[e.to] < d[e.to]){
                     d[e.to] = d[i]+e.cost+h[i]-h[e.to];
