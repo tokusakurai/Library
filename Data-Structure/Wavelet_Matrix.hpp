@@ -127,7 +127,7 @@ struct Wavelet_Matrix{
         return range_freq(l, r, upper)-range_freq(l, r, lower);
     }
 
-    int quantile(int l, int r, int k) const{ //[l,r)で小さい方からk番目(0-indexed)の値
+    T quantile(int l, int r, int k) const{ //[l,r)で小さい方からk番目(0-indexed)の値
         assert(k >= 0 && k < r-l);
         T ret = 0;
         for(int i = h-1; i >= 0; i--){
