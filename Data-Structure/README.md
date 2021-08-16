@@ -45,3 +45,8 @@
 
 ## 二分探索木
 - [スプレー木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Splay_Tree.hpp) (スプレー操作を行うことで平衡を保つ二分木)
+
+## ウェーブレット行列
+静的な配列に対して、様々なクエリをオンラインで扱うことができる。
+
+- [ウェーブレット行列](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Wavelet_Matrix.hpp)
