@@ -16,44 +16,44 @@
 using namespace std;
 
 template<typename T>
-void Fast_Zeta_Transform(vector<T> &f, bool upper){
-    int n = f.size();
+void Fast_Zeta_Transform(vector<T> &a, bool upper){
+    int n = a.size();
     assert((n&(n-1)) == 0);
     for(int i = 1; i < n; i <<= 1){
         for(int j = 0; j < n; j++){
             if(!(j&i)){
-                if(upper) f[j] += f[j|i];
-                else f[j|i] += f[j];
+                if(upper) a[j] += a[j|i];
+                else a[j|i] += a[j];
             }
         }
     }
 }
 
 template<typename T>
-void Fast_Mobius_Transform(vector<T> &f, bool upper){
-    int n = f.size();
+void Fast_Mobius_Transform(vector<T> &a, bool upper){
+    int n = a.size();
     assert((n&(n-1)) == 0);
     for(int i = 1; i < n; i <<= 1){
         for(int j = 0; j < n; j++){
             if(!(j&i)){
-                if(upper) f[j] -= f[j|i];
-                else f[j|i] -= f[j];
+                if(upper) a[j] -= a[j|i];
+                else a[j|i] -= a[j];
             }
         }
     }
 }
 
 template<typename T>
-void Fast_Hadamard_Transform(vector<T> &f, bool inverse = false){
-    int n = f.size();
+void Fast_Hadamard_Transform(vector<T> &a, bool inverse = false){
+    int n = a.size();
     assert((n&(n-1)) == 0);
     for(int i = 1; i < n; i <<= 1){
         for(int j = 0; j < n; j++){
             if(!(j&i)){
-                T x = f[j], y = f[j|i];
-                f[j] = x+y, f[j|i] = x-y;
+                T x = a[j], y = a[j|i];
+                a[j] = x+y, a[j|i] = x-y;
             }
         }
     }
-    if(inverse) for(auto &e : f) e /= n;
+    if(inverse) for(auto &e : a) e /= n;
 }
