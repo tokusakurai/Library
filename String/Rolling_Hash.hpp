@@ -19,7 +19,7 @@ using namespace std;
 using ull = unsigned long long;
 
 struct Rolling_Hash{
-    const ull mod = (1ull<<61)-1;
+    const ull mod = (1ULL<<61)-1;
 
     ull calc_mod(ull x) const{
         ull ret = (x>>61) + (x&mod);
@@ -28,8 +28,8 @@ struct Rolling_Hash{
 
     ull mul(ull x, ull y) const{
         x = calc_mod(x), y = calc_mod(y);
-        ull x1 = x>>31, x2 = x&((1ull<<31)-1), y1 = y>>31, y2 = y&((1ull<<31)-1);
-        ull z = x1*y2 + x2*y1, z1 = z>>30, z2 = z&((1ull<<30)-1);
+        ull x1 = x>>31, x2 = x&((1ULL<<31)-1), y1 = y>>31, y2 = y&((1ULL<<31)-1);
+        ull z = x1*y2 + x2*y1, z1 = z>>30, z2 = z&((1ULL<<30)-1);
         return calc_mod(x1*y1*2 + x2*y2 + z1 + (z2<<31));
     }
 
@@ -84,7 +84,7 @@ struct Rolling_Hash{
 
 template<typename T>
 struct Array_Hash{
-    const ull mod = (1ull<<61)-1; 
+    const ull mod = (1ULL<<61)-1; 
 
     ull calc_mod(ull x) const{
         ull ret = (x>>61) + (x&mod);
@@ -93,8 +93,8 @@ struct Array_Hash{
 
     ull mul(ull x, ull y) const{
         x = calc_mod(x), y = calc_mod(y);
-        ull x1 = x>>31, x2 = x&((1ull<<31)-1), y1 = y>>31, y2 = y&((1ull<<31)-1);
-        ull z = x1*y2 + x2*y1, z1 = z>>30, z2 = z&((1ull<<30)-1);
+        ull x1 = x>>31, x2 = x&((1ULL<<31)-1), y1 = y>>31, y2 = y&((1ULL<<31)-1);
+        ull z = x1*y2 + x2*y1, z1 = z>>30, z2 = z&((1ULL<<30)-1);
         return calc_mod(x1*y1*2 + x2*y2 + z1 + (z2<<31));
     }
 
