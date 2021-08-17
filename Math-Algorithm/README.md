@@ -73,6 +73,11 @@ NTT素数を、自身から1引いたものが(配列の長さより)十分大�
 
 - [任意mod数論変換(NTT)](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Arbitrary_Mod_NTT.hpp) (任意modにおける畳込み)
 
+### 多変数畳み込み
+FFT(NTT)を用いることで、多変数多項式の積を次数が大きくなるところは切り捨てで求めることができる。
+
+- [多変数畳み込み](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Multivariate_Convolution.hpp) 
+
 ## 形式的冪級数(FPS)
 形式的冪級数(項の数が有限とは限らない多項式)の基本的な計算を行うアルゴリズム。
 
