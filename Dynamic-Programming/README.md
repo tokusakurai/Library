@@ -26,9 +26,11 @@
 - [2次元累積和](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/Cumulative_Sum_2D.hpp)
 
 ## 高速ゼータ・メビウス・アダマール変換
-長さが2べきであるような配列に対する各種の変換。応用としてAND・OR・XOR畳み込みがある。
+長さが2べきであるような配列に対する各種の変換。応用としてAND・OR・XOR畳み込みやsubset畳み込みがある。
 
 - [高速ゼータ・メビウス・アダマール変換](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/Zeta_Mobius_Hadamard.hpp)
+
+- [ビット演算による添字畳み込み](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/Bitwise_Convolution.hpp) (AND・OR・XOR畳み込み、subset畳み込み)
 
 ## Convex-Hull-Trick
 直線の追加クエリ(ただし、追加する直線の傾きは単調)と、追加された直線群におけるある点での値の最小値(または最大値)クエリを扱える。
