@@ -15,6 +15,8 @@
 
 - [剰余演算](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Modulo.hpp) (累乗、オイラーのφ関数、離散対数、位数、原始根)
 
+- [テトレーション](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Tetration.hpp)
+
 - [mod-int構造体](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Mod_Int.hpp)
 
 - [実行時入力mod-int構造体](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Runtime_Mod_Int.hpp)
@@ -74,7 +76,7 @@ NTT素数を、自身から1引いたものが(配列の長さより)十分大�
 - [任意mod数論変換(NTT)](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Arbitrary_Mod_NTT.hpp) (任意modにおける畳込み)
 
 ### 多変数畳み込み
-FFT(NTT)を用いることで、多変数多項式の積を次数が大きくなるところは切り捨てで求めることができる。
+FFT(NTT)を用いることで、多変数多項式の積を次数が大きくなるところは切り捨てで求めることができる。    
 
 - [多変数畳み込み](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Multivariate_Convolution.hpp) 
 
