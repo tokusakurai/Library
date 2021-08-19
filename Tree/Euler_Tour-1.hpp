@@ -7,6 +7,7 @@
 
 //verified with
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2871&lang=ja
+//https://judge.yosupo.jp/problem/vertex_add_subtree_sum
 
 #pragma once
 #include <bits/stdc++.h>
