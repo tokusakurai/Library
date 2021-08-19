@@ -16,6 +16,7 @@
 //https://judge.yosupo.jp/problem/log_of_formal_power_series
 //https://judge.yosupo.jp/problem/exp_of_formal_power_series
 //https://judge.yosupo.jp/problem/pow_of_formal_power_series
+//https://judge.yosupo.jp/problem/division_of_polynomials
 
 #pragma once
 #include <bits/stdc++.h>
@@ -98,7 +99,7 @@ struct Formal_Power_Series : vector<Mod_Int<mod>>{
             this->clear();
             return *this;
         }
-        int n = this->size()-v.size()+1;
+        int n = this->size()-(int)v.size()+1;
         return *this = (rev().pre(n)*v.rev().inv(n)).pre(n).rev(n);
     }
 
