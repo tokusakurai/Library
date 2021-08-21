@@ -16,40 +16,39 @@ using namespace std;
 
 #include "../Math-Algorithm/NTT.hpp"
 
-//(NTT素数、原始根)
-const int m1 = 1045430273, r1 = 3;
-const int m2 = 1051721729, r2 = 6;
-const int m3 = 1053818881, r3 = 7;
+//NTT素数たち
+const int m1 = 1045430273;
+const int m2 = 1051721729;
+const int m3 = 1053818881;
 
-template<int mod>
+template<typename T>
 struct Arbitrary_Mod_Number_Theorem_Transform{
-    using T = Mod_Int<mod>;
-    using mint1 = Mod_Int<m1>;
-    using mint2 = Mod_Int<m2>;
-    using mint3 = Mod_Int<m3>;
-    Number_Theorem_Transform<m1, r1> ntt1;
-    Number_Theorem_Transform<m2, r2> ntt2;
-    Number_Theorem_Transform<m3, r3> ntt3;
+    using mint_1 = Mod_Int<m1>;
+    using mint_2 = Mod_Int<m2>;
+    using mint_3 = Mod_Int<m3>;
+    using NTT_1 = Number_Theorem_Transform<mint_1>;
+    using NTT_2 = Number_Theorem_Transform<mint_2>;
+    using NTT_3 = Number_Theorem_Transform<mint_3>;
 
     Arbitrary_Mod_Number_Theorem_Transform() {}
 
-    vector<T> convolve(const vector<T> &a, const vector<T> &b){
+    static vector<T> convolve(const vector<T> &a, const vector<T> &b){
         int n = a.size(), m = b.size();
-        vector<mint1> a1(n), b1(m);
-        vector<mint2> a2(n), b2(m);
-        vector<mint3> a3(n), b3(m);
+        vector<mint_1> a1(n), b1(m);
+        vector<mint_2> a2(n), b2(m);
+        vector<mint_3> a3(n), b3(m);
         for(int i = 0; i < n; i++) a1[i] = a[i].x, a2[i] = a[i].x, a3[i] = a[i].x;
         for(int i = 0; i < m; i++) b1[i] = b[i].x, b2[i] = b[i].x, b3[i] = b[i].x;
-        auto x = ntt1.convolve(a1, b1);
-        auto y = ntt2.convolve(a2, b2);
-        auto z = ntt3.convolve(a3, b3);
-        const auto m1_inv_m2 = mint2(m1).inverse().x;
-        const auto m1m2_inv_m3 = (mint3(m1)*m2).inverse().x;
+        auto x = NTT_1::convolve(a1, b1);
+        auto y = NTT_2::convolve(a2, b2);
+        auto z = NTT_3::convolve(a3, b3);
+        const auto m1_inv_m2 = mint_2(m1).inverse().x;
+        const auto m1m2_inv_m3 = (mint_3(m1)*m2).inverse().x;
         const auto m1m2_mod = (mint(m1)*m2).x;
         vector<T> ret(n+m-1);
         for(int i = 0; i < n+m-1; i++){
-            auto v1 = ((mint2(y[i])+m2-x[i].x)*m1_inv_m2).x;
-            auto v2 = ((z[i]+m3-x[i].x-mint3(m1)*v1)*m1m2_inv_m3).x;
+            auto v1 = ((mint_2(y[i])+m2-x[i].x)*m1_inv_m2).x;
+            auto v2 = ((z[i]+m3-x[i].x-mint_3(m1)*v1)*m1m2_inv_m3).x;
             ret[i] = (T(x[i].x))+T(m1)*v1+T(m1m2_mod)*v2;
         }
         return ret;

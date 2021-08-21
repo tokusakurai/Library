@@ -17,22 +17,34 @@ using namespace std;
 
 #include "../Math-Algorithm/Mod_Int.hpp"
 
-template<int mod, int primitive_root>
+template<typename T>
 struct Number_Theorem_Transform{
-    using T = Mod_Int<mod>;
-    vector<T> r, ir;
+    static int max_base;
+    static T root;
+    static vector<T> r, ir;
 
-    Number_Theorem_Transform(){
-        r.resize(30), ir.resize(30);
-        for(int i = 0; i < 30; i++){
-            r[i] = -T(primitive_root).pow((mod-1)>>(i+2)); //r[i]:=1の2^(i+2)乗根
+    Number_Theorem_Transform() {}
+
+    static void init(){
+        if(!empty(r)) return;
+        int mod = T::get_mod();
+        int tmp = mod-1;
+        root = 2;
+        while(root.pow(tmp>>1) == 1) root++;
+        max_base = 0;
+        while(tmp%2 == 0) tmp >>= 1, max_base++;
+        r.resize(max_base), ir.resize(max_base);
+        for(int i = 0; i < max_base; i++){
+            r[i] = -root.pow((mod-1)>>(i+2)); //r[i]:=1の2^(i+2)乗根
             ir[i] = r[i].inverse(); //ir[i]:=1/r[i]
         }
     }
 
-    void ntt(vector<T> &a, int n) const{
+    static void ntt(vector<T> &a){
+        init();
+        int n = a.size();
         assert((n&(n-1)) == 0);
-        a.resize(n);
+        assert(n <= (1<<max_base));
         for(int k = n; k >>= 1;){
             T w = 1;
             for(int s = 0, t = 0; s < n; s += 2*k){
@@ -45,9 +57,11 @@ struct Number_Theorem_Transform{
         }
     }
 
-    void intt(vector<T> &a, int n) const{
+    static void intt(vector<T> &a){
+        init();
+        int n = a.size();
         assert((n&(n-1)) == 0);
-        a.resize(n);
+        assert(n <= (1<<max_base));
         for(int k = 1; k < n; k <<= 1){
             T w = 1;
             for(int s = 0, t = 0; s < n; s += 2*k){
@@ -62,12 +76,25 @@ struct Number_Theorem_Transform{
         for(auto &e: a) e *= inv;
     }
 
-    vector<T> convolve(vector<T> a, vector<T> b) const{
+    static vector<T> convolve(vector<T> a, vector<T> b){
         int k = (int)a.size()+(int)b.size()-1, n = 1;
         while(n < k) n <<= 1;
-        ntt(a, n), ntt(b, n);
+        a.resize(n), b.resize(n);
+        ntt(a), ntt(b);
         for(int i = 0; i < n; i++) a[i] *= b[i];
-        intt(a, n), a.resize(k);
+        intt(a), a.resize(k);
         return a;
     }
 };
+
+template<typename T>
+int Number_Theorem_Transform<T>::max_base = 0;
+
+template<typename T>
+T Number_Theorem_Transform<T>::root = T();
+
+template<typename T>
+vector<T> Number_Theorem_Transform<T>::r = vector<T>();
+
+template<typename T>
+vector<T> Number_Theorem_Transform<T>::ir = vector<T>();

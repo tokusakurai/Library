@@ -20,6 +20,8 @@ struct Mod_Int{
 
     Mod_Int(long long y) : x(y >= 0 ? y % mod : (mod - (-y) % mod) % mod) {}
 
+    static int get_mod() {return mod;}
+
     Mod_Int &operator += (const Mod_Int &p){
         if((x += p.x) >= mod) x -= mod;
         return *this;
