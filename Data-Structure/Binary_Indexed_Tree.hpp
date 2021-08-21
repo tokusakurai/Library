@@ -1,5 +1,5 @@
 
-//Binary-Indexed木
+//Binary Indexed Tree
 //計算量 構築 : O(N)、1点加算・区間和取得・二分探索 : O(log(N))
 //空間計算量 O(N)
 

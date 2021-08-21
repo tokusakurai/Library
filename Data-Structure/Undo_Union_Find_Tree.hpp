@@ -1,5 +1,5 @@
 
-//Undo可能Union-Find木
+//Undo可能Union-Find Tree
 //計算量 構築 : O(N)、併合・結合判定・サイズ : O(log(N))、Undo : O(1)
 //空間計算量 O(N)
 
