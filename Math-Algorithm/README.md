@@ -86,3 +86,14 @@ FFT(NTT)を用いることで、多変数多項式の積を次数が大きくな
 - [形式的冪級数(FPS)](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/FPS.hpp) (NTT素数modにおける形式的冪級数)
 
 - [任意mod形式的冪級数(FPS)](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Arbitrary_Mod_FPS.hpp) (任意modにおける形式的羃級数)
+
+## 多項式
+多項式補間や、与えられた点での評価を行うアルゴリズム。
+
+- [Subproduct Tree](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Subproduct_Tree.hpp)(多項式の積についてのセグメント木)
+
+- [ラグランジュ補間(1点)](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Lagrange_Interpolation.hpp)(f(0),f(1),..,f(n-1)の値からある1点でのfの値を求める)
+
+- [ラグランジュ補間(多項式)](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Polynomial_Interpolation.hpp)(多項式そのものを復元する)
+
+- [多点評価](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Multipoint_Evaluation.hpp)(多項式が与えられたときに多点での値を求める)
