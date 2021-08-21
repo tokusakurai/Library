@@ -21,9 +21,6 @@ using namespace std;
 
 #include "../Math-Algorithm/NTT.hpp"
 
-using mint = Mod_Int<998244353>;
-Number_Theorem_Transform<998244353, 3> NTT;
-
 int chi(const vector<int> &base, int n){
     int k = base.size(), ret = 0;
     for(int e: base){
@@ -32,20 +29,22 @@ int chi(const vector<int> &base, int n){
     return ret;
 }
 
-vector<mint> multivariate_convolve(const vector<mint> &a, const vector<mint> &b, const vector<int> &base){
+template<typename T>
+vector<T> multivariate_convolve(const vector<T> &a, const vector<T> &b, const vector<int> &base){
+    using NTT_ = Number_Theorem_Transform<T>;
     int k = base.size(), m = (k > 0? base.back() : 1);
     assert((int)a.size() == m && (int)b.size() == m);
     int n = 1;
     while(n < 2*m-1) n <<= 1;
-    vector<vector<mint>> A(k+1, vector<mint>(n, 0));
-    vector<vector<mint>> B(k+1, vector<mint>(n, 0));
-    vector<vector<mint>> C(k+1, vector<mint>(n, 0));
+    vector<vector<T>> A(k+1, vector<T>(n, 0));
+    vector<vector<T>> B(k+1, vector<T>(n, 0));
+    vector<vector<T>> C(k+1, vector<T>(n, 0));
     for(int i = 0; i < m; i++){
         int t = chi(base, i);
         A[t][i] = a[i], B[t][i] = b[i];
     }
     for(int i = 0; i <= k; i++){
-        NTT.ntt(A[i], n), NTT.ntt(B[i], n);
+        NTT_::ntt(A[i]), NTT_::ntt(B[i]);
     }
     for(int i = 0; i <= k; i++){
         for(int j = 0; j <= k; j++){
@@ -55,8 +54,8 @@ vector<mint> multivariate_convolve(const vector<mint> &a, const vector<mint> &b,
             }
         }
     }
-    for(int i = 0; i <= k; i++) NTT.intt(C[i], n);
-    vector<mint> c(m);
+    for(int i = 0; i <= k; i++) NTT_::intt(C[i]);
+    vector<T> c(m);
     for(int i = 0; i < m; i++) c[i] = C[chi(base, i)][i];
     return c;
 }
