@@ -18,11 +18,10 @@ using namespace std;
 
 #include "../Math-Algorithm/Arbitrary_Mod_NTT.hpp"
 
-template<int mod>
-struct Formal_Power_Series : vector<Mod_Int<mod>>{
-    using T = Mod_Int<mod>;
-    Arbitrary_Mod_Number_Theorem_Transform<mod> NTT;
-    using vector<T> :: vector;
+template<typename T>
+struct Formal_Power_Series : vector<T>{
+    using NTT_ = Arbitrary_Mod_Number_Theorem_Transform<T>;
+    using vector<T>::vector;
 
     Formal_Power_Series(const vector<T> &v) : vector<T>(v) {}
 
@@ -37,15 +36,14 @@ struct Formal_Power_Series : vector<Mod_Int<mod>>{
         return ret;
     }
 
-    Formal_Power_Series &normalize(){
+    void normalize(){
         while(!this->empty() && this->back() == 0) this->pop_back();
-        return *this;
     }
 
-    Formal_Power_Series operator - () const noexcept{
+    Formal_Power_Series operator - () const{
         Formal_Power_Series ret = *this;
         for(int i = 0; i < (int)ret.size(); i++) ret[i] = -ret[i];
-        return ret; 
+        return ret;
     }
 
     Formal_Power_Series &operator += (const T &x){
@@ -57,7 +55,8 @@ struct Formal_Power_Series : vector<Mod_Int<mod>>{
     Formal_Power_Series &operator += (const Formal_Power_Series &v){
         if(v.size() > this->size()) this->resize(v.size());
         for(int i = 0; i < (int)v.size(); i++) (*this)[i] += v[i];
-        return this->normalize();
+        this->normalize();
+        return *this;
     }
 
     Formal_Power_Series &operator -= (const T &x){
@@ -69,7 +68,8 @@ struct Formal_Power_Series : vector<Mod_Int<mod>>{
     Formal_Power_Series &operator -= (const Formal_Power_Series &v){
         if(v.size() > this->size()) this->resize(v.size());
         for(int i = 0; i < (int)v.size(); i++) (*this)[i] -= v[i];
-        return this->normalize();
+        this->normalize();
+        return *this;
     }
 
     Formal_Power_Series &operator *= (const T &x){
@@ -78,7 +78,11 @@ struct Formal_Power_Series : vector<Mod_Int<mod>>{
     }
 
     Formal_Power_Series &operator *= (const Formal_Power_Series &v){
-        return *this = NTT.convolve(*this, v);
+        if(this->empty() || empty(v)){
+            this->clear();
+            return *this;
+        }
+        return *this = NTT_::convolve(*this, v);
     }
 
     Formal_Power_Series &operator /= (const T &x){

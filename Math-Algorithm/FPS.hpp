@@ -24,11 +24,10 @@ using namespace std;
 
 #include "../Math-Algorithm/NTT.hpp"
 
-template<int mod, int primitive_root>
-struct Formal_Power_Series : vector<Mod_Int<mod>>{
-    using T = Mod_Int<mod>;
-    Number_Theorem_Transform<mod, primitive_root> NTT;
-    using vector<T> :: vector;
+template<typename T>
+struct Formal_Power_Series : vector<T>{
+    using NTT_ = Number_Theorem_Transform<T>;
+    using vector<T>::vector;
 
     Formal_Power_Series(const vector<T> &v) : vector<T>(v) {}
 
@@ -43,15 +42,14 @@ struct Formal_Power_Series : vector<Mod_Int<mod>>{
         return ret;
     }
 
-    Formal_Power_Series &normalize(){
+    void normalize(){
         while(!this->empty() && this->back() == 0) this->pop_back();
-        return *this;
     }
 
-    Formal_Power_Series operator - () const noexcept{
+    Formal_Power_Series operator - () const{
         Formal_Power_Series ret = *this;
         for(int i = 0; i < (int)ret.size(); i++) ret[i] = -ret[i];
-        return ret; 
+        return ret;
     }
 
     Formal_Power_Series &operator += (const T &x){
@@ -63,7 +61,8 @@ struct Formal_Power_Series : vector<Mod_Int<mod>>{
     Formal_Power_Series &operator += (const Formal_Power_Series &v){
         if(v.size() > this->size()) this->resize(v.size());
         for(int i = 0; i < (int)v.size(); i++) (*this)[i] += v[i];
-        return this->normalize();
+        this->normalize();
+        return *this;
     }
 
     Formal_Power_Series &operator -= (const T &x){
@@ -75,7 +74,8 @@ struct Formal_Power_Series : vector<Mod_Int<mod>>{
     Formal_Power_Series &operator -= (const Formal_Power_Series &v){
         if(v.size() > this->size()) this->resize(v.size());
         for(int i = 0; i < (int)v.size(); i++) (*this)[i] -= v[i];
-        return this->normalize();
+        this->normalize();
+        return *this;
     }
 
     Formal_Power_Series &operator *= (const T &x){
@@ -84,7 +84,11 @@ struct Formal_Power_Series : vector<Mod_Int<mod>>{
     }
 
     Formal_Power_Series &operator *= (const Formal_Power_Series &v){
-        return *this = NTT.convolve(*this, v);
+        if(this->empty() || empty(v)){
+            this->clear();
+            return *this;
+        }
+        return *this = NTT_::convolve(*this, v);
     }
 
     Formal_Power_Series &operator /= (const T &x){
@@ -166,17 +170,17 @@ struct Formal_Power_Series : vector<Mod_Int<mod>>{
         Formal_Power_Series ret(1, (*this)[0].inverse());
         for(int i = 1; i < deg; i <<= 1){
             Formal_Power_Series f = pre(2*i), g = ret;
-            NTT.ntt(f, 2*i), NTT.ntt(g, 2*i);
+            f.resize(2*i), g.resize(2*i);
+            NTT_::ntt(f), NTT_::ntt(g);
             Formal_Power_Series h(2*i);
             for(int j = 0; j < 2*i; j++) h[j] = f[j]*g[j];
-            NTT.intt(h, 2*i);
+            NTT_::intt(h);
             for(int j = 0; j < i; j++) h[j] = 0;
-            NTT.ntt(h, 2*i);
+            NTT_::ntt(h);
             for(int j = 0; j < 2*i; j++) h[j] *= g[j];
-            NTT.intt(h, 2*i);
+            NTT_::intt(h);
             for(int j = 0; j < i; j++) h[j] = 0;
             ret -= h;
-            //ret = (ret+ret-ret*ret*pre(i<<1)).pre(i<<1);
         }
         ret.resize(deg);
         return ret;
@@ -195,9 +199,66 @@ struct Formal_Power_Series : vector<Mod_Int<mod>>{
 
     Formal_Power_Series exp(int deg) const{ // exp(f) (f[0] = 0)
         assert((*this)[0] == 0);
-        Formal_Power_Series ret(1, 1);
-        for(int i = 1; i < deg; i <<= 1){
-            ret = (ret*(pre(i<<1)+1-ret.log(i<<1))).pre(i<<1);
+        Formal_Power_Series inv;
+        inv.reserve(deg+1);
+        inv.push_back(0), inv.push_back(1);
+
+        auto inplace_integral = [&](Formal_Power_Series &F) -> void {
+            int n = F.size();
+            int mod = T::get_mod();
+            while((int) inv.size() <= n) {
+                int i = inv.size();
+                inv.push_back((-inv[mod%i])*(mod/i));
+            }
+            F.insert(begin(F), 0);
+            for(int i = 1; i <= n; i++) F[i] *= inv[i];
+        };
+
+        auto inplace_diff = [](Formal_Power_Series &F) -> void {
+            if(F.empty()) return;
+            F.erase(begin(F));
+            T coeff = 1, one = 1;
+            for(int i = 0; i < (int) F.size(); i++) {
+                F[i] *= coeff;
+                coeff += one;
+            }
+        };
+
+        Formal_Power_Series ret{1, this->size()>1 ? (*this)[1] : 0}, c{1}, z1, z2{1, 1};
+        for(int m = 2; m < deg; m *= 2){
+            auto y = ret;
+            y.resize(2*m);
+            NTT_::ntt(y);
+            z1 = z2;
+            Formal_Power_Series z(m);
+            for(int i = 0; i < m; i++) z[i] = y[i]*z1[i];
+            NTT_::intt(z);
+            fill(begin(z), begin(z)+m/2, 0);
+            NTT_::ntt(z);
+            for(int i = 0; i < m; i++) z[i] *= -z1[i];
+            NTT_::intt(z);
+            c.insert(end(c), begin(z)+m/2, end(z));
+            z2 = c, z2.resize(2 * m);
+            NTT_::ntt(z2);
+            Formal_Power_Series x(begin(*this), begin(*this)+min((int)this->size(), m));
+            inplace_diff(x);
+            x.push_back(0);
+            NTT_::ntt(x);
+            for(int i = 0; i < m; i++) x[i] *= y[i];
+            NTT_::intt(x);
+            x -= ret.diff(), x.resize(2*m);
+            for(int i = 0; i < m-1; i++) x[m+i] = x[i], x[i] = 0;
+            NTT_::ntt(x);
+            for(int i = 0; i < 2*m; i++) x[i] *= z2[i];
+            NTT_::intt(x);
+            x.pop_back();
+            inplace_integral(x);
+            for(int i = m; i < min((int)this->size(), 2*m); i++) x[i] += (*this)[i];
+            fill(begin(x), begin(x)+m, 0);
+            NTT_::ntt(x);
+            for(int i = 0; i < 2 * m; i++) x[i] *= y[i];
+            NTT_::intt(x);
+            ret.insert(end(ret), begin(x)+m, end(x));
         }
         ret.resize(deg);
         return ret;
