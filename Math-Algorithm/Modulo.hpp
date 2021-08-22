@@ -1,6 +1,6 @@
 
 //剰余演算(累乗、オイラーのφ関数、離散対数、位数、原始根)
-//計算量 K乗 : O(log(K))、オイラーのφ関数・離散対数・位数 : O(√M)、原始根 : O(φ(M-1)*log(M))
+//計算量 K乗 : O(log(K))、離散対数 : (O√M+log(M))、オイラーのφ関数・位数 : O(√M)、原始根 : O(φ(M-1)*log(M))
 
 //概要
 //累乗 : ダブリング
@@ -8,6 +8,9 @@
 //離散対数 : Baby-step Giant-step
 //位数 : φ(M)の約数を全て考える。
 //原始根 : 乱数で発生させて、その位数がM-1であるかどうか判定する。原始根は最低でもφ(M-1)個存在する。
+
+//verified with
+//https://judge.yosupo.jp/problem/discrete_logarithm_mod
 
 #pragma once
 #include <bits/stdc++.h>
@@ -24,7 +27,7 @@ long long modpow(long long x, long long n, const int &m){
 }
 
 template<typename T>
-T Euler_Totient(T m){ //オイラーのφ関数(xとmが互いに素ならば、x^φ(m)≡1(mod m))
+T Euler_Totient(T m){ //オイラーのφ関数(xとmが互いに素ならば、x^φ(m) ≡ 1(mod m))
     T ret = m;
     for(T i = 2; i*i <= m; i++){
         if(m%i == 0) ret /= i, ret *= i-1;
@@ -34,22 +37,33 @@ T Euler_Totient(T m){ //オイラーのφ関数(xとmが互いに素ならば、
     return ret;
 }
 
-int modlog(const int &x, long long y, const int &m){ //x^k≡y(mod m)となる最小の非負整数k(xとmは互いに素)
-    unordered_map<int, int> mp;
-    int n = 0; long long now = 1;
-    for(; n*n < m; n++){
-        if(!mp.count(now)) mp[now] = n;
-        now *= x, now %= m;
+int modlog(int x, int y, int m){ //x^k ≡ y(mod m)となる最小の非負整数k(存在しなければ-1)
+    long long g = 1;
+    for(int i = m; i > 0; i >>= 1) g *= x, g %= m;
+    g = gcd(g, m);
+    int c = 0;
+    long long t = 1;
+    for(; t%g != 0; c++){
+        if(t == y) return c;
+        t *= x, t %= m;
     }
-    now = modpow(now, Euler_Totient(m)-1, m);
+    if(y%g != 0) return -1;
+    t /= g, y /= g, m /= g;
+    int n = 0;
+    long long gs = 1;
+    for(; n*n < m; n++) gs *= x, gs %= m;
+    unordered_map<int, int> mp;
+    long long e = y;
+    for(int i = 0; i < n; mp[e] = ++i) e *= x, e %= m;
+    e = t;
     for(int i = 0; i < n; i++){
-        if(mp.count(y)) return n*i+mp[y];
-        y *= now, y %= m;
+        e *= gs, e %= m;
+        if(mp.count(e)) return c+n*(i+1)-mp[e];
     }
     return -1;
 }
 
-template<typename T> T order(T x, const T &m){ //x^k≡1(mod m)となる最小の正整数k(xとmは互いに素)
+template<typename T> T order(T x, const T &m){ //x^k ≡ 1(mod m)となる最小の正整数k(xとmは互いに素)
     T n = Euler_Totient(m);
     vector<T> ds;
     for(T i = 1; i*i <= n; i++){
