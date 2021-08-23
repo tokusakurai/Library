@@ -12,32 +12,34 @@
 - [Undo可能Union-Find Tree](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Undo_Union_Find_Tree.hpp) (Union操作を巻き戻すことができる)
 
 ## Binary Indexed Tree
-配列に対して1点加算と区間和取得ができる。セグメント木と比べてメモリや計算量の定数倍が軽いというメリットがある。
+配列に対して1点加算と区間和取得ができる。Segment Treeと比べてメモリや計算量の定数倍が軽いというメリットがある。
 
 - [Binary Indexed Tree](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Binary_Indexed_Tree.hpp)
 
-## セグメント木
+## Segment Tree
 配列に対して1点更新と区間演算ができる。ただし、二項演算はモノイドとしての性質を満たさなければならない。
 
-- [セグメント木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Segment_Tree.hpp)
+- [Segment Tree](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Segment_Tree.hpp)
 
 遅延評価(必要になるまで更新を保留すること)を用いることによって、区間更新を扱うこともできる。
 
-- [双対セグメント木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Dual_Segment_Tree.hpp) (作用素の二項演算がモノイドの性質を満たすとき、区間更新と1点取得を扱える)
+- [双対Segment Tree](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Dual_Segment_Tree.hpp) (作用素の二項演算がモノイドの性質を満たすとき、区間更新と1点取得を扱える)
 
-- [遅延評価付きセグメント木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Lazy_Segment_Tree.hpp) (上記2つを組み合わせることで区間更新と区間演算を扱える)
+- [遅延評価付きSegment Tree](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Lazy_Segment_Tree.hpp) (上記2つを組み合わせることで区間更新と区間演算を扱える)
 
-セグメント木にセグメント木を乗せることで、1点更新と矩形演算を扱うこともできる。
+- [Segment Tree Beats](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Segment_Tree_Beats.hpp) (区間chmin・chmaxを扱える)
 
-- [2次元セグメント木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Segment_Tree_2D.hpp)
+Segment TreeにSegment Treeを乗せることで、2次元平面上の1点更新と矩形演算を扱うこともできる。
+
+- [2次元Segment Tree](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Segment_Tree_2D.hpp)
 
 ## スパーステーブル
-配列が静的かつ二項演算が結合則と冪等性を満たすとき、区間演算ができる。セグメント木と比べてクエリ計算量は小さいが、メモリ消費が大きいことと扱える演算の幅が小さくなることに注意。
+配列が静的かつ二項演算が結合則と冪等性を満たすとき、区間演算ができる。Segment Treeと比べてクエリ計算量は小さいが、メモリ消費が大きいことと扱える演算の幅が小さくなることに注意。
 
 - [スパーステーブル](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Sparse_Table.hpp)
 
 ## 平方分割
-配列を適当なサイズごとのバケットに分割して区間クエリを処理するテクニック。セグメント木と比べて計算量は落ちるが、扱えるクエリの幅が大きい。
+配列を適当なサイズごとのバケットに分割して区間クエリを処理するテクニック。Segment Treeと比べて計算量は落ちるが、扱えるクエリの幅が大きい。
 
 - [平方分割(雛形)](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Sqrt_Decomposition_Template.hpp)
 
