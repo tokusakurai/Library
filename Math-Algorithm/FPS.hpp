@@ -1,6 +1,6 @@
 
 //形式的冪級数
-//計算量 加算・減算・微分・積分 : O(N)、積・除算・inv・log・exp・pow : O(N*log(N))
+//計算量 加算・減算・微分・積分 : O(N)、積・除算・inv・log・exp・pow・Taylor Shift : O(N*log(N))
 
 //各種演算はテイラー展開を用いて定義される(詳しくは下のverify url)
 
@@ -10,6 +10,7 @@
 //除算 : invを用いて計算する。
 //log : invを用いて計算する。
 //pow : logとexpを用いて計算する。
+//Taylor Shift : 係数を分解して畳み込みに持ち込む。
 
 //verified with
 //https://judge.yosupo.jp/problem/inv_of_formal_power_series
@@ -17,6 +18,7 @@
 //https://judge.yosupo.jp/problem/exp_of_formal_power_series
 //https://judge.yosupo.jp/problem/pow_of_formal_power_series
 //https://judge.yosupo.jp/problem/division_of_polynomials
+//https://judge.yosupo.jp/problem/polynomial_taylor_shift
 
 #pragma once
 #include <bits/stdc++.h>
@@ -285,4 +287,25 @@ struct Formal_Power_Series : vector<T>{
     }
 
     Formal_Power_Series pow(long long k) const {return pow(k, this->size());}
+
+    Formal_Power_Series Taylor_shift(T c) const{
+        int n = this->size();
+        vector<T> ifac(n, 1);
+        Formal_Power_Series f(n), g(n);
+        for(int i = 0; i < n; i++){
+            f[n-1-i] = (*this)[i]*ifac[n-1];
+            if(i < n-1) ifac[n-1] *= i+1;
+        }
+        ifac[n-1] = ifac[n-1].inverse();
+        for(int i = n-1; i > 0; i--) ifac[i-1] = ifac[i]*i;
+        T pw = 1;
+        for(int i = 0; i < n; i++){
+            g[i] = pw*ifac[i];
+            pw *= c;
+        }
+        f *= g;
+        Formal_Power_Series b(n);
+        for(int i = 0; i < n; i++) b[i] = f[n-1-i]*ifac[i];
+        return b;
+    }
 };
