@@ -16,7 +16,7 @@
 using namespace std;
 
 template<typename T>
-T Lagrange_Interpolation(const vector<T> &ys, T x){
+T Lagrange_interpolation(const vector<T> &ys, T x){
     int n = ys.size();
     vector<T> ifac(n);
     ifac[n-1] = 1;

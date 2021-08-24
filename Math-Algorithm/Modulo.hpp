@@ -27,7 +27,18 @@ long long modpow(long long x, long long n, const int &m){
 }
 
 template<typename T>
-T Euler_Totient(T m){ //オイラーのφ関数(xとmが互いに素ならば、x^φ(m) ≡ 1(mod m))
+T modinv(T a, const T &m){
+    T b = m, u = 1, v = 0;
+    while(b > 0){
+        T t = a/b;
+        swap(a -= t*b, b);
+        swap(u -= t*v, v);
+    }
+    return u >= 0 ? u%m : (m-(-u)%m)%m;
+}
+
+template<typename T>
+T Euler_totient(T m){ //オイラーのφ関数(xとmが互いに素ならば、x^φ(m) ≡ 1(mod m))
     T ret = m;
     for(T i = 2; i*i <= m; i++){
         if(m%i == 0) ret /= i, ret *= i-1;
@@ -64,7 +75,7 @@ int modlog(int x, int y, int m){ //x^k ≡ y(mod m)となる最小の非負整�
 }
 
 template<typename T> T order(T x, const T &m){ //x^k ≡ 1(mod m)となる最小の正整数k(xとmは互いに素)
-    T n = Euler_Totient(m);
+    T n = Euler_totient(m);
     vector<T> ds;
     for(T i = 1; i*i <= n; i++){
         if(n%i == 0) ds.push_back(i), ds.push_back(n/i);
