@@ -32,3 +32,8 @@
 木をいくつかの列に分割し、単純パスをいくつかの列の一部区間をつなげたものとして表現することで効率的にパスクエリを扱うことができる。
 
 - [Heavy-Light分解](https://github.com/tokusakurai/Library/blob/main/Tree/HLD.hpp)
+
+## 動的木
+辺の追加・削除によって、木構造そのものが変化するときに効率的にパスクエリを扱うことができる。
+
+- [Link-Cut Tree](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Link_Cut_Tree.hpp) (パスをスプレー木で管理することで辺の追加・削除とパスクエリを扱える)
