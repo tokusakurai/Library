@@ -1,12 +1,13 @@
 
 //スプレー木
-//計算量 挿入・削除・i番目の値にアクセス・二分探索 : 償却O(log(N))
+//計算量 挿入・削除・i番目の値にアクセス・二分探索 : (ならし)O(log(N))
 
 //概要
-//要素にアクセスするときにsplay操作をしてアクセスした頂点を根に持ってくる
+//平衡二分探索木で、要素にアクセスするときにsplay操作をしてアクセスした頂点を根に持ってくる。
 
 //verified with
 //https://atcoder.jp/contests/arc033/tasks/arc033_3
+//https://judge.yosupo.jp/problem/associative_array
 
 #pragma once
 #include <bits/stdc++.h>
@@ -22,6 +23,13 @@ struct Splay_Tree{
         Node(T x) : lch(NULL), rch(NULL), par(NULL), x(x), size(1) {}
 
         Node() : Node(0) {}
+
+        int state(){
+            if(!this->par) return 0;
+            if(this->par->lch == this) return 1;
+            if(this->par->rch == this) return -1;
+            return 0;
+        }
     };
 
     Node *root;
@@ -38,21 +46,10 @@ struct Splay_Tree{
         if(t->rch) t->size += t->rch->size;
     }
 
-    int state(Node *t){
-        if(!t->par) return 0;
-        if(t->par->lch == t) return 1;
-        if(t->par->rch == t) return -1;
-        return 0;
-    }
-
     void rotate(Node *t){
         Node *p = t->par, *q = p->par, *c = t->rch;
-        if(p->lch == t){
-            c = t->rch, t->rch = p, p->lch = c;
-        }
-        else{
-            c = t->lch, t->lch = p, p->rch = c;
-        }
+        if(p->lch == t) c = t->rch, t->rch = p, p->lch = c;
+        else c = t->lch, t->lch = p, p->rch = c;
         if(q && q->lch == p) q->lch = t;
         if(q && q->rch == p) q->rch = t;
         t->par = q, p->par = t;
@@ -61,14 +58,10 @@ struct Splay_Tree{
     }
 
     void splay(Node *t){
-        while(state(t) != 0){
-            if(state(t->par) == 0) rotate(t);
-            else if(state(t) == state(t->par)){
-                rotate(t->par), rotate(t);
-            }
-            else{
-                rotate(t), rotate(t);
-            }
+        while(t->state() != 0){
+            if(t->par->state() == 0) rotate(t);
+            else if(t->state() == t->par->state()) rotate(t->par), rotate(t);
+            else rotate(t), rotate(t);
         }
         root = t;
     }
