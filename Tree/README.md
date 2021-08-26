@@ -36,4 +36,4 @@
 ## 動的木
 辺の追加・削除によって、木構造そのものが変化するときに効率的にパスクエリを扱うことができる。
 
-- [Link-Cut Tree](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Link_Cut_Tree.hpp) (パスをスプレー木で管理することで辺の追加・削除とパスクエリを扱える)
+- [Link-Cut Tree](https://github.com/tokusakurai/Library/blob/main/Tree/Link_Cut_Tree.hpp) (パスをスプレー木で管理することで辺の追加・削除とパスクエリを扱える)
