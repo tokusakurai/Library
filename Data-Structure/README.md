@@ -46,7 +46,7 @@ Segment TreeにSegment Treeを乗せることで、2次元平面上の1点更新
 - [平方分割(例)](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Sqrt_Decomposition_Example.hpp) (区間chmin、区間chmax、区間add、区間sumクエリを扱える)
 
 ## 平衡二分探索木
-- [スプレー木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Splay_Tree.hpp) (スプレー操作を行うことで平衡を保つ二分木)
+- [スプレー木](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Splay_Tree.hpp) (スプレー操作を行うことで平衡を保つ二分探索木)
 
 ## ウェーブレット行列
 静的な配列に対して、様々なクエリをオンラインで扱うことができる。
