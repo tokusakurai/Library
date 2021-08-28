@@ -8,7 +8,7 @@
 ## 素数・約数
 素数・約数に関するアルゴリズム。
 
-- [素数・約数](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Prime.hpp) (約数列挙、素因数分解、素数判定、エラトステネスの篩)
+- [素数・約数](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Prime.hpp) (約数列挙、素因数分解、素数判定、エラトステネスの篩、素数え上げ)
 
 ## 剰余演算
 剰余演算に関するアルゴリズム。
