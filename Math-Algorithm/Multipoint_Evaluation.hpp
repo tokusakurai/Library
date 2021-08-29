@@ -24,6 +24,6 @@ vector<T> multipoint_evaluation(const Formal_Power_Series<T> &f, const vector<T>
     g[1] = f%g[1];
     for(int i = 2; i < k+n; i++) g[i] = g[i/2]%g[i];
     vector<T> ys(n);
-    for(int i = 0; i < n; i++) ys[i] = g[k+i][0];
+    for(int i = 0; i < n; i++) ys[i] = empty(g[k+i])? 0: g[k+i][0];
     return ys;
 }
