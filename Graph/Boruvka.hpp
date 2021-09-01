@@ -1,13 +1,13 @@
 
-//Boruvka法(最小全域木)
-//計算量 O(E*log(V))
+// Boruvka法(最小全域木)
+// 計算量 O(E*log(V))
 
-//概要
-//各連結成分について、他の連結成分と自身を結ぶ最小コストの辺を採用する。
-//各ステップで連結成分の数は半分以下になるから、ステップ回数はO(log(V))回。
+// 概要
+// 各連結成分について、他の連結成分と自身を結ぶ最小コストの辺を採用する。
+// 各ステップで連結成分の数は半分以下になるから、ステップ回数はO(log(V))回。
 
-//verified with
-//http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_2_A&lang=ja
+// verified with
+// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_2_A&lang=ja
 
 #pragma once
 #include <bits/stdc++.h>
@@ -15,10 +15,12 @@ using namespace std;
 
 #include "../Data-Structure/Union_Find_Tree.hpp"
 
-template<typename T, bool directed = false>
-struct Edges{
-    struct edge{
-        int from, to; T cost; int id;
+template <typename T, bool directed = false>
+struct Edges {
+    struct edge {
+        int from, to;
+        T cost;
+        int id;
         edge(int from, int to, T cost, int id) : from(from), to(to), cost(cost), id(id) {}
     };
 
@@ -27,32 +29,30 @@ struct Edges{
     const int n;
     int m;
 
-    Edges(int n) : INF_T(numeric_limits<T>::max()/2), n(n), m(0) {}
+    Edges(int n) : INF_T(numeric_limits<T>::max() / 2), n(n), m(0) {}
 
-    void add_edge(int from, int to, T cost){
+    void add_edge(int from, int to, T cost) {
         es.emplace_back(from, to, cost, m);
-        if(!directed) es.emplace_back(to, from, cost, m);
+        if (!directed) es.emplace_back(to, from, cost, m);
         m++;
     }
 
-    T boruvka(){
+    T boruvka() {
         Union_Find_Tree uf(n);
         T ret = 0;
-        while(uf.size(0) < n){
+        while (uf.size(0) < n) {
             vector<pair<T, int>> mincost(n, make_pair(INF_T, -1));
-            for(auto &e: es){
+            for (auto &e : es) {
                 int u = uf.root(e.from), v = uf.root(e.to);
-                if(u != v && e.cost < mincost[u].first){
-                    mincost[u] = make_pair(e.cost, v);
-                }
+                if (u != v && e.cost < mincost[u].first) { mincost[u] = make_pair(e.cost, v); }
             }
             bool flag = true;
-            for(int i = 0; i < n; i++){
-                if(mincost[i].second == -1) continue;
+            for (int i = 0; i < n; i++) {
+                if (mincost[i].second == -1) continue;
                 flag = false;
-                if(uf.unite(i, mincost[i].second)) ret += mincost[i].first;
+                if (uf.unite(i, mincost[i].second)) ret += mincost[i].first;
             }
-            if(flag) return INF_T;
+            if (flag) return INF_T;
         }
         return ret;
     }

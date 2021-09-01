@@ -78,7 +78,7 @@ struct Combination {
                 pref[i] = pref[i - 1] + ifac(i);
         }
         T ret = 0;
-        for (int i = 1; i <= k; i++) { ret += T(i).pow(n) * ifac(i) * pref[k - i]; }
+        for (int i = 1; i <= k; i++) ret += T(i).pow(n) * ifac(i) * pref[k - i];
         return ret;
     }
 };

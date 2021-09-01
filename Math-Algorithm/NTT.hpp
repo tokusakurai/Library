@@ -1,15 +1,15 @@
 
-//数論変換(高速剰余変換)(modはx*(2^y)+1で表されるもの(N+M<=2^y))
-//計算量 O((N+M)*log(N+M))
+// 数論変換(高速剰余変換)(modはx*(2^y)+1で表されるもの(N+M<=2^y))
+// 計算量 O((N+M)*log(N+M))
 
-//概要
-//modをPとして、P=x*2^y+1と表したとき、2^y>=N+M-1が成立すればFFTが行える。
-//rをPの原子根とすれば、剰余環での1の2^k乗根はr^(x*2^(y-k))として得られる。
-//代表的な(P,r)の組として(998244353,3)がある。
+// 概要
+// modをPとして、P=x*2^y+1と表したとき、2^y>=N+M-1が成立すればFFTが行える。
+// rをPの原子根とすれば、剰余環での1の2^k乗根はr^(x*2^(y-k))として得られる。
+// 代表的な(P,r)の組として(998244353,3)がある。
 
-//verified with
-//https://atcoder.jp/contests/practice2/tasks/practice2_f
-//https://judge.yosupo.jp/problem/convolution_mod
+// verified with
+// https://atcoder.jp/contests/practice2/tasks/practice2_f
+// https://judge.yosupo.jp/problem/convolution_mod
 
 #pragma once
 #include <bits/stdc++.h>
@@ -17,84 +17,84 @@ using namespace std;
 
 #include "../Math-Algorithm/Mod_Int.hpp"
 
-template<typename T>
-struct Number_Theorem_Transform{
+template <typename T>
+struct Number_Theorem_Transform {
     static int max_base;
     static T root;
     static vector<T> r, ir;
 
     Number_Theorem_Transform() {}
 
-    static void init(){
-        if(!empty(r)) return;
+    static void init() {
+        if (!r.empty()) return;
         int mod = T::get_mod();
-        int tmp = mod-1;
+        int tmp = mod - 1;
         root = 2;
-        while(root.pow(tmp>>1) == 1) root++;
+        while (root.pow(tmp >> 1) == 1) root++;
         max_base = 0;
-        while(tmp%2 == 0) tmp >>= 1, max_base++;
+        while (tmp % 2 == 0) tmp >>= 1, max_base++;
         r.resize(max_base), ir.resize(max_base);
-        for(int i = 0; i < max_base; i++){
-            r[i] = -root.pow((mod-1)>>(i+2)); //r[i]:=1の2^(i+2)乗根
-            ir[i] = r[i].inverse(); //ir[i]:=1/r[i]
+        for (int i = 0; i < max_base; i++) {
+            r[i] = -root.pow((mod - 1) >> (i + 2)); // r[i]:=1の2^(i+2)乗根
+            ir[i] = r[i].inverse();                 // ir[i]:=1/r[i]
         }
     }
 
-    static void ntt(vector<T> &a){
+    static void ntt(vector<T> &a) {
         init();
         int n = a.size();
-        assert((n&(n-1)) == 0);
-        assert(n <= (1<<max_base));
-        for(int k = n; k >>= 1;){
+        assert((n & (n - 1)) == 0);
+        assert(n <= (1 << max_base));
+        for (int k = n; k >>= 1;) {
             T w = 1;
-            for(int s = 0, t = 0; s < n; s += 2*k){
-                for(int i = s, j = s+k; i < s+k; i++, j++){
-                    T x = a[i], y = w*a[j];
-                    a[i] = x+y, a[j] = x-y;
+            for (int s = 0, t = 0; s < n; s += 2 * k) {
+                for (int i = s, j = s + k; i < s + k; i++, j++) {
+                    T x = a[i], y = w * a[j];
+                    a[i] = x + y, a[j] = x - y;
                 }
                 w *= r[__builtin_ctz(++t)];
             }
         }
     }
 
-    static void intt(vector<T> &a){
+    static void intt(vector<T> &a) {
         init();
         int n = a.size();
-        assert((n&(n-1)) == 0);
-        assert(n <= (1<<max_base));
-        for(int k = 1; k < n; k <<= 1){
+        assert((n & (n - 1)) == 0);
+        assert(n <= (1 << max_base));
+        for (int k = 1; k < n; k <<= 1) {
             T w = 1;
-            for(int s = 0, t = 0; s < n; s += 2*k){
-                for(int i = s, j = s+k; i < s+k; i++, j++){
+            for (int s = 0, t = 0; s < n; s += 2 * k) {
+                for (int i = s, j = s + k; i < s + k; i++, j++) {
                     T x = a[i], y = a[j];
-                    a[i] = x+y, a[j] = w*(x-y);
+                    a[i] = x + y, a[j] = w * (x - y);
                 }
                 w *= ir[__builtin_ctz(++t)];
             }
         }
         T inv = T(n).inverse();
-        for(auto &e: a) e *= inv;
+        for (auto &e : a) e *= inv;
     }
 
-    static vector<T> convolve(vector<T> a, vector<T> b){
-        int k = (int)a.size()+(int)b.size()-1, n = 1;
-        while(n < k) n <<= 1;
+    static vector<T> convolve(vector<T> a, vector<T> b) {
+        int k = (int)a.size() + (int)b.size() - 1, n = 1;
+        while (n < k) n <<= 1;
         a.resize(n), b.resize(n);
         ntt(a), ntt(b);
-        for(int i = 0; i < n; i++) a[i] *= b[i];
+        for (int i = 0; i < n; i++) a[i] *= b[i];
         intt(a), a.resize(k);
         return a;
     }
 };
 
-template<typename T>
+template <typename T>
 int Number_Theorem_Transform<T>::max_base = 0;
 
-template<typename T>
+template <typename T>
 T Number_Theorem_Transform<T>::root = T();
 
-template<typename T>
+template <typename T>
 vector<T> Number_Theorem_Transform<T>::r = vector<T>();
 
-template<typename T>
+template <typename T>
 vector<T> Number_Theorem_Transform<T>::ir = vector<T>();

@@ -1,131 +1,129 @@
 
-//素数・約数に関する計算
-//計算量 約数列挙・素因数分解・素数判定 : O(√N)、1,2,...,NのうちKと互いに素な自然数の数え上げ : O(2^|{Kの素因数}|)
-//エラトステネスの篩 : O(N*log(log(N)))、N以下の素数の数え上げ : O(N^(3/4)/log(N))
+// 素数・約数に関する計算
+// 計算量 約数列挙・素因数分解・素数判定 : O(√N)、1,2,...,NのうちKと互いに素な自然数の数え上げ : O(2^|{Kの素因数}|)
+// エラトステネスの篩 : O(N*log(log(N)))、N以下の素数の数え上げ : O(N^(3/4)/log(N))
 
-//概要
-//約数列挙・素因数分解・素数判定 : 自然数Nの素因数で√Nより大きいものは高々1つなので、√N以下の数全てについて割り切れるか調べる。
-//1,2,...,N のうち Kと互いに素な自然数の数え上げ : 約数包除
-//エラトステネスの篩 : 前から順番に見て、注目している数が素数ならその数の倍数(その数は含めない)は全て素数ではないことになるので、テーブルをfalseに切り替える。
-//素数の数え上げ : h(x,n) := n以下の素数でx以下の素数で篩をかけたときに残る要素数 を利用する。
+// 概要
+// 約数列挙・素因数分解・素数判定 : 自然数Nの素因数で√Nより大きいものは高々1つなので、√N以下の数全てについて割り切れるか調べる。
+// 1,2,...,N のうち Kと互いに素な自然数の数え上げ : 約数包除
+// エラトステネスの篩 : 前から順番に見て、注目している数が素数ならその数の倍数(その数は含めない)は全て素数ではないことになるので、テーブルをfalseに切り替える。
+// 素数の数え上げ : h(x,n) := n以下の素数でx以下の素数で篩をかけたときに残る要素数 を利用する。
 
-//verified with
-//http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=NTL_1_A&lang=jp
-//http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_1_C&lang=jp
-//http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_1_C
+// verified with
+// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=NTL_1_A&lang=jp
+// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_1_C&lang=jp
+// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_1_C
 
 #pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
-template<typename T>
-vector<T> divisors(const T &n){
+template <typename T>
+vector<T> divisors(const T &n) {
     vector<T> ret;
-    for(T i = 1; i*i <= n; i++){
-        if(n%i == 0){
+    for (T i = 1; i * i <= n; i++) {
+        if (n % i == 0) {
             ret.push_back(i);
-            if(i*i != n) ret.push_back(n/i);
+            if (i * i != n) ret.push_back(n / i);
         }
     }
     sort(begin(ret), end(ret));
     return ret;
 }
 
-template<typename T>
-vector<pair<T, int>> prime_factor(T n){
+template <typename T>
+vector<pair<T, int>> prime_factor(T n) {
     vector<pair<T, int>> ret;
-    for(T i = 2; i*i <= n; i++){
+    for (T i = 2; i * i <= n; i++) {
         int cnt = 0;
-        while(n%i == 0) cnt++, n /= i;
-        if(cnt > 0) ret.emplace_back(i, cnt);
+        while (n % i == 0) cnt++, n /= i;
+        if (cnt > 0) ret.emplace_back(i, cnt);
     }
-    if(n > 1) ret.emplace_back(n, 1);
+    if (n > 1) ret.emplace_back(n, 1);
     return ret;
 }
 
-template<typename T>
-bool is_prime(const T &n){
-    if(n == 1) return false;
-    for(T i = 2; i*i <= n; i++){
-        if(n%i == 0) return false;
+template <typename T>
+bool is_prime(const T &n) {
+    if (n == 1) return false;
+    for (T i = 2; i * i <= n; i++) {
+        if (n % i == 0) return false;
     }
     return true;
 }
 
-template<typename T>
-T coprime(T n, T k){ //1,2,...,nのうちkと互いに素である自然数の個数
+template <typename T>
+T coprime(T n, T k) { // 1,2,...,nのうちkと互いに素である自然数の個数
     vector<pair<T, int>> ps = prime_factor(k);
     int m = ps.size();
     T ret = 0;
-    for(int i = 0; i < (1<<m); i++){
+    for (int i = 0; i < (1 << m); i++) {
         T prd = 1;
-        for(int j = 0; j < m; j++){
-            if((i>>j)&1) prd *= ps[j].first;
+        for (int j = 0; j < m; j++) {
+            if ((i >> j) & 1) prd *= ps[j].first;
         }
-        ret += (__builtin_parity(i)? -1 : 1)*(n/prd);
+        ret += (__builtin_parity(i) ? -1 : 1) * (n / prd);
     }
     return ret;
 }
 
-vector<bool> Eratosthenes(const int &n){
-    vector<bool> ret(n+1, true);
-    if(n >= 0) ret[0] = false;
-    if(n >= 1) ret[1] = false;
-    for(int i = 2; i*i <= n; i++){
-        if(!ret[i]) continue;
-        for(int j = i+i; j <= n; j += i) ret[j] = false;
+vector<bool> Eratosthenes(const int &n) {
+    vector<bool> ret(n + 1, true);
+    if (n >= 0) ret[0] = false;
+    if (n >= 1) ret[1] = false;
+    for (int i = 2; i * i <= n; i++) {
+        if (!ret[i]) continue;
+        for (int j = i + i; j <= n; j += i) ret[j] = false;
     }
     return ret;
 }
 
-vector<int> Eratosthenes2(const int &n){
-    vector<int> ret(n+1);
+vector<int> Eratosthenes2(const int &n) {
+    vector<int> ret(n + 1);
     iota(begin(ret), end(ret), 0);
-    if(n >= 0) ret[0] = -1;
-    if(n >= 1) ret[1] = -1;
-    for(int i = 2; i*i <= n; i++){
-        if(ret[i] < i) continue;
-        for(int j = i+i; j <= n; j += i) ret[j] = min(ret[j], i);
+    if (n >= 0) ret[0] = -1;
+    if (n >= 1) ret[1] = -1;
+    for (int i = 2; i * i <= n; i++) {
+        if (ret[i] < i) continue;
+        for (int j = i + i; j <= n; j += i) ret[j] = min(ret[j], i);
     }
     return ret;
 }
 
-vector<int> enumerate_prime(int n){ //n以下の素数の列挙
-    if(n < 2) return {};
-    if(n == 2) return {2};
-    int m = n/6;
-    vector<bool> p1(m+1, true), p5(m+1, true);
+vector<int> enumerate_prime(int n) { // n以下の素数の列挙
+    if (n < 2) return {};
+    if (n == 2) return {2};
+    int m = n / 6;
+    vector<bool> p1(m + 1, true), p5(m + 1, true);
     p1[0] = false;
     vector<int> ret = {2, 3};
-    for(int i = 0; i <= m; i++){
-        int a = 6*i+1, b = 6*i+5;
-        if(a <= n && p1[i]){
+    for (int i = 0; i <= m; i++) {
+        int a = 6 * i + 1, b = 6 * i + 5;
+        if (a <= n && p1[i]) {
             ret.push_back(a);
-            for(int j = a+i; j <= m; j += a) p1[j] = false;
-            for(int j = 5*i; j <= m; j += a) p5[j] = false;
+            for (int j = a + i; j <= m; j += a) p1[j] = false;
+            for (int j = 5 * i; j <= m; j += a) p5[j] = false;
         }
-        if(b <= n && p5[i]){
+        if (b <= n && p5[i]) {
             ret.push_back(b);
-            for(int j = b+i; j <= m; j += b) p5[j] = false;
-            for(int j = 5*i+4; j <= m; j += b) p1[j] = false;
+            for (int j = b + i; j <= m; j += b) p5[j] = false;
+            for (int j = 5 * i + 4; j <= m; j += b) p1[j] = false;
         }
     }
     return ret;
 }
 
-template<typename T>
-T prime_count(T n){ //n以下の素数の数え上げ
-    if(n < 2) return 0;
+template <typename T>
+T prime_count(T n) { // n以下の素数の数え上げ
+    if (n < 2) return 0;
     vector<T> ns = {0};
-    for(T i = n; i > 0; i = n/(n/i+1)) ns.push_back(i);
+    for (T i = n; i > 0; i = n / (n / i + 1)) ns.push_back(i);
     vector<T> h = ns;
-    for(T &x : h) x--;
-    for(T x = 2, m = sqrtl(n), k = ns.size(); x <= m; x++){
-        if(h[k-x] == h[k-x+1]) continue; //h(x-1,x-1) = h(x-1,x) ならばxは素数ではない
-        T x2 = x*x, pi = h[k-x+1];
-        for(T i = 1, j = ns[i]; i < k && j >= x2; j = ns[++i]){
-            h[i] -= h[i*x <= m? i*x : k-j/x]-pi;
-        }
+    for (T &x : h) x--;
+    for (T x = 2, m = sqrtl(n), k = ns.size(); x <= m; x++) {
+        if (h[k - x] == h[k - x + 1]) continue; // h(x-1,x-1) = h(x-1,x) ならばxは素数ではない
+        T x2 = x * x, pi = h[k - x + 1];
+        for (T i = 1, j = ns[i]; i < k && j >= x2; j = ns[++i]) h[i] -= h[i * x <= m ? i * x : k - j / x] - pi;
     }
     return h[1];
 }
