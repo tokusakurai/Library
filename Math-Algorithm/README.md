@@ -36,6 +36,11 @@
 
 - [モンモール数](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Montmort_Number.hpp) (完全順列の個数のテーブル)
 
+## K乗根
+体においてK乗根を求めるアルゴリズム。
+
+- [K乗根(整数)](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Kth_Root_Integer.hpp) (非負整数のK乗根以下の最小の整数を求める)
+
 ## 2-SAT
 リテラル数が2以下のクロージャーの積で表される論理式の充足可能性を判定するアルゴリズム。
 - [2-SAT](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Two_SAT.hpp)
@@ -73,7 +78,7 @@
 - [高速フーリエ変換(FFT)](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/FFT.hpp)
 
 ### 数論変換(NTT)
-NTT素数を、自身から1引いたものが(配列の長さより)十分大きい2冪で割り切れる素数とする。NTT素数をmodとした剰余環では1の2冪(十分大きい)乗根を取ることが出来るため、高速フーリエ変換を適用することができる。代表的なNTT素数として998244353がある。
+NTT素数を、自身から1引いたものが(配列の長さより)十分大きい2冪で割り切れる素数とする。NTT素数を法とした有理整数環の剰余体では1の2冪(十分大きい)乗根を取ることが出来るため、高速フーリエ変換を適用することができる。代表的なNTT素数として998244353がある。
 
 - [数論変換(NTT)](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/NTT.hpp) (NTT素数modにおける畳込み)
 
