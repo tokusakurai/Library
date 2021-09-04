@@ -10,18 +10,24 @@
 
 - [素数・約数](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Prime.hpp) (約数列挙、素因数分解、素数判定、エラトステネスの篩、素数え上げ)
 
-## 剰余演算
-剰余演算に関するアルゴリズム。
+## 剰余環における演算
+有理整数環の剰余環における演算に関するアルゴリズム。
 
-- [剰余演算](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Modulo.hpp) (累乗、オイラーのφ関数、離散対数、位数、原始根)
+- [剰余環における演算](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Factor_Ring.hpp) (累乗、オイラーのφ関数、離散対数、位数、原始根)
 
 - [テトレーション](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Tetration.hpp)
+
+## mod-int構造体
+有理整数環の剰余体を構造体で表現したもので、加減乗除を扱うことができる。除算以外は剰余環でも扱うことができる。
 
 - [mod-int構造体](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Mod_Int.hpp)
 
 - [実行時入力mod-int構造体](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Runtime_Mod_Int.hpp)
 
-- [写像12相](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Twelvefold_Way.hpp) (二項係数、第2種スターリング数、ベル数)
+## 組み合わせ
+前計算をすることによって、二項係数を効率的に求めることができる。
+
+- [組み合わせ](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Combination.hpp) (二項係数、第2種スターリング数、ベル数)
 
 ## 数列
 各種数列のテーブルを計算するアルゴリズム。
