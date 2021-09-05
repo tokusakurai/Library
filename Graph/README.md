@@ -80,7 +80,7 @@
 
 - [橋・関節点(Low-Link)](https://github.com/tokusakurai/Library/blob/main/Graph/Low_Link.hpp)
 
-- [二重辺連結成分分解](https://github.com/tokusakurai/Library/blob/main/Graph/Two-Edge-Connencted_Components.hpp)
+- [二重辺連結成分分解](https://github.com/tokusakurai/Library/blob/main/Graph/Two-Edge-Connected_Components.hpp)
 
 ## その他発展的なアルゴリズム
 
