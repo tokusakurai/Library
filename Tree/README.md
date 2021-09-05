@@ -17,9 +17,9 @@
 ## 最近共通祖先
 根付き木の2点の共通の祖先で最も根から深いものを求めるアルゴリズム。
 
-- [最近共通祖先(重みなし木)](https://github.com/tokusakurai/Library/blob/main/Tree/LCA.hpp) (ダブリングを用いる)
+- [最近共通祖先(重みなし木)](https://github.com/tokusakurai/Library/blob/main/Tree/Lowest_Common_Ancestor.hpp) (ダブリングを用いる)
 
-- [最近共通祖先(重み付き木)](https://github.com/tokusakurai/Library/blob/main/Tree/LCA_Weighted.hpp)
+- [最近共通祖先(重み付き木)](https://github.com/tokusakurai/Library/blob/main/Tree/Lowest_Common_Ancestor_Weighted.hpp)
 
 ## 全方位木DP
 全ての頂点についてのその頂点を根とした部分木DPを効率的に扱うことができる。

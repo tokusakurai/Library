@@ -9,6 +9,7 @@
 
 // verified with
 // https://judge.yosupo.jp/problem/vertex_add_path_sum
+// https://judge.yosupo.jp/problem/vertex_set_path_composite
 
 #pragma once
 #include <bits/stdc++.h>
