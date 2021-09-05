@@ -19,7 +19,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#include "../Math-Algorithm/NTT.hpp"
+#include "../Math-Algorithm/Number_Theoretic_Transform.hpp"
 
 int chi(const vector<int> &base, int n) {
     int k = base.size(), ret = 0;
@@ -29,7 +29,7 @@ int chi(const vector<int> &base, int n) {
 
 template <typename T>
 vector<T> multivariate_convolve(const vector<T> &a, const vector<T> &b, const vector<int> &base) {
-    using NTT_ = Number_Theorem_Transform<T>;
+    using NTT_ = Number_Theoretic_Transform<T>;
     int k = base.size(), m = (k > 0 ? base.back() : 1);
     assert((int)a.size() == m && (int)b.size() == m);
     int n = 1;

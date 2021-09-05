@@ -1,9 +1,16 @@
 
-// 形式的冪級数(任意mod)
-// 計算量 加算・減算・微分・積分 : O(N)、除算・inv・log・exp・pow : O(N*log(N))
+// 形式的冪級数
+// 計算量 加算・減算・微分・積分 : O(N)、積・除算・inv・log・exp・pow・Taylor Shift : O(N*log(N))
+
+// 各種演算はテイラー展開を用いて定義される(詳しくは下のverify url)
 
 // 概要
-// 複数のmodでの結果を用いて復元する。
+// 積 : NTT
+// inv・exp : ニュートン法を用いた漸化式を立てて計算する。
+// 除算 : invを用いて計算する。
+// log : invを用いて計算する。
+// pow : logとexpを用いて計算する。
+// Taylor Shift : 係数を分解して畳み込みに持ち込む。
 
 // verified with
 // https://judge.yosupo.jp/problem/inv_of_formal_power_series
@@ -11,16 +18,17 @@
 // https://judge.yosupo.jp/problem/exp_of_formal_power_series
 // https://judge.yosupo.jp/problem/pow_of_formal_power_series
 // https://judge.yosupo.jp/problem/division_of_polynomials
+// https://judge.yosupo.jp/problem/polynomial_taylor_shift
 
 #pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
-#include "../Math-Algorithm/Arbitrary_Mod_NTT.hpp"
+#include "../Math-Algorithm/Number_Theoretic_Transform.hpp"
 
 template <typename T>
 struct Formal_Power_Series : vector<T> {
-    using NTT_ = Arbitrary_Mod_Number_Theorem_Transform<T>;
+    using NTT_ = Number_Theoretic_Transform<T>;
     using vector<T>::vector;
 
     Formal_Power_Series(const vector<T> &v) : vector<T>(v) {}
@@ -158,7 +166,20 @@ struct Formal_Power_Series : vector<T> {
     Formal_Power_Series inv(int deg) const { // 1/f (f[0] != 0)
         assert((*this)[0] != T(0));
         Formal_Power_Series ret(1, (*this)[0].inverse());
-        for (int i = 1; i < deg; i <<= 1) ret = (ret + ret - ret * ret * pre(i << 1)).pre(i << 1);
+        for (int i = 1; i < deg; i <<= 1) {
+            Formal_Power_Series f = pre(2 * i), g = ret;
+            f.resize(2 * i), g.resize(2 * i);
+            NTT_::ntt(f), NTT_::ntt(g);
+            Formal_Power_Series h(2 * i);
+            for (int j = 0; j < 2 * i; j++) h[j] = f[j] * g[j];
+            NTT_::intt(h);
+            for (int j = 0; j < i; j++) h[j] = 0;
+            NTT_::ntt(h);
+            for (int j = 0; j < 2 * i; j++) h[j] *= g[j];
+            NTT_::intt(h);
+            for (int j = 0; j < i; j++) h[j] = 0;
+            ret -= h;
+        }
         ret.resize(deg);
         return ret;
     }
@@ -176,8 +197,67 @@ struct Formal_Power_Series : vector<T> {
 
     Formal_Power_Series exp(int deg) const { // exp(f) (f[0] = 0)
         assert((*this)[0] == 0);
-        Formal_Power_Series ret(1, 1);
-        for (int i = 1; i < deg; i <<= 1) ret = (ret * (pre(i << 1) + 1 - ret.log(i << 1))).pre(i << 1);
+        Formal_Power_Series inv;
+        inv.reserve(deg + 1);
+        inv.push_back(0), inv.push_back(1);
+
+        auto inplace_integral = [&](Formal_Power_Series &F) -> void {
+            int n = F.size();
+            int mod = T::get_mod();
+            while ((int)inv.size() <= n) {
+                int i = inv.size();
+                inv.push_back((-inv[mod % i]) * (mod / i));
+            }
+            F.insert(begin(F), 0);
+            for (int i = 1; i <= n; i++) F[i] *= inv[i];
+        };
+
+        auto inplace_diff = [](Formal_Power_Series &F) -> void {
+            if (F.empty()) return;
+            F.erase(begin(F));
+            T coeff = 1, one = 1;
+            for (int i = 0; i < (int)F.size(); i++) {
+                F[i] *= coeff;
+                coeff += one;
+            }
+        };
+
+        Formal_Power_Series ret{1, this->size() > 1 ? (*this)[1] : 0}, c{1}, z1, z2{1, 1};
+        for (int m = 2; m < deg; m *= 2) {
+            auto y = ret;
+            y.resize(2 * m);
+            NTT_::ntt(y);
+            z1 = z2;
+            Formal_Power_Series z(m);
+            for (int i = 0; i < m; i++) z[i] = y[i] * z1[i];
+            NTT_::intt(z);
+            fill(begin(z), begin(z) + m / 2, 0);
+            NTT_::ntt(z);
+            for (int i = 0; i < m; i++) z[i] *= -z1[i];
+            NTT_::intt(z);
+            c.insert(end(c), begin(z) + m / 2, end(z));
+            z2 = c, z2.resize(2 * m);
+            NTT_::ntt(z2);
+            Formal_Power_Series x(begin(*this), begin(*this) + min((int)this->size(), m));
+            inplace_diff(x);
+            x.push_back(0);
+            NTT_::ntt(x);
+            for (int i = 0; i < m; i++) x[i] *= y[i];
+            NTT_::intt(x);
+            x -= ret.diff(), x.resize(2 * m);
+            for (int i = 0; i < m - 1; i++) x[m + i] = x[i], x[i] = 0;
+            NTT_::ntt(x);
+            for (int i = 0; i < 2 * m; i++) x[i] *= z2[i];
+            NTT_::intt(x);
+            x.pop_back();
+            inplace_integral(x);
+            for (int i = m; i < min((int)this->size(), 2 * m); i++) x[i] += (*this)[i];
+            fill(begin(x), begin(x) + m, 0);
+            NTT_::ntt(x);
+            for (int i = 0; i < 2 * m; i++) x[i] *= y[i];
+            NTT_::intt(x);
+            ret.insert(end(ret), begin(x) + m, end(x));
+        }
         ret.resize(deg);
         return ret;
     }
@@ -203,4 +283,25 @@ struct Formal_Power_Series : vector<T> {
     }
 
     Formal_Power_Series pow(long long k) const { return pow(k, this->size()); }
+
+    Formal_Power_Series Taylor_shift(T c) const {
+        int n = this->size();
+        vector<T> ifac(n, 1);
+        Formal_Power_Series f(n), g(n);
+        for (int i = 0; i < n; i++) {
+            f[n - 1 - i] = (*this)[i] * ifac[n - 1];
+            if (i < n - 1) ifac[n - 1] *= i + 1;
+        }
+        ifac[n - 1] = ifac[n - 1].inverse();
+        for (int i = n - 1; i > 0; i--) ifac[i - 1] = ifac[i] * i;
+        T pw = 1;
+        for (int i = 0; i < n; i++) {
+            g[i] = pw * ifac[i];
+            pw *= c;
+        }
+        f *= g;
+        Formal_Power_Series b(n);
+        for (int i = 0; i < n; i++) b[i] = f[n - 1 - i] * ifac[i];
+        return b;
+    }
 };

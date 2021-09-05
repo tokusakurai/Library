@@ -18,12 +18,12 @@ using namespace std;
 #include "../Math-Algorithm/Mod_Int.hpp"
 
 template <typename T>
-struct Number_Theorem_Transform {
+struct Number_Theoretic_Transform {
     static int max_base;
     static T root;
     static vector<T> r, ir;
 
-    Number_Theorem_Transform() {}
+    Number_Theoretic_Transform() {}
 
     static void init() {
         if (!r.empty()) return;
@@ -88,13 +88,13 @@ struct Number_Theorem_Transform {
 };
 
 template <typename T>
-int Number_Theorem_Transform<T>::max_base = 0;
+int Number_Theoretic_Transform<T>::max_base = 0;
 
 template <typename T>
-T Number_Theorem_Transform<T>::root = T();
+T Number_Theoretic_Transform<T>::root = T();
 
 template <typename T>
-vector<T> Number_Theorem_Transform<T>::r = vector<T>();
+vector<T> Number_Theoretic_Transform<T>::r = vector<T>();
 
 template <typename T>
-vector<T> Number_Theorem_Transform<T>::ir = vector<T>();
+vector<T> Number_Theoretic_Transform<T>::ir = vector<T>();

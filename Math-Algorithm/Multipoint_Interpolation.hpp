@@ -15,11 +15,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#include "../Math-Algorithm/NTT.hpp"
+#include "../Math-Algorithm/Number_Theoretic_Transform.hpp"
 
 template <typename T>
 vector<T> multipoint_interpolation(const vector<T> &ys, const T &c, const int &m) {
-    using NTT_ = Number_Theorem_Transform<T>;
+    using NTT_ = Number_Theoretic_Transform<T>;
     int n = ys.size();
     vector<T> ifac(n);
     ifac[n - 1] = 1;

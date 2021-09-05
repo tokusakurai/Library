@@ -15,11 +15,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#include "../Math-Algorithm/NTT.hpp"
+#include "../Math-Algorithm/Number_Theoretic_Transform.hpp"
 
 template <typename T>
 struct Bostan_Mori {
-    using NTT_ = Number_Theorem_Transform<T>;
+    using NTT_ = Number_Theoretic_Transform<T>;
 
     // d項間線形漸化式 a[n] = c[1]*a[n-1]+c[2]*a[n-2]+・・・+c[d]*a[n-d]
     const int d;

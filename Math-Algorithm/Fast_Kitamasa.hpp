@@ -12,12 +12,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#include "../Math-Algorithm/FPS.hpp"
+#include "../Math-Algorithm/Formal_Power_Series.hpp"
 
-template <int mod, int primitive_root>
+template <typename T>
 struct Kitamasa {
-    using T = Mod_Int<mod>;
-    using FPS = Formal_Power_Series<mod, primitive_root>;
+    using FPS = Formal_Power_Series<T>;
 
     // d項間線形漸化式 a[n] = c[1]*a[n-1]+c[2]*a[n-2]+・・・+c[d]*a[n-d]
     const vector<T> a, c;

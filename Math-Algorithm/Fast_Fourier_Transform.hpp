@@ -14,37 +14,40 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const double pi = acos(-1.0);
-
 template <typename T>
-struct Fast_Foulier_Transform {
+struct Fast_Fourier_Transform {
     using comp = complex<double>;
-    vector<comp> r, ir;
+    static double pi;
+    static vector<comp> r, ir;
 
-    Fast_Foulier_Transform() {
+    Fast_Fourier_Transform() {}
+
+    static void init() {
+        if (!r.empty()) return;
         r.resize(30), ir.resize(30);
         for (int i = 0; i < 30; i++) {
             r[i] = -polar(1.0, pi / (1 << (i + 1)));   // r[i] := 1の2^(i+2)乗根
             ir[i] = -polar(1.0, -pi / (1 << (i + 1))); // ir[i] := 1/r[i]
         }
-    };
+    }
 
-    vector<comp> to_comp(const vector<T> &a) const {
+    static vector<comp> to_comp(vector<T> a) {
         vector<comp> ret(a.size());
         for (int i = 0; i < (int)a.size(); i++) ret[i] = comp(a[i], 0.0);
         return ret;
     }
 
-    vector<T> to_T(const vector<comp> &a) const {
+    static vector<T> to_T(vector<comp> a) {
         vector<T> ret(a.size(), 0);
         for (int i = 0; i < (int)a.size(); i++) ret[i] = a[i].real() + 0.1; // 整数の場合、誤差をケア
         // for(int i = 0; i < (int)a.size(); i++) ret[i] = a[i].real(); // 小数の場合
         return ret;
     }
 
-    void fft(vector<comp> &a, int n) const {
+    static void fft(vector<comp> &a) {
+        init();
+        int n = a.size();
         assert((n & (n - 1)) == 0);
-        a.resize(n);
         for (int k = n; k >>= 1;) {
             comp w = 1;
             for (int s = 0, t = 0; s < n; s += 2 * k) {
@@ -57,7 +60,9 @@ struct Fast_Foulier_Transform {
         }
     }
 
-    void ifft(vector<comp> &a, int n) const {
+    static void ifft(vector<comp> &a) {
+        init();
+        int n = a.size();
         assert((n & (n - 1)) == 0);
         a.resize(n);
         for (int k = 1; k < n; k <<= 1) {
@@ -73,15 +78,25 @@ struct Fast_Foulier_Transform {
         for (auto &e : a) e /= n;
     }
 
-    vector<T> convolve(const vector<T> &a, const vector<T> &b) const {
+    static vector<T> convolve(vector<T> a, vector<T> b) {
         int k = (int)a.size() + (int)b.size() - 1, n = 1;
         while (n < k) n <<= 1;
         vector<comp> A = to_comp(a), B = to_comp(b);
-        fft(A, n), fft(B, n);
+        A.resize(n), B.resize(n);
+        fft(A), fft(B);
         for (int i = 0; i < n; i++) A[i] *= B[i];
-        ifft(A, n);
+        ifft(A);
         vector<T> c = to_T(A);
         c.resize(k);
         return c;
     }
 };
+
+template <typename T>
+double Fast_Fourier_Transform<T>::pi = acos(-1.0);
+
+template <typename T>
+vector<complex<double>> Fast_Fourier_Transform<T>::r = vector<complex<double>>();
+
+template <typename T>
+vector<complex<double>> Fast_Fourier_Transform<T>::ir = vector<complex<double>>();

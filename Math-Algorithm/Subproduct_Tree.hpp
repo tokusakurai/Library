@@ -11,7 +11,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#include "../Math-Algorithm/FPS.hpp";
+#include "../Math-Algorithm/Formal_Power_Series.hpp"
 
 template <typename T>
 vector<Formal_Power_Series<T>> subproduct_tree(const vector<T> &xs) {

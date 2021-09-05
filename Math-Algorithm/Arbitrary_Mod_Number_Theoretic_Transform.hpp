@@ -14,7 +14,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#include "../Math-Algorithm/NTT.hpp"
+#include "../Math-Algorithm/Number_Theoretic_Transform.hpp"
 
 // NTT素数たち
 const int m1 = 1045430273;
@@ -22,15 +22,15 @@ const int m2 = 1051721729;
 const int m3 = 1053818881;
 
 template <typename T>
-struct Arbitrary_Mod_Number_Theorem_Transform {
+struct Arbitrary_Mod_Number_Theoretic_Transform {
     using mint_1 = Mod_Int<m1>;
     using mint_2 = Mod_Int<m2>;
     using mint_3 = Mod_Int<m3>;
-    using NTT_1 = Number_Theorem_Transform<mint_1>;
-    using NTT_2 = Number_Theorem_Transform<mint_2>;
-    using NTT_3 = Number_Theorem_Transform<mint_3>;
+    using NTT_1 = Number_Theoretic_Transform<mint_1>;
+    using NTT_2 = Number_Theoretic_Transform<mint_2>;
+    using NTT_3 = Number_Theoretic_Transform<mint_3>;
 
-    Arbitrary_Mod_Number_Theorem_Transform() {}
+    Arbitrary_Mod_Number_Theoretic_Transform() {}
 
     static vector<T> convolve(const vector<T> &a, const vector<T> &b) {
         int n = a.size(), m = b.size();

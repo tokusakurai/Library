@@ -17,11 +17,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#include "../Math-Algorithm/NTT.hpp"
+#include "../Math-Algorithm/Number_Theoretic_Transform.hpp"
 
 template <typename T>
 vector<T> first_stirling_number(int n) {
-    using NTT_ = Number_Theorem_Transform<T>;
+    using NTT_ = Number_Theoretic_Transform<T>;
     if (n == 0) return {1};
     vector<T> fac(n + 1), ifac(n + 1);
     fac[0] = 1;
@@ -57,7 +57,7 @@ vector<T> first_stirling_number(int n) {
 
 template <typename T>
 vector<T> second_stirling_number(int n) {
-    using NTT_ = Number_Theorem_Transform<T>;
+    using NTT_ = Number_Theoretic_Transform<T>;
     vector<T> ifac(n + 1);
     ifac[n] = 1;
     for (int i = 1; i <= n; i++) ifac[n] *= i;

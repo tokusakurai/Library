@@ -75,16 +75,16 @@
 ### 高速フーリエ変換(FFT)
 2つの多項式の積は、それぞれを複素数上で離散フーリエ変換し、両者の各項の積を取ったものを逆離散フーリエ変換することで得られる。このとき離散フーリエ変換・逆離散フーリエ変換がボトルネックとなっており、次数が2冪のときにこれらを高速に行えるアルゴリズムとして高速フーリエ変換が知られている。
 
-- [高速フーリエ変換(FFT)](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/FFT.hpp)
+- [高速フーリエ変換(FFT)](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Fast_Fourier_Transform.hpp)
 
 ### 数論変換(NTT)
 NTT素数を、自身から1引いたものが(配列の長さより)十分大きい2冪で割り切れる素数とする。NTT素数を法とした有理整数環の剰余体では1の2冪(十分大きい)乗根を取ることが出来るため、高速フーリエ変換を適用することができる。代表的なNTT素数として998244353がある。
 
-- [数論変換(NTT)](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/NTT.hpp) (NTT素数modにおける畳込み)
+- [数論変換(NTT)](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Number_Theoretic_Transform.hpp) (NTT素数modにおける畳込み)
 
 いくつかのNTT素数modを用意して、Garnerのアルゴリズムで復元することによって任意modで畳み込みを行うことができる。
 
-- [任意mod数論変換(NTT)](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Arbitrary_Mod_NTT.hpp) (任意modにおける畳込み)
+- [任意mod数論変換(NTT)](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Arbitrary_Mod_Number_Theoretic_Transform.hpp) (任意modにおける畳込み)
 
 ### 多変数畳み込み
 FFT(NTT)を用いることで、多変数多項式の積を次数が大きくなるところは切り捨てで求めることができる。    
@@ -94,9 +94,9 @@ FFT(NTT)を用いることで、多変数多項式の積を次数が大きくな
 ## 形式的冪級数(FPS)
 形式的冪級数(項の数が有限とは限らない多項式)の基本的な計算を行うアルゴリズム。
 
-- [形式的冪級数(FPS)](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/FPS.hpp) (NTT素数modにおける形式的冪級数)
+- [形式的冪級数(FPS)](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Formal_Power_Series.hpp) (NTT素数modにおける形式的冪級数)
 
-- [任意mod形式的冪級数(FPS)](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Arbitrary_Mod_FPS.hpp) (任意modにおける形式的羃級数)
+- [任意mod形式的冪級数(FPS)](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Arbitrary_Mod_Formal_Power_Series.hpp) (任意modにおける形式的羃級数)
 
 ## 多項式
 多項式補間や、与えられた点での評価を行うアルゴリズム。
