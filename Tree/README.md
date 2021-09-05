@@ -36,7 +36,7 @@
 ## Heavy-Light分解
 木をいくつかの列に分割し、単純パスをいくつかの列の一部区間をつなげたものとして表現することで効率的にパスクエリを扱うことができる。
 
-- [Heavy-Light分解](https://github.com/tokusakurai/Library/blob/main/Tree/HLD.hpp)
+- [Heavy-Light分解](https://github.com/tokusakurai/Library/blob/main/Tree/Heavy-Light_Decomposition.hpp)
 
 ## 動的木
 辺の追加・削除によって、木構造そのものが変化するときに効率的にパスクエリを扱うことができる。
