@@ -24,11 +24,11 @@ const ll INF = (1LL << 60) - 1;
 template <typename T>
 bool chmax(T &x, const T &y) {
     return (x < y) ? (x = y, true) : false;
-};
+}
 template <typename T>
 bool chmin(T &x, const T &y) {
     return (x > y) ? (x = y, true) : false;
-};
+}
 
 struct io_setup {
     io_setup() {
