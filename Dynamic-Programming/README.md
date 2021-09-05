@@ -37,6 +37,11 @@
 
 - [Convex-Hull-Trick](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/Convex_Hull_Trick.hpp)
 
+## Slope-Trick
+全ての点において傾きが(存在すれば)整数となるような凸関数を、傾きが変化する点の座標を管理することによって効率的に扱うことができる。
+
+- [Slope-Trick](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/Slope_Trick.hpp)
+
 ## Moのアルゴリズム
 配列が静的かつ区間クエリの先読みが出来る場合、処理するクエリの順番を工夫することで効率的にクエリを処理できる。
 
