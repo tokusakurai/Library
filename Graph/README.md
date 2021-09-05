@@ -34,7 +34,7 @@
 
 - [Bellman-Ford法](https://github.com/tokusakurai/Library/blob/main/Graph/Bellman-Ford.hpp)
 
-- [Shortest-Path-Faster-Algorithm](https://github.com/tokusakurai/Library/blob/main/Graph/SPFA.hpp) (最悪計算量と比べて高速に動作することも多い)
+- [Shortest-Path-Faster-Algorithm](https://github.com/tokusakurai/Library/blob/main/Graph/Shortest_Path_Fast_Algorithm.hpp) (最悪計算量と比べて高速に動作することも多い)
 
 ### 全点対最短路
 
@@ -73,14 +73,14 @@
 ## 強連結成分分解
 有向グラフの各頂点が属する強連結成分(誘導部分グラフにおいて互いに行き来可能な点集合)を求めるアルゴリズム。
 
-- [強連結成分分解](https://github.com/tokusakurai/Library/blob/main/Graph/SCC.hpp)
+- [強連結成分分解](https://github.com/tokusakurai/Library/blob/main/Graph/Strongly-Connected_Components.hpp)
 
 ## 二重辺連結成分分解
 無向グラフの各頂点が属する二重辺連結成分(誘導部分グラフが橋を含まないような点集合)を求めるアルゴリズム。
 
 - [橋・関節点(Low-Link)](https://github.com/tokusakurai/Library/blob/main/Graph/Low_Link.hpp)
 
-- [二重辺連結成分分解](https://github.com/tokusakurai/Library/blob/main/Graph/TECC.hpp)
+- [二重辺連結成分分解](https://github.com/tokusakurai/Library/blob/main/Graph/Two-Edge-Connencted_Components.hpp)
 
 ## その他発展的なアルゴリズム
 

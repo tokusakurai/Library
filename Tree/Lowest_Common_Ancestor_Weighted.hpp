@@ -22,16 +22,20 @@ struct Weighted_Graph {
     };
 
     vector<vector<edge>> es;
-    const T INF_T;
+    const T INF_T = numeric_limits<T>::max() / 2;
     const int n;
     int m;
 
-    const int height;
     vector<vector<int>> par; // par[i][j] := 頂点jの2^i個前の祖先
     vector<int> depth;
     vector<T> d;
+    int height;
 
-    Weighted_Graph(int n) : es(n), INF_T(numeric_limits<T>::max() / 2), n(n), m(0), height(32 - __builtin_clz(n)), depth(n), d(n) { par.assign(height, vector<int>(n)); }
+    Weighted_Graph(int n) : es(n), n(n), m(0) {
+        height = 1;
+        while ((1 << height) < n) height++;
+        par.assign(height, vector<int>(n));
+    }
 
     void add_edge(int from, int to, T cost) {
         es[from].emplace_back(to, cost, m);

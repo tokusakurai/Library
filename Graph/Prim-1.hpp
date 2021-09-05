@@ -14,14 +14,14 @@ using namespace std;
 template <typename T, bool directed = false>
 struct Table {
     vector<vector<T>> es;
-    const T INF_T;
+    const T INF_T = numeric_limits<T>::max() / 2;
     const int n;
 
     inline const vector<T> &operator[](int k) const { return es[k]; }
 
     inline vector<T> &operator[](int k) { return es[k]; }
 
-    Table(int n) : es(n), INF_T(numeric_limits<T>::max() / 2), n(n) {
+    Table(int n) : es(n), n(n) {
         for (int i = 0; i < n; i++) es[i].assign(n, INF_T);
         for (int i = 0; i < n; i++) es[i][i] = 0;
     }

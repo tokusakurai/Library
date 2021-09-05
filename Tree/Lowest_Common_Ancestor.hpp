@@ -30,9 +30,13 @@ struct Graph {
 
     vector<vector<int>> par; // par[i][j] := 頂点jの2^i個前の祖先
     vector<int> depth;
-    const int height;
+    int height;
 
-    Graph(int n) : es(n), n(n), m(0), depth(n), height(32 - __builtin_clz(n)) { par.assign(height, vector<int>(n)); }
+    Graph(int n) : es(n), n(n), m(0), depth(n) {
+        height = 1;
+        while ((1 << height) < n) height++;
+        par.assign(height, vector<int>(n));
+    }
 
     void add_edge(int from, int to) {
         es[from].emplace_back(to, m);

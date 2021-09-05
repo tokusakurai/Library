@@ -24,10 +24,10 @@ struct Max_Flow {
 
     vector<vector<edge>> es;
     vector<bool> used;
-    const F INF_F;
+    const F INF_F = numeric_limits<F>::max() / 2;
     const int n;
 
-    Max_Flow(int n) : es(n), used(n), INF_F(numeric_limits<F>::max()), n(n) {}
+    Max_Flow(int n) : es(n), used(n), n(n) {}
 
     void add_edge(int from, int to, F cap, bool directed = true) {
         es[from].emplace_back(to, cap, (int)es[to].size());

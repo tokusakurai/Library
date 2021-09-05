@@ -25,11 +25,11 @@ struct Weighted_Graph {
     };
 
     vector<vector<edge>> es;
-    const T INF_T;
+    const T INF_T = numeric_limits<T>::max() / 2;
     const int n;
     int m;
 
-    Weighted_Graph(int n) : es(n), INF_T(numeric_limits<T>::max() / 2), n(n), m(0) {}
+    Weighted_Graph(int n) : es(n), n(n), m(0) {}
 
     void add_edge(int from, int to, T cost) {
         es[from].emplace_back(to, cost, m);

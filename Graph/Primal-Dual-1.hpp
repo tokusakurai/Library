@@ -26,11 +26,11 @@ struct Min_Cost_Flow {
     vector<vector<edge>> es;
     vector<T> d;
     vector<int> pre_v, pre_e;
-    const F INF_F;
-    const T INF_T;
+    const F INF_F = numeric_limits<F>::max() / 2;
+    const T INF_T = numeric_limits<T>::max() / 2;
     const int n;
 
-    Min_Cost_Flow(int n) : es(n), d(n), pre_v(n), pre_e(n), INF_F(numeric_limits<F>::max()), INF_T(numeric_limits<T>::max() / 2), n(n) {}
+    Min_Cost_Flow(int n) : es(n), d(n), pre_v(n), pre_e(n), n(n) {}
 
     void add_edge(int from, int to, F cap, T cost) {
         es[from].emplace_back(to, cap, cost, (int)es[to].size());
