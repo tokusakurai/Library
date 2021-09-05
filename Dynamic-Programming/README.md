@@ -4,11 +4,11 @@
 
 - [各種ナップザック問題](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/Knapsack.hpp) (01ナップザック問題、個数制限なしナップザック問題、個数制限付きナップザック問題)
 
-- [最長共通部分列(LCS)](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/LCS.hpp)
+- [最長共通部分列(LCS)](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/Longest_Common_Subsequence.hpp)
 
 - [編集距離](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/Edit_Distance.hpp)
 
-- [最長増加部分列(LIS)](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/LIS.hpp) (DP配列の再利用で計算量が落ちるインラインDP)
+- [最長増加部分列(LIS)](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/Longest_Increasing_Subsequence.hpp) (DP配列の再利用で計算量が落ちるインラインDP)
 
 - [転倒数](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/Inversion_Number.hpp)
 
