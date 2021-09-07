@@ -29,9 +29,11 @@
 
 - [Segment Tree Beats](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Segment_Tree_Beats.hpp) (区間chmin・chmaxを扱える)
 
-Segment TreeにSegment Treeを乗せることで、2次元平面上の1点更新と矩形演算を扱うこともできる。
+Segment TreeにSegment Treeや双対Segment Treeを乗せることで、2次元平面上の1点更新と矩形演算や矩形更新と1点取得を扱うこともできる。
 
 - [2次元Segment Tree](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Segment_Tree_2D.hpp)
+
+- [2次元双対Segment Tree](https://github.com/tokusakurai/Library/blob/main/Data-Structure/Dual_Segment_Tree_2D.hpp)
 
 ## スパーステーブル
 配列が静的かつ二項演算が結合則と冪等性を満たすとき、区間演算ができる。Segment Treeと比べてクエリ計算量は小さいが、メモリ消費が大きいことと扱える演算の幅が小さくなることに注意。
