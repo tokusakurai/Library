@@ -22,10 +22,10 @@ struct Segment_Tree_Beats {
     vector<int> max_cnt, min_cnt;
     vector<T> sum, add, upd; // addとupdはそれぞれ加算・更新の遅延配列
     vector<int> L, R;
-    const T INF_T;
+    const T INF_T = numeric_limits<T>::max() / 2;
     int n;
 
-    Segment_Tree_Beats(const vector<T> &v) : INF_T(numeric_limits<T>::max() / 2) {
+    Segment_Tree_Beats(const vector<T> &v) {
         int m = v.size();
         n = 1;
         while (n < m) n <<= 1;
