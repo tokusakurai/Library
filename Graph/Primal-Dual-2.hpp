@@ -1,15 +1,16 @@
 
 // sからtへの流量fのフローの最小費用流を求める(最初のグラフに負の閉路が存在しない場合)
-// 計算量 O(E*V+F*E*log(V))、初期状態でコストが負の辺が存在しない場合 : O(F*E*log(V))
+// 計算量 O(E*V+F*E*log(V))、初期状態でコストが負の辺が存在しないまたはグラフがDAGである場合 : O(F*E*log(V))
 
 // 概要
-// 最初にBellman-Ford法で始点から各点の最短路を確定する。
+// 最初にBellman-Ford法で始点から各点の最短路を確定する。(DAGの場合は動的計画法でよい。)
 // ポテンシャルを用いることで全ての辺のコストを非負とみなすことができる。
 // 残余グラフにおいてDijkstra法で最短路を求め、流せるだけ流し、ポテンシャルを更新する。
 // ステップ回数は最大でF回。
 
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_6_B&lang=ja
+// https://atcoder.jp/contests/abc214/tasks/abc214_h
 
 #pragma once
 #include <bits/stdc++.h>
@@ -59,6 +60,30 @@ struct Min_Cost_Flow {
         }
     }
 
+    void dag_shortest_path(int s) {
+        vector<int> deg(n, 0);
+        for (int i = 0; i < n; i++) {
+            for (auto &e : es[i]) {
+                if (e.cap > 0) deg[e.to]++;
+            }
+        }
+        fill(begin(h), end(h), INF_T);
+        h[s] = 0;
+        queue<int> que;
+        for (int i = 0; i < n; i++) {
+            if (deg[i] == 0) que.push(i);
+        }
+        while (!que.empty()) {
+            int i = que.front();
+            que.pop();
+            for (auto &e : es[i]) {
+                if (e.cap == 0) continue;
+                h[e.to] = min(h[e.to], h[i] + e.cost);
+                if (--deg[e.to] == 0) que.push(e.to);
+            }
+        }
+    }
+
     void dijkstra(int s) {
         fill(begin(d), end(d), INF_T);
         using P = pair<T, int>;
@@ -79,9 +104,9 @@ struct Min_Cost_Flow {
         }
     }
 
-    T min_cost_flow(int s, int t, F flow) {
+    T min_cost_flow(int s, int t, F flow, bool dag = false) {
         T ret = 0;
-        if (negative) bellman_ford(s);
+        if (negative) dag ? dag_shortest_path(s) : bellman_ford(s);
         while (flow > 0) {
             dijkstra(s);
             if (d[t] == INF_T) return -1;
