@@ -117,7 +117,7 @@ struct Min_Cost_Flow {
                     h[i] += d[i];
             }
             F f = flow;
-            for (int now = t; now != s; now = pre_v[now]) { f = min(f, es[pre_v[now]][pre_e[now]].cap); }
+            for (int now = t; now != s; now = pre_v[now]) f = min(f, es[pre_v[now]][pre_e[now]].cap);
             ret += h[t] * f, flow -= f;
             for (int now = t; now != s; now = pre_v[now]) {
                 edge &e = es[pre_v[now]][pre_e[now]];
