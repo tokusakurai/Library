@@ -32,6 +32,11 @@
 
 - [ビット演算による添字畳み込み](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/Bitwise_Convolution.hpp) (AND・OR・XOR畳み込み、subset畳み込み)
 
+## 凸数列の(min,+)畳み込み
+2つの凸数列に対する添え字加算・最小値畳み込み。
+
+- [凸数列の(min,+)畳み込み](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/Concave_Min_Plus_Convolution.hpp)
+
 ## Convex-Hull-Trick
 直線の追加クエリ(ただし、追加する直線の傾きは単調)と、追加された直線群におけるある点での値の最小値(または最大値)クエリを扱える。
 
