@@ -19,8 +19,9 @@ using namespace std;
 struct Union_Find_Tree {
     vector<int> data;
     const int n;
+    int cnt;
 
-    Union_Find_Tree(int n) : data(n, -1), n(n) {}
+    Union_Find_Tree(int n) : data(n, -1), n(n), cnt(n) {}
 
     int root(int x) {
         if (data[x] < 0) return x;
@@ -34,12 +35,18 @@ struct Union_Find_Tree {
         if (x == y) return false;
         if (data[x] > data[y]) swap(x, y);
         data[x] += data[y], data[y] = x;
+        cnt--;
         return true;
     }
 
     int size(int x) { return -data[root(x)]; }
 
+    int count() { return cnt; };
+
     bool same(int x, int y) { return root(x) == root(y); }
 
-    void clear() { fill(begin(data), end(data), -1); }
+    void clear() {
+        cnt = n;
+        fill(begin(data), end(data), -1);
+    }
 };
