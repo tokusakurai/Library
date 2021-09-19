@@ -44,7 +44,7 @@ struct Edges {
             vector<pair<T, int>> mincost(n, make_pair(INF_T, -1));
             for (auto &e : es) {
                 int u = uf.root(e.from), v = uf.root(e.to);
-                if (u != v && e.cost < mincost[u].first) { mincost[u] = make_pair(e.cost, v); }
+                if (u != v && e.cost < mincost[u].first) mincost[u] = make_pair(e.cost, v);
             }
             bool flag = true;
             for (int i = 0; i < n; i++) {
