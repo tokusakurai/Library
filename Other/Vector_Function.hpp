@@ -28,13 +28,13 @@ int ub(const vector<T> &v, T x) {
 }
 
 template <typename T>
-void unique(vector<T> &v) {
+void rearrange(vector<T> &v) {
     sort(begin(v), end(v));
     v.erase(unique(begin(v), end(v)), end(v));
 }
 
 template <typename T>
-vector<int> iota(const vector<T> &v, bool greater = false) {
+vector<int> id_sort(const vector<T> &v, bool greater = false) {
     int n = v.size();
     vector<int> ret(n);
     iota(begin(ret), end(ret), 0);
