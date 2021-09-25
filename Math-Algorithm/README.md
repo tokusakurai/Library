@@ -91,6 +91,13 @@ FFT(NTT)を用いることで、多変数多項式の積を次数が大きくな
 
 - [多変数畳み込み](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Multivariate_Convolution.hpp) 
 
+## 高速ゼータ・メビウス・アダマール変換
+長さが2べきであるような配列に対する各種の変換。応用として添字AND・OR・XOR畳み込みやsubset畳み込みがある。
+
+- [高速ゼータ・メビウス・アダマール変換](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Zeta_Mobius_Hadamard.hpp)
+
+- [ビット演算による添字畳み込み](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Bitwise_Convolution.hpp) (添字AND・OR・XOR畳み込み、subset畳み込み)
+
 ## 形式的冪級数(FPS)
 形式的冪級数(項の数が有限とは限らない多項式)の基本的な計算を行うアルゴリズム。
 

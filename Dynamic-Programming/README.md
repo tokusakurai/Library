@@ -25,13 +25,6 @@
 
 - [2次元累積和](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/Cumulative_Sum_2D.hpp)
 
-## 高速ゼータ・メビウス・アダマール変換
-長さが2べきであるような配列に対する各種の変換。応用としてAND・OR・XOR畳み込みやsubset畳み込みがある。
-
-- [高速ゼータ・メビウス・アダマール変換](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/Zeta_Mobius_Hadamard.hpp)
-
-- [ビット演算による添字畳み込み](https://github.com/tokusakurai/Library/blob/main/Dynamic-Programming/Bitwise_Convolution.hpp) (AND・OR・XOR畳み込み、subset畳み込み)
-
 ## 凸数列の(min,+)畳み込み
 2つの凸数列に対する添え字加算・最小値畳み込み。
 

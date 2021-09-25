@@ -16,7 +16,7 @@
 using namespace std;
 
 template <typename T>
-void Fast_Zeta_Transform(vector<T> &a, bool upper) {
+void fast_zeta_transform(vector<T> &a, bool upper) {
     int n = a.size();
     assert((n & (n - 1)) == 0);
     for (int i = 1; i < n; i <<= 1) {
@@ -32,7 +32,7 @@ void Fast_Zeta_Transform(vector<T> &a, bool upper) {
 }
 
 template <typename T>
-void Fast_Mobius_Transform(vector<T> &a, bool upper) {
+void fast_mobius_transform(vector<T> &a, bool upper) {
     int n = a.size();
     assert((n & (n - 1)) == 0);
     for (int i = 1; i < n; i <<= 1) {
@@ -48,7 +48,7 @@ void Fast_Mobius_Transform(vector<T> &a, bool upper) {
 }
 
 template <typename T>
-void Fast_Hadamard_Transform(vector<T> &a, bool inverse = false) {
+void fast_hadamard_transform(vector<T> &a, bool inverse = false) {
     int n = a.size();
     assert((n & (n - 1)) == 0);
     for (int i = 1; i < n; i <<= 1) {
@@ -59,6 +59,8 @@ void Fast_Hadamard_Transform(vector<T> &a, bool inverse = false) {
             }
         }
     }
-    if (inverse)
-        for (auto &e : a) e /= n;
+    if (inverse) {
+        T inv = T(1) / T(n);
+        for (auto &e : a) e *= inv;
+    }
 }

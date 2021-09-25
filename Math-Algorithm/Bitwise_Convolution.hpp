@@ -18,15 +18,15 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#include "../Dynamic-Programming/Zeta_Mobius_Hadamard.hpp"
+#include "../Math-Algorithm/Zeta_Mobius_Hadamard.hpp"
 
 template <typename T>
 vector<T> bitwise_and_convolve(vector<T> a, vector<T> b) {
     int n = a.size();
     assert(b.size() == n && (n & (n - 1)) == 0);
-    Fast_Zeta_Transform(a, true), Fast_Zeta_Transform(b, true);
+    fast_zeta_transform(a, true), fast_zeta_transform(b, true);
     for (int i = 0; i < n; i++) a[i] *= b[i];
-    Fast_Mobius_Transform(a, true);
+    fast_mobius_transform(a, true);
     return a;
 }
 
@@ -34,9 +34,9 @@ template <typename T>
 vector<T> bitwise_or_convolve(vector<T> a, vector<T> b) {
     int n = a.size();
     assert(b.size() == n && (n & (n - 1)) == 0);
-    Fast_Zeta_Transform(a, false), Fast_Zeta_Transform(b, false);
+    fast_zeta_transform(a, false), fast_zeta_transform(b, false);
     for (int i = 0; i < n; i++) a[i] *= b[i];
-    Fast_Mobius_Transform(a, false);
+    fast_mobius_transform(a, false);
     return a;
 }
 
@@ -44,9 +44,9 @@ template <typename T>
 vector<T> bitwise_xor_convolve(vector<T> a, vector<T> b) {
     int n = a.size();
     assert(b.size() == n && (n & (n - 1)) == 0);
-    Fast_Hadamard_Transform(a), Fast_Hadamard_Transform(b);
+    fast_hadamard_transform(a), fast_hadamard_transform(b);
     for (int i = 0; i < n; i++) a[i] *= b[i];
-    Fast_Hadamard_Transform(a, true);
+    fast_hadamard_transform(a, true);
     return a;
 }
 
@@ -60,13 +60,13 @@ vector<T> subset_convolve(const vector<T> &a, const vector<T> &b) {
         int t = __builtin_popcount(i);
         A[t][i] = a[i], B[t][i] = b[i];
     }
-    for (int i = 0; i <= k; i++) { Fast_Zeta_Transform(A[i], false), Fast_Zeta_Transform(B[i], false); }
+    for (int i = 0; i <= k; i++) fast_zeta_transform(A[i], false), fast_zeta_transform(B[i], false);
     for (int i = 0; i <= k; i++) {
         for (int j = 0; j <= k - i; j++) {
             for (int l = 0; l < n; l++) C[i + j][l] += A[i][l] * B[j][l];
         }
     }
-    for (int i = 0; i <= k; i++) Fast_Mobius_Transform(C[i], false);
+    for (int i = 0; i <= k; i++) fast_mobius_transform(C[i], false);
     vector<T> c(n);
     for (int i = 0; i < n; i++) c[i] = C[__builtin_popcount(i)][i];
     return c;
