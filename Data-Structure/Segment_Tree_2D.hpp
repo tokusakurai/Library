@@ -7,6 +7,7 @@
 // Segment Treeの各ノードにSegment Treeを乗せている。
 // あらかじめ座標圧縮しておき、必要な部分だけ残すことでメモリをO(N*log(N))に削減できる。
 // y軸方向に計算したあとx軸方向について計算するので、可換モノイドであれば十分。
+// ただし、値更新はfを作用する形でないといけない。
 
 // verified with
 // https://judge.yosupo.jp/problem/rectangle_sum
@@ -49,10 +50,10 @@ struct Segment_Tree_2D {
         }
     }
 
-    void change(int x, int y, const T &a, bool update = true) {
+    void change(int x, int y, const T &a) { // fでaを作用する
         x += n;
         while (x) {
-            segs[x].change(lower_bound(begin(ids[x]), end(ids[x]), y) - begin(ids[x]), a, update);
+            segs[x].change(lower_bound(begin(ids[x]), end(ids[x]), y) - begin(ids[x]), a, false);
             x >>= 1;
         }
     }
