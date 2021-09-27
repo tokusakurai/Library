@@ -11,6 +11,7 @@
 // https://atcoder.jp/contests/abc160/tasks/abc160_f
 // https://atcoder.jp/contests/s8pc-4/tasks/s8pc_4_d
 // https://atcoder.jp/contests/dp/tasks/dp_v
+// https://atcoder.jp/contests/abc220/tasks/abc220_f
 
 #pragma once
 #include <bits/stdc++.h>
@@ -21,7 +22,7 @@ struct Rerooting {
     struct edge {
         int to;
         key_t data;
-        sum_t dp, ndp; // to側の部分木dp、from側の部分木dp
+        sum_t dp, ndp; // to側の部分木dp(辺も含む)、from側の部分木dp(辺は含まない)
         edge(int to, key_t data, sum_t dp, sum_t ndp) : to(to), data(data), dp(dp), ndp(ndp) {}
     };
 
@@ -32,12 +33,13 @@ struct Rerooting {
     const F f;               // 1頂点を間に挟んで隣り合う2つの部分木の情報をマージ
     const G g;               // 部分木の根に1本辺を足す
     const sum_t e1;          // fの単位元
+    const sum_t base;        // 1頂点の場合のdpの値
 
-    Rerooting(int n, const F &f, const G &g, const sum_t &e1) : es(n), subdp(n, e1), dp(n, e1), f(f), g(g), e1(e1) {}
+    Rerooting(int n, const F &f, const G &g, const sum_t &e1, const sum_t &base) : es(n), subdp(n, base), dp(n), f(f), g(g), e1(e1), base(base) {}
 
     void add_edge(int from, int to, const key_t &data) {
-        es[from].emplace_back(to, data, e1, e1);
-        if (!directed) es[to].emplace_back(from, data, e1, e1);
+        es[from].emplace_back(to, data, e1, base);
+        if (!directed) es[to].emplace_back(from, data, e1, base);
     }
 
     void dfs_sub(int now, int pre = -1) {
@@ -52,11 +54,11 @@ struct Rerooting {
         sum_t S = e1;
         for (int i = 0; i < (int)es[now].size(); i++) {
             auto &e = es[now][i];
-            e.ndp = S;
+            e.ndp = f(e.ndp, S);
             e.dp = g(e.to == pre ? top : subdp[e.to], e.data);
             S = f(S, e.dp);
         }
-        dp[now] = S;
+        dp[now] = f(base, S);
         S = e1;
         for (int i = (int)es[now].size() - 1; i >= 0; i--) {
             auto &e = es[now][i];
