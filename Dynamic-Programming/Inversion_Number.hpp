@@ -15,7 +15,7 @@ using namespace std;
 #include "../Data-Structure/Binary_Indexed_Tree.hpp"
 
 template <typename T>
-long long inversion_number(vector<T> a) {
+long long inversion_number(const vector<T> &a) {
     int n = a.size();
     vector<int> v(n);
     iota(begin(v), end(v), 0);
@@ -23,7 +23,7 @@ long long inversion_number(vector<T> a) {
         if (a[i] != a[j]) return a[i] < a[j];
         return i < j;
     });
-    Binary_Indexed_Tree<int> bit(vector<int>(n, 0));
+    Binary_Indexed_Tree<int> bit(n, 0);
     long long ret = 0;
     for (int i = 0; i < n; i++) {
         ret += bit.query(v[i] + 1, n);
@@ -32,13 +32,31 @@ long long inversion_number(vector<T> a) {
     return ret;
 }
 
-long long inversion_number(vector<int> a, int m) { // 配列の全ての要素が[0,m)に含まれる場合
+template <typename T>
+long long inversion_number(const vector<T> &a, const vector<T> &b) { // aをbに変換するのに必要な最小バブルソート回数
     int n = a.size();
-    Binary_Indexed_Tree<int> bit(vector<int>(m, 0));
+    assert(b.size() == n);
+    vector<int> u(n), v(n);
+    iota(begin(u), end(u), 0);
+    sort(begin(u), end(u), [&](int i, int j) {
+        if (a[i] != a[j]) return a[i] < a[j];
+        return i < j;
+    });
+    iota(begin(v), end(v), 0);
+    sort(begin(v), end(v), [&](int i, int j) {
+        if (b[i] != b[j]) return b[i] < b[j];
+        return i < j;
+    });
+    vector<int> w(n);
+    for (int i = 0; i < n; i++) {
+        if (a[u[i]] != b[v[i]]) return -1;
+        w[v[i]] = u[i];
+    }
+    Binary_Indexed_Tree<int> bit(n, 0);
     long long ret = 0;
     for (int i = 0; i < n; i++) {
-        ret += bit.query(a[i] + 1, m);
-        bit.add(a[i], 1);
+        ret += bit.query(w[i] + 1, n);
+        bit.add(w[i], 1);
     }
     return ret;
 }
