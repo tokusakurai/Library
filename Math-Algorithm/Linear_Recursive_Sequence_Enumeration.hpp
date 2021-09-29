@@ -7,7 +7,7 @@
 // とすると、x^(n+d)をF(x)で割った商はa[n]+a[n-1]x+a[n-2]x^2+...+a[0]x^nとなる。
 
 // verified with
-// https://judge.yosupo.jp/problem/kth_term_of_linearly_recurrent_sequence
+// https://atcoder.jp/contests/typical90/tasks/typical90_cl
 
 #pragma once
 #include <bits/stdc++.h>

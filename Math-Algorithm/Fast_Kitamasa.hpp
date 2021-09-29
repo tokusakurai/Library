@@ -17,11 +17,10 @@ using namespace std;
 template <typename T>
 struct Kitamasa {
     using FPS = Formal_Power_Series<T>;
-
-    // d項間線形漸化式 a[n] = c[1]*a[n-1]+c[2]*a[n-2]+・・・+c[d]*a[n-d]
+    // d項間線形漸化式 a[n] = c[1]*a[n-1]+c[2]*a[n-2]+...+c[d]*a[n-d]
     const vector<T> a, c;
     const int d;
-    // f(x) := x^d-c[1]*x^(d-1)-・・・-c[d-1]*x-c[d]
+    // f(x) := x^d-c[1]*x^(d-1)-...-c[d-1]*x-c[d]
     vector<T> f;
 
     Kitamasa(const vector<T> &a, const vector<T> &c) : a(a), c(c), d(a.size()) {

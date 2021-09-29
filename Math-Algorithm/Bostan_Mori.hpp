@@ -20,7 +20,7 @@ using namespace std;
 template <typename T>
 struct Bostan_Mori {
     using NTT_ = Number_Theoretic_Transform<T>;
-    // d項間線形漸化式 a[n] = c[1]*a[n-1]+c[2]*a[n-2]+・・・+c[d]*a[n-d]
+    // d項間線形漸化式 a[n] = c[1]*a[n-1]+c[2]*a[n-2]+...+c[d]*a[n-d]
     const int d;
     // G(x) := a[0]+a[1]x+a[2]x^2+...
     // Q(x) := 1-c[1]x-c[2]x^2-...-c[d]x^d

@@ -4,7 +4,7 @@
 
 // 概要
 // a_k = Σb_i*a_i (i = 0,1,....,D-1)の形で表したい。
-// f(x) := x^d-c[1]*x^(d-1)-・・・-c[d-1]*x-c[d]とすると、
+// f(x) := x^d-c[1]*x^(d-1)-...-c[d-1]*x-c[d]とすると、
 // x^kをf(x)で割った余りのx^iの項の係数がb_iに対応する。
 
 // verified with
@@ -16,10 +16,10 @@ using namespace std;
 
 template <typename T>
 struct Kitamasa {
-    // d項間線形漸化式 a[n] = c[1]*a[n-1]+c[2]*a[n-2]+・・・+c[d]*a[n-d]
+    // d項間線形漸化式 a[n] = c[1]*a[n-1]+c[2]*a[n-2]+...+c[d]*a[n-d]
     const vector<T> a, c;
     const int d;
-    // f(x) := x^d-c[1]*x^(d-1)-・・・-c[d-1]*x-c[d]
+    // f(x) := x^d-c[1]*x^(d-1)-...-c[d-1]*x-c[d]
     vector<T> f;
 
     Kitamasa(const vector<T> &a, const vector<T> &c) : a(a), c(c), d(a.size()) {
