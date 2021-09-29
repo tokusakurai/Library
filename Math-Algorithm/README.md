@@ -65,6 +65,8 @@
 
 - [Bostan-Moriのアルゴリズム](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Bostan_Mori.hpp)
 
+- [線形回帰数列の各項列挙](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Linear_Recursive_Sequence_Enumeration.hpp) (線形漸化式に従う初項1の数列を求める)
+
 線形漸化式で得られる数列の先頭の有限項が与えられたとき、それを与える階数最小の線形漸化式を求めることもできる。
 
 - [Berlekamp-Masseyのアルゴリズム](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Berlekamp_Massey.hpp)
