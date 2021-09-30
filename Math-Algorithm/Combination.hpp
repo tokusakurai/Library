@@ -73,10 +73,11 @@ struct Combination {
         vector<T> pref(k + 1);
         pref[0] = 1;
         for (int i = 1; i <= k; i++) {
-            if (i & 1)
+            if (i & 1) {
                 pref[i] = pref[i - 1] - ifac(i);
-            else
+            } else {
                 pref[i] = pref[i - 1] + ifac(i);
+            }
         }
         T ret = 0;
         for (int i = 1; i <= k; i++) ret += T(i).pow(n) * ifac(i) * pref[k - i];

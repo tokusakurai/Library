@@ -64,10 +64,11 @@ struct F2_Matrix {
                     break;
                 }
             }
-            if (p[i] < n)
+            if (p[i] < n) {
                 is_zero[p[i]] = false;
-            else if (b[i] == 1)
+            } else if (b[i] == 1) {
                 return {};
+            }
         }
         vector<int> x(n, 0);
         for (int i = 0; i < m; i++) {
