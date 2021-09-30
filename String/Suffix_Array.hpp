@@ -36,10 +36,11 @@ struct Suffix_Array {
                 if (i == 0 || c[sa[i - 1]] != c[sa[i]])
                     rank[sa[i]] = i;
                 else {
-                    if (sa[i - 1] + len >= n || c[sa[i - 1] + len / 2] != c[sa[i] + len / 2])
+                    if (sa[i - 1] + len >= n || c[sa[i - 1] + len / 2] != c[sa[i] + len / 2]) {
                         rank[sa[i]] = i;
-                    else
+                    } else {
                         rank[sa[i]] = rank[sa[i - 1]];
+                    }
                 }
             }
             iota(begin(cnt), end(cnt), 0);

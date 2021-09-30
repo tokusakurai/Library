@@ -38,10 +38,11 @@ vector<int> KMP(string S) {
     for (int i = 0; i < n; i++) {
         while (j >= 0 && S[i] != S[j]) j = ret[j];
         j++;
-        if (i + 1 < n && S[i + 1] == S[j])
+        if (i + 1 < n && S[i + 1] == S[j]) {
             ret[i + 1] = ret[j];
-        else
+        } else {
             ret[i + 1] = j;
+        }
     }
     return ret;
 }
