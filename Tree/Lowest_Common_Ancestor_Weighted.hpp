@@ -59,10 +59,11 @@ struct Weighted_Graph {
         prepare(root);
         for (int j = 0; j < height - 1; j++) {
             for (int i = 0; i < n; i++) {
-                if (par[j][i] == -1)
+                if (par[j][i] == -1) {
                     par[j + 1][i] = -1;
-                else
+                } else {
                     par[j + 1][i] = par[j][par[j][i]];
+                }
             }
         }
     }

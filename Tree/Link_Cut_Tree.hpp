@@ -81,10 +81,11 @@ struct Link_Cut_Tree {
 
     void rotate(Node *t) {
         Node *p = t->par, *q = p->par, *c = t->rch;
-        if (p->lch == t)
+        if (p->lch == t) {
             c = t->rch, t->rch = p, p->lch = c;
-        else
+        } else {
             c = t->lch, t->lch = p, p->rch = c;
+        }
         if (q && q->lch == p) q->lch = t;
         if (q && q->rch == p) q->rch = t;
         t->par = q, p->par = t;

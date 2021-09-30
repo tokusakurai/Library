@@ -77,8 +77,9 @@ struct Graph {
         if (!rev) {
             depth[now] = (pre == -1 ? 0 : depth[pre] + 1);
             cnt[depth[now]]++, memo1.push_back(depth[now]);
-        } else
+        } else {
             cnt[depth[now]]--, memo2.push_back(depth[now]);
+        }
         for (auto &e : es[now]) {
             if (e.to == pre || used[e.to]) continue;
             _dfs1(e.to, now, rev);
