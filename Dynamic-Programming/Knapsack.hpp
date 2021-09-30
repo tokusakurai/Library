@@ -40,8 +40,9 @@ int knapsack_01_2(vector<int> v, vector<T> w, T W) {
         for (int j = V; j >= v[i]; j--) dp[j] = min(dp[j], dp[j - v[i]] + w[i]);
     }
     int ret = 0;
-    for (int i = 0; i <= V; i++)
+    for (int i = 0; i <= V; i++) {
         if (dp[i] <= W) ret = i;
+    }
     return ret;
 }
 

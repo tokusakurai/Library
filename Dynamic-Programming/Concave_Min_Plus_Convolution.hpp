@@ -29,12 +29,13 @@ vector<T> concave_min_plus_convolve(const vector<T> &a, const vector<T> &b, cons
     int pi = la, pj = lb;
     for (int i = la + lb; i <= ra + rb; i++) {
         c[i] = (a[pi] == e || b[pj] == e ? e : a[pi] + b[pj]);
-        if (pi == ra)
+        if (pi == ra) {
             pj++;
-        else if (pj == rb)
+        } else if (pj == rb) {
             pi++;
-        else
+        } else {
             (is_min ^ (a[pi + 1] + b[pj] > a[pi] + b[pj + 1]) ? pi : pj)++;
+        }
     }
     return c;
 }

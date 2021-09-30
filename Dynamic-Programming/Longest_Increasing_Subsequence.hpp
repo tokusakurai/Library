@@ -18,14 +18,16 @@ int longest_increasing_subsequence(const vector<T> &a, bool strict) { // strict 
     vector<T> dp;
     for (auto &e : a) {
         typename vector<T>::iterator it;
-        if (strict)
+        if (strict) {
             it = lower_bound(begin(dp), end(dp), e);
-        else
+        } else {
             it = upper_bound(begin(dp), end(dp), e);
-        if (it == end(dp))
+        }
+        if (it == end(dp)) {
             dp.push_back(e);
-        else
+        } else {
             *it = e;
+        }
     }
     return dp.size();
 }
