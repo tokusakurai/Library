@@ -39,8 +39,9 @@ struct Wavelet_Matrix {
                 if ((a[j] >> i) & 1) {
                     B[i][j >> 6] |= 1ULL << (j & 63);
                     b.push_back(a[j]);
-                } else
+                } else {
                     a[k++] = a[j];
+                }
             }
             c[i] = k;
             for (T e : b) a[k++] = e;
@@ -55,10 +56,11 @@ struct Wavelet_Matrix {
 
     int rank(int l, int r, const T &x) const { // [l,r)に含まれるxの個数
         for (int i = h - 1; i >= 0; i--) {
-            if ((x >> i) & 1)
+            if ((x >> i) & 1) {
                 l = c[i] + rank_01(i, l, 1), r = c[i] + rank_01(i, r, 1);
-            else
+            } else {
                 l = rank_01(i, l, 0), r = rank_01(i, r, 0);
+            }
         }
         return r - l;
     }
@@ -70,8 +72,9 @@ struct Wavelet_Matrix {
             if (B[i][k >> 6] & (1ULL << (k & 63))) {
                 ret |= T(1) << i;
                 k = c[i] + rank_01(i, k, 1);
-            } else
+            } else {
                 k = rank_01(i, k, 0);
+            }
         }
         return ret;
     }
@@ -99,18 +102,20 @@ struct Wavelet_Matrix {
     int select(int k, const T &x) const { // k番目(0-indexed)のxの位置
         int l = 0, r = n;
         for (int i = h - 1; i >= 0; i--) {
-            if ((x >> i) & 1)
+            if ((x >> i) & 1) {
                 l = c[i] + rank_01(i, l, 1), r = c[i] + rank_01(i, r, 1);
-            else
+            } else {
                 l = rank_01(i, l, 0), r = rank_01(i, r, 0);
+            }
         }
         if (r - l <= k) return -1;
         int p = l + k;
         for (int i = 0; i < h; i++) {
-            if ((x >> i) & 1)
+            if ((x >> i) & 1) {
                 p = select_01(i, p - c[i], 1);
-            else
+            } else {
                 p = select_01(i, p, 0);
+            }
         }
         return p;
     }
@@ -122,8 +127,9 @@ struct Wavelet_Matrix {
             if ((upper >> i) & 1) {
                 ret += rank_01(i, r, 0) - rank_01(i, l, 0);
                 l = c[i] + rank_01(i, l, 1), r = c[i] + rank_01(i, r, 1);
-            } else
+            } else {
                 l = rank_01(i, l, 0), r = rank_01(i, r, 0);
+            }
         }
         return ret;
     }
@@ -138,9 +144,9 @@ struct Wavelet_Matrix {
         T ret = 0;
         for (int i = h - 1; i >= 0; i--) {
             int nl = rank_01(i, l, 0), nr = rank_01(i, r, 0);
-            if (k < nr - nl)
+            if (k < nr - nl) {
                 l = nl, r = nr;
-            else {
+            } else {
                 ret |= T(1) << i;
                 k -= nr - nl;
                 l = c[i] + l - nl, r = c[i] + r - nr;

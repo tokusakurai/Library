@@ -49,10 +49,11 @@ struct Segment_Tree {
     }
 
     void change(int i, const Monoid &x, bool update = true) {
-        if (update)
+        if (update) {
             seg[i + n] = x;
-        else
+        } else {
             seg[i + n] = f(seg[i + n], x);
+        }
         i += n;
         while (i >>= 1) { seg[i] = f(seg[2 * i], seg[2 * i + 1]); }
     }
@@ -74,16 +75,17 @@ struct Segment_Tree {
     int find_subtree(int i, const C &check, const Monoid &x, Monoid &M, bool type) const {
         while (i < n) {
             Monoid nxt = type ? f(seg[2 * i + type], M) : f(M, seg[2 * i + type]);
-            if (check(nxt, x))
+            if (check(nxt, x)) {
                 i = 2 * i + type;
-            else
+            } else {
                 M = nxt, i = 2 * i + (type ^ 1);
+            }
         }
         return i - n;
     }
 
     template <typename C>
-    int find_first(int l, const C &check, const Monoid &x) const { // 区間[l,r]での演算結果がxとcで与えられる条件を満たす最小のr
+    int find_first(int l, const C &check, const Monoid &x) const { // check((区間[l,r]での演算結果), x)を満たす最小のr
         Monoid L = e1;
         int a = l + n, b = n + n;
         while (a < b) {
@@ -98,7 +100,7 @@ struct Segment_Tree {
     }
 
     template <typename C>
-    int find_last(int r, const C &check, const Monoid &x) const { // 区間[l,r]での演算結果がxとcで与えられる条件を満たす最大のl
+    int find_last(int r, const C &check, const Monoid &x) const { // check((区間[l,r)での演算結果), x)を満たす最大のl
         Monoid R = e1;
         int a = n, b = r + n;
         while (a < b) {

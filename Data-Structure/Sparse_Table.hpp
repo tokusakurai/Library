@@ -35,10 +35,11 @@ struct Sparse_Table {
         for (int i = 0; i < n; i++) st[0][i] = table[i];
         for (int j = 0; j < height - 1; j++) {
             for (int i = 0; i < n; i++) {
-                if (i + (1 << j) < n)
+                if (i + (1 << j) < n) {
                     st[j + 1][i] = f(st[j][i], st[j][i + (1 << j)]);
-                else
+                } else {
                     st[j + 1][i] = st[j][i];
+                }
             }
         }
         lookup.assign(n + 1, -1);

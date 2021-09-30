@@ -46,10 +46,11 @@ struct Splay_Tree {
 
     void rotate(Node *t) {
         Node *p = t->par, *q = p->par, *c = t->rch;
-        if (p->lch == t)
+        if (p->lch == t) {
             c = t->rch, t->rch = p, p->lch = c;
-        else
+        } else {
             c = t->lch, t->lch = p, p->rch = c;
+        }
         if (q && q->lch == p) q->lch = t;
         if (q && q->rch == p) q->rch = t;
         t->par = q, p->par = t;
@@ -59,12 +60,13 @@ struct Splay_Tree {
 
     void splay(Node *t) {
         while (t->state() != 0) {
-            if (t->par->state() == 0)
+            if (t->par->state() == 0) {
                 rotate(t);
-            else if (t->state() == t->par->state())
+            } else if (t->state() == t->par->state()) {
                 rotate(t->par), rotate(t);
-            else
+            } else {
                 rotate(t), rotate(t);
+            }
         }
         root = t;
     }
@@ -75,10 +77,11 @@ struct Splay_Tree {
         while (true) {
             int lsize = (now->lch ? now->lch->size : 0);
             if (i == lsize) break;
-            if (i < lsize)
+            if (i < lsize) {
                 now = now->lch;
-            else
+            } else {
                 i -= lsize + 1, now = now->rch;
+            }
         }
         splay(now);
         return now;
@@ -91,9 +94,9 @@ struct Splay_Tree {
     Node *lower_bound(T x) { // x以上で最小のノード
         Node *now = root, *ret = NULL;
         while (now) {
-            if (now->x < x)
+            if (now->x < x) {
                 now = now->rch;
-            else {
+            } else {
                 ret = now;
                 now = now->lch;
             }
@@ -105,9 +108,9 @@ struct Splay_Tree {
     Node *upper_bound(T x) { // x以上の最小のノード
         Node *now = root, *ret = NULL;
         while (now) {
-            if (now->x <= x)
+            if (now->x <= x) {
                 now = now->rch;
-            else {
+            } else {
                 ret = now;
                 now = now->lch;
             }

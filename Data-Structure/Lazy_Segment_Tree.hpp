@@ -108,16 +108,17 @@ struct Lazy_Segment_Tree {
         while (i < n) {
             eval(i);
             Monoid nxt = type ? f(reflect(2 * i + type), M) : f(M, reflect(2 * i + type));
-            if (check(nxt, x))
+            if (check(nxt, x)) {
                 i = 2 * i + type;
-            else
+            } else {
                 M = nxt, i = 2 * i + (type ^ 1);
+            }
         }
         return i - n;
     }
 
     template <typename C>
-    int find_first(int l, const C &check, const Monoid &x) { // 区間[l,r]での演算結果がxとcで与えられる条件を満たす最小のr
+    int find_first(int l, const C &check, const Monoid &x) { // check((区間[l,r]での演算結果), x)を満たす最小のr
         Monoid L = e1;
         int a = l + n, b = n + n;
         thrust(a);
@@ -133,7 +134,7 @@ struct Lazy_Segment_Tree {
     }
 
     template <typename C>
-    int find_last(int r, const C &check, const Monoid &x) { // 区間[l,r]での演算結果がxとcで与えられる条件を満たす最大のl
+    int find_last(int r, const C &check, const Monoid &x) { // check((区間[l,r)での演算結果), x)を満たす最大のl
         Monoid R = e1;
         int a = n, b = r + n;
         thrust(b - 1);
