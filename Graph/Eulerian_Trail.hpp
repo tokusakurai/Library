@@ -38,10 +38,11 @@ struct Eulerian_Trail {
 
     void add_edge(int from, int to) {
         list.emplace_back(from, to), es[from].emplace_back(to, m);
-        if (directed)
+        if (directed) {
             deg[from]++, deg[to]--;
-        else
+        } else {
             es[to].emplace_back(from, m), deg[from]++, deg[to]++;
+        }
         m++;
     }
 
@@ -73,11 +74,13 @@ struct Eulerian_Trail {
         vector<vector<int>> ret;
         fill(begin(used_v), end(used_v), false);
         if (directed) {
-            for (auto &e : deg)
+            for (auto &e : deg) {
                 if (e != 0) return {};
+            }
         } else {
-            for (auto &e : deg)
+            for (auto &e : deg) {
                 if (e & 1) return {};
+            }
         }
         used_e.assign(m, false);
         for (int i = 0; i < n; i++) {
@@ -99,9 +102,9 @@ struct Eulerian_Trail {
             int s = -1, t = -1;
             if (directed) {
                 for (auto &u : vs) {
-                    if (abs(deg[u]) > 1)
+                    if (abs(deg[u]) > 1) {
                         return {};
-                    else if (deg[u] == 1) {
+                    } else if (deg[u] == 1) {
                         if (s != -1) return {};
                         s = u;
                     }
@@ -109,12 +112,13 @@ struct Eulerian_Trail {
             } else {
                 for (auto &u : vs) {
                     if (deg[u] & 1) {
-                        if (s == -1)
+                        if (s == -1) {
                             s = u;
-                        else if (t == -1)
+                        } else if (t == -1) {
                             t = u;
-                        else
+                        } else {
                             return {};
+                        }
                     }
                 }
             }

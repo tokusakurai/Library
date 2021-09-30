@@ -52,7 +52,8 @@ struct Weighted_Graph {
                     d[e.to] = d[i] + e.cost;
                     if (!inque[e.to]) {
                         if (++cnt[e.to] >= n) return -INF_T; // sから到達できる負閉路あり
-                        que.emplace(e.to), inque[e.to] = true;
+                        que.emplace(e.to);
+                        inque[e.to] = true;
                     }
                 }
             }

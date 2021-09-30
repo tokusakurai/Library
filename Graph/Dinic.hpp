@@ -43,7 +43,10 @@ struct Max_Flow {
             int i = que.front();
             que.pop();
             for (auto &e : es[i]) {
-                if (e.cap > 0 && d[e.to] == -1) { d[e.to] = d[i] + 1, que.push(e.to); }
+                if (e.cap > 0 && d[e.to] == -1) {
+                    d[e.to] = d[i] + 1;
+                    que.push(e.to);
+                }
             }
         }
         return d[t] != -1;

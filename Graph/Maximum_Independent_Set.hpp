@@ -36,10 +36,11 @@ long long maximum_independent_set(vector<long long> G, long long rem = -1) {
         rem &= ~(1LL << k);
         long long p = maximum_independent_set(G, rem);
         long long q = maximum_independent_set(G, rem & ~G[k]);
-        if (__builtin_popcountll(p) > __builtin_popcountll(q))
+        if (__builtin_popcountll(p) > __builtin_popcountll(q)) {
             ret |= p;
-        else
+        } else {
             ret |= ((1LL << k) | q);
+        }
     }
     return ret;
 }

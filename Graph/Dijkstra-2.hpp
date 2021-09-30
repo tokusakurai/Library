@@ -50,7 +50,10 @@ struct Weighted_Graph {
             que.pop();
             if (p > d[i]) continue;
             for (auto &e : es[i]) {
-                if (d[i] + e.cost < d[e.to]) { pre_v[e.to] = i, que.emplace(d[e.to] = d[i] + e.cost, e.to); }
+                if (d[i] + e.cost < d[e.to]) {
+                    pre_v[e.to] = i;
+                    que.emplace(d[e.to] = d[i] + e.cost, e.to);
+                }
             }
         }
         return d[t];

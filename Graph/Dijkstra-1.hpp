@@ -46,7 +46,7 @@ struct Table {
             if (d[u] == INF_T) break;
             for (int j = 0; j < n; j++) {
                 if (es[u][j] != INF_T) {
-                    if (d[u] + es[u][j] < d[j]) { d[j] = d[u] + es[u][j], pre_v[j] = u; }
+                    if (d[u] + es[u][j] < d[j]) d[j] = d[u] + es[u][j], pre_v[j] = u;
                 }
             }
         }

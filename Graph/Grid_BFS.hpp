@@ -36,7 +36,10 @@ struct Grid {
             for (int k = 0; k < 4; k++) {
                 int nx = x + dx[k], ny = y + dy[k];
                 if (!in(nx, ny) || S[nx][ny] == '#') continue;
-                if (d[x][y] + 1 < d[nx][ny]) d[nx][ny] = d[x][y] + 1, que.emplace(nx, ny);
+                if (d[x][y] + 1 < d[nx][ny]) {
+                    d[nx][ny] = d[x][y] + 1;
+                    que.emplace(nx, ny);
+                }
             }
         }
         return d[tx][ty];

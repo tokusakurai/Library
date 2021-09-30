@@ -53,8 +53,9 @@ struct Weighted_Graph {
                 if (!used[e.to] && e.cost < mincost[e.to]) que.emplace(mincost[e.to] = e.cost, e.to);
             }
         }
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++) {
             if (!used[i]) return INF_T;
+        }
         return ret;
     }
 };

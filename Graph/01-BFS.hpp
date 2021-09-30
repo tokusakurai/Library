@@ -49,10 +49,11 @@ struct Weighted_Graph {
             for (auto &e : es[i]) {
                 if (d[i] + e.cost < d[e.to]) {
                     d[e.to] = d[i] + e.cost, pre_v[e.to] = i;
-                    if (e.cost == 0)
+                    if (e.cost == 0) {
                         que.push_front(e.to);
-                    else
+                    } else {
                         que.push_back(e.to);
+                    }
                 }
             }
         }

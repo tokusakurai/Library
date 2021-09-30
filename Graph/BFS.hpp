@@ -44,7 +44,10 @@ struct Graph {
             int i = que.front();
             que.pop();
             for (auto &e : es[i]) {
-                if (d[i] + 1 < d[e.to]) { d[e.to] = d[i] + 1, pre_v[e.to] = i, que.push(e.to); }
+                if (d[i] + 1 < d[e.to]) {
+                    d[e.to] = d[i] + 1, pre_v[e.to] = i;
+                    que.push(e.to);
+                }
             }
         }
         return d[t];

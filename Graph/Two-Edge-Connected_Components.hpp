@@ -26,10 +26,11 @@ struct Two_Edge_Connected_Components : Low_Link<directed> {
     Two_Edge_Connected_Components(int n) : L(n), comp(n), n(n) {}
 
     int _dfs(int now, int pre, int k) {
-        if (pre != -1 && this->ord[pre] >= this->low[now])
+        if (pre != -1 && this->ord[pre] >= this->low[now]) {
             comp[now] = comp[pre];
-        else
+        } else {
             comp[now] = k++;
+        }
         for (auto &e : this->es[now]) {
             if (comp[e.to] == -1) k = _dfs(e.to, now, k);
         }
