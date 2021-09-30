@@ -102,8 +102,9 @@ struct Graph {
         }
         if (depth[u] > depth[v]) {
             l.emplace_back(id_v[u] + 1, id_v[v] + use_edge);
-        } else
+        } else {
             r.emplace_back(id_v[u] + use_edge, id_v[v] + 1);
+        }
         reverse(begin(r), end(r));
         for (auto &e : r) l.push_back(e);
         return l;
