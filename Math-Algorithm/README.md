@@ -10,6 +10,8 @@
 
 - [素数・約数](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Prime.hpp) (約数列挙、素因数分解、素数判定、エラトステネスの篩、素数え上げ)
 
+- [高速素因数分解](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Fast_Prime_Factorization.hpp)
+
 ## 剰余環における演算
 有理整数環の剰余環における演算に関するアルゴリズム。
 
