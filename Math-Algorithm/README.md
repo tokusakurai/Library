@@ -24,6 +24,8 @@
 
 - [実行時入力mod-int構造体](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Runtime_Mod_Int.hpp)
 
+- [モンゴメリ乗算mod-int構造体(64ビット)](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Montgomery_Mod_Int_64.hpp)
+
 ## 組み合わせ
 前計算をすることによって、二項係数を効率的に求めることができる。
 
