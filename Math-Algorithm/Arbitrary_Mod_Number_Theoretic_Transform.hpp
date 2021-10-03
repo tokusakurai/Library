@@ -44,7 +44,7 @@ struct Arbitrary_Mod_Number_Theoretic_Transform {
         auto z = NTT_3::convolve(a3, b3);
         const auto m1_inv_m2 = mint_2(m1).inverse().x;
         const auto m1m2_inv_m3 = (mint_3(m1) * m2).inverse().x;
-        const auto m1m2_mod = (mint(m1) * m2).x;
+        const auto m1m2_mod = (T(m1) * m2).x;
         vector<T> ret(n + m - 1);
         for (int i = 0; i < n + m - 1; i++) {
             auto v1 = ((mint_2(y[i]) + m2 - x[i].x) * m1_inv_m2).x;
