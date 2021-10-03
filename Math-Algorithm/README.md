@@ -104,10 +104,12 @@ FFT(NTT)を用いることで、多変数多項式の積を次数が大きくな
 
 - [ビット演算による添字畳み込み](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Bitwise_Convolution.hpp) (添字AND・OR・XOR畳み込み、subset畳み込み)
 
-## 添字GCD畳み込み
-約数系集合に対するゼータ変換・メビウス変換によって、添字GCD畳み込みを行うことができる。
+## 約数系ゼータ・メビウス変換
+約数系集合に対するゼータ変換・メビウス変換。応用として添字GCD・LCM畳み込みがある。
 
-- [添字GCD畳み込み](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/GCD_Convolution.hpp)
+- [約数系ゼータ・メビウス変換](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Divisors_Zeta_Mobius.hpp)
+
+- [添字GCD・LCM畳み込み](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/GCD_LCM_Convolution.hpp)
 
 ## 形式的冪級数(FPS)
 形式的冪級数(項の数が有限とは限らない多項式)の基本的な計算を行うアルゴリズム。
