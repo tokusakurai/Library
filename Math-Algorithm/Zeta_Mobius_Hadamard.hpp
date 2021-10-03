@@ -22,10 +22,11 @@ void fast_zeta_transform(vector<T> &a, bool upper) {
     for (int i = 1; i < n; i <<= 1) {
         for (int j = 0; j < n; j++) {
             if (!(j & i)) {
-                if (upper)
+                if (upper) {
                     a[j] += a[j | i];
-                else
+                } else {
                     a[j | i] += a[j];
+                }
             }
         }
     }
@@ -38,10 +39,11 @@ void fast_mobius_transform(vector<T> &a, bool upper) {
     for (int i = 1; i < n; i <<= 1) {
         for (int j = 0; j < n; j++) {
             if (!(j & i)) {
-                if (upper)
+                if (upper) {
                     a[j] -= a[j | i];
-                else
+                } else {
                     a[j | i] -= a[j];
+                }
             }
         }
     }
