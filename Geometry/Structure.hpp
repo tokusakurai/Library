@@ -15,15 +15,15 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int sgn(Real a) { return (a < -EPS) ? -1 : (a > EPS) ? 1 : 0; } // 符号関数
-
-bool eq(Real a, Real b) { return sgn(b - a) == 0; }
-
 using Real = double;
 using Point = complex<Real>;
 
 const Real EPS = 1e-10; // ここは適宜調節する
 const Real pi = acos(-1.0);
+
+int sgn(Real a) { return (a < -EPS) ? -1 : (a > EPS) ? 1 : 0; } // 符号関数
+
+bool eq(Real a, Real b) { return sgn(b - a) == 0; }
 
 Point operator*(const Point &p, const Real &d) { return Point(real(p) * d, imag(p) * d); }
 
