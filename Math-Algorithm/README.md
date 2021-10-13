@@ -95,7 +95,11 @@ NTT素数を、自身から1引いたものが(配列の長さより)十分大�
 ### 多変数畳み込み
 FFT(NTT)を用いることで、多変数多項式の積を次数が大きくなるところは切り捨てで求めることができる。    
 
-- [多変数畳み込み](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Multivariate_Convolution.hpp) 
+- [多変数畳み込み](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Multivariate_Convolution.hpp)
+
+## 多項式べき乗
+多項式をべき乗したときのある項の係数を求める。
+- [多項式べき乗の係数](https://github.com/tokusakurai/Library/blob/main/Math-Algorithm/Power_Coefficient.hpp)
 
 ## 高速ゼータ・メビウス・アダマール変換
 長さが2べきであるような配列に対する各種の変換。応用として添字AND・OR・XOR畳み込みやsubset畳み込みがある。
