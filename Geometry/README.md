@@ -22,8 +22,13 @@
 ## アルゴリズム
 多数の点を処理するアルゴリズム。
 
-- [多角形の面積](https://github.com/tokusakurai/Library/blob/main/Geometry/Area.hpp)
+- [多角形](https://github.com/tokusakurai/Library/blob/main/Geometry/Polygon.hpp) (面積と内外判定)
 
 - [凸包](https://github.com/tokusakurai/Library/blob/main/Geometry/Convex_Hull.hpp) (元の点集合を含む最小の凸多角形を構築する)
 
 - [最近点対](https://github.com/tokusakurai/Library/blob/main/Geometry/Structure.hpp)
+
+## All
+上記を全て1つにまとめたもの。
+
+- [All](https://github.com/tokusakurai/Library/blob/main/Geometry/All.hpp)

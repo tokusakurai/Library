@@ -15,7 +15,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-using Real = double;
+using Real = long double;
 using Point = complex<Real>;
 
 const Real EPS = 1e-10; // ここは適宜調節する
