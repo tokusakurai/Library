@@ -1,11 +1,11 @@
 
 // モンゴメリ乗算mod-int構造体(64ビット)
-// 計算量 加減乗算 : O(1)、除算 : O(log(MOD))、K乗 : O(log(K))
+// 計算量 加減乗算 : O(1), 除算 : O(log(mod)), K乗 : O(log(k))
 
 // 概要
 // モントゴメリ乗算を用いて積の剰余を計算する。
 // R = 2^64 として、Rがかかった状態での値を保持している。
-// またreductionの高速化として、2*MODでの余りを保持している。
+// またreductionの高速化として、2*modでの余りを保持している。
 
 // verified with
 // https://judge.yosupo.jp/problem/factorize

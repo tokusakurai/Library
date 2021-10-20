@@ -1,7 +1,7 @@
 
 // ビット演算による添字畳込み
-// 計算量 AND畳み込み・OR畳み込み・XOR畳み込み : O(N*log(N))、subset畳み込み : O(N*log(N)^2)
-// 空間計算量 AND畳み込み・OR畳み込み・XOR畳み込み : O(N)、subset畳み込み : O(N*log(N))
+// 計算量 AND畳み込み・OR畳み込み・XOR畳み込み : O(n log(n)), subset畳み込み : O(n log(n)^2)
+// 空間計算量 AND畳み込み・OR畳み込み・XOR畳み込み : O(n), subset畳み込み : O(n log(n))
 
 // 概要
 // AND畳み込み : a,bを上位集合で高速ゼータ変換⇒両者の各項の積を取る⇒上位集合で高速メビウス変換

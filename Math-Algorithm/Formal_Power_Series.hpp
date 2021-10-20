@@ -1,6 +1,6 @@
 
 // 形式的冪級数
-// 計算量 加算・減算・微分・積分 : O(N)、積・除算・inv・log・exp・pow・Taylor Shift : O(N*log(N))
+// 計算量 加算・減算・微分・積分 : O(n), 積・除算・inv・log・exp・pow・Taylor Shift : O(n log(n))
 
 // 各種演算はテイラー展開を用いて定義される(詳しくは下のverify url)
 

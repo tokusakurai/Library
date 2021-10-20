@@ -1,14 +1,14 @@
 
 // テトレーション(mod)
-// 計算量 O(√M)
+// 計算量 O(√m)
 
 // 概要
 // x^^n := 1(n = 0), x^(x^^(n-1))(n>=1)として再帰的に定義される。
-// n >= φ(M)であるとき、x^n ≡ x^(φ(M)+n%φ(M))が成立する。
+// n >= φ(m)であるとき、x^n ≡ x^(φ(m)+n%φ(m))が成立する。
 // 演算の結果でM以上になったかのフラグを持っておけばx^nのループに入っているかどうかを確認できる。
-// φ(M) >= ceil(log_2(M))であることから、一度フラグが立ったら常に立っているとしていい。
+// φ(m) >= ceil(log_2(m))であることから、一度フラグが立ったら常に立っているとしていい。
 // ただし、x = 0,1は場合分けする必要がある。
-// M ← φ(M)を2回行うとMは半分以下になることから計算量はO(√M)と評価できる。
+// m ← φ(m)を2回行うとmは半分以下になることから計算量はO(√m)と評価できる。
 
 // verified with
 // https://judge.yosupo.jp/problem/tetration_mod
@@ -17,7 +17,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#include "../Math-Algorithm/Modulo.hpp"
+#include "../Math-Algorithm/Factor_Ring.hpp"
 
 long long modpow(long long x, long long n, const int &m, int &flag) { // 答えがm以上になるならflagを立てる
     long long ret = 1;

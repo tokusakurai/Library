@@ -1,11 +1,11 @@
 
-// kitamasa法(D階の線形漸化式で与えられる数列の第N項を求める)
-// 計算量 O(D^2*log(N))
+// kitamasa法(d階の線形漸化式で与えられる数列の第n項を求める)
+// 計算量 O(d^2 log(n))
 
 // 概要
-// a_k = Σb_i*a_i (i = 0,1,....,D-1)の形で表したい。
+// a[n]を a[n] = Σ[0 <= i < d] b[i]*a[i] の形で表したい。
 // f(x) := x^d-c[1]*x^(d-1)-...-c[d-1]*x-c[d]とすると、
-// x^kをf(x)で割った余りのx^iの項の係数がb_iに対応する。
+// x^nをf(x)で割った余りのx^iの項の係数がb[i]に対応する。
 
 // verified with
 // https://atcoder.jp/contests/tdpc/tasks/tdpc_fibonacci

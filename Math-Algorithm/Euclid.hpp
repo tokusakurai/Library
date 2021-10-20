@@ -1,11 +1,11 @@
 
 // ユークリッドの互除法を用いた種々の計算
-// 計算量 gcd・lcm・extgcd・modinv・floor_sum・中国剰余定理 : O(log(max(a, b)))、Garner : O(N^2+N*log(M))
+// 計算量 gcd・lcm・extgcd・modinv・floor_sum・中国剰余定理 : O(log(max(a, b))), Garner : O(n^2)
 
 // extgcd : ax+by = gcd(a,b)を満たす(x,y)の組の1つ
-// floor_sum : Σfloor((A*i+B)/M) (i = 0,1,....,N-1)
+// floor_sum : Σ[0<=i<n] floor((ai+b)/m)
 // 中国剰余定理 : x ≡ a_1(mod m_1), x ≡ a_2(mod m_2)を満たす最小の非負整数x
-// Garner : x ≡ a_i(mod m_i) (i = 0,1,....,N-1)を満たす最小の非負整数xをMで割った余り
+// Garner : x ≡ a_i(mod m_i) (0<=i<n)を満たす最小の非負整数xをMで割った余り
 
 // 概要
 // gcd・lcm・extgcd : ユークリッドの互除法を使って再帰的に解く。
@@ -60,7 +60,7 @@ int modinv(const int &a, const int &m) { // aとmは互いに素
 }
 
 template <typename T>
-T floor_sum(const T &n, const T &m, T a, T b) { // Σ(floor((a*i+b)/m)) (i = 0,1,...,n-1)
+T floor_sum(const T &n, const T &m, T a, T b) { // Σ[0<=i<n] floor((ai+b)/m)
     T ret = (a / m) * (n * (n - 1) / 2) + (b / m) * n;
     a %= m, b %= m;
     T y = (a * n + b) / m;
