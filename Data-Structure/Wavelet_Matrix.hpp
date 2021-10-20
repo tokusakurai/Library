@@ -1,7 +1,7 @@
 
 // ウェーブレット行列
-// 計算量 構築 : O(N*log(V))、rank・access・range_freq : O(log(V))、select : O(log(V)^2) (Vは配列の要素の最大値)
-// 空間計算量 O(N)
+// 計算量 構築 : O(n log(m)), rank・access・range_freq : O(log(m)), select : O(log(m)^2) (mは配列の要素の最大値)
+// 空間計算量 O(n)
 
 // 概要
 // ビットを上から順番に安定ソートすることで構築する。

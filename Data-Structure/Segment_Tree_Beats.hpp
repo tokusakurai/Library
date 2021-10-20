@@ -1,13 +1,13 @@
 
 // Segment Tree Beats
-// 計算量 : 区間chmin・chmax : (ならし)O(log(N)^2)、区間add・update・min・max・sum : O(log(N))
+// 計算量 : 区間chmin・chmax : (ならし) O(log(n)^2), 区間add・update・min・max・sum : O(log(n))
 
 // 概要
 // Segment Treeの各ノードについて
 // 区間の最小値、厳密な2番目の最小値、最小値の個数、最大値、厳密な2番目の最大値、最大値の個数、和の情報を持っておく。
 // add・update・min・max・sumクエリは遅延セグメント木と同様にしてできる。
 // chmin・chmaxは1番目と2番目の間のときだけ更新(1番目だけ全て置き換える)し、そうでなければ下に流す。
-// 1回の操作で最悪O(N)個のノードを探索することになるが、計算量はならしでO(log(N)^2)となる。
+// 1回の操作で最悪O(n)個のノードを探索することになるが、計算量はならしでO(log(n)^2)となる。
 
 // verified with
 // https://judge.yosupo.jp/problem/range_chmin_chmax_add_range_sum
