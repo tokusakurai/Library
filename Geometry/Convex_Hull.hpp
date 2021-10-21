@@ -1,10 +1,10 @@
 
 // 凸包
-// 計算量 : O(N*log(N))
+// 計算量 O(n log(n))
 
 // 概要
 // 上側凸包と下側凸包を求めてつなげる。
-// 座標の幅がMであり、格子点のみであるとすると、凸包の個数はO(M^(2/3))個。
+// 座標の幅がmであり、格子点のみであるとすると、凸包の個数はO(m^(2/3))個。
 
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_4_A&lang=ja
