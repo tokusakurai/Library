@@ -1,7 +1,7 @@
 
 // 最近共通祖先(LCA)
-// 計算量 構築 : O(V*log(V))、2頂点のLCA・距離 : O(log(V))
-// 空間計算量 O(V*log(V))
+// 計算量 構築 : O(n log(n)), 2頂点のLCA・距離 : O(log(n))
+// 空間計算量 O(n log(n))
 
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_5_C&lang=ja
