@@ -1,10 +1,10 @@
 
-// Primal-Dual法(最小費用流)
-// 計算量 O(F*E*V)
+// Primal-Dual法 (最小費用流)
+// 計算量 O(fnm)
 
 // 概要
 // 残余グラフにおいてBellman-Ford法で最短路を求め、流せるだけ流す。
-// ステップ回数は最大でF回。
+// ステップ回数は最大でf回。
 
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_6_B&lang=ja

@@ -1,6 +1,6 @@
 
-// Shortest-Path-Fast-Algorithm(負辺があっても動作する単一始点最短路)
-// 計算量 O(E*V)
+// Shortest-Path-Fast-Algorithm (負辺があっても動作する単一始点最短路)
+// 計算量 O(nm)
 
 // 概要
 // queueを用いる。
