@@ -32,3 +32,10 @@
 上記を全て1つにまとめたもの。
 
 - [All](https://github.com/tokusakurai/Library/blob/main/Geometry/All.hpp)
+
+## 整数幾何
+全ての点の座標が整数のときに、整数計算のみで扱える幾何。
+
+- [凸包](https://github.com/tokusakurai/Library/blob/main/Geometry/Convex_Hull_Integer.hpp)
+
+- [偏角ソート](https://github.com/tokusakurai/Library/blob/main/Geometry/Sort_Arg.hpp)

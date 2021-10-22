@@ -274,8 +274,10 @@ vector<Line> tangent(Circle c1, Circle c2) { // 共通接線
 
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_4_A&lang=ja
 vector<Point> convex_hull(vector<Point> p) { // 凸包
-    int n = p.size(), k = 0;
     sort(begin(p), end(p), compare_x);
+    p.erase(unique(begin(p), end(p)), end(p));
+    int n = p.size(), k = 0;
+    if (n == 1) return p;
     vector<Point> ch(2 * n);
     for (int i = 0; i < n; ch[k++] = p[i++]) {
         while (k >= 2 && sgn(det(ch[k - 1] - ch[k - 2], p[i] - ch[k - 1])) <= 0) k--;

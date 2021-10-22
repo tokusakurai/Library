@@ -1,5 +1,5 @@
 
-// 多角形(面積、内外判定)
+// 多角形 (面積、内外判定)
 // 計算量 O(n)
 
 // 概要
@@ -16,7 +16,7 @@ using namespace std;
 
 #include "../Geometry/Structure.hpp"
 
-Real area(const vector<Point> &p) { //多角形の面積
+Real area(const vector<Point> &p) {
     Real ret = 0.0;
     int n = p.size();
     for (int i = 0; i < n; i++) ret += det(p[i], p[(i + 1) % n]);
