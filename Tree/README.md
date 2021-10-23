@@ -47,3 +47,8 @@
 数列を最小値で再帰的に分割することで得られる二分木。
 
 - [Cartesian tree](https://github.com/tokusakurai/Library/blob/main/Tree/Cartesian_Tree.hpp)
+
+## 木上の最小シュタイナー木
+頂点集合の追加・削除を行ったときの最小シュタイナー木のサイズを求めることができる。
+
+- [木上の最小シュタイナー木](https://github.com/tokusakurai/Library/blob/main/Tree/Dynamic_Steiner_Tree.hpp)
