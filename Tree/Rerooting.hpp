@@ -29,17 +29,17 @@ struct Rerooting {
     using F = function<sum_t(sum_t, sum_t)>;
     using G = function<sum_t(sum_t, key_t)>;
     vector<vector<edge>> es;
-    vector<sum_t> subdp, dp; // 部分木のdp、全方位のdp
-    const F f;               // 1頂点を間に挟んで隣り合う2つの部分木の情報をマージ
-    const G g;               // 部分木の根に1本辺を足す
-    const sum_t e1;          // fの単位元
-    const sum_t base;        // 1頂点の場合のdpの値
+    vector<sum_t> subdp, dp;  // 部分木のdp、全方位のdp
+    const F f;                // 1頂点を間に挟んで隣り合う2つの部分木の情報をマージ
+    const G g;                // 部分木の根に1本辺を足す
+    const sum_t e1;           // fの単位元
+    const vector<sum_t> base; // 1頂点の場合のdpの値
 
-    Rerooting(int n, const F &f, const G &g, const sum_t &e1, const sum_t &base) : es(n), subdp(n, base), dp(n), f(f), g(g), e1(e1), base(base) {}
+    Rerooting(int n, const F &f, const G &g, const sum_t &e1, const vector<sum_t> &base) : es(n), subdp(base), dp(n), f(f), g(g), e1(e1), base(base) {}
 
     void add_edge(int from, int to, const key_t &data) {
-        es[from].emplace_back(to, data, e1, base);
-        if (!directed) es[to].emplace_back(from, data, e1, base);
+        es[from].emplace_back(to, data, e1, base[from]);
+        if (!directed) es[to].emplace_back(from, data, e1, base[to]);
     }
 
     void dfs_sub(int now, int pre = -1) {
@@ -58,7 +58,7 @@ struct Rerooting {
             e.dp = g(e.to == pre ? top : subdp[e.to], e.data);
             S = f(S, e.dp);
         }
-        dp[now] = f(base, S);
+        dp[now] = f(base[now], S);
         S = e1;
         for (int i = (int)es[now].size() - 1; i >= 0; i--) {
             auto &e = es[now][i];
