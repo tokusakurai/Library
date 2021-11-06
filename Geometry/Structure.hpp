@@ -36,7 +36,7 @@ istream &operator>>(istream &is, Point &p) {
     return is;
 }
 
-ostream &operator<<(ostream &os, Point &p) { return os << real(p) << ' ' << imag(p); }
+ostream &operator<<(ostream &os, const Point &p) { return os << real(p) << ' ' << imag(p); }
 
 bool compare_x(const Point &p, const Point &q) {
     if (!eq(real(p), real(q))) return real(p) < real(q);

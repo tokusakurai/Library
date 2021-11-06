@@ -91,7 +91,7 @@ istream &operator>>(istream &is, pair<S, T> &p) {
 }
 
 template <typename S, typename T>
-ostream &operator<<(ostream &os, pair<S, T> &p) {
+ostream &operator<<(ostream &os, const pair<S, T> &p) {
     return os << p.first << ' ' << p.second;
 }
 
