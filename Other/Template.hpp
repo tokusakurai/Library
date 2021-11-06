@@ -37,6 +37,7 @@ template <typename T>
 void print(const vector<T> &v, T x = 0) {
     int n = v.size();
     for (int i = 0; i < n; i++) cout << v[i] + x << (i == n - 1 ? '\n' : ' ');
+    if (v.empty()) cout << '\n';
 }
 
 template <typename T>
@@ -68,6 +69,30 @@ vector<int> id_sort(const vector<T> &v, bool greater = false) {
     iota(begin(ret), end(ret), 0);
     sort(begin(ret), end(ret), [&](int i, int j) { return greater ? v[i] > v[j] : v[i] < v[j]; });
     return ret;
+}
+
+template <typename S, typename T>
+pair<S, T> operator+(const pair<S, T> &p, const pair<S, T> &q) {
+    return make_pair(p.first + q.first, p.second + q.second);
+}
+
+template <typename S, typename T>
+pair<S, T> operator-(const pair<S, T> &p, const pair<S, T> &q) {
+    return make_pair(p.first - q.first, p.second - q.second);
+}
+
+template <typename S, typename T>
+istream &operator>>(istream &is, pair<S, T> &p) {
+    S a;
+    T b;
+    is >> a >> b;
+    p = make_pair(a, b);
+    return is;
+}
+
+template <typename S, typename T>
+ostream &operator<<(ostream &os, pair<S, T> &p) {
+    return os << p.first << ' ' << p.second;
 }
 
 struct io_setup {
