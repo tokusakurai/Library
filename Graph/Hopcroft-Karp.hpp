@@ -1,6 +1,6 @@
 
 // Hopcroft-Karp法 (2部グラフの最大マッチング)
-// 計算量 O(m√n)
+// 計算量 O(e√(n+m)) (eは辺の総数)
 
 // 概要
 // 左側のマッチングに含まれない点の深さを0としてBFSで各点の深さを決定する。
@@ -30,14 +30,20 @@ struct Bipartite_Matching {
         fill(begin(d), end(d), -1);
         queue<int> que;
         for (int i = 0; i < n; i++) {
-            if (!used[i]) que.emplace(i), d[i] = 0;
+            if (!used[i]) {
+                que.push(i);
+                d[i] = 0;
+            }
         }
         while (!que.empty()) {
             int i = que.front();
             que.pop();
             for (auto &e : es[i]) {
                 int j = match[e];
-                if (j != -1 && d[j] == -1) { que.emplace(j), d[j] = d[i] + 1; }
+                if (j != -1 && d[j] == -1) {
+                    que.push(j);
+                    d[j] = d[i] + 1;
+                }
             }
         }
     }
@@ -54,7 +60,7 @@ struct Bipartite_Matching {
         return false;
     }
 
-    int bipartite_matching() { // 操作後のmatch配列は最大マッチングの1つにおいて右側の各要素とマッチングする左側の要素を表す
+    int bipartite_matching() { // 右側のiは左側のmatch[i]とマッチングする
         fill(begin(match), end(match), -1), fill(begin(used), end(used), false);
         int ret = 0;
         while (true) {

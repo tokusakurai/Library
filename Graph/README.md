@@ -82,6 +82,11 @@
 
 - [二重辺連結成分分解](https://github.com/tokusakurai/Library/blob/main/Graph/Two-Edge-Connected_Components.hpp)
 
+## DM分解
+二部グラフの隣接行列の行と列を並び替えてできるだけ細かくブロック三角化するアルゴリズム。
+
+- [DM分解](https://github.com/tokusakurai/Library/blob/main/Graph/Dulmage-Mendelsohn_Decomposition.hpp)
+
 ## その他発展的なアルゴリズム
 
 - [オイラー路・オイラー閉路](https://github.com/tokusakurai/Library/blob/main/Graph/Eulerian_Trail.hpp) (全ての辺をちょうど一度通るパスや閉路を検出する)

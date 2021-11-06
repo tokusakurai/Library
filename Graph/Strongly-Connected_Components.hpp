@@ -24,12 +24,12 @@ struct Strongly_Connected_Components {
     };
 
     vector<vector<edge>> es, rs;
-    vector<int> vs, comp;
-    vector<bool> used;
+    vector<int> vs;
+    vector<int> comp;
     const int n;
     int m;
 
-    Strongly_Connected_Components(int n) : es(n), rs(n), vs(n), comp(n), used(n), n(n), m(0) {}
+    Strongly_Connected_Components(int n) : es(n), rs(n), comp(n), n(n), m(0) {}
 
     void add_edge(int from, int to) {
         es[from].emplace_back(to, m), rs[to].emplace_back(from, m);
@@ -38,29 +38,28 @@ struct Strongly_Connected_Components {
     }
 
     void _dfs(int now) {
-        used[now] = true;
-        for (auto &e : es[now]) {
-            if (!used[e.to]) _dfs(e.to);
-        }
+        if (comp[now] != -1) return;
+        comp[now] = 1;
+        for (auto &e : es[now]) _dfs(e.to);
         vs.push_back(now);
     }
 
-    void _rdfs(int now, int cnt) {
-        used[now] = true, comp[now] = cnt;
-        for (auto &e : rs[now]) {
-            if (!used[e.to]) _rdfs(e.to, cnt);
-        }
+    void _rdfs(int now, int col) {
+        if (comp[now] != -1) return;
+        comp[now] = col;
+        for (auto &e : rs[now]) _rdfs(e.to, col);
     }
 
     Graph<true> decompose() {
-        fill(begin(used), end(used), false);
+        fill(begin(comp), end(comp), -1);
         for (int i = 0; i < n; i++) {
-            if (!used[i]) _dfs(i);
+            if (comp[i] == -1) _dfs(i);
         }
-        fill(begin(used), end(used), false), reverse(begin(vs), end(vs));
+        fill(begin(comp), end(comp), -1);
+        reverse(begin(vs), end(vs));
         int cnt = 0;
         for (auto &e : vs) {
-            if (!used[e]) _rdfs(e, cnt++);
+            if (comp[e] == -1) _rdfs(e, cnt++);
         }
         Graph<true> G(cnt);
         for (int i = 0; i < n; i++) {
