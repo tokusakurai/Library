@@ -30,7 +30,7 @@ struct Dulmage_Mendelsohn_Decomposition : Bipartite_Matching {
     vector<int> comp_l, comp_r;       // 属するブロックの番号
     vector<int> vs;
 
-    Dulmage_Mendelsohn_Decomposition(int n, int m) : BM(n, m), rs(n), comp_l(n), comp_r(n) {}
+    Dulmage_Mendelsohn_Decomposition(int n, int m) : BM(n, m), rs(n), comp_l(n), comp_r(m) {}
 
     void _dfs(int now, int col) {
         if (comp_l[now] != n + 1) return;
