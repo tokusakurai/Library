@@ -1,14 +1,16 @@
 
 // オイラー閉路・オイラー路の検出
-// 計算量 O(n+m)
+// 計算量 オイラー閉路 : O(n+m), オイラー路 : O((n+m)α(n))
 
 // オイラー路 : 全ての辺をちょうど一度通るパス
 // オイラー閉路 : 閉路になるオイラー路
 
 // 連結グラフがオイラー閉路をもつ必要十分条件
-// 有向グラフ : すべての頂点について(入次数)=(出次数)、無向グラフ：全ての頂点の次数が偶数
+// 有向グラフ : すべての頂点について (入次数) = (出次数)
+// 無向グラフ：全ての頂点の次数が偶数
 // 連結グラフがオイラー路をもつ(かつオイラー閉路はもたない)必要十分条件
-// 有向グラフ : (入次数)-(出次数)が1,-1である頂点がちょうど1つずつあり、それ以外は全て0、無向グラフ：次数が奇数である頂点がちょうど2つある
+// 有向グラフ : (入次数)-(出次数) が1,-1である頂点がちょうど1つずつあり、それ以外は全て0
+// 無向グラフ：次数が奇数である頂点がちょうど2つある
 
 // verified with
 // https://codeforces.com/contest/1361/problem/C
@@ -28,7 +30,6 @@ struct Eulerian_Trail {
     };
 
     vector<vector<edge>> es;
-    vector<pair<int, int>> list;
     vector<bool> used_e, used_v;
     vector<int> deg;
     const int n;
@@ -37,18 +38,17 @@ struct Eulerian_Trail {
     Eulerian_Trail(int n) : es(n), used_v(n), deg(n), n(n), m(0) {}
 
     void add_edge(int from, int to) {
-        list.emplace_back(from, to), es[from].emplace_back(to, m);
+        es[from].emplace_back(to, m);
         if (directed) {
             deg[from]++, deg[to]--;
         } else {
-            es[to].emplace_back(from, m), deg[from]++, deg[to]++;
+            es[to].emplace_back(from, m);
+            deg[from]++, deg[to]++;
         }
         m++;
     }
 
-    pair<int, int> get_edge(int id) { return list[id]; }
-
-    vector<int> trace(int s) {
+    vector<int> trace(int s, bool use_id = false) {
         stack<edge> st;
         vector<int> ret;
         st.emplace(s, -1);
@@ -56,21 +56,22 @@ struct Eulerian_Trail {
             int now = st.top().to;
             used_v[now] = true;
             if (es[now].empty()) {
-                ret.push_back(st.top().id);
+                ret.push_back(use_id ? st.top().id : now);
                 st.pop();
             } else {
-                auto e = es[now].back();
+                auto &e = es[now].back();
                 es[now].pop_back();
                 if (used_e[e.id]) continue;
-                used_e[e.id] = true, st.push(e);
+                used_e[e.id] = true;
+                st.push(e);
             }
         }
-        ret.pop_back();
+        if (use_id) ret.pop_back();
         reverse(begin(ret), end(ret));
         return ret;
     }
 
-    vector<vector<int>> eulerian_trail() { // 各連結成分に対してオイラー路を列挙
+    vector<vector<int>> eulerian_trail(bool use_id = false) { // 各連結成分に対してオイラー路を列挙
         vector<vector<int>> ret;
         fill(begin(used_v), end(used_v), false);
         if (directed) {
@@ -84,17 +85,18 @@ struct Eulerian_Trail {
         }
         used_e.assign(m, false);
         for (int i = 0; i < n; i++) {
-            if (es[i].empty() || used_v[i]) continue;
-            ret.push_back(trace(i));
+            if (!used_v[i]) ret.push_back(trace(i, use_id));
         }
         return ret;
     }
 
-    vector<vector<int>> semi_eulerian_trail() { // 各連結成分に対して準オイラー路を列挙
+    vector<vector<int>> semi_eulerian_trail(bool use_id = false) { // 各連結成分に対して準オイラー路を列挙
         Union_Find_Tree uf(n);
-        for (auto &e : list) uf.unite(e.first, e.second);
+        for (int i = 0; i < n; i++) {
+            for (auto &e : es[i]) uf.unite(i, e.to);
+        }
         vector<vector<int>> group(n);
-        for (int i = 0; i < n; i++) { group[uf[i]].emplace_back(i); }
+        for (int i = 0; i < n; i++) group[uf[i]].push_back(i);
         vector<vector<int>> ret;
         used_e.assign(m, false);
         for (auto &vs : group) {
@@ -102,9 +104,8 @@ struct Eulerian_Trail {
             int s = -1, t = -1;
             if (directed) {
                 for (auto &u : vs) {
-                    if (abs(deg[u]) > 1) {
-                        return {};
-                    } else if (deg[u] == 1) {
+                    if (abs(deg[u]) > 1) return {};
+                    if (deg[u] == 1) {
                         if (s != -1) return {};
                         s = u;
                     }
@@ -112,18 +113,12 @@ struct Eulerian_Trail {
             } else {
                 for (auto &u : vs) {
                     if (deg[u] & 1) {
-                        if (s == -1) {
-                            s = u;
-                        } else if (t == -1) {
-                            t = u;
-                        } else {
-                            return {};
-                        }
+                        if (s != -1 && t != -1) return {};
+                        (s == -1 ? s : t) = u;
                     }
                 }
             }
-            ret.push_back(trace(s == -1 ? vs.front() : s));
-            if (ret.back().empty()) ret.pop_back();
+            ret.push_back(trace(s == -1 ? vs.front() : s, use_id));
         }
         return ret;
     }
