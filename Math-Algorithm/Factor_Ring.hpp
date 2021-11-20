@@ -20,6 +20,7 @@ using namespace std;
 #include "../Other/Random.hpp"
 
 long long modpow(long long x, long long n, const int &m) {
+    x %= m;
     long long ret = 1;
     for (; n > 0; n >>= 1, x *= x, x %= m) {
         if (n & 1) ret *= x, ret %= m;
