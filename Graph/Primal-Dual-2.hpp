@@ -111,10 +111,11 @@ struct Min_Cost_Flow {
             dijkstra(s);
             if (d[t] == INF_T) return -1;
             for (int i = 0; i < n; i++) {
-                if (h[i] == INF_T || d[i] == INF_T)
+                if (h[i] == INF_T || d[i] == INF_T) {
                     h[i] = INF_T;
-                else
+                } else {
                     h[i] += d[i];
+                }
             }
             F f = flow;
             for (int now = t; now != s; now = pre_v[now]) f = min(f, es[pre_v[now]][pre_e[now]].cap);
