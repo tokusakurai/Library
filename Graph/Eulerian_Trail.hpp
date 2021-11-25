@@ -2,9 +2,9 @@
 // オイラー閉路・オイラー路の検出
 // 計算量 オイラー閉路 : O(n+m), オイラー路 : O((n+m)α(n))
 
+// 概要
 // オイラー路 : 全ての辺をちょうど一度通るパス
 // オイラー閉路 : 閉路になるオイラー路
-
 // 連結グラフがオイラー閉路をもつ必要十分条件
 // 有向グラフ : すべての頂点について (入次数) = (出次数)
 // 無向グラフ：全ての頂点の次数が偶数
@@ -14,7 +14,9 @@
 
 // verified with
 // https://codeforces.com/contest/1361/problem/C
-// https://yukicoder.me/submissions/591125
+// https://yukicoder.me/problems/no/583
+// https://atcoder.jp/contests/abc227/tasks/abc227_h
+// https://codeforces.com/contest/1610/problem/F
 
 #pragma once
 #include <bits/stdc++.h>
@@ -35,17 +37,16 @@ struct Eulerian_Trail {
     const int n;
     int m;
 
-    Eulerian_Trail(int n) : es(n), used_v(n), deg(n), n(n), m(0) {}
+    Eulerian_Trail(int n) : es(n), used_v(n), deg(n, 0), n(n), m(0) {}
 
     void add_edge(int from, int to) {
-        es[from].emplace_back(to, m);
+        es[from].emplace_back(to, m++);
         if (directed) {
             deg[from]++, deg[to]--;
         } else {
-            es[to].emplace_back(from, m);
+            es[to].emplace_back(from, m++);
             deg[from]++, deg[to]++;
         }
-        m++;
     }
 
     vector<int> trace(int s, bool use_id = false) {
@@ -61,8 +62,9 @@ struct Eulerian_Trail {
             } else {
                 auto &e = es[now].back();
                 es[now].pop_back();
-                if (used_e[e.id]) continue;
-                used_e[e.id] = true;
+                int id = directed ? e.id : e.id / 2;
+                if (used_e[id]) continue;
+                used_e[id] = true;
                 st.push(e);
             }
         }
@@ -83,7 +85,7 @@ struct Eulerian_Trail {
                 if (e & 1) return {};
             }
         }
-        used_e.assign(m, false);
+        used_e.assign(directed ? m : m / 2, false);
         for (int i = 0; i < n; i++) {
             if (!used_v[i]) ret.push_back(trace(i, use_id));
         }
@@ -98,7 +100,7 @@ struct Eulerian_Trail {
         vector<vector<int>> group(n);
         for (int i = 0; i < n; i++) group[uf[i]].push_back(i);
         vector<vector<int>> ret;
-        used_e.assign(m, false);
+        used_e.assign(directed ? m : m / 2, false);
         for (auto &vs : group) {
             if (vs.empty()) continue;
             int s = -1, t = -1;
