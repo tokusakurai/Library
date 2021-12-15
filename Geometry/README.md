@@ -28,7 +28,7 @@
 
 - [凸包](Convex_Hull.hpp) (元の点集合を含む最小の凸多角形を構築する)
 
-- [最近点対](Structure.hpp)
+- [最近点対](Closest_Pair.hpp)
 
 ## All
 
@@ -41,5 +41,7 @@
 全ての点の座標が整数のときに、整数計算のみで扱える幾何。
 
 - [凸包](Convex_Hull_Integer.hpp)
+
+- [最近点対](Closest_Pair_Integer.hpp)
 
 - [偏角ソート](Sort_Arg.hpp)

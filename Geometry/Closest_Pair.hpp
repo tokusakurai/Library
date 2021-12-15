@@ -15,16 +15,17 @@ using namespace std;
 #include "../Geometry/Structure.hpp"
 
 Real closest_pair(vector<Point> p) {
-    if (p.size() <= 1) return 1e18;
+    int n = p.size();
+    if (n == 0) return 1e18;
     sort(begin(p), end(p), compare_x);
-    vector<Point> memo(p.size());
+    vector<Point> memo(n);
 
     function<Real(int, int)> rec = [&](int l, int r) {
-        if (r - l <= 1) return Real(1e18);
-        int m = (l + r) >> 1;
+        if (r - l == 1) return Real(1e18);
+        int m = (l + r) / 2;
         Real x = real(p[m]);
         Real ret = min(rec(l, m), rec(m, r));
-        inplace_merge(p.begin() + l, p.begin() + m, p.begin() + r, compare_y);
+        inplace_merge(begin(p) + l, begin(p) + m, begin(p) + r, compare_y);
         int cnt = 0;
         for (int i = l; i < r; i++) {
             if (abs(real(p[i]) - x) >= ret) continue;
@@ -38,5 +39,5 @@ Real closest_pair(vector<Point> p) {
         return ret;
     };
 
-    return rec(0, p.size());
+    return rec(0, n);
 }

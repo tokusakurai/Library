@@ -5,7 +5,7 @@
 // 概要
 // 全ての頂点の座標が整数の場合の凸包。
 
-//verified with
+// verified with
 // https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_4_A&lang=ja
 
 #pragma once
