@@ -96,6 +96,14 @@
 
 - [DM分解](Dulmage-Mendelsohn_Decomposition.hpp)
 
+## マトロイド
+
+マトロイドとはある公理系を満たす集合システムのことであり、多くの組み合わせ最適化問題をマトロイドを用いて表現することができる。
+
+- [マトロイド](Matroid.hpp)
+
+- [重み付きマトロイド交差](Weighted_Matroid_Intersection.hpp)
+
 ## その他発展的なアルゴリズム
 
 - [オイラー路・オイラー閉路](Eulerian_Trail.hpp) (全ての辺をちょうど一度通るパスや閉路を検出する)
