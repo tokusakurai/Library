@@ -4,57 +4,57 @@
 
 グラフの表現の仕方として、主に隣接リスト、隣接行列、辺集合がある。
 
-- [グラフ(雛形)](Graph_Template.hpp)
+- [グラフ（雛形）](Graph_Template.hpp)
 
-## 深さ優先探索(DFS)
+## 深さ優先探索（DFS）
 
 深さ優先探索。再帰関数を用いて簡潔に実装できる場合が多く、汎用性が非常に高い。
 
-- [DFS(無向グラフ)](DFS_Undirected.hpp) (パス検出・閉路検出)
+- [DFS（無向グラフ）](DFS_Undirected.hpp)（パス検出・閉路検出）
 
-- [DFS(有向グラフ)](DFS_Directed.hpp) (パス検出・トポロジカルソート・閉路検出)
+- [DFS（有向グラフ）](DFS_Directed.hpp)（パス検出・トポロジカルソート・閉路検出）
 
-## 幅優先探索(BFS)
+## 幅優先探索（BFS）
 
 幅優先探索。辺のコストが全て等しいときの単一始点最短路を求めるのに利用される場合が多い。
 
-- [BFS](BFS.hpp) (単一始点最短路)
+- [BFS](BFS.hpp)（単一始点最短路）
 
-- [グリッド上のBFS](Grid_BFS.hpp) (単一始点最短路)
+- [グリッド上の BFS](Grid_BFS.hpp)（単一始点最短路）
 
-- [01-BFS](01-BFS.hpp) (辺のコストが0または1のときの単一始点最短路)
+- [01-BFS](01-BFS.hpp)（辺のコストが 0 または 1 のときの単一始点最短路）
 
 ## 最短路問題
 
-グラフの2点間の最短路(最短距離)を求めるアルゴリズム。
+グラフの2点間の最短路（最短距離）を求めるアルゴリズム。
 
-### 単一始点最短路(負辺なし)
+### 単一始点最短路（負辺なし）
 
-- [Dijkstra法-1](Dijkstra-1.hpp) (頂点数が小さい場合に高速に動作する)
+- [Dijkstra 法 1](Dijkstra-1.hpp)（頂点数が小さい場合に高速に動作する）
 
-- [Dijkstra法-2](Dijkstra-2.hpp) (頂点数が大きい場合でも高速に動作する)
+- [Dijkstra 法 2](Dijkstra-2.hpp)（頂点数が大きい場合でも高速に動作する）
 
-### 単一始点最短路(負辺あり)
+### 単一始点最短路（負辺あり）
 
-- [Bellman-Ford法](Bellman-Ford.hpp)
+- [Bellman-Ford 法](Bellman-Ford.hpp)
 
-- [Shortest-Path-Faster-Algorithm](Shortest_Path_Fast_Algorithm.hpp) (最悪計算量と比べて高速に動作することも多い)
+- [Shortest-Path-Faster-Algorithm](Shortest_Path_Fast_Algorithm.hpp)（最悪計算量と比べて高速に動作することも多い）
 
 ### 全点対最短路
 
-- [Warshall-Floyd法](Warshall-Floyd.hpp) (負辺があってもよい)
+- [Warshall-Floyd 法](Warshall-Floyd.hpp)（負辺があってもよい）
 
 ## 最小全域木問題
 
 辺のコストが全て非負のときに全域木を構成するための最小コストを求めるアルゴリズム。
 
-- [Prim法-1](Prim-1.hpp) (頂点数が小さい場合に高速に動作する)
+- [Prim 法 1](Prim-1.hpp)（頂点数が小さい場合に高速に動作する）
 
-- [Prim法-2](Prim-2.hpp) (頂点数が大きい場合でも高速に動作する)
+- [Prim 法 2](Prim-2.hpp)（頂点数が大きい場合でも高速に動作する）
 
-- [Kruscal法](Kruscal.hpp)
+- [Kruscal 法](Kruscal.hpp)
 
-- [Boruvka法](Boruvka.hpp)
+- [Boruvka 法](Boruvka.hpp)
 
 ## ネットワークフロー
 
@@ -62,19 +62,19 @@
 
 ### 最大流問題
 
-- [Ford-Fulkerson法](Ford-Fulkerson.hpp)
+- [Ford-Fulkerson 法](Ford-Fulkerson.hpp)
 
-- [Dinic法](Dinic.hpp) (最悪計算量と比べて非常に高速に動作することが多い)
+- [Dinic 法](Dinic.hpp)（最悪計算量と比べて非常に高速に動作することが多い）
 
 ### 最小費用流問題
 
-- [Primal-Dual法-1](Primal-Dual-1.hpp)
+- [Primal-Dual 法 1](Primal-Dual-1.hpp)
 
-- [Primal-Dual法-2](Primal-Dual-2.hpp) (ポテンシャルを用いた高速化)
+- [Primal-Dual 法 2](Primal-Dual-2.hpp)（ポテンシャルを用いた高速化）
 
 ### 2部グラフの最大マッチング
 
-- [Hopcroft-Karp法](Hopcroft-Karp.hpp)
+- [Hopcroft-Karp 法](Hopcroft-Karp.hpp)
 
 ## 強連結成分分解
 
@@ -84,17 +84,17 @@
 
 ## 二重辺連結成分分解
 
-無向グラフの各頂点が属する二重辺連結成分(誘導部分グラフが橋を含まないような点集合)を求めるアルゴリズム。
+無向グラフの各頂点が属する二重辺連結成分（誘導部分グラフが橋を含まないような点集合）を求めるアルゴリズム。
 
-- [橋・関節点(Low-Link)](Low_Link.hpp)
+- [橋・関節点（Low-Link）](Low_Link.hpp)
 
 - [二重辺連結成分分解](Two-Edge-Connected_Components.hpp)
 
-## DM分解
+## DM 分解
 
 二部グラフの隣接行列の行と列を並び替えてできるだけ細かくブロック三角化するアルゴリズム。
 
-- [DM分解](Dulmage-Mendelsohn_Decomposition.hpp)
+- [DM 分解](Dulmage-Mendelsohn_Decomposition.hpp)
 
 ## マトロイド
 
@@ -106,8 +106,8 @@
 
 ## その他発展的なアルゴリズム
 
-- [オイラー路・オイラー閉路](Eulerian_Trail.hpp) (全ての辺をちょうど一度通るパスや閉路を検出する)
+- [オイラー路・オイラー閉路](Eulerian_Trail.hpp)（全ての辺をちょうど一度通るパスや閉路を検出する）
 
-- [彩色数](Choromatic_Number.hpp) (隣接頂点の色が異なるように彩色するのに必要な最小の色の数を求める)
+- [彩色数](Choromatic_Number.hpp)（隣接頂点の色が異なるように彩色するのに必要な最小の色の数を求める）
 
-- [最大安定集合](Maximum_Independent_Set.hpp) (どの2点も元のグラフで隣接しないような点集合でサイズが最大のものを求める)
+- [最大安定集合](Maximum_Independent_Set.hpp)（どの 2 点も元のグラフで隣接しないような点集合でサイズが最大のものを求める）
