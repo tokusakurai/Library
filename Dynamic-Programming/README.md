@@ -22,9 +22,9 @@
 
 累積和を DP で前計算することによって区間和を効率的に求めることができる。
 
-- [1次元累積和](Cumulative_Sum_1D.hpp)
+- [1 次元累積和](Cumulative_Sum_1D.hpp)
 
-- [2次元累積和](Cumulative_Sum_2D.hpp)
+- [2 次元累積和](Cumulative_Sum_2D.hpp)
 
 ## 凸数列の (min,+) 畳み込み
 

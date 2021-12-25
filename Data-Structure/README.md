@@ -34,9 +34,9 @@
 
 Segment Tree に Segment Tree や双対 Segment Tree を乗せることで、2 次元平面上の 1 点更新と矩形演算や矩形更新と 1 点取得を扱うこともできる。
 
-- [2次元 Segment Tree](Segment_Tree_2D.hpp)
+- [2 次元 Segment Tree](Segment_Tree_2D.hpp)
 
-- [2次元双対 Segment Tree](Dual_Segment_Tree_2D.hpp)
+- [2 次元双対 Segment Tree](Dual_Segment_Tree_2D.hpp)
 
 ## スパーステーブル
 
