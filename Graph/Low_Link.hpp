@@ -6,11 +6,11 @@
 // 関節点：除くと誘導部分グラフが非連結になるような頂点
 
 // 概要
-// ord[i] := 頂点iをDFSで何番目に探索したか
-// low[i] := 頂点iから後退辺を1回まで通ることで到達できる頂点のordの最小値
-// 辺(u,v)(ord[u]<ord[v])が橋⇔ord[u]<low[v]
-// 根が関節点⇔子が2つ以上
-// 根でない頂点uが関節点⇔uの子vでord[u]<=low[v]を満たすものが存在する
+// ord[i] := 頂点 i を DFS で何番目に探索したか
+// low[i] := 頂点 i から後退辺を 1 回まで通ることで到達できる頂点の ord の最小値
+// 辺 (u,v) (ord[u]<ord[v]) が橋 <-> ord[u] < low[v]
+// 根が関節点 <-> 子が2つ以上
+// 根でない頂点 u が関節点 <-> u の子 v で ord[u] <= low[v] を満たすものが存在する
 
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_3_A&lang=ja

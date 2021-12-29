@@ -1,12 +1,12 @@
 
-// Hopcroft-Karp法 (2部グラフの最大マッチング)
-// 計算量 O(e√(n+m)) (eは辺の総数)
+// Hopcroft-Karp 法（2 部グラフの最大マッチング）
+// 計算量 O(e√(n+m))（e は辺の総数）
 
 // 概要
-// 左側のマッチングに含まれない点の深さを0としてBFSで各点の深さを決定する。
-// このとき左→右の移動では現在マッチングに使われていない辺を、右→左の移動では現在マッチングに使われている辺のみを用いる。
-// 左側のマッチングに含まれていない点から右側のマッチングに含まれていない点へのパスをDFSで見つけ、パス上の辺の使用不使用を反転させる。
-// ステップ回数は最大でO(√n)回。
+// 左側のマッチングに含まれない点の深さを 0 として BFS で各点の深さを決定する。
+// このとき左 -> 右の移動では現在マッチングに使われていない辺を、右 -> 左の移動では現在マッチングに使われている辺のみを用いる。
+// 左側のマッチングに含まれていない点から右側のマッチングに含まれていない点へのパスを DFS で見つけ、パス上の辺の使用不使用を反転させる。
+// ステップ回数は最大で O(√n) 回。
 
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_7_A&lang=ja
@@ -60,7 +60,7 @@ struct Bipartite_Matching {
         return false;
     }
 
-    int bipartite_matching() { // 右側のiは左側のmatch[i]とマッチングする
+    int bipartite_matching() { // 右側の i は左側の match[i] とマッチングする
         fill(begin(match), end(match), -1), fill(begin(used), end(used), false);
         int ret = 0;
         while (true) {

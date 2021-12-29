@@ -1,11 +1,11 @@
 
-// Dinic法 (最大流)
+// Dinic法（最大流）
 // 計算量 O(mn^2)
 
 // 概要
-// BFSで残余グラフにおける始点から各点の最短距離を確定→始点から終点まで最短路で結ぶ増加パスをDFSで探索
+// BFS で残余グラフにおける始点から各点の最短距離を確定 -> 始点から終点まで最短路で結ぶ増加パスを DFS で探索
 // このステップを始点から終点までの増加パスが存在しなくなるまで行う。
-// 各ステップで最短距離は増加するので、ステップ回数はn-1回以下。
+// 各ステップで最短距離は増加するので、ステップ回数は n-1 回以下。
 
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_6_A&lang=ja
@@ -14,7 +14,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template <typename F> //流量の型
+template <typename F> // 流量の型
 struct Max_Flow {
     struct edge {
         int to;
@@ -68,7 +68,7 @@ struct Max_Flow {
         return 0;
     }
 
-    F max_flow(int s, int t) { // 操作後のd配列は最小カットの1つを表す(0以上ならs側、-1ならt側)
+    F max_flow(int s, int t) { // 操作後の d 配列は最小カットの 1 つを表す（0 以上なら s 側、-1 なら t 側）
         F flow = 0;
         while (_bfs(s, t)) {
             fill(begin(pos), end(pos), 0);

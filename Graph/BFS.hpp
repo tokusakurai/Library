@@ -4,8 +4,8 @@
 
 // 概要
 // 始点から近い順に最短路を確定させる。
-// queueを用いる。
-// 辺のコストは全て1なのでqueueに入れるだけで始点から近い順が保たれる。
+// queue を用いる。
+// 辺のコストは全て 1 なので queue に入れるだけで始点から近い順が保たれる。
 
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_11_C&lang=ja

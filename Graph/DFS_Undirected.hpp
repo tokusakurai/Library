@@ -1,11 +1,11 @@
 
-// 無向グラフでの基本的なDFS
-// 計算量 パス検出・閉路検出 : O(n+m)
+// 無向グラフでの基本的な DFS
+// 計算量 パス検出・閉路検出：O(n+m)
 
 // 概要
-// 直前に使用した辺を戻らないようにしてDFSをする。
-// パス検出 : 目的の点に到達したら探索を打ち切って、来たパスを戻ることで復元する。
-// 閉路検出 : 同じ点に2回到達したら探索を打ち切って、その頂点に来るまで来たパスを戻ることで復元する。
+// 直前に使用した辺を戻らないようにして DFS をする。
+// パス検出：目的の点に到達したら探索を打ち切って、来たパスを戻ることで復元する。
+// 閉路検出：同じ点に2回到達したら探索を打ち切って、その頂点に来るまで来たパスを戻ることで復元する。
 
 // verified with
 // https://yukicoder.me/problems/no/1254
@@ -53,7 +53,7 @@ struct Graph {
         return false;
     }
 
-    vector<int> find_path(int s, int t, bool use_id = false) { // 点素なs-tパスを1つ検出
+    vector<int> find_path(int s, int t, bool use_id = false) { // 点素な s-t パスを1つ検出
         ret_path.clear(), fill(begin(used), end(used), 0);
         detect_path(s, t, use_id);
         reverse(begin(ret_path), end(ret_path));

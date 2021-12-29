@@ -1,11 +1,11 @@
 
-// Shortest-Path-Fast-Algorithm (負辺があっても動作する単一始点最短路)
+// Shortest-Path-Fast-Algorithm（負辺があっても動作する単一始点最短路）
 // 計算量 O(nm)
 
 // 概要
-// queueを用いる。
-// 始点から始めて最短路が更新される点があればqueueに入れる。(既に入っていれば入れない)
-// 負閉路が存在しない場合、各頂点についてqueueに入れられる回数は最大でV-1回になる。(V回入れられたら負閉路が存在する)
+// queue を用いる。
+// 始点から始めて最短路が更新される点があれば queue に入れる。（既に入っていれば入れない）
+// 負閉路が存在しない場合、各頂点について queue に入れられる回数は最大で V-1 回になる。（V 回入れられたら負閉路が存在する）
 
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_1_B&lang=ja
@@ -51,7 +51,7 @@ struct Weighted_Graph {
                 if (d[i] + e.cost < d[e.to]) {
                     d[e.to] = d[i] + e.cost;
                     if (!inque[e.to]) {
-                        if (++cnt[e.to] >= n) return -INF_T; // sから到達できる負閉路あり
+                        if (++cnt[e.to] >= n) return -INF_T; // s から到達できる負閉路あり
                         que.emplace(e.to);
                         inque[e.to] = true;
                     }

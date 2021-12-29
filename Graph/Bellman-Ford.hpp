@@ -1,10 +1,10 @@
 
-// Bellman-Ford法 (負辺があっても動作する単一始点最短路)
+// Bellman-Ford法（負辺があっても動作する単一始点最短路）
 // 計算量 O(nm)
 
 // 概要
 // 各ステップで全ての辺を用いて最短距離を更新する。
-// 負の閉路がなければステップ回数はn-1回行えばよい。(n回目のステップでも更新が発生したら負閉路が存在する)
+// 負の閉路がなければステップ回数は n-1 回行えばよい。（n 回目のステップでも更新が発生したら負閉路が存在する）
 
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_1_B&lang=ja
@@ -38,7 +38,7 @@ struct Weighted_Graph {
         m++;
     }
 
-    bool bellman_ford(int s) { // sから到達可能な負閉路を検出
+    bool bellman_ford(int s) { // s　から到達可能な負閉路を検出
         fill(begin(d), end(d), INF_T);
         d[s] = 0;
         bool ret = false;

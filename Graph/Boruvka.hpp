@@ -1,10 +1,10 @@
 
-// Boruvka法 (最小全域木)
+// Boruvka法（最小全域木）
 // 計算量 O(m log(n))
 
 // 概要
 // 各連結成分について、他の連結成分と自身を結ぶ最小コストの辺を採用する。
-// 各ステップで連結成分の数は半分以下になるから、ステップ回数はO(log(n))回。
+// 各ステップで連結成分の数は半分以下になるから、ステップ回数は O(log(n)) 回。
 
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_2_A&lang=ja

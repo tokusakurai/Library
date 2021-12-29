@@ -1,9 +1,9 @@
 
-// Ford-Fulkerson法(最大流)
+// Ford-Fulkerson 法（最大流）
 // 計算量 O(fn)
 
-// 残余グラフにおいて容量が正の辺のみからなるパス(増加パス)をDFSで探索し、流せるだけ流す。
-// ステップ回数は最大でf回
+// 残余グラフにおいて容量が正の辺のみからなるパス（増加パス）を DFS で探索し、流せるだけ流す。
+// ステップ回数は最大で f 回
 // 逆辺の初期容量は、有向グラフの場合：0、無向グラフの場合：正辺の容量と同じ
 
 // verified with
@@ -49,7 +49,7 @@ struct Max_Flow {
         return 0;
     }
 
-    F max_flow(int s, int t) { // 操作後のused配列は最小カットの1つを表す(trueならs側、falseならt側)
+    F max_flow(int s, int t) { // 操作後の used 配列は最小カットの 1 つを表す(true なら s 側、false ならt側)
         F flow = 0;
         for (;;) {
             fill(begin(used), end(used), false);

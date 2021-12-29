@@ -1,11 +1,11 @@
 
-// Warshall-Floyed法 (負辺があっても動作する全点対最短路)
+// Warshall-Floyd 法（負辺があっても動作する全点対最短路）
 // 計算量 O(n^3)
 
 // 概要
-// dp[k][i][j] := 頂点0~k-1と頂点i,jのみを使うときのiからjへの最短路
-// このdpをメモリ省略で行うことができる。
-// dp[i][i]<0となるiが存在する場合、頂点iを含む負閉路が存在する。
+// dp[k][i][j] := 頂点 0,1,...,k-1 と頂点 i,j のみを使うときの i から j への最短路
+// この dp をメモリ省略で行うことができる。
+// dp[i][i] < 0 となる i が存在する場合、頂点 i を含む負閉路が存在する。
 
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_1_C&lang=ja
