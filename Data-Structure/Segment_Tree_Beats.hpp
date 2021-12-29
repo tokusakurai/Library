@@ -1,13 +1,14 @@
 
 // Segment Tree Beats
-// 計算量 : 区間chmin・chmax : (ならし) O(log(n)^2), 区間add・update・min・max・sum : O(log(n))
+// 計算量：区間 chmin・chmax：（ならし）O(log(n)^2)、区間 add・update・min・max・sum：O(log(n))
+// 空間計算量 O(n)
 
 // 概要
-// Segment Treeの各ノードについて
-// 区間の最小値、厳密な2番目の最小値、最小値の個数、最大値、厳密な2番目の最大値、最大値の個数、和の情報を持っておく。
-// add・update・min・max・sumクエリは遅延セグメント木と同様にしてできる。
-// chmin・chmaxは1番目と2番目の間のときだけ更新(1番目だけ全て置き換える)し、そうでなければ下に流す。
-// 1回の操作で最悪O(n)個のノードを探索することになるが、計算量はならしでO(log(n)^2)となる。
+// Segment Tree の各ノードについて
+// 区間の最小値、厳密な 2 番目の最小値、最小値の個数、最大値、厳密な 2 番目の最大値、最大値の個数、和の情報を持っておく。
+// add・update・min・max・sum クエリは遅延セグメント木と同様にしてできる。
+// chmin・chmax は 1 番目と 2 番目の間のときだけ更新（1 番目だけ全て置き換える）し、そうでなければ下に流す。
+// 1 回の操作で最悪 O(n) 個のノードを探索することになるが、計算量はならしで O(log(n)^2) となる。
 
 // verified with
 // https://judge.yosupo.jp/problem/range_chmin_chmax_add_range_sum
@@ -20,7 +21,7 @@ template <typename T>
 struct Segment_Tree_Beats {
     vector<T> max_1, max_2, min_1, min_2;
     vector<int> max_cnt, min_cnt;
-    vector<T> sum, add, upd; // addとupdはそれぞれ加算・更新の遅延配列
+    vector<T> sum, add, upd; // add と upd はそれぞれ加算・更新の遅延配列
     vector<int> L, R;
     const T INF_T = numeric_limits<T>::max() / 2;
     int n;
@@ -48,7 +49,7 @@ struct Segment_Tree_Beats {
         sum[i] = x;
     }
 
-    void node_chmin(int i, const T &x) { // max_1[i] > x > max_2[i]のときのchmin
+    void node_chmin(int i, const T &x) { // max_1[i] > x > max_2[i] のときの chmin
         sum[i] += (x - max_1[i]) * max_cnt[i];
         if (min_1[i] == max_1[i]) min_1[i] = x;
         if (min_2[i] == max_1[i]) min_2[i] = x;
@@ -56,7 +57,7 @@ struct Segment_Tree_Beats {
         if (upd[i] != INF_T && x < upd[i]) upd[i] = x;
     }
 
-    void node_chmax(int i, const T &x) { // min_1[i] < x < min_2[i]のときのchmax
+    void node_chmax(int i, const T &x) { // min_1[i] < x < min_2[i] のときの chmax
         sum[i] += (x - min_1[i]) * min_cnt[i];
         if (max_1[i] == min_1[i]) max_1[i] = x;
         if (max_2[i] == min_1[i]) max_2[i] = x;
@@ -64,7 +65,7 @@ struct Segment_Tree_Beats {
         if (upd[i] != INF_T && x > upd[i]) upd[i] = x;
     }
 
-    void node_add(int i, const T &x) { // 全体にadd
+    void node_add(int i, const T &x) { // 全体に add
         if (max_1[i] != -INF_T) max_1[i] += x;
         if (max_2[i] != -INF_T) max_2[i] += x;
         if (min_1[i] != INF_T) min_1[i] += x;
@@ -74,13 +75,13 @@ struct Segment_Tree_Beats {
         add[i] += x;
     }
 
-    void node_update(int i, const T &x) { // 全体にupdate
+    void node_update(int i, const T &x) { // 全体に update
         max_1[i] = x, max_2[i] = -INF_T, max_cnt[i] = R[i] - L[i];
         min_1[i] = x, min_2[i] = INF_T, min_cnt[i] = R[i] - L[i];
         upd[i] = x, add[i] = 0;
     }
 
-    void push(int i) { // iから遅延評価を子に流す
+    void push(int i) { // i から遅延評価を子に流す
         if (upd[i] != INF_T) {
             node_update(2 * i, upd[i]);
             node_update(2 * i + 1, upd[i]);
@@ -98,7 +99,7 @@ struct Segment_Tree_Beats {
         if (min_1[i] > min_1[2 * i + 1]) node_chmax(2 * i + 1, min_1[i]);
     }
 
-    void pull(int i) { // 子の状態からiの状態を復元する
+    void pull(int i) { // 子の状態から i の状態を復元する
         int l = 2 * i, r = 2 * i + 1;
         sum[i] = sum[l] + sum[r];
         if (max_1[l] > max_1[r]) {

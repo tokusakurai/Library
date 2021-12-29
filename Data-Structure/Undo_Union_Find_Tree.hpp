@@ -1,11 +1,11 @@
 
-// Undo可能Union-Find Tree
-// 計算量 構築 : O(n), 併合・結合判定・サイズ : O(log(n)), Undo : O(1)
+// Undo 可能 Union-Find Tree
+// 計算量 構築：O(n)、併合・結合判定・サイズ：O(log(n))、Undo：O(1)
 // 空間計算量 O(n)
 
 // 概要
 // まず、縮約は諦める。
-// すると、各union操作においてdata配列が変更されるのは高々2箇所だけであるから、変更箇所を記録しておけばO(1)でUndoできる。
+// すると、各 union 操作において data 配列が変更されるのは高々 2 箇所だけであるから、変更箇所を記録しておけば O(1) で Undo できる。
 
 // verified with
 // https://codeforces.com/contest/1445/problem/E

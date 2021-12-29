@@ -1,13 +1,13 @@
 
 // Segment Tree
-// 計算量 構築 : O(n), 1点更新・区間取得・二分探索 : O(log(n))
+// 計算量 構築：O(n)、1 点更新・区間取得・二分探索：O(log(n))
 // 空間計算量 O(n)
 
 // 概要
-// ノードを区間に対応させることで、任意の区間がO(log(n))個のノードが表す区間のdisjointな和集合として表現される。
-// 各点を被覆するノードはO(log(n))個。
-// 1点更新 : その点を含むノードの値を全て更新する。
-// 区間取得 : 区間をちょうど被覆するノードたちの値を用いて演算を行う。
+// ノードを区間に対応させることで、任意の区間が O(log(n)) 個のノードが表す区間の disjoint な和集合として表現される。
+// 各点を被覆するノードは O(log(n)) 個。
+// 1 点更新：その点を含むノードの値を全て更新する。
+// 区間取得：区間をちょうど被覆するノードたちの値を用いて演算を行う。
 
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_A&lang=ja
@@ -85,7 +85,7 @@ struct Segment_Tree {
     }
 
     template <typename C>
-    int find_first(int l, const C &check, const Monoid &x) const { // check((区間[l,r]での演算結果), x)を満たす最小のr
+    int find_first(int l, const C &check, const Monoid &x) const { // check((区間 [l,r] での演算結果), x) を満たす最小の r
         Monoid L = e1;
         int a = l + n, b = n + n;
         while (a < b) {
@@ -100,7 +100,7 @@ struct Segment_Tree {
     }
 
     template <typename C>
-    int find_last(int r, const C &check, const Monoid &x) const { // check((区間[l,r)での演算結果), x)を満たす最大のl
+    int find_last(int r, const C &check, const Monoid &x) const { // check((区間 [l,r) での演算結果), x) を満たす最大の l
         Monoid R = e1;
         int a = n, b = r + n;
         while (a < b) {

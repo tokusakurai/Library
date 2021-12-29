@@ -1,13 +1,13 @@
 
-// 2次元Segment Tree
-// 計算量 構築 : O(n log(n)^2), 1点更新・矩形取得 : O(log(n)^2)
+// 2 次元 Segment Tree
+// 計算量 構築：O(n log(n)^2)、1 点更新・矩形取得：O(log(n)^2)
 // 空間計算量 O(n log(n))
 
 // 概要
-// Segment Treeの各ノードにSegment Treeを乗せている。
-// あらかじめ座標圧縮しておき、必要な部分だけ残すことでメモリをO(n log(n))に削減できる。
-// y軸方向に計算したあとx軸方向について計算するので、可換モノイドであれば十分。
-// ただし、値更新はfを作用する形でないといけない。
+// Segment Tree の各ノードに Segment Tree を乗せている。
+// あらかじめ座標圧縮しておき、必要な部分だけ残すことでメモリを O(n log(n)) に削減できる。
+// y 軸方向に計算したあと x 軸方向について計算するので、可換モノイドであれば十分。
+// ただし、値更新は f を作用する形でないといけない。
 
 // verified with
 // https://judge.yosupo.jp/problem/rectangle_sum
@@ -50,7 +50,7 @@ struct Segment_Tree_2D {
         }
     }
 
-    void change(int x, int y, const T &a) { // fでaを作用する
+    void change(int x, int y, const T &a) { // f で a を作用する
         x += n;
         while (x) {
             segs[x].change(lower_bound(begin(ids[x]), end(ids[x]), y) - begin(ids[x]), a, false);

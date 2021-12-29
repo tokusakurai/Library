@@ -1,11 +1,11 @@
 
-// 部分永続Union-Find Tree (任意時刻でのクエリを扱える)
-// 計算量 構築 : O(n), (任意時刻tにおける) 併合・結合判定・サイズ : O(log(n))
+// 部分永続 Union-Find Tree（任意時刻でのクエリを扱える）
+// 計算量 構築：O(n)、（任意時刻tにおける）併合・結合判定・サイズ：O(log(n))
 // 空間計算量 O(n)
 
 // 概要
 // まず、縮約は諦める。
-// すると、各頂点について親が書き換えられるのは高々1回だけになるので、その時刻を記録しておけば任意時刻でも親をたどっていくことができる。
+// すると、各頂点について親が書き換えられるのは高々 1 回だけになるので、その時刻を記録しておけば任意時刻でも親をたどっていくことができる。
 
 // verified with
 // https://atcoder.jp/contests/agc002/tasks/agc002_d
@@ -16,7 +16,7 @@ using namespace std;
 
 struct Partitially_Persistent_Union_Find_Tree {
     vector<int> data;
-    vector<int> last;                   // 別の頂点にくっつけられた(自分が根でなくなった)時刻
+    vector<int> last;                   // 別の頂点にくっつけられた（自分が根でなくなった）時刻
     vector<vector<pair<int, int>>> add; // 併合が起きたときの時刻と連結成分のサイズを記録
     const int n;
 

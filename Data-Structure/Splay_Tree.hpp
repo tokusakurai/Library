@@ -1,9 +1,9 @@
 
 // スプレー木
-// 計算量 挿入・削除・i番目の値にアクセス・二分探索 : (ならし) O(log(n))
+// 計算量 挿入・削除・i番目の値にアクセス・二分探索：（ならし）O(log(n))
 
 // 概要
-// 平衡二分探索木で、要素にアクセスするときにsplay操作をしてアクセスした頂点を根に持ってくる。
+// 平衡二分探索木で、要素にアクセスするときに splay 操作をしてアクセスした頂点を根に持ってくる。
 
 // verified with
 // https://atcoder.jp/contests/arc033/tasks/arc033_3
@@ -71,7 +71,7 @@ struct Splay_Tree {
         root = t;
     }
 
-    Node *get(int i) { // i番目(0-indexed)の値
+    Node *get(int i) { // i 番目（0-indexed）の値
         if (i >= root->size) return NULL;
         Node *now = root;
         while (true) {
@@ -91,7 +91,7 @@ struct Splay_Tree {
 
     Node *make_node(const T &x) { return new Node(x); }
 
-    Node *lower_bound(T x) { // x以上で最小のノード
+    Node *lower_bound(T x) { // x 以上で最小のノード
         Node *now = root, *ret = NULL;
         while (now) {
             if (now->x < x) {
@@ -105,7 +105,7 @@ struct Splay_Tree {
         return ret;
     }
 
-    Node *upper_bound(T x) { // x以上の最小のノード
+    Node *upper_bound(T x) { // x 以上の最小のノード
         Node *now = root, *ret = NULL;
         while (now) {
             if (now->x <= x) {
@@ -119,7 +119,7 @@ struct Splay_Tree {
         return ret;
     }
 
-    Node *find(T x) { // xより大きい最小のノード
+    Node *find(T x) {
         Node *ret = lower_bound(x);
         if (!ret || ret->x != x) return NULL;
         return ret;

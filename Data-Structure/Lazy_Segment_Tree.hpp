@@ -1,13 +1,13 @@
 
-// 遅延評価付きSegment Tree
-// 計算量 構築 : O(n), 区間更新・区間取得・二分探索 : O(log(n))
+// 遅延評価付き Segment Tree
+// 計算量 構築：O(n)、区間更新・区間取得・二分探索：O(log(n))
 // 空間計算量 O(n)
 
 // 概要
 // 遅延配列は、上にあるものほど新しく追加されたものであるようにする。
 // また、本配列は自身より下の部分の遅延評価をされたときに常に更新されるようにする。
-// 区間更新 : まず更新される各ノードより上の部分の遅延評価を解消してから遅延配列を更新し、更新した区間より上の部分の本配列を更新する。
-// 区間取得 : 取得する区間の上の部分の遅延評価を解消する。
+// 区間更新：まず更新される各ノードより上の部分の遅延評価を解消してから遅延配列を更新し、更新した区間より上の部分の本配列を更新する。
+// 区間取得：取得する区間の上の部分の遅延評価を解消する。
 
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_H&lang=ja
@@ -118,7 +118,7 @@ struct Lazy_Segment_Tree {
     }
 
     template <typename C>
-    int find_first(int l, const C &check, const Monoid &x) { // check((区間[l,r]での演算結果), x)を満たす最小のr
+    int find_first(int l, const C &check, const Monoid &x) { // check((区間 [l,r] での演算結果), x) を満たす最小の r
         Monoid L = e1;
         int a = l + n, b = n + n;
         thrust(a);
@@ -134,7 +134,7 @@ struct Lazy_Segment_Tree {
     }
 
     template <typename C>
-    int find_last(int r, const C &check, const Monoid &x) { // check((区間[l,r)での演算結果), x)を満たす最大のl
+    int find_last(int r, const C &check, const Monoid &x) { // check((区間 [l,r) での演算結果), x) を満たす最大の l
         Monoid R = e1;
         int a = n, b = r + n;
         thrust(b - 1);

@@ -1,13 +1,13 @@
 
 // Binary Indexed Tree
-// 計算量 構築 : O(n), 1点加算・区間和取得・二分探索 : O(log(n))
+// 計算量 構築：O(n)、1 点加算・区間和取得・二分探索：O(log(n))
 // 空間計算量 O(n)
 
 // 概要
-// ノードを区間に対応させることで、任意のiについて区間[0,i)がO(log(n))個のノードが表す区間のdisjointな和集合として表現される。
-// 各頂点を被覆するノードはO(log(n))個。
-// 1点加算 : その点を含むノードの値を全て加算する。
-// 区間和取得 : [l,r)の和を求めるとき、[0,r)の和から[0,l)の和を引く。
+// ノードを区間に対応させることで、任意の i について区間 [0,i) が O(log(n)) 個のノードが表す区間の disjoint な和集合として表現される。
+// 各頂点を被覆するノードは O(log(n)) 個。
+// 1 点加算 : その点を含むノードの値を全て加算する。
+// 区間和取得 : [l,r) の和を求めるとき、[0,r) の和から [0,l) の和を引く。
 
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_B&lang=ja
@@ -23,7 +23,7 @@ struct Binary_Indexed_Tree {
     vector<T> bit;
     const int n;
 
-    Binary_Indexed_Tree(const vector<T> &v) : n((int)v.size()) { // vは配列の初期状態
+    Binary_Indexed_Tree(const vector<T> &v) : n((int)v.size()) { // v は配列の初期状態
         bit.resize(n + 1);
         copy(begin(v), end(v), bit.begin() + 1);
         for (int a = 2; a <= n; a <<= 1) {
@@ -56,7 +56,7 @@ struct Binary_Indexed_Tree {
 
     T operator[](int i) const { return query(i, i + 1); }
 
-    int lower_bound(T x) const { // 区間[0,a]の総和がx以上となる最小のa
+    int lower_bound(T x) const { // 区間 [0,a] の総和が x 以上となる最小の a
         int ret = 0;
         for (int k = 31 - __builtin_clz(n); k >= 0; k--) {
             if (ret + (1 << k) <= n && bit[ret + (1 << k)] < x) x -= bit[ret += (1 << k)];
@@ -64,7 +64,7 @@ struct Binary_Indexed_Tree {
         return ret;
     }
 
-    int upper_bound(T x) const { // 区間[0,a]の総和がxより大きくなる最小のa
+    int upper_bound(T x) const { // 区間 [0,a] の総和が x より大きくなる最小の a
         int ret = 0;
         for (int k = 31 - __builtin_clz(n); k >= 0; k--) {
             if (ret + (1 << k) <= n && bit[ret + (1 << k)] <= x) x -= bit[ret += (1 << k)];
