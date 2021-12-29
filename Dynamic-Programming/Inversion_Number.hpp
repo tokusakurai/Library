@@ -3,7 +3,7 @@
 // 計算量 O(n log(n))
 
 // 概要
-// 配列を左端から右端の順または小さい要素から大きい要素の順に見ていき、各値やidの出現回数をBITで記録する。
+// 配列を左端から右端の順または小さい要素から大きい要素の順に見ていき、各値や id の出現回数を BIT で記録する。
 
 // verified with
 // https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_5_D&lang=jp
@@ -33,7 +33,7 @@ long long inversion_number(const vector<T> &a) {
 }
 
 template <typename T>
-long long inversion_number(const vector<T> &a, const vector<T> &b) { // aをbに変換するのに必要な最小バブルソート回数
+long long inversion_number(const vector<T> &a, const vector<T> &b) { // a を b に変換するのに必要な最小バブルソート回数
     int n = a.size();
     assert(b.size() == n);
     vector<int> u(n), v(n);

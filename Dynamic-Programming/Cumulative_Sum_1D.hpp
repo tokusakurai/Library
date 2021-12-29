@@ -1,9 +1,9 @@
 
-// 1次元累積和
-// 計算量 構築 : O(n), imos法を用いた加算・区間和クエリ : O(1)
+// 1 次元累積和
+// 計算量 構築：O(n)、imos 法を用いた加算・区間和クエリ：O(1)
 
 // 概要
-// 各要素について自分より前の要素の和を累積和dpで求める。
+// 各要素について自分より前の要素の和を累積和 dp で求める。
 
 // verified with
 // https://judge.yosupo.jp/problem/static_range_sum
@@ -25,7 +25,7 @@ struct Cumulative_Sum_1D {
         for (int i = 1; i < n; i++) v[i] += v[i - 1];
     }
 
-    void add(int l, int r, T x) { // 区間[l,r)にimos法で加算
+    void add(int l, int r, T x) { // 区間 [l,r) に imos 法で加算
         l = max(l, 0), r = min(r, n);
         if (r <= l) return;
         v[l] += x;
@@ -34,7 +34,7 @@ struct Cumulative_Sum_1D {
 
     T fold(int a) { return (a <= 0 ? 0 : v[min(n, a) - 1]); }
 
-    T sum(int l, int r) { // 区間[l,r)の総和
+    T sum(int l, int r) { // 区間 [l,r) の総和
         l = max(l, 0), r = min(r, n);
         if (r <= l) return 0;
         return fold(r) - fold(l);

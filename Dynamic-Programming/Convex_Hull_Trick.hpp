@@ -1,6 +1,6 @@
 
-// Convex-Hull-Trick (追加する直線の傾きが、最小値クエリなら単調非増加、最大値クエリなら単調非減少のときのみ)
-// 計算量 直線追加 : O(1), 最小値(最大値)クエリ : O(log(n)), 単調な最小値(最大値)クエリ : O(1)(ならし)
+// Convex-Hull-Trick（追加する直線の傾きが、最小値クエリなら単調非増加、最大値クエリなら単調非減少のときのみ）
+// 計算量 直線追加：O(1)、最小値（最大値）クエリ：O(log(n))、単調な最小値(最大値)クエリ：（ならし）O(1)
 
 // 概要
 // 直線を追加していく際、直線群の中で最も下になることがありえないようなものを除去していく。
@@ -27,7 +27,7 @@ struct Convex_Hull_Trick {
 
     bool judge(int i, int j, int k) const { return (b[k] - b[j]) * (a[j] - a[i]) >= (b[j] - b[i]) * (a[k] - a[j]); }
 
-    void add_line(T p, T q) { // y = px+qを追加
+    void add_line(T p, T q) { // y = px+q を追加
         if (!ismin) p *= -1, q *= -1;
         assert(empty() || a.back() >= p);
         int k = a.size();

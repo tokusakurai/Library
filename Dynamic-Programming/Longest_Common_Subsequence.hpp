@@ -1,9 +1,9 @@
 
-// 最長共通部分列 (LCS)
+// 最長共通部分列（LCS）
 // 計算量 O(nm)
 
 // 概要
-// dp[i][j] := aの前からi文字とbの前からj文字の最長共通部分列の長さ
+// dp[i][j] := a の前から i 文字と b の前から j 文字の最長共通部分列の長さ
 
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_10_C&lang=ja

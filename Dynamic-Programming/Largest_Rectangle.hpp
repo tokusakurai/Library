@@ -3,9 +3,9 @@
 // 計算量 O(n)
 
 // 概要
-// left[i] := j<=iかつmin(h[j],h[j+1],...,h[i])=h[i]を満たす最小のj
-// stackに入っているindexは、前のものほどそのindexに対応するヒストグラムが高い。
-// stackから取り除かれるときが右端に相当する。
+// left[i] := j <= i かつ min(h[j],h[j+1],...,h[i]) = h[i] を満たす最小の j
+// stack に入っている index は、前のものほどその index に対応するヒストグラムが高い。
+// stack から取り除かれるときが右端に相当する。
 
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_3_C&lang=ja

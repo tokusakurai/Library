@@ -1,6 +1,6 @@
 
-// 2次元累積和
-// 計算量 構築 : O(nm), imos法を用いた加算・長方形和クエリ : O(1)
+// 2 次元累積和
+// 計算量 構築：O(nm)、imos 法を用いた加算・長方形和クエリ：O(1)
 
 // 概要
 // 各要素について自分より左上の要素の和を累積和dpで求める。
@@ -30,7 +30,7 @@ struct Cumulative_Sum_2D {
         }
     }
 
-    void add(int lx, int ly, int rx, int ry, T x) { // 区間[lx,rx)×[ly,ry)にimos法で加算
+    void add(int lx, int ly, int rx, int ry, T x) { // 区間 [lx,rx) × [ly,ry) に imos 法で加算
         lx = max(lx, 0), ly = max(ly, 0), rx = min(rx, n), ry = min(ry, m);
         if (rx <= lx || ry <= ly) return;
         v[lx][ly] += x;
@@ -41,7 +41,7 @@ struct Cumulative_Sum_2D {
 
     T fold(int a, int b) { return (a <= 0 || b <= 0 ? 0 : v[min(a, n) - 1][min(b, m) - 1]); }
 
-    T sum(int lx, int ly, int rx, int ry) { // 区間[lx,rx)×[ly,ry)の総和
+    T sum(int lx, int ly, int rx, int ry) { // 区間 [lx,rx) × [ly,ry) の総和
         lx = max(lx, 0), ly = max(ly, 0), rx = min(rx, n), ry = min(ry, m);
         if (rx <= lx || ry <= ly) return 0;
         return fold(lx, ly) - fold(rx, ly) - fold(lx, ry) + fold(rx, ry);
