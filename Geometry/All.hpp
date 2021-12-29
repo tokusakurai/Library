@@ -67,7 +67,7 @@ Real dot(const Point &p, const Point &q) { return real(p) * real(q) + imag(p) * 
 Real det(const Point &p, const Point &q) { return real(p) * imag(q) - imag(p) * real(q); }
 
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_1_C&lang=ja
-int ccw(const Point &a, Point b, Point c) { // 線分abに対するcの位置関係
+int ccw(const Point &a, Point b, Point c) { // 線分 ab に対する c の位置関係
     b = b - a, c = c - a;
     if (sgn(det(b, c)) == 1) return +1;  // COUNTER_CLOCKWISE
     if (sgn(det(b, c)) == -1) return -1; // CLOCKWISE
@@ -247,7 +247,7 @@ int in_polygon(const vector<Point> &p, const Point &q) { // IN:2, ON:1, OUT:0
 }
 
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_7_F&lang=ja
-vector<Point> tangent(const Circle &c, const Point &p) { // 点pを通る円cの接線とcの接点
+vector<Point> tangent(const Circle &c, const Point &p) { // 点 p を通る円 c の接線と c の接点
     return crosspoint(c, Circle(p, sqrt(norm(p - c.p) - c.r * c.r)));
 }
 
@@ -290,7 +290,7 @@ vector<Point> convex_hull(vector<Point> p) { // 凸包
 }
 
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_5_A&lang=ja
-Real closest_pair(vector<Point> p) { //最近点対の距離
+Real closest_pair(vector<Point> p) { // 最近点対の距離
     if (p.size() <= 1) return 1e18;
     sort(begin(p), end(p), compare_x);
     vector<Point> memo(p.size());

@@ -4,7 +4,7 @@
 
 // 概要
 // 上側凸包と下側凸包を求めてつなげる。
-// 座標の幅がmであり、格子点のみであるとすると、凸包の個数はO(m^(2/3))個。
+// 座標の幅が m であり、格子点のみであるとすると、凸包の個数は O(m^(2/3)) 個。
 
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_4_A&lang=ja

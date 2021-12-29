@@ -12,7 +12,7 @@ using namespace std;
 
 #include "../Geometry/Crosspoint.hpp"
 
-vector<Point> tangent(const Circle &c, const Point &p) { // 点pを通る円cの接線とcの接点
+vector<Point> tangent(const Circle &c, const Point &p) { // 点 p を通る円 c の接線と c の接点
     return crosspoint(c, Circle(p, sqrt(norm(p - c.p) - c.r * c.r)));
 }
 

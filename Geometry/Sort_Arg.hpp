@@ -3,8 +3,8 @@
 // 計算量 O(n log(n))
 
 // 概要
-// 点をarctanで偏角(∈(-π,π])ソートする。
-// ただし、(0,0)の偏角は0とする。
+// 点を arctan で偏角（∈(-π,π]）ソートする。
+// ただし、(0,0) の偏角は 0 とする。
 
 // verified with
 // https://judge.yosupo.jp/problem/sort_points_by_argument
