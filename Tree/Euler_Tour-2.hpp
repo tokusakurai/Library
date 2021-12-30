@@ -3,8 +3,8 @@
 // 計算量 O(n)
 
 // 概要
-// 根付き木の頂点と辺をDFSで訪問した順(戻るときに使った辺や頂点もカウントする)に並べる。
-// 辺(u,v)と辺(v,u)が互いに打ち消し合うようにできればパスを区間としてみなすことができる。
+// 根付き木の頂点と辺を DFS で訪問した順（戻るときに使った辺や頂点もカウントする）に並べる。
+// 辺 (u,v) と辺 (v,u) が互いに打ち消し合うようにできればパスを区間としてみなすことができる。
 
 // verified with
 // https://atcoder.jp/contests/abc014/tasks/abc014_4
@@ -27,8 +27,8 @@ struct Weighted_Graph {
     const int n;
     int m;
 
-    vector<int> vs, edges;     // 辺を親方向にたどるときは-mして記録
-    vector<int> ls, rs, depth; // vsの中でiのもののindexの最小値がls[i]、最大値がrs[i]
+    vector<int> vs, edges;     // 辺を親方向にたどるときは -m して記録
+    vector<int> ls, rs, depth; // vs の中で i のものの index の最小値が ls[i]、最大値が rs[i]
 
     Weighted_Graph(int n) : es(n), INF_T(numeric_limits<T>::max() / 2), n(n), m(0), ls(n), rs(n), depth(n) {}
 

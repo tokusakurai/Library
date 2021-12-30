@@ -1,6 +1,6 @@
 
-// 最近共通祖先(LCA)
-// 計算量 構築 : O(n log(n)), 2頂点のLCA・距離 : O(log(n))
+// 最近共通祖先（LCA）
+// 計算量 構築：O(n log(n))、2 頂点の LCA・距離：O(log(n))
 // 空間計算量 O(n log(n))
 
 // verified with
@@ -26,7 +26,7 @@ struct Weighted_Graph {
     const int n;
     int m;
 
-    vector<vector<int>> par; // par[i][j] := 頂点jの2^i個前の祖先
+    vector<vector<int>> par; // par[i][j] := 頂点 j の 2^i 個前の祖先
     vector<int> depth;
     vector<T> d;
     int height;

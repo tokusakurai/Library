@@ -1,12 +1,12 @@
 
-// 最近共通祖先(LCA)
-// 計算量 構築 : O(n log(n))、2頂点のLCA・距離 : O(log(n))
+// 最近共通祖先（LCA）
+// 計算量 構築：O(n log(n))、2 頂点の LCA・距離：O(log(n))
 // 空間計算量 O(n log(n))
 
 // 概要
-// par[i][j] := 頂点jの2^i個前の祖先とすると、ダブリングでテーブルを埋めることができる。
-// 頂点u,vで根からuの方がvより深いとする。
-// まずuをvと同じ深さになるまで引き上げ、その後uとvが同じ頂点に来ない範囲で両者を同じ高さだけ引き上げる。
+// par[i][j] := 頂点 j の 2^i 個前の祖先とすると、ダブリングでテーブルを埋めることができる。
+// 頂点 u,v で根から u の方が v より深いとする。
+// まず u を v と同じ深さになるまで引き上げ、その後 u と v が同じ頂点に来ない範囲で両者を同じ高さだけ引き上げる。
 
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_5_C&lang=ja
@@ -28,7 +28,7 @@ struct Graph {
     const int n;
     int m;
 
-    vector<vector<int>> par; // par[i][j] := 頂点jの2^i個前の祖先
+    vector<vector<int>> par; // par[i][j] := 頂点 j の 2^i 個前の祖先
     vector<int> depth;
     int height;
 
@@ -55,7 +55,7 @@ struct Graph {
         }
     }
 
-    void build(int root = 0) { // rootを根として前準備する
+    void build(int root = 0) { // root を根として前準備する
         prepare(root);
         for (int j = 0; j < height - 1; j++) {
             for (int i = 0; i < n; i++) {

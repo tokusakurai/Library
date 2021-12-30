@@ -1,10 +1,10 @@
 
-// 全方位木DP
-// 計算量 O(nα) (αは部分木マージと辺追加にかかる計算量)
+// 全方位木 DP
+// 計算量 O(nα)（α は部分木マージと辺追加にかかる計算量）
 
 // 概要
-// 1回目のDFSで各部分木における情報を計算する。
-// 2回目のDFSでは下側の部分木における情報と上側の部分木における情報をマージする。
+// 1回目の DFS で各部分木における情報を計算する。
+// 2回目の DFS では下側の部分木における情報と上側の部分木における情報をマージする。
 // この際に、各頂点から出る辺について左右からの累積和を持っておくことで効率的に計算できる。
 
 // verified with
@@ -22,18 +22,18 @@ struct Rerooting {
     struct edge {
         int to;
         key_t data;
-        sum_t dp, ndp; // to側の部分木dp(辺も含む)、from側の部分木dp(辺は含まない)
+        sum_t dp, ndp; // to 側の部分木 dp（辺も含む）、from 側の部分木 dp（辺は含まない）
         edge(int to, key_t data, sum_t dp, sum_t ndp) : to(to), data(data), dp(dp), ndp(ndp) {}
     };
 
     using F = function<sum_t(sum_t, sum_t)>;
     using G = function<sum_t(sum_t, key_t)>;
     vector<vector<edge>> es;
-    vector<sum_t> subdp, dp;  // 部分木のdp、全方位のdp
-    const F f;                // 1頂点を間に挟んで隣り合う2つの部分木の情報をマージ
-    const G g;                // 部分木の根に1本辺を足す
-    const sum_t e1;           // fの単位元
-    const vector<sum_t> base; // 1頂点の場合のdpの値
+    vector<sum_t> subdp, dp;  // 部分木の dp、全方位の dp
+    const F f;                // 1 頂点を間に挟んで隣り合う 2 つの部分木の情報をマージ
+    const G g;                // 部分木の根に 1 本辺を足す
+    const sum_t e1;           // f の単位元
+    const vector<sum_t> base; // 1 頂点の場合の dp の値
 
     Rerooting(int n, const F &f, const G &g, const sum_t &e1, const vector<sum_t> &base) : es(n), subdp(base), dp(n), f(f), g(g), e1(e1), base(base) {}
 

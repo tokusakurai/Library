@@ -1,9 +1,9 @@
 
-// 木の重心分解 (雛形)
+// 木の重心分解（雛形）
 // 計算量 O(n)
 
 // 概要
-// DFSを用いて、各頂点についてその点を除いたときの残る部分木のサイズの最大値を列挙することで重心を求める。
+// DFS を用いて、各頂点についてその点を除いたときの残る部分木のサイズの最大値を列挙することで重心を求める。
 
 #pragma once
 #include <bits/stdc++.h>
@@ -54,7 +54,7 @@ struct Graph {
         return ret;
     }
 
-    int centroid(int s) { // 頂点sを含む連結成分の重心を返す
+    int centroid(int s) { // 頂点 s を含む連結成分の重心を返す
         calc_size(s);
         return search_centroid(s, si[s]).second;
     }

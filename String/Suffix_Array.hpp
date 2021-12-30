@@ -1,15 +1,15 @@
 
 // 接尾辞配列、高さ配列
-// 計算量 接尾辞配列構築 : O(|S|log(|S|)), 二分探索 : O(|T|log(|S|)), 高さ配列構築 : O(|S|)
+// 計算量 接尾辞配列構築：O(|S|log(|S|))、二分探索：O(|T|log(|S|))、高さ配列構築：O(|S|)
 
-// 接尾辞配列(suffix array) : 文字列の全ての接尾辞を辞書順にソートしたものを記録する(実際には何字目からの接尾辞かを記録する)。
-// 高さ配列(longest common prefix array) : 接尾辞配列の隣同士で接頭辞が何文字一致しているかを記録する。
+// 接尾辞配列（suffix array）：文字列の全ての接尾辞を辞書順にソートしたものを記録する（実際には何文字目からの接尾辞かを記録する）。
+// 高さ配列（longest common prefix array）：接尾辞配列の隣同士で接頭辞が何文字一致しているかを記録する。
 
 // 概要
-// sa[i] := 辞書順i番目(0-indexed)の接尾辞のスタート地点(0-indexed)
-// rank[i] := i文字目(0-indexed)から始まる接尾辞は辞書順何番目か(0-indexed)
-// k文字分のsa配列を用いることで2k文字分のsa配列を構築できる。
-// lcp[i] := Sのrank[i]文字目から始まる部分列とrank[i+1]文字目から始まる部分列の最長共通接頭辞のサイズ。
+// sa[i] := 辞書順 i 番目（0-indexed）の接尾辞のスタート地点（0-indexed）
+// rank[i] := i 文字目（0-indexed）から始まる接尾辞は辞書順何番目か（0-indexed）
+// k 文字分の sa 配列を用いることで 2k 文字分の sa 配列を構築できる。
+// lcp[i] := S の rank[i] 文字目から始まる部分列と rank[i+1] 文字目から始まる部分列の最長共通接頭辞のサイズ。
 
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_14_D&lang=ja
@@ -66,7 +66,7 @@ struct Suffix_Array {
         return si == n && ti < m;
     }
 
-    int lower_bound(const string &t) const { // 辞書順でt以降となるもので最初の接尾辞
+    int lower_bound(const string &t) const { // 辞書順で t 以降となるもので最初の接尾辞
         int l = -1, r = n;
         while (r - l > 1) {
             int m = (l + r) / 2;

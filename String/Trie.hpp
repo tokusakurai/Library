@@ -1,11 +1,11 @@
 
 // トライ木
-// 計算量 文字列追加・検索 : O(|S|)
+// 計算量 文字列追加・検索：O(|S|)
 
 // 概要
 // トライ木の各頂点は、次に各文字を使った際の行き先の情報を記録する。
-// 追加 : 文字列を前から見て、トライ木を根から降りていく。該当する頂点がなくなったら新しい頂点を作る。
-// 検索 : 文字列を前から見て、トライ木を根から降りていく。
+// 追加：文字列を前から見て、トライ木を根から降りていく。該当する頂点がなくなったら新しい頂点を作る。
+// 検索：文字列を前から見て、トライ木を根から降りていく。
 
 // verified with
 // https://atcoder.jp/contests/tenka1-2016-final/tasks/tenka1_2016_final_c
@@ -43,7 +43,7 @@ struct Trie {
 
     void insert(const string &s) { insert(s, count()); }
 
-    bool search(const string &s, bool prefix = false) const { // s(のprefix)を検索
+    bool search(const string &s, bool prefix = false) const { // s（の prefix）を検索
         int now = 0;
         for (int i = 0; i < s.size(); i++) {
             now = nodes[now].next[s[i] - base];

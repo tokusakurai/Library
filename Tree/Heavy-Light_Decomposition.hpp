@@ -1,11 +1,11 @@
 
-// Heavy-Light分解
-// 計算量 HL分解 : O(n), パス検出・パスが通る区間の個数 : O(log(n))
+// Heavy-Light 分解
+// 計算量 HL 分解：O(n)、パス検出・パスが通る区間の個数：O(log(n))
 
 // 概要
 // 根付き木の各頂点の重みを、その頂点を根とする部分木の頂点数とする。
 // 各頂点について、子のうち重みが最大のものとの間の辺のみを残す。
-// 結果として木はいくつかの列に分割され、任意の2頂点間の単純パスについて通る列の個数は最大でO(log(n))個となる。
+// 結果として木はいくつかの列に分割され、任意の 2 頂点間の単純パスについて通る列の個数は最大で O(log(n)) 個となる。
 
 // verified with
 // https://judge.yosupo.jp/problem/vertex_add_path_sum
@@ -77,7 +77,7 @@ struct Graph {
         _dfs2(root, true, s);
     }
 
-    vector<pair<int, int>> get_path(int u, int v, bool use_edge = false) { //パスに対応する区間たちを列挙
+    vector<pair<int, int>> get_path(int u, int v, bool use_edge = false) { // パスに対応する区間たちを列挙
         vector<pair<int, int>> ret;
         while (root[u] != root[v]) {
             if (depth[root[u]] > depth[root[v]]) swap(u, v);

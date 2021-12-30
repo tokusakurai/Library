@@ -1,9 +1,9 @@
 
-// 木の重心分解 (例)
-// 計算量 重心検出 : O(n)、再帰の深さ : O(log(n))、全体の計算量 : O(n log(n))
+// 木の重心分解（例）
+// 計算量 重心検出：O(n)、再帰の深さ：O(log(n))、全体の計算量：O(n log(n))
 
 // 概要
-// 一回の分割で新たにできる木のサイズは元の木の半分以下であるから、分割統治したときの再帰の深さは最大でO(log(V))となる。
+// 一回の分割で新たにできる木のサイズは元の木の半分以下であるから、分割統治したときの再帰の深さは最大で O(log(n)) となる。
 
 // verified with
 // https://atcoder.jp/contests/yahoo-procon2018-final-open/tasks/yahoo_procon2018_final_c
