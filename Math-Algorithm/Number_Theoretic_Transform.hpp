@@ -1,11 +1,11 @@
 
-// 数論変換(高速剰余変換)(modはx*(2^y)+1で表されるもの(n+m<=2^y))
+// 数論変換（高速剰余変換）（mod は x*(2^y)+1 で表されるもの (n+m<=2^y)）
 // 計算量 O((n+m)log(n+m))
 
 // 概要
-// modをpとして、p=x*2^y+1と表したとき、2^y>=n+m-1が成立すればFFTが行える。
-// rをPの原子根とすれば、剰余環での1の2^k乗根はr^(x*2^(y-k))として得られる。
-// 代表的な(p,r)の組として(998244353,3)がある。
+// mod を pとして、p = x*2^y+1 と表したとき、2^y >= n+m-1 が成立すれば FFT が行える。
+// r を P の原子根とすれば、体 Z/pZ での 1 の 2^k 乗根は r^(x*2^(y-k)) として得られる。
+// 代表的な (p,r) の組として (998244353,3) がある。
 
 // verified with
 // https://atcoder.jp/contests/practice2/tasks/practice2_f
@@ -35,8 +35,8 @@ struct Number_Theoretic_Transform {
         while (tmp % 2 == 0) tmp >>= 1, max_base++;
         r.resize(max_base), ir.resize(max_base);
         for (int i = 0; i < max_base; i++) {
-            r[i] = -root.pow((mod - 1) >> (i + 2)); // r[i]:=1の2^(i+2)乗根
-            ir[i] = r[i].inverse();                 // ir[i]:=1/r[i]
+            r[i] = -root.pow((mod - 1) >> (i + 2)); // r[i] := 1 の 2^(i+2) 乗根
+            ir[i] = r[i].inverse();                 // ir[i] := 1/r[i]
         }
     }
 

@@ -1,9 +1,9 @@
 
-// mod-int構造体(modは素数)
-// 計算量 加減乗算 : O(1), 除算 : O(log(mod)), k乗 : O(log(k))
+// mod-int 構造体（mod は素数）
+// 計算量 加減乗算：O(1)、除算：O(log(mod))、k 乗：O(log(k))
 
-// 累乗 : ダブリング
-// 逆元 : aとmが互いに素なとき、フェルマーの小定理よりa^(m-1)≡1(mod m)なので、aの逆元はa^(m-2)
+// 累乗：ダブリング
+// 逆元：a と m が互いに素なとき、フェルマーの小定理より a^(m-1) ≡ 1(mod m) なので、a の逆元は a^(m-2)
 
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_5_A&lang=ja

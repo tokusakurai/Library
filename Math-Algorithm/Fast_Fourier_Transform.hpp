@@ -3,9 +3,9 @@
 // 計算量 O((n+m)log(n+m))
 
 // 概要
-// StockhamのFFTを用いる。
-// 通常のFFT(Cooley Turkey)ではビットを反転して並べ替えているが、その部分を省略している。
-// そのため、DFTした後の配列は順番が入れ替わったもの(ビット反転したときの昇順)となっている。
+// Stockham の FFT を用いる。
+// 通常の FFT（Cooley Turkey）ではビットを反転して並べ替えているが、その部分を省略している。
+// そのため、DFT した後の配列は順番が入れ替わったもの（ビット反転したときの昇順）となっている。
 
 // verified with
 // https://atcoder.jp/contests/atc001/tasks/fft_c
@@ -26,7 +26,7 @@ struct Fast_Fourier_Transform {
         if (!r.empty()) return;
         r.resize(30), ir.resize(30);
         for (int i = 0; i < 30; i++) {
-            r[i] = -polar(1.0, pi / (1 << (i + 1)));   // r[i] := 1の2^(i+2)乗根
+            r[i] = -polar(1.0, pi / (1 << (i + 1)));   // r[i] := 1 の 2^(i+2) 乗根
             ir[i] = -polar(1.0, -pi / (1 << (i + 1))); // ir[i] := 1/r[i]
         }
     }

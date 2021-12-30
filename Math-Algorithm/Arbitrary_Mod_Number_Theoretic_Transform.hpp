@@ -1,10 +1,10 @@
 
-// 数論変換(高速剰余変換) (任意mod)
+// 数論変換（高速剰余変換）（任意 mod）
 // 計算量 O((n+m)log(n+m))
 
 // 概要
-// modをpとすると、剰余を取らない場合の畳込みをした結果の各項の最大値はP^2*max(n,m)程度となる。
-// p<=2*10^9、n,m<=10^6であったとしても、3種類のNTTmod(10^9程度)での畳み込みの結果から復元することができる。
+// mod を p とすると、剰余を取らない場合の畳込みをした結果の各項の最大値は p^2*max(n,m) 程度となる。
+// p = 2*10^9、n,m = 10^6 であったとしても、3 種類の NTT-mod（10^9 程度）での畳み込みの結果から復元することができる。
 
 // verified with
 // https://atcoder.jp/contests/practice2/tasks/practice2_f
@@ -16,7 +16,7 @@ using namespace std;
 
 #include "../Math-Algorithm/Number_Theoretic_Transform.hpp"
 
-// NTT素数たち
+// NTT 素数たち
 const int m1 = 1045430273;
 const int m2 = 1051721729;
 const int m3 = 1053818881;

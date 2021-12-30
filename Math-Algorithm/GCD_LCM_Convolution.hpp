@@ -1,10 +1,10 @@
 
-// 添字GCD・LCM畳み込み
+// 添字 GCD・LCM 畳み込み
 // 計算量 O(n log(log(n)))
 
 // 概要
-// GCD畳み込み : a,bを約数系の上位集合でゼータ変換⇒両者の各項の積を取る⇒約数系の上位集合でメビウス変換
-// LCM畳み込み : a,bを約数系の下位集合でゼータ変換⇒両者の各項の積を取る⇒約数系の下位集合でメビウス変換
+// GCD 畳み込み：a,b を約数系の上位集合でゼータ変換 -> 両者の各項の積を取る -> 約数系の上位集合でメビウス変換
+// LCM 畳み込み：a,b を約数系の下位集合でゼータ変換 -> 両者の各項の積を取る -> 約数系の下位集合でメビウス変換
 
 // verified with
 // https://atcoder.jp/contests/agc038/tasks/agc038_c
@@ -26,7 +26,7 @@ vector<T> gcd_convolve(vector<T> a, vector<T> b) {
 }
 
 template <typename T>
-vector<T> lcm_convolve(vector<T> a, vector<T> b) { // lcm(i, j) >= n の場合はa[i]*b[j]はc[0]に足される
+vector<T> lcm_convolve(vector<T> a, vector<T> b) { // lcm(i, j) >= n の場合は a[i]*b[j] は c[0] に足される
     int n = a.size();
     assert((int)b.size() == n);
     divisors_zeta_transform(a, false), divisors_zeta_transform(b, false);

@@ -1,12 +1,12 @@
 
-// Bostan-Moriのアルゴリズム (d階の線形漸化式で与えられる数列の第n項を求める)
+// Bostan-Mori のアルゴリズム（d 階の線形漸化式で与えられる数列の第 n 項を求める）
 // 計算量 O(d log(d)log(n))
 
 // 概要
 // G(x) := a[0]+a[1]x+a[2]x^2+...
 // Q(x) := 1-c[1]x-c[2]x^2-...-c[d]x^d
 // P(x) := G(x)*Q(x)
-// とすると、P(x)はd-1次以下になっているので、a[n] = [x^n](P(x)/Q(x))を求める。
+// とすると、P(x) は d-1 次以下になっているので、a[n] = [x^n](P(x)/Q(x)) を求める。
 
 // verified with
 // https://judge.yosupo.jp/problem/kth_term_of_linearly_recurrent_sequence
@@ -20,11 +20,11 @@ using namespace std;
 template <typename T>
 struct Bostan_Mori {
     using NTT_ = Number_Theoretic_Transform<T>;
-    // d項間線形漸化式 a[n] = c[1]*a[n-1]+c[2]*a[n-2]+...+c[d]*a[n-d]
+    // d 項間線形漸化式 a[n] = c[1]*a[n-1]+c[2]*a[n-2]+...+c[d]*a[n-d]
     const int d;
     // G(x) := a[0]+a[1]x+a[2]x^2+...
     // Q(x) := 1-c[1]x-c[2]x^2-...-c[d]x^d
-    // P(x) := G(x)*Q(x) (畳み込み)
+    // P(x) := G(x)*Q(x)（畳み込み）
     vector<T> P, Q;
 
     Bostan_Mori(const vector<T> &a, const vector<T> &c) : d(a.size()) {
@@ -35,7 +35,7 @@ struct Bostan_Mori {
         P.resize(d);
     }
 
-    T operator[](long long n) const { // a[n](0-indexed)
+    T operator[](long long n) const { // a[n]（0-indexed）
         vector<T> U = P, V = Q;
         for (; n; n >>= 1) {
             vector<T> W = V;

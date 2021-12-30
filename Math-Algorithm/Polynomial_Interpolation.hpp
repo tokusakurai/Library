@@ -1,13 +1,13 @@
 
-// ラグランジュ補間 (多項式)
+// ラグランジュ補間（多項式）
 // 計算量 O(n log(n)^2)
 // 空間計算量 O(n log(n))
 
 // 概要
-// f(x_1) = y_1, f(x_2) = y_2,..., f(x_n) = y_nが与えられているときに、(n-1)次以下の多項式f(x)を求める。
-// h(x) = (x-x_1)(x-x_2)...(x-x_n)とすると、h'(x) = Σ[0<=i<m] Π[j≠i] (x-x_j)であるから、
-// 因数定理よりh'(x)を(x-x_i)で割った余りはΠ(x_i-x_j)(j≠i)となる。
-// この余りはMultipoint Evaluationの要領で求められ、さらにSubtree Productを使うことで答えを求めることができる。
+// f(x_1) = y_1, f(x_2) = y_2,..., f(x_n) = y_n が与えられているときに、n-1 次以下の多項式 f(x) を求める。
+// h(x) = (x-x_1)(x-x_2)...(x-x_n) とすると、h'(x) = Σ[0<=i<m]Π[j!=i](x-x_j) であるから、
+// 因数定理より h'(x) を x-x_i で割った余りは Π[j!=i](x_i-x_j) となる。
+// この余りは Multipoint Evaluation の要領で求められ、さらに Subproduct Tree を使うことで答えを求めることができる。
 
 // verified with
 // https://judge.yosupo.jp/problem/polynomial_interpolation

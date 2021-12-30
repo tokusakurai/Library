@@ -1,10 +1,10 @@
 
 // 抽象化された行列
-// 計算量 積 : O(mnp), k乗 : O(n^3 log(k))
+// 計算量 積：O(mnp)、k 乗：O(n^3 log(k))
 
 // 概要
-// 半環(R,+,*)に対して行列の積演算を行える。
-// 単位行列は、対角成分は1元、それ以外は0元。
+// 半環 (R,+,*) に対して行列の積演算を行える。
+// 単位行列は、対角成分は 1 元、それ以外は 0 元。
 // 累乗：ダブリング
 
 // verified with
@@ -36,7 +36,7 @@ struct Semi_Ring {
     // (a*b)*c = a*(b*c), 1*a = a*1 = a
     // a*(b+c) = a*b+a*c, (a+b)*c = a*c+b*c
     // 0*a = a*0 = 0
-    // これらを満たす演算の組として(+,*), (XOR,AND), (min,+), (max,+)などがある
+    // これらを満たす演算の組として (+,*), (XOR,AND), (min,+), (max,+) などがある
 
     Semi_Ring operator+(const Semi_Ring &p) const { return Semi_Ring(*this) += p; }
 

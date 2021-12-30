@@ -1,13 +1,13 @@
 
 // 素数・約数に関する計算
-// 計算量 約数列挙・素因数分解・素数判定 : O(√n), 1,2,...,nのうちkと互いに素な自然数の数え上げ : O(2^#{kの素因数})
-// エラトステネスの篩 : O(n log(log(n))), n以下の素数の数え上げ : O(n^(3/4)/log(n))
+// 計算量 約数列挙・素因数分解・素数判定：O(√n)、1,2,...,n のうち k と互いに素な自然数の数え上げ：O(2^#{k の素因数})
+// エラトステネスの篩：O(n log(log(n)))、n 以下の素数の数え上げ：O(n^(3/4)/log(n))
 
 // 概要
-// 約数列挙・素因数分解・素数判定 : 自然数nの素因数で√nより大きいものは高々1つなので、√n以下の数全てについて割り切れるか調べる。
-// 1,2,...,n のうち kと互いに素な自然数の数え上げ : 約数包除
-// エラトステネスの篩 : 前から順番に見て、注目している数が素数ならその数の倍数(その数は含めない)は全て素数ではないことになるので、テーブルをfalseに切り替える。
-// 素数の数え上げ : h(x,n) := n以下の素数でx以下の素数で篩をかけたときに残る要素数 を利用する。
+// 約数列挙・素因数分解・素数判定：自然数 n の素因数で √n より大きいものは高々 1 つなので、√n 以下の数全てについて割り切れるか調べる。
+// 1,2,...,n のうち k と互いに素な自然数の数え上げ：約数包除
+// エラトステネスの篩：前から順番に見て、注目している数が素数ならその数の倍数(その数は含めない)は全て素数ではないことになるので、テーブルを false に切り替える。
+// 素数の数え上げ：h(x,n) := n 以下の素数で x 以下の素数で篩をかけたときに残る要素数 を利用する。
 
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=NTL_1_A&lang=jp
@@ -53,7 +53,7 @@ bool is_prime(const T &n) {
 }
 
 template <typename T>
-T coprime(T n, T k) { // 1,2,...,nのうちkと互いに素である自然数の個数
+T coprime(T n, T k) { // 1,2,...,n のうち k と互いに素である自然数の個数
     vector<pair<T, int>> ps = prime_factor(k);
     int m = ps.size();
     T ret = 0;
@@ -90,7 +90,7 @@ vector<int> Eratosthenes2(const int &n) {
     return ret;
 }
 
-vector<int> enumerate_prime(int n) { // n以下の素数の列挙
+vector<int> enumerate_prime(int n) { // n 以下の素数の列挙
     if (n < 2) return {};
     if (n == 2) return {2};
     int m = n / 6;
@@ -114,14 +114,14 @@ vector<int> enumerate_prime(int n) { // n以下の素数の列挙
 }
 
 template <typename T>
-T prime_count(T n) { // n以下の素数の数え上げ
+T prime_count(T n) { // n 以下の素数の数え上げ
     if (n < 2) return 0;
     vector<T> ns = {0};
     for (T i = n; i > 0; i = n / (n / i + 1)) ns.push_back(i);
     vector<T> h = ns;
     for (T &x : h) x--;
     for (T x = 2, m = sqrtl(n), k = ns.size(); x <= m; x++) {
-        if (h[k - x] == h[k - x + 1]) continue; // h(x-1,x-1) = h(x-1,x) ならばxは素数ではない
+        if (h[k - x] == h[k - x + 1]) continue; // h(x-1,x-1) = h(x-1,x) ならば x は素数ではない
         T x2 = x * x, pi = h[k - x + 1];
         for (T i = 1, j = ns[i]; i < k && j >= x2; j = ns[++i]) h[i] -= h[i * x <= m ? i * x : k - j / x] - pi;
     }

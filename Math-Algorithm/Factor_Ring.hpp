@@ -1,14 +1,14 @@
 
-// 有理整数環の剰余環における演算(累乗、逆元、オイラーのφ関数、離散対数、位数、原始根)
-// 計算量 k乗 : O(log(k)), 逆元 : O(log(m)), 離散対数 : (O√m+log(m)), オイラーのφ関数・位数 : O(√m), 原始根 : O(φ(m-1)log(m))
+// 有理整数環の剰余環における演算(累乗、逆元、オイラーの φ 関数、離散対数、位数、原始根)
+// 計算量 k 乗：O(log(k)), 逆元：O(log(m)), 離散対数：(O√m+log(m)), オイラーのφ関数・位数：O(√m), 原始根：O(φ(m-1)log(m))
 
 // 概要
-// 累乗 : ダブリング
-// 逆元 : ユークリッドの互除法で、左から行列を作用させているとみる。
-// オイラーのφ関数 : mの素因数を全て列挙し、m以下の自然数のうちmと互いに素なものの割合を考える。
-// 離散対数 : Baby-step Giant-step
-// 位数 : φ(m)の約数を全て考える。
-// 原始根 : 乱数で発生させて、その位数がm-1であるかどうか判定する。原始根は最低でもφ(m-1)個存在する。
+// 累乗：ダブリング
+// 逆元：ユークリッドの互除法で、左から行列を作用させているとみる。
+// オイラーの φ 関数：m の素因数を全て列挙し、m 以下の自然数のうち m と互いに素なものの割合を考える。
+// 離散対数：Baby-step Giant-step
+// 位数：φ(m) の約数を全て考える。
+// 原始根：乱数で発生させて、その位数が m-1 であるかどうか判定する。原始根は最低でも φ(m-1) 個存在する。
 
 // verified with
 // https://judge.yosupo.jp/problem/discrete_logarithm_mod
@@ -40,7 +40,7 @@ T modinv(T a, const T &m) {
 }
 
 template <typename T>
-T Euler_totient(T m) { // オイラーのφ関数(xとmが互いに素ならば、x^φ(m) ≡ 1(mod m))
+T Euler_totient(T m) { // オイラーの φ 関数（x と m が互いに素ならば、x^φ(m) ≡ 1(mod m)）
     T ret = m;
     for (T i = 2; i * i <= m; i++) {
         if (m % i == 0) ret /= i, ret *= i - 1;
@@ -50,7 +50,7 @@ T Euler_totient(T m) { // オイラーのφ関数(xとmが互いに素ならば�
     return ret;
 }
 
-int modlog(int x, int y, int m) { // x^k ≡ y(mod m)となる最小の非負整数k(存在しなければ-1)
+int modlog(int x, int y, int m) { // x^k ≡ y(mod m) となる最小の非負整数 k（存在しなければ -1）
     long long g = 1;
     for (int i = m; i > 0; i >>= 1) g *= x, g %= m;
     g = gcd(g, m);
@@ -77,7 +77,7 @@ int modlog(int x, int y, int m) { // x^k ≡ y(mod m)となる最小の非負整
 }
 
 template <typename T>
-T order(T x, const T &m) { // x^k ≡ 1(mod m)となる最小の正整数k(xとmは互いに素)
+T order(T x, const T &m) { // x^k ≡ 1(mod m) となる最小の正整数 k（x と m は互いに素）
     T n = Euler_totient(m);
     vector<T> ds;
     for (T i = 1; i * i <= n; i++) {
@@ -91,7 +91,7 @@ T order(T x, const T &m) { // x^k ≡ 1(mod m)となる最小の正整数k(xとm
 }
 
 template <typename T>
-T primitive_root(const T &m) { // 素数mの原始根
+T primitive_root(const T &m) { // 素数 m の原始根
     vector<T> ds;
     for (T i = 1; i * i <= m - 1; i++) {
         if ((m - 1) % i == 0) ds.push_back(i), ds.push_back((m - 1) / i);

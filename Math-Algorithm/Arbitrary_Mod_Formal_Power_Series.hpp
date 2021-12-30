@@ -1,9 +1,9 @@
 
-// 形式的冪級数 (任意mod)
-// 計算量 加算・減算・微分・積分 : O(n), 除算・inv・log・exp・pow : O(n log(n))
+// 形式的冪級数（任意 mod）
+// 計算量 加算・減算・微分・積分：O(n)、除算・inv・log・exp・pow：O(n log(n))
 
 // 概要
-// 複数のmodでの結果を用いて復元する。
+// 複数の mod での結果を用いて復元する。
 
 // verified with
 // https://judge.yosupo.jp/problem/inv_of_formal_power_series

@@ -1,9 +1,9 @@
 
 // 行列計算
-// 計算量 積 : O(mnp), k乗 : O(n^3 log(k)), 簡約化・ガウスの消去法 : O(mn^2)
+// 計算量 積：O(mnp)、k 乗：O(n^3 log(k))、簡約化・ガウスの消去法：O(mn^2)
 
 // 累乗：ダブリング
-// ガウスの消去法 : 行基本変形を繰り返すことで連立一次方程式の解を求める。
+// ガウスの消去法：行基本変形を繰り返すことで連立一次方程式の解を求める。
 
 // verified with
 // https://judge.yosupo.jp/problem/matrix_product
@@ -64,7 +64,7 @@ struct Matrix {
         // return abs(a-b) <= EPS;
     }
 
-    pair<int, T> row_reduction(vector<T> &b) { //行基本変形を用いて簡約化を行い、(階数、行列式)の組を返す
+    pair<int, T> row_reduction(vector<T> &b) { // 行基本変形を用いて簡約化を行い、(階数、行列式) の組を返す
         int m = height(), n = width(), check = 0, rank = 0;
         T det = 1;
         assert(b.size() == m);
@@ -72,7 +72,7 @@ struct Matrix {
             int pivot = check;
             for (int i = check; i < m; i++) {
                 if (A[i][j] != 0) pivot = i;
-                // if(abs(A[i][j]) > abs(A[pivot][j])) pivot = i; //Tが小数の場合はこちら
+                // if(abs(A[i][j]) > abs(A[pivot][j])) pivot = i; // T が小数の場合はこちら
             }
             if (check != pivot) det *= T(-1);
             swap(A[check], A[pivot]), swap(b[check], b[pivot]);
@@ -104,7 +104,7 @@ struct Matrix {
         return row_reduction(b);
     }
 
-    Matrix inverse() { //行基本変形によって正方行列の逆行列を求める
+    Matrix inverse() { // 行基本変形によって正方行列の逆行列を求める
         if (height() != width()) return Matrix(0, 0);
         int n = height();
         Matrix ret = I(n);
@@ -112,7 +112,7 @@ struct Matrix {
             int pivot = j;
             for (int i = j; i < n; i++) {
                 if (A[i][j] != 0) pivot = i;
-                // if(abs(A[i][j]) > abs(A[pivot][j])) pivot = i; //Tが小数の場合はこちら
+                // if(abs(A[i][j]) > abs(A[pivot][j])) pivot = i; // T が小数の場合はこちら
             }
             swap(A[j], A[pivot]), swap(ret[j], ret[pivot]);
             if (eq(A[j][j], T(0))) return Matrix(0, 0);
@@ -132,7 +132,7 @@ struct Matrix {
         return ret;
     }
 
-    vector<vector<T>> Gausiann_elimination(vector<T> b) { // Ax=bの解の1つと解空間の基底の組を返す
+    vector<vector<T>> Gausiann_elimination(vector<T> b) { // Ax = b の解の 1 つと解空間の基底の組を返す
         int m = height(), n = width();
         row_reduction(b);
         vector<vector<T>> ret;

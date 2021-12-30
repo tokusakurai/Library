@@ -1,16 +1,16 @@
 
 // 形式的冪級数
-// 計算量 加算・減算・微分・積分 : O(n), 積・除算・inv・log・exp・pow・Taylor Shift : O(n log(n))
+// 計算量 加算・減算・微分・積分：O(n)、積・除算・inv・log・exp・pow・Taylor Shift：O(n log(n))
 
-// 各種演算はテイラー展開を用いて定義される(詳しくは下のverify url)
+// 各種演算はテイラー展開を用いて定義される（詳しくは下の verify url）
 
 // 概要
-// 積 : NTT
-// inv・exp : ニュートン法を用いた漸化式を立てて計算する。
-// 除算 : invを用いて計算する。
-// log : invを用いて計算する。
-// pow : logとexpを用いて計算する。
-// Taylor Shift : 係数を分解して畳み込みに持ち込む。
+// 積：NTT
+// inv・exp：ニュートン法を用いた漸化式を立てて計算する。
+// 除算：inv を用いて計算する。
+// log：inv を用いて計算する。
+// pow：log と exp を用いて計算する。
+// Taylor Shift：係数を分解して畳み込みに持ち込む。
 
 // verified with
 // https://judge.yosupo.jp/problem/inv_of_formal_power_series

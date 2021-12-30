@@ -1,18 +1,18 @@
 
 // ユークリッドの互除法を用いた種々の計算
-// 計算量 gcd・lcm・extgcd・modinv・floor_sum・中国剰余定理 : O(log(max(a, b))), Garner : O(n^2)
+// 計算量 gcd・lcm・extgcd・modinv・floor_sum・中国剰余定理： O(log(max(a, b)))、Garner：O(n^2)
 
-// extgcd : ax+by = gcd(a,b)を満たす(x,y)の組の1つ
-// floor_sum : Σ[0<=i<n] floor((ai+b)/m)
-// 中国剰余定理 : x ≡ a_1(mod m_1), x ≡ a_2(mod m_2)を満たす最小の非負整数x
-// Garner : x ≡ a_i(mod m_i) (0<=i<n)を満たす最小の非負整数xをMで割った余り
+// extgcd：ax+by = gcd(a,b) を満たす (x,y) の組の1つ
+// floor_sum：Σ[0<=i<n] floor((ai+b)/m)
+// 中国剰余定理：x ≡ a_1(mod m_1), x ≡ a_2(mod m_2) を満たす最小の非負整数 x
+// Garner：x ≡ a_i(mod m_i) (0<=i<n) を満たす最小の非負整数 x を M で割った余り
 
 // 概要
-// gcd・lcm・extgcd : ユークリッドの互除法を使って再帰的に解く。
-// modinv : ax+my = 1を満たすxをextgcdで求める。
-// floor_sum : 領域内の格子点の数とみなし、A<Mなら縦横をひっくり返すなどする。
-// 中国剰余定理 : 解が存在する⇔a_1 ≡ a_2(mod gcd(m_1,m_2))
-// Garnerの定理 : 解が存在する⇔任意のi,jについてa_i ≡ a_j(mod gcd(m_i,m_j))
+// gcd・lcm・extgcd：ユークリッドの互除法を使って再帰的に解く。
+// modinv：ax+my = 1 を満たす x を extgcd で求める。
+// floor_sum：領域内の格子点の数とみなし、 A < M なら縦横をひっくり返すなどする。
+// 中国剰余定理：解が存在する <-> a_1 ≡ a_2(mod gcd(m_1,m_2))
+// Garnerの定理：解が存在する <-> 任意の i,j について a_i ≡ a_j(mod gcd(m_i,m_j))
 
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_1_B&lang=ja
@@ -38,7 +38,7 @@ T lcm(const T &a, const T &b) {
 }
 
 template <typename T>
-T extgcd(const T &a, const T &b, T &x, T &y) { // |x|と|y|は結果としてmax(a,b)以下になる。
+T extgcd(const T &a, const T &b, T &x, T &y) { // |x| と |y| は結果として max(a,b) 以下になる。
     if (b == 0) {
         x = 1, y = 0;
         return a;
@@ -53,7 +53,7 @@ int mod(const long long &a, const int &m) {
     return ret + (ret < 0 ? m : 0);
 }
 
-int modinv(const int &a, const int &m) { // aとmは互いに素
+int modinv(const int &a, const int &m) { // a と m は互いに素
     int x, y;
     extgcd(a, m, x, y);
     return mod(x, m);
@@ -79,7 +79,7 @@ pair<T, T> Chinese_reminder_theorem(const T &a1, const T &m1, const T &a2, const
     return make_pair(a, m);
 }
 
-bool prepare_Garner(vector<int> &a, vector<int> &m) { // mの各要素がそれぞれ互いに素とは限らない場合の前処理
+bool prepare_Garner(vector<int> &a, vector<int> &m) { // m の各要素がそれぞれ互いに素とは限らない場合の前処理
     int n = a.size();
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < i; j++) {
@@ -97,7 +97,7 @@ bool prepare_Garner(vector<int> &a, vector<int> &m) { // mの各要素がそれ�
     return true;
 }
 
-int Garner(vector<int> a, vector<int> m, const int &M) { // mの各要素はそれぞれ互いに素
+int Garner(vector<int> a, vector<int> m, const int &M) { // m の各要素はそれぞれ互いに素
     m.push_back(M);
     vector<long long> coeffs(m.size(), 1);
     vector<long long> constants(m.size(), 0);

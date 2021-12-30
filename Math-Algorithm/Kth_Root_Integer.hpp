@@ -1,9 +1,9 @@
 
-// K乗根(整数)
+// K 乗根（整数）
 // 計算量 O(k log(a))
 
 // 概要
-// 整数a,kがa>=0,k>0を満たすとき、floor(a^(1/k))を二分探索で求める。
+// 整数 a,k が a >= 0,k > 0 を満たすとき、floor(a^(1/k)) を二分探索で求める。
 
 // verified with
 // https://judge.yosupo.jp/problem/kth_root_integer

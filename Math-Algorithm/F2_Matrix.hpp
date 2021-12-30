@@ -1,9 +1,9 @@
 
 // 二元体での行列
-// 計算量 簡約化・ガウスの消去法 : O(mn^2/64)
+// 計算量 簡約化・ガウスの消去法：O(mn^2/64)
 
 // 概要
-// 行iに行jを足す操作は行iに行jをXORする操作と同値なので、bitsetで高速化できる。
+// 行 i に行 j を足す操作は行 i に行 j を XOR する操作と同値なので、bitset で高速化できる。
 
 // verified with
 // https://yukicoder.me/problems/no/1421
@@ -26,7 +26,7 @@ struct F2_Matrix {
 
     inline T &operator[](int k) { return A[k]; }
 
-    int row_reduction(vector<int> &b) { // 行基本変形を用いて簡約化を行い、rankを返す。
+    int row_reduction(vector<int> &b) { // 行基本変形を用いて簡約化を行い、rank を返す。
         int m = height(), n = width(), check = 0, rank = 0;
         assert(b.size() == m);
         for (int j = 0; j < n; j++) {
@@ -51,7 +51,7 @@ struct F2_Matrix {
         return row_reduction(b);
     }
 
-    vector<vector<int>> Gausiann_elimination(vector<int> b) { // Ax = bの解の1つと解空間の基底の組を返す
+    vector<vector<int>> Gausiann_elimination(vector<int> b) { // Ax = b の解の 1 つと解空間の基底の組を返す
         int m = height(), n = width();
         row_reduction(b);
         vector<vector<int>> ret;
