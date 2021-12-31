@@ -104,7 +104,7 @@ struct Lazy_Segment_Tree {
     Monoid operator[](int i) { return query(i, i + 1); }
 
     template <typename C>
-    int find_subtree(int i, const C &check, const Monoid &x, Monoid &M, bool type) {
+    int find_subtree(int i, const C &check, const Monoid &x, Monoid &M, int type) {
         while (i < n) {
             eval(i);
             Monoid nxt = type ? f(reflect(2 * i + type), M) : f(M, reflect(2 * i + type));
@@ -125,7 +125,7 @@ struct Lazy_Segment_Tree {
         while (a < b) {
             if (a & 1) {
                 Monoid nxt = f(L, reflect(a));
-                if (check(nxt, x)) return find_subtree(a, check, x, L, false);
+                if (check(nxt, x)) return find_subtree(a, check, x, L, 0);
                 L = nxt, a++;
             }
             a >>= 1, b >>= 1;
@@ -139,9 +139,9 @@ struct Lazy_Segment_Tree {
         int a = n, b = r + n;
         thrust(b - 1);
         while (a < b) {
-            if (b & 1 || a == 1) {
+            if ((b & 1) || a == 1) {
                 Monoid nxt = f(reflect(--b), R);
-                if (check(nxt, x)) return find_subtree(b, check, x, R, true);
+                if (check(nxt, x)) return find_subtree(b, check, x, R, 1);
                 R = nxt;
             }
             a >>= 1, b >>= 1;

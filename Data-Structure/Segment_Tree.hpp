@@ -72,13 +72,14 @@ struct Segment_Tree {
     Monoid operator[](int i) const { return seg[n + i]; }
 
     template <typename C>
-    int find_subtree(int i, const C &check, const Monoid &x, Monoid &M, bool type) const {
+    int find_subtree(int i, const C &check, const Monoid &x, Monoid &M, int type) const {
         while (i < n) {
             Monoid nxt = type ? f(seg[2 * i + type], M) : f(M, seg[2 * i + type]);
             if (check(nxt, x)) {
                 i = 2 * i + type;
             } else {
-                M = nxt, i = 2 * i + (type ^ 1);
+                M = nxt;
+                i = 2 * i + (type ^ 1);
             }
         }
         return i - n;
@@ -91,7 +92,7 @@ struct Segment_Tree {
         while (a < b) {
             if (a & 1) {
                 Monoid nxt = f(L, seg[a]);
-                if (check(nxt, x)) return find_subtree(a, check, x, L, false);
+                if (check(nxt, x)) return find_subtree(a, check, x, L, 0);
                 L = nxt, a++;
             }
             a >>= 1, b >>= 1;
@@ -104,9 +105,9 @@ struct Segment_Tree {
         Monoid R = e1;
         int a = n, b = r + n;
         while (a < b) {
-            if (b & 1 || a == 1) {
+            if ((b & 1) || a == 1) {
                 Monoid nxt = f(seg[--b], R);
-                if (check(nxt, x)) return find_subtree(b, check, x, R, true);
+                if (check(nxt, x)) return find_subtree(b, check, x, R, 1);
                 R = nxt;
             }
             a >>= 1, b >>= 1;
