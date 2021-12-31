@@ -111,7 +111,8 @@ struct Lazy_Segment_Tree {
             if (check(nxt, x)) {
                 i = 2 * i + type;
             } else {
-                M = nxt, i = 2 * i + (type ^ 1);
+                M = nxt;
+                i = 2 * i + (type ^ 1);
             }
         }
         return i - n;
