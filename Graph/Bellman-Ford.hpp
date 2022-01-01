@@ -1,5 +1,5 @@
 
-// Bellman-Ford法（負辺があっても動作する単一始点最短路）
+// Bellman-Ford 法（負辺があっても動作する単一始点最短路）
 // 計算量 O(nm)
 
 // 概要
@@ -28,9 +28,9 @@ struct Weighted_Graph {
     int m;
 
     vector<T> d;
-    vector<int> pre_v;
+    vector<int> pre_v, pre_e;
 
-    Weighted_Graph(int n) : es(n), n(n), m(0), d(n), pre_v(n) {}
+    Weighted_Graph(int n) : es(n), n(n), m(0), d(n), pre_v(n), pre_e(n) {}
 
     void add_edge(int from, int to, T cost) {
         es[from].emplace_back(to, cost, m);
@@ -47,8 +47,12 @@ struct Weighted_Graph {
                 for (auto &e : es[j]) {
                     if (d[j] == INF_T) continue;
                     if (d[j] + e.cost < d[e.to]) {
-                        d[e.to] = d[j] + e.cost, pre_v[e.to] = j;
-                        if (i >= n - 1) d[e.to] = -INF_T, ret = true;
+                        d[e.to] = d[j] + e.cost;
+                        pre_v[e.to] = j, pre_e[e.to] = e.id;
+                        if (i >= n - 1) {
+                            d[e.to] = -INF_T;
+                            ret = true;
+                        }
                     }
                 }
             }
@@ -70,12 +74,13 @@ struct Weighted_Graph {
         }
     }
 
-    vector<int> shortest_path(int s, int t) {
+    vector<int> shortest_path(int s, int t, bool use_id = true) {
         bellman_ford(s);
         if (abs(d[t]) == INF_T) return {};
         vector<int> ret;
-        for (int now = t; now != s; now = pre_v[now]) ret.push_back(now);
-        ret.push_back(s), reverse(begin(ret), end(ret));
+        for (int now = t; now != s; now = pre_v[now]) ret.push_back(use_id ? pre_e[now] : now);
+        if (!use_id) ret.push_back(s);
+        reverse(begin(ret), end(ret));
         return ret;
     }
 };

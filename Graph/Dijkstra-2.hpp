@@ -30,9 +30,9 @@ struct Weighted_Graph {
     int m;
 
     vector<T> d;
-    vector<int> pre_v;
+    vector<int> pre_v, pre_e;
 
-    Weighted_Graph(int n) : es(n), n(n), m(0), d(n), pre_v(n) {}
+    Weighted_Graph(int n) : es(n), n(n), m(0), d(n), pre_v(n), pre_e(n) {}
 
     void add_edge(int from, int to, T cost) {
         es[from].emplace_back(to, cost, m);
@@ -51,7 +51,7 @@ struct Weighted_Graph {
             if (p > d[i]) continue;
             for (auto &e : es[i]) {
                 if (d[i] + e.cost < d[e.to]) {
-                    pre_v[e.to] = i;
+                    pre_v[e.to] = i, pre_e[e.to] = e.id;
                     que.emplace(d[e.to] = d[i] + e.cost, e.to);
                 }
             }
@@ -59,11 +59,13 @@ struct Weighted_Graph {
         return d[t];
     }
 
-    vector<int> shortest_path(int s, int t) {
+    vector<int> shortest_path(int s, int t, bool use_id = true) {
         if (dijkstra(s, t) == INF_T) return {};
+        if (d[t] == INF_T) return {};
         vector<int> ret;
-        for (int now = t; now != s; now = pre_v[now]) ret.push_back(now);
-        ret.push_back(s), reverse(begin(ret), end(ret));
+        for (int now = t; now != s; now = pre_v[now]) ret.push_back(use_id ? pre_e[now] : now);
+        if (!use_id) ret.push_back(s);
+        reverse(begin(ret), end(ret));
         return ret;
     }
 };

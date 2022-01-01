@@ -1,9 +1,9 @@
 
-// Dinic法（最大流）
+// Dinic 法（最大流）
 // 計算量 O(mn^2)
 
 // 概要
-// BFS で残余グラフにおける始点から各点の最短距離を確定 -> 始点から終点まで最短路で結ぶ増加パスを DFS で探索
+// BFS で残余グラフにおける始点から各点の最短距離を確定 -> 始点から終点まで最短路で結ぶ増加パスを DFS で探索。
 // このステップを始点から終点までの増加パスが存在しなくなるまで行う。
 // 各ステップで最短距離は増加するので、ステップ回数は n-1 回以下。
 
@@ -38,7 +38,8 @@ struct Max_Flow {
     bool _bfs(int s, int t) {
         fill(begin(d), end(d), -1);
         queue<int> que;
-        d[s] = 0, que.push(s);
+        d[s] = 0;
+        que.push(s);
         while (!que.empty()) {
             int i = que.front();
             que.pop();

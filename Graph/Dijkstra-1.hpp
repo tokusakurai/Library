@@ -46,7 +46,10 @@ struct Table {
             if (d[u] == INF_T) break;
             for (int j = 0; j < n; j++) {
                 if (es[u][j] != INF_T) {
-                    if (d[u] + es[u][j] < d[j]) d[j] = d[u] + es[u][j], pre_v[j] = u;
+                    if (d[u] + es[u][j] < d[j]) {
+                        d[j] = d[u] + es[u][j];
+                        pre_v[j] = u;
+                    }
                 }
             }
         }
@@ -57,7 +60,8 @@ struct Table {
         if (dijkstra(s, t) == INF_T) return {};
         vector<int> ret;
         for (int now = t; now != s; now = pre_v[now]) ret.push_back(now);
-        ret.push_back(s), reverse(begin(ret), end(ret));
+        ret.push_back(s);
+        reverse(begin(ret), end(ret));
         return ret;
     }
 };
