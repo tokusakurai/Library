@@ -74,7 +74,7 @@ struct Weighted_Graph {
         }
     }
 
-    vector<int> shortest_path(int s, int t, bool use_id = true) {
+    vector<int> shortest_path(int s, int t, bool use_id = false) {
         bellman_ford(s);
         if (abs(d[t]) == INF_T) return {};
         vector<int> ret;

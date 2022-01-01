@@ -59,7 +59,7 @@ struct Weighted_Graph {
         return d[t];
     }
 
-    vector<int> shortest_path(int s, int t, bool use_id = true) {
+    vector<int> shortest_path(int s, int t, bool use_id = false) {
         if (dijkstra(s, t) == INF_T) return {};
         vector<int> ret;
         for (int now = t; now != s; now = pre_v[now]) ret.push_back(use_id ? pre_e[now] : now);

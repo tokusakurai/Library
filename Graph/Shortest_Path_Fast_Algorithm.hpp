@@ -67,7 +67,7 @@ struct Weighted_Graph {
         return d[t];
     }
 
-    vector<int> shortest_path(int s, int t, bool use_id = true) {
+    vector<int> shortest_path(int s, int t, bool use_id = false) {
         shortest_path_faster_algorithm(s);
         if (abs(d[t]) == INF_T) return {};
         vector<int> ret;
