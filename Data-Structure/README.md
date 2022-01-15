@@ -56,6 +56,10 @@ Segment Tree に Segment Tree や双対 Segment Tree を乗せることで、2 �
 
 - [スプレー木](Splay_Tree.hpp)（スプレー操作を行うことで平衡を保つ二分探索木）
 
+## Binary Trie
+
+- [Binary Trie](Binary_Trie.hpp)（非負整数値を 2 進数表記することで Trie 木を構築する）
+
 ## ウェーブレット行列
 
 静的な配列に対して、様々なクエリをオンラインで扱うことができる。
