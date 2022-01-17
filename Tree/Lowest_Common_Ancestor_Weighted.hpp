@@ -31,7 +31,7 @@ struct Weighted_Graph {
     vector<T> d;
     int height;
 
-    Weighted_Graph(int n) : es(n), n(n), m(0) {
+    Weighted_Graph(int n) : es(n), n(n), m(0), depth(n), d(n) {
         height = 1;
         while ((1 << height) < n) height++;
         par.assign(height, vector<int>(n));
