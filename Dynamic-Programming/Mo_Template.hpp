@@ -1,5 +1,5 @@
 
-// Moのアルゴリズム（雛形）
+// Mo のアルゴリズム（雛形）
 // 計算量 O(α(n+q)√n)（α は区間を伸縮させるのに必要な計算量）
 
 // 概要
@@ -42,11 +42,11 @@ struct Mo {
 
     vector<Q> solve(int bucket_size, vector<query> qs) {
         vector<Q> ret(qs.size());
-        sort(begin(qs), end(qs), [&](query a, query b) {
-            int A = (a.l) / bucket_size, B = (b.l) / bucket_size;
+        sort(begin(qs), end(qs), [&](query p, query q) {
+            int A = (p.l) / bucket_size, B = (q.l) / bucket_size;
             if (A != B) return A < B;
-            if (A % 2 == 0) return a.r < b.r;
-            return a.r > b.r;
+            if (A % 2 == 0) return p.r < q.r;
+            return p.r > q.r;
         });
         for (auto &e : qs) {
             while (e.l < l) insert(--l);

@@ -108,7 +108,10 @@ struct Sqrt_Decomposition {
     vector<Node> nodes;
 
     Sqrt_Decomposition(const vector<T> &a, int bucket_size) {
-        for (int i = 0; i < (int)a.size(); i += bucket_size) { nodes.emplace_back(a, i, min(i + bucket_size, (int)a.size())); }
+        for (int i = 0; i < (int)a.size(); i += bucket_size) {
+            int l = i, r = min(i + bucket_size, (int)a.size());
+            nodes.emplace_back(a, l, r);
+        }
     }
 
     void query_chmin(int a, int b, const T &x) {
