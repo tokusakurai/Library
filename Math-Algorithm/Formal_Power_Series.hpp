@@ -2,7 +2,12 @@
 // 形式的冪級数
 // 計算量 加算・減算・微分・積分：O(n)、積・除算・inv・log・exp・pow・Taylor Shift：O(n log(n))
 
-// 各種演算はテイラー展開を用いて定義される（詳しくは下の verify url）
+// 定義
+// df/dx := Σ[k=0,1,...]k([x^k]f(x))x^(k-1)
+// ∫f(x)dx := Σ[k=0,1,...]([x^k]f(x))x^(k+1)/(k+1) 
+// 1/f(x) := f(x)g(x) = 1 となるような g(x)
+// log(1+f(x)) := Σ[k=0,1,...](-1)^(k+1)f(x)^k/k
+// exp(f(x)) := Σ[k=0,1,...]f(x)^k/k! ([x^0]f(x) = 0)
 
 // 概要
 // 積：NTT
@@ -156,14 +161,14 @@ struct Formal_Power_Series : vector<T> {
         return ret;
     }
 
-    Formal_Power_Series integral() const { // ∫fdx
+    Formal_Power_Series integral() const { // ∫f(x)dx
         int n = this->size();
         Formal_Power_Series ret(n + 1);
         for (int i = 0; i < n; i++) ret[i + 1] = (*this)[i] / (i + 1);
         return ret;
     }
 
-    Formal_Power_Series inv(int deg) const { // 1/f (f[0] != 0)
+    Formal_Power_Series inv(int deg) const { // 1/f(x) (f[0] != 0)
         assert((*this)[0] != T(0));
         Formal_Power_Series ret(1, (*this)[0].inverse());
         for (int i = 1; i < deg; i <<= 1) {
@@ -186,7 +191,7 @@ struct Formal_Power_Series : vector<T> {
 
     Formal_Power_Series inv() const { return inv(this->size()); }
 
-    Formal_Power_Series log(int deg) const { // log(f) (f[0] = 1)
+    Formal_Power_Series log(int deg) const { // log(f(x)) (f[0] = 1)
         assert((*this)[0] == 1);
         Formal_Power_Series ret = (diff() * inv(deg)).pre(deg - 1).integral();
         ret.resize(deg);
@@ -195,7 +200,7 @@ struct Formal_Power_Series : vector<T> {
 
     Formal_Power_Series log() const { return log(this->size()); }
 
-    Formal_Power_Series exp(int deg) const { // exp(f) (f[0] = 0)
+    Formal_Power_Series exp(int deg) const { // exp(f(x)) (f[0] = 0)
         assert((*this)[0] == 0);
         Formal_Power_Series inv;
         inv.reserve(deg + 1);
@@ -264,7 +269,7 @@ struct Formal_Power_Series : vector<T> {
 
     Formal_Power_Series exp() const { return exp(this->size()); }
 
-    Formal_Power_Series pow(long long k, int deg) const { // f^k
+    Formal_Power_Series pow(long long k, int deg) const { // f(x)^k
         int n = this->size();
         for (int i = 0; i < n; i++) {
             if ((*this)[i] == 0) continue;
@@ -284,7 +289,7 @@ struct Formal_Power_Series : vector<T> {
 
     Formal_Power_Series pow(long long k) const { return pow(k, this->size()); }
 
-    Formal_Power_Series Taylor_shift(T c) const {
+    Formal_Power_Series Taylor_shift(T c) const { // f(x+c)
         int n = this->size();
         vector<T> ifac(n, 1);
         Formal_Power_Series f(n), g(n);

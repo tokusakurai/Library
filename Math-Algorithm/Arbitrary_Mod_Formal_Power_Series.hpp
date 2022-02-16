@@ -148,14 +148,14 @@ struct Formal_Power_Series : vector<T> {
         return ret;
     }
 
-    Formal_Power_Series integral() const { // ∫fdx
+    Formal_Power_Series integral() const { // ∫f(x)dx
         int n = this->size();
         Formal_Power_Series ret(n + 1);
         for (int i = 0; i < n; i++) ret[i + 1] = (*this)[i] / (i + 1);
         return ret;
     }
 
-    Formal_Power_Series inv(int deg) const { // 1/f (f[0] != 0)
+    Formal_Power_Series inv(int deg) const { // 1/f(x) (f[0] != 0)
         assert((*this)[0] != T(0));
         Formal_Power_Series ret(1, (*this)[0].inverse());
         for (int i = 1; i < deg; i <<= 1) ret = (ret + ret - ret * ret * pre(i << 1)).pre(i << 1);
@@ -165,7 +165,7 @@ struct Formal_Power_Series : vector<T> {
 
     Formal_Power_Series inv() const { return inv(this->size()); }
 
-    Formal_Power_Series log(int deg) const { // log(f) (f[0] = 1)
+    Formal_Power_Series log(int deg) const { // log(f(x)) (f[0] = 1)
         assert((*this)[0] == 1);
         Formal_Power_Series ret = (diff() * inv(deg)).pre(deg - 1).integral();
         ret.resize(deg);
@@ -174,7 +174,7 @@ struct Formal_Power_Series : vector<T> {
 
     Formal_Power_Series log() const { return log(this->size()); }
 
-    Formal_Power_Series exp(int deg) const { // exp(f) (f[0] = 0)
+    Formal_Power_Series exp(int deg) const { // exp(f(x)) (f[0] = 0)
         assert((*this)[0] == 0);
         Formal_Power_Series ret(1, 1);
         for (int i = 1; i < deg; i <<= 1) ret = (ret * (pre(i << 1) + 1 - ret.log(i << 1))).pre(i << 1);
@@ -184,7 +184,7 @@ struct Formal_Power_Series : vector<T> {
 
     Formal_Power_Series exp() const { return exp(this->size()); }
 
-    Formal_Power_Series pow(long long k, int deg) const { // f^k
+    Formal_Power_Series pow(long long k, int deg) const { // f(x)^k
         int n = this->size();
         for (int i = 0; i < n; i++) {
             if ((*this)[i] == 0) continue;
@@ -203,4 +203,25 @@ struct Formal_Power_Series : vector<T> {
     }
 
     Formal_Power_Series pow(long long k) const { return pow(k, this->size()); }
+
+    Formal_Power_Series Taylor_shift(T c) const { // f(x+c)
+        int n = this->size();
+        vector<T> ifac(n, 1);
+        Formal_Power_Series f(n), g(n);
+        for (int i = 0; i < n; i++) {
+            f[n - 1 - i] = (*this)[i] * ifac[n - 1];
+            if (i < n - 1) ifac[n - 1] *= i + 1;
+        }
+        ifac[n - 1] = ifac[n - 1].inverse();
+        for (int i = n - 1; i > 0; i--) ifac[i - 1] = ifac[i] * i;
+        T pw = 1;
+        for (int i = 0; i < n; i++) {
+            g[i] = pw * ifac[i];
+            pw *= c;
+        }
+        f *= g;
+        Formal_Power_Series b(n);
+        for (int i = 0; i < n; i++) b[i] = f[n - 1 - i] * ifac[i];
+        return b;
+    }
 };
