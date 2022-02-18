@@ -35,7 +35,7 @@ struct Bostan_Mori {
         P.resize(d);
     }
 
-    T operator[](long long n) const { // a[n]（0-indexed）
+    T operator[](long long n) const { // a[n] (0-indexed)
         vector<T> U = P, V = Q;
         for (; n; n >>= 1) {
             vector<T> W = V;

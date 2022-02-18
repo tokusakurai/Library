@@ -45,7 +45,7 @@ struct Kitamasa {
         return ret;
     }
 
-    T operator[](long long n) const { // a[n]（0-indexed）
+    T operator[](long long n) const { // a[n] (0-indexed)
         vector<T> x(d + 1, 0);
         x[1] = 1, x = pow(x, n);
         x.resize(d);

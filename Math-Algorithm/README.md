@@ -90,25 +90,25 @@
 
 畳み込み（ここでは多項式の乗算）を行うアルゴリズム。
 
-### 高速フーリエ変換（FFT）
+### 高速フーリエ変換 (FFT)
 
 2 つの多項式の積は、それぞれを複素数上で離散フーリエ変換し、両者の各項の積を取ったものを逆離散フーリエ変換することで得られる。このとき離散フーリエ変換・逆離散フーリエ変換がボトルネックとなっており、次数が 2 冪のときにこれらを高速に行えるアルゴリズムとして高速フーリエ変換が知られている。
 
-- [高速フーリエ変換（FFT）](Fast_Fourier_Transform.hpp)
+- [高速フーリエ変換 (FFT)](Fast_Fourier_Transform.hpp)
 
-### 数論変換（NTT）
+### 数論変換 (NTT)
 
 NTT 素数を、自身から 1 引いたものが（配列の長さより）十分大きい 2 冪で割り切れる素数とする。NTT 素数 p を法とした有理整数環の剰余体 Z/pZ では 1 の 2 冪（十分大きい）乗根を取ることが出来るため、高速フーリエ変換を適用することができる。代表的な NTT 素数として 998244353 がある。
 
-- [数論変換（NTT）](Number_Theoretic_Transform.hpp)（NTT 素数 mod における畳込み）
+- [数論変換 (NTT)](Number_Theoretic_Transform.hpp)（NTT 素数 mod における畳込み）
 
 いくつかの NTT 素数を用意して Garner のアルゴリズムで復元することによって、任意 mod で畳み込みを行うことができる。
 
-- [任意 mod 数論変換（NTT）](Arbitrary_Mod_Number_Theoretic_Transform.hpp)（任意 mod における畳込み）
+- [任意 mod 数論変換 (NTT)](Arbitrary_Mod_Number_Theoretic_Transform.hpp)（任意 mod における畳込み）
 
 ### 多変数畳み込み
 
-FFT（NTT）を用いることで、多変数多項式の積を次数が大きくなるところは切り捨てで求めることができる。
+FFT (NTT) を用いることで、多変数多項式の積を次数が大きくなるところは切り捨てで求めることができる。
 
 - [多変数畳み込み](Multivariate_Convolution.hpp)
 
@@ -134,13 +134,13 @@ FFT（NTT）を用いることで、多変数多項式の積を次数が大き�
 
 - [添字 GCD・LCM 畳み込み](GCD_LCM_Convolution.hpp)
 
-## 形式的冪級数（FPS）
+## 形式的冪級数 (FPS)
 
 形式的冪級数（項の数が有限とは限らない多項式）の基本的な計算を行うアルゴリズム。
 
-- [形式的冪級数（FPS）](Formal_Power_Series.hpp)（NTT 素数 mod における形式的冪級数）
+- [形式的冪級数 (FPS)](Formal_Power_Series.hpp)（NTT 素数 mod における形式的冪級数）
 
-- [任意 mod 形式的冪級数（FPS）](Arbitrary_Mod_Formal_Power_Series.hpp)（任意 mod における形式的羃級数）
+- [任意 mod 形式的冪級数 (FPS)](Arbitrary_Mod_Formal_Power_Series.hpp)（任意 mod における形式的羃級数）
 
 ## 多項式
 

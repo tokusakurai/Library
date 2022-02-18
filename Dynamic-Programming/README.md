@@ -1,14 +1,14 @@
-# 動的計画法（DP）
+# 動的計画法 (DP)
 
 ## 典型的な DP 問題
 
 - [各種ナップザック問題](Knapsack.hpp)（01 ナップザック問題、個数制限なしナップザック問題、個数制限付きナップザック問題）
 
-- [最長共通部分列（LCS）](Longest_Common_Subsequence.hpp)
+- [最長共通部分列 (LCS)](Longest_Common_Subsequence.hpp)
 
 - [編集距離](Edit_Distance.hpp)
 
-- [最長増加部分列（LIS）](Longest_Increasing_Subsequence.hpp)（DP 配列の再利用で計算量が落ちるインライン DP）
+- [最長増加部分列 (LIS)](Longest_Increasing_Subsequence.hpp)（DP 配列の再利用で計算量が落ちるインライン DP）
 
 - [転倒数](Inversion_Number.hpp)
 

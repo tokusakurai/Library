@@ -2,7 +2,7 @@
 
 - [データ構造](Data-Structure)
 
-- [動的計画法（DP）](Dynamic-Programming)
+- [動的計画法 (DP)](Dynamic-Programming)
 
 - [グラフ](Graph)
 

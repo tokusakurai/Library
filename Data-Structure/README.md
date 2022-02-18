@@ -2,7 +2,7 @@
 
 ## Union-Find Tree
 
-2 つの集合を統合して 1 つにすること（Union）と、ある要素が属する集合を求めること（Find）ができる。
+2 つの集合を統合して 1 つにすること (Union) と、ある要素が属する集合を求めること (Find) ができる。
 
 - [Union-Find Tree](Union_Find_Tree.hpp)
 

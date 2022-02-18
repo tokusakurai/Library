@@ -51,7 +51,7 @@ struct Kitamasa {
         return ret;
     }
 
-    T operator[](long long n) const { // a[n]（0-indexed）
+    T operator[](long long n) const { // a[n] (0-indexed)
         if (n < d) return a[n];
         vector<T> x(d + 1, 0);
         x[1] = 1, x = pow(x, n);
