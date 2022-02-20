@@ -1,8 +1,8 @@
 
 // ユークリッドの互除法を用いた種々の計算
-// 計算量 gcd・lcm・extgcd・modinv・floor_sum・中国剰余定理： O(log(max(a, b)))、Garner：O(n^2)
+// 計算量 gcd・lcm・extgcd・modinv・floor_sum・中国剰余定理：O(log(max(a, b)))、Garner：O(n^2)
 
-// extgcd：ax+by = gcd(a,b) を満たす (x,y) の組の1つ
+// extgcd：ax+by = gcd(a,b) を満たす (x,y) の組の 1 つ
 // floor_sum：Σ[0<=i<n] floor((ai+b)/m)
 // 中国剰余定理：x ≡ a_1(mod m_1), x ≡ a_2(mod m_2) を満たす最小の非負整数 x
 // Garner：x ≡ a_i(mod m_i) (0<=i<n) を満たす最小の非負整数 x を M で割った余り
