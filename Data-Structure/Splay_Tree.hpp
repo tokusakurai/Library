@@ -30,11 +30,30 @@ struct Splay_Tree {
             if (this->par->rch == this) return -1;
             return 0;
         }
+        
+        void rec_delete() { // 再帰的に子の Node のメモリを解放していく
+            deleter(lch);
+            deleter(rch);
+        }
+
+        void deleter(Node* child) {
+            if(child) {
+                child->rec_delete();
+                delete child;
+            }
+        }
     };
 
     Node *root;
 
     Splay_Tree() : root(NULL) {}
+
+    ~Splay_Tree() {
+        if(root) {
+            root->rec_delete();
+            delete root;
+        }
+    }
 
     int size() { return (root ? root->size : 0); }
 
