@@ -9,6 +9,7 @@
 
 // verified with
 // https://judge.yosupo.jp/problem/range_kth_smallest
+// https://judge.yosupo.jp/problem/static_range_frequency
 
 #pragma once
 #include <bits/stdc++.h>
@@ -24,7 +25,7 @@ struct Wavelet_Matrix {
     int h;
 
     Wavelet_Matrix(vector<T> a) : n(a.size()), m((n >> 6) + 1) {
-        T M = *max_element(begin(a), end(a));
+        T M = (n == 0 ? 0 : *max_element(begin(a), end(a)));
         h = 1;
         while (M >> h) h++;
         mask.assign(64, 0);
