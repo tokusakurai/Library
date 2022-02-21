@@ -64,7 +64,7 @@ struct Matrix {
         // return abs(a-b) <= EPS;
     }
 
-    pair<int, T> row_reduction(vector<T> &b) { // 行基本変形を用いて簡約化を行い、(階数、行列式) の組を返す
+    pair<int, T> row_reduction(vector<T> &b) { // 行基本変形を用いて簡約化を行い、(rank, det) の組を返す
         int m = height(), n = width(), check = 0, rank = 0;
         T det = 1;
         assert(b.size() == m);

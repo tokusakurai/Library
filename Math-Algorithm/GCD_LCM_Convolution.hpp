@@ -8,6 +8,8 @@
 
 // verified with
 // https://atcoder.jp/contests/agc038/tasks/agc038_c
+// https://judge.yosupo.jp/problem/gcd_convolution
+// https://judge.yosupo.jp/problem/lcm_convolution
 
 #pragma once
 #include <bits/stdc++.h>
@@ -26,7 +28,7 @@ vector<T> gcd_convolve(vector<T> a, vector<T> b) {
 }
 
 template <typename T>
-vector<T> lcm_convolve(vector<T> a, vector<T> b) { // lcm(i, j) >= n の場合は a[i]*b[j] は c[0] に足される
+vector<T> lcm_convolve(vector<T> a, vector<T> b) { // lcm(i, j) >= n の場合は a[i] * b[j] は c[0] に足される
     int n = a.size();
     assert((int)b.size() == n);
     divisors_zeta_transform(a, false), divisors_zeta_transform(b, false);
