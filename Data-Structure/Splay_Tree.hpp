@@ -1,6 +1,6 @@
 
 // スプレー木
-// 計算量 挿入・削除・i番目の値にアクセス・二分探索：（ならし）O(log(n))
+// 計算量 挿入・削除・i 番目の値にアクセス・二分探索：（ならし）O(log(n))
 
 // 概要
 // 平衡二分探索木で、要素にアクセスするときに splay 操作をしてアクセスした頂点を根に持ってくる。
@@ -90,7 +90,7 @@ struct Splay_Tree {
         root = t;
     }
 
-    Node *get(int i) { // i 番目（0-indexed）の値
+    Node *get(int i) { // i 番目 (0-indexed) の値
         if (i >= root->size) return NULL;
         Node *now = root;
         while (true) {

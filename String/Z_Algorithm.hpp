@@ -1,10 +1,10 @@
 
-// z-alogorithm（文字列 S と S の i 文字目（0-indexed）以降の最長共通接頭辞の長さを記録した配列を求める）
+// z-alogorithm（文字列 S と S の i 文字目 (0-indexed) 以降の最長共通接頭辞の長さを記録した配列を求める）
 // 計算量 O(|S|)
 
 // 概要
 // 求める配列を A とする。
-// j+A[j] < A[i] ならば A[j] = A[j+i] となる。j+A[j] >= A[i] の場合でもはみ出た部分だけまた判定し直せばよい。
+// j + A[j] < A[i] ならば A[j] = A[j + i] となる。j + A[j] >= A[i] の場合でもはみ出た部分だけまた判定し直せばよい。
 
 // verified with
 // https://atcoder.jp/contests/jag2013summer-day3/tasks/icpc2013summer_day3_h

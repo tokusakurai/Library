@@ -49,7 +49,7 @@ struct Wavelet_Matrix {
         }
     }
 
-    int rank_01(int i, int r, int bit) const { // [0,r) に含まれる i ビット目が bit(0 か 1) であるものの個数
+    int rank_01(int i, int r, int bit) const { // [0,r) に含まれる i ビット目が bit（0 か 1）であるものの個数
         int res = S[i][r >> 6] + __builtin_popcountll(B[i][r >> 6] & mask[r & 63]);
         return bit ? res : r - res;
     }
@@ -81,7 +81,7 @@ struct Wavelet_Matrix {
 
     T operator[](int k) const { return access(k); }
 
-    int select_01(int i, int k, int bit) const { // k 番目（0-indexed）の i ビット目が bit(0 か 1) であるものの位置
+    int select_01(int i, int k, int bit) const { // k 番目 (0-indexed) の i ビット目が bit（0 か 1）であるものの位置
         int L = 0, R = m + 1;
         while (R - L > 1) {
             int M = (L + R) / 2, t = S[i][M];
@@ -99,7 +99,7 @@ struct Wavelet_Matrix {
         return ((L << 6) + l < n ? (L << 6) + l : -1);
     }
 
-    int select(int k, const T &x) const { // k 番目（0-indexed）の x の位置
+    int select(int k, const T &x) const { // k 番目 (0-indexed) の x の位置
         int l = 0, r = n;
         for (int i = h - 1; i >= 0; i--) {
             if ((x >> i) & 1) {
@@ -139,7 +139,7 @@ struct Wavelet_Matrix {
         return range_freq(l, r, upper) - range_freq(l, r, lower);
     }
 
-    T quantile(int l, int r, int k) const { // [l,r) で小さい方から k 番目（0-indexed）の値
+    T quantile(int l, int r, int k) const { // [l,r) で小さい方から k 番目 (0-indexed) の値
         assert(k >= 0 && k < r - l);
         T ret = 0;
         for (int i = h - 1; i >= 0; i--) {
