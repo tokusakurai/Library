@@ -23,11 +23,11 @@ struct Binary_Indexed_Tree {
     vector<T> bit;
     const int n;
 
-    Binary_Indexed_Tree(const vector<T> &v) : n((int)v.size()) { // v は配列の初期状態
+    Binary_Indexed_Tree(const vector<T> &v) : n((int)v.size()) {
         bit.resize(n + 1);
-        copy(begin(v), end(v), bit.begin() + 1);
+        copy(begin(v), end(v), begin(bit) + 1);
         for (int a = 2; a <= n; a <<= 1) {
-            for (int b = a; b <= n; b += a) { bit[b] += bit[b - a / 2]; }
+            for (int b = a; b <= n; b += a) bit[b] += bit[b - a / 2];
         }
     }
 
@@ -36,7 +36,7 @@ struct Binary_Indexed_Tree {
         vector<T> v(n, x);
         copy(begin(v), end(v), begin(bit) + 1);
         for (int a = 2; a <= n; a <<= 1) {
-            for (int b = a; b <= n; b += a) { bit[b] += bit[b - a / 2]; }
+            for (int b = a; b <= n; b += a) bit[b] += bit[b - a / 2];
         }
     }
 
@@ -56,7 +56,7 @@ struct Binary_Indexed_Tree {
 
     T operator[](int i) const { return query(i, i + 1); }
 
-    int lower_bound(T x) const { // 区間 [0,a] の総和が x 以上となる最小の a
+    int lower_bound(T x) const {
         int ret = 0;
         for (int k = 31 - __builtin_clz(n); k >= 0; k--) {
             if (ret + (1 << k) <= n && bit[ret + (1 << k)] < x) x -= bit[ret += (1 << k)];
@@ -64,7 +64,7 @@ struct Binary_Indexed_Tree {
         return ret;
     }
 
-    int upper_bound(T x) const { // 区間 [0,a] の総和が x より大きくなる最小の a
+    int upper_bound(T x) const {
         int ret = 0;
         for (int k = 31 - __builtin_clz(n); k >= 0; k--) {
             if (ret + (1 << k) <= n && bit[ret + (1 << k)] <= x) x -= bit[ret += (1 << k)];

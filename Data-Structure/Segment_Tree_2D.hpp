@@ -7,11 +7,11 @@
 // Segment Tree の各ノードに Segment Tree を乗せている。
 // あらかじめ座標圧縮しておき、必要な部分だけ残すことでメモリを O(n log(n)) に削減できる。
 // y 軸方向に計算したあと x 軸方向について計算するので、可換モノイドであれば十分。
-// ただし、値更新は f を作用する形でないといけない。
 
 // verified with
 // https://judge.yosupo.jp/problem/rectangle_sum
 // https://judge.yosupo.jp/problem/point_add_rectangle_sum
+// https://codeforces.com/gym/103443/problem/C
 
 #pragma once
 #include <bits/stdc++.h>
@@ -19,62 +19,77 @@ using namespace std;
 
 #include "../Data-Structure/Segment_Tree.hpp"
 
-template <typename T>
+template <typename T, typename S> // S は座標の型
 struct Segment_Tree_2D {
     using F = function<T(T, T)>;
     int n;
-    vector<vector<int>> ids;
+    vector<S> xs;
+    vector<pair<S, S>> all_points;
+    vector<vector<pair<S, S>>> points;
     vector<Segment_Tree<T>> segs;
     const F f;
     const T e1;
 
-    Segment_Tree_2D(int m, const F &f, const T &e1) : f(f), e1(e1) {
-        n = 1;
-        while (n < m) n <<= 1;
-        ids.resize(2 * n);
-    }
+    Segment_Tree_2D(const F &f, const T &e1) : f(f), e1(e1) {}
 
-    void insert(int x, int y) { // 値を変更する箇所を先に全て挿入しておく
-        x += n;
-        while (x) {
-            ids[x].push_back(y);
-            x >>= 1;
-        }
+    void insert(const S &x, const S &y) { // 値を変更する箇所を先に全て挿入しておく
+        xs.push_back(x);
+        all_points.emplace_back(x, y);
     }
 
     void build() {
+        sort(begin(xs), end(xs));
+        xs.erase(unique(begin(xs), end(xs)), end(xs));
+        int m = xs.size();
+        n = 1;
+        while (n < m) n <<= 1;
+        points.resize(2 * n);
+        for (auto &p : all_points) {
+            auto [x, y] = p;
+            int i = lower_bound(begin(xs), end(xs), x) - begin(xs);
+            i += n;
+            while (i) {
+                points[i].emplace_back(y, x);
+                i >>= 1;
+            }
+        }
         for (int i = 0; i < 2 * n; i++) {
-            sort(begin(ids[i]), end(ids[i]));
-            ids[i].erase(unique(begin(ids[i]), end(ids[i])), end(ids[i]));
-            segs.emplace_back((int)ids[i].size(), e1, f, e1);
+            sort(begin(points[i]), end(points[i]));
+            points[i].erase(unique(begin(points[i]), end(points[i])), end(points[i]));
+            segs.emplace_back((int)points[i].size(), e1, f, e1);
         }
     }
 
-    void change(int x, int y, const T &a) { // f で a を作用する
-        x += n;
-        while (x) {
-            segs[x].change(lower_bound(begin(ids[x]), end(ids[x]), y) - begin(ids[x]), a, false);
-            x >>= 1;
+    void change(const S &x, const S &y, const T &a, bool update = true) {
+        int i = lower_bound(begin(xs), end(xs), x) - begin(xs);
+        i += n;
+        while (i) {
+            int j = lower_bound(begin(points[i]), end(points[i]), make_pair(y, x)) - begin(points[i]);
+            segs[i].change(j, a, update);
+            i >>= 1;
         }
     }
 
-    T query(int lx, int rx, int ly, int ry) const {
+    T query(const S &lx, const S &rx, const S &ly, const S &ry) const {
         T L = e1, R = e1;
-        lx += n, rx += n;
-        while (lx < rx) {
-            if (lx & 1) {
-                int l = lower_bound(begin(ids[lx]), end(ids[lx]), ly) - begin(ids[lx]);
-                int r = lower_bound(begin(ids[lx]), end(ids[lx]), ry) - begin(ids[lx]);
-                L = f(L, segs[lx].query(l, r));
-                lx++;
+        int li = lower_bound(begin(xs), end(xs), lx) - begin(xs);
+        int ri = lower_bound(begin(xs), end(xs), rx) - begin(xs);
+        li += n, ri += n;
+        S mi = (xs.empty() ? 0 : xs.front());
+        while (li < ri) {
+            if (li & 1) {
+                int l = lower_bound(begin(points[li]), end(points[li]), make_pair(ly, mi)) - begin(points[li]);
+                int r = lower_bound(begin(points[li]), end(points[li]), make_pair(ry, mi)) - begin(points[li]);
+                L = f(L, segs[li].query(l, r));
+                li++;
             }
-            if (rx & 1) {
-                rx--;
-                int l = lower_bound(begin(ids[rx]), end(ids[rx]), ly) - begin(ids[rx]);
-                int r = lower_bound(begin(ids[rx]), end(ids[rx]), ry) - begin(ids[rx]);
-                R = f(segs[rx].query(l, r), R);
+            if (ri & 1) {
+                ri--;
+                int l = lower_bound(begin(points[ri]), end(points[ri]), make_pair(ly, mi)) - begin(points[ri]);
+                int r = lower_bound(begin(points[ri]), end(points[ri]), make_pair(ry, mi)) - begin(points[ri]);
+                R = f(segs[ri].query(l, r), R);
             }
-            lx >>= 1, rx >>= 1;
+            li >>= 1, ri >>= 1;
         }
         return f(L, R);
     }

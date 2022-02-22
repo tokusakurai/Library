@@ -17,62 +17,77 @@ using namespace std;
 
 #include "../Data-Structure/Dual_Segment_Tree.hpp"
 
-template <typename T>
+template <typename T, typename S> // S は座標の型
 struct Dual_Segment_Tree_2D {
     using H = function<T(T, T)>;
     int n;
-    vector<vector<int>> ids;
+    vector<S> xs;
+    vector<pair<S, S>> all_points;
+    vector<vector<pair<S, S>>> points;
     vector<Dual_Segment_Tree<T>> segs;
     const H h;
     const T e2;
 
-    Dual_Segment_Tree_2D(int m, const H &h, const T &e2) : h(h), e2(e2) {
-        n = 1;
-        while (n < m) n <<= 1;
-        ids.resize(2 * n);
-    }
+    Dual_Segment_Tree_2D(const H &h, const T &e2) : h(h), e2(e2) {}
 
-    void insert(int x, int y) { // 値が欲しい箇所を先に全て挿入しておく
-        x += n;
-        while (x) {
-            ids[x].push_back(y);
-            x >>= 1;
-        }
+    void insert(const S &x, const S &y) { // 値が欲しい箇所を先に全て挿入しておく
+        xs.push_back(x);
+        all_points.emplace_back(x, y);
     }
 
     void build() {
+        sort(begin(xs), end(xs));
+        xs.erase(unique(begin(xs), end(xs)), end(xs));
+        int m = xs.size();
+        n = 1;
+        while (n < m) n <<= 1;
+        points.resize(2 * n);
+        for (auto &p : all_points) {
+            auto [x, y] = p;
+            int i = lower_bound(begin(xs), end(xs), x) - begin(xs);
+            i += n;
+            while (i) {
+                points[i].emplace_back(y, x);
+                i >>= 1;
+            }
+        }
         for (int i = 0; i < 2 * n; i++) {
-            sort(begin(ids[i]), end(ids[i]));
-            ids[i].erase(unique(begin(ids[i]), end(ids[i])), end(ids[i]));
-            segs.emplace_back((int)ids[i].size(), h, e2);
+            sort(begin(points[i]), end(points[i]));
+            points[i].erase(unique(begin(points[i]), end(points[i])), end(points[i]));
+            segs.emplace_back((int)points[i].size(), h, e2);
         }
     }
 
-    void apply(int lx, int rx, int ly, int ry, const T &x) {
-        lx += n, rx += n;
-        while (lx < rx) {
-            if (lx & 1) {
-                int l = lower_bound(begin(ids[lx]), end(ids[lx]), ly) - begin(ids[lx]);
-                int r = lower_bound(begin(ids[lx]), end(ids[lx]), ry) - begin(ids[lx]);
-                segs[lx].apply(l, r, x);
-                lx++;
+    void apply(const S &lx, const S &rx, const S &ly, const S &ry, const T &a) {
+        int li = lower_bound(begin(xs), end(xs), lx) - begin(xs);
+        int ri = lower_bound(begin(xs), end(xs), rx) - begin(xs);
+        li += n, ri += n;
+        S mi = (xs.empty() ? 0 : xs.front());
+        while (li < ri) {
+            if (li & 1) {
+                int l = lower_bound(begin(points[li]), end(points[li]), make_pair(ly, mi)) - begin(points[li]);
+                int r = lower_bound(begin(points[li]), end(points[li]), make_pair(ry, mi)) - begin(points[li]);
+                segs[li].apply(l, r, a);
+                li++;
             }
-            if (rx & 1) {
-                rx--;
-                int l = lower_bound(begin(ids[rx]), end(ids[rx]), ly) - begin(ids[rx]);
-                int r = lower_bound(begin(ids[rx]), end(ids[rx]), ry) - begin(ids[rx]);
-                segs[rx].apply(l, r, x);
+            if (ri & 1) {
+                ri--;
+                int l = lower_bound(begin(points[ri]), end(points[ri]), make_pair(ly, mi)) - begin(points[ri]);
+                int r = lower_bound(begin(points[ri]), end(points[ri]), make_pair(ry, mi)) - begin(points[ri]);
+                segs[ri].apply(l, r, a);
             }
-            lx >>= 1, rx >>= 1;
+            li >>= 1, ri >>= 1;
         }
     }
 
-    T get(int x, int y) {
-        x += n;
+    T get(const S &x, const S &y) {
         T ret = e2;
-        while (x) {
-            ret = h(ret, segs[x].get(lower_bound(begin(ids[x]), end(ids[x]), y) - begin(ids[x])));
-            x >>= 1;
+        int i = lower_bound(begin(xs), end(xs), x) - begin(xs);
+        i += n;
+        while (i) {
+            int j = lower_bound(begin(points[i]), end(points[i]), make_pair(y, x)) - begin(points[i]);
+            ret = h(ret, segs[i].get(j));
+            i >>= 1;
         }
         return ret;
     }
