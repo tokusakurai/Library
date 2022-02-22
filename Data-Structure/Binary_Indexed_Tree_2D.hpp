@@ -11,7 +11,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/rectangle_sum
 // https://judge.yosupo.jp/problem/point_add_rectangle_sum
-// https://codeforces.com/gym/103443/problem/C
 
 #pragma once
 #include <bits/stdc++.h>
