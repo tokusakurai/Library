@@ -30,9 +30,9 @@
 
 ### 単一始点最短路（負辺なし）
 
-- [Dijkstra 法 1](Dijkstra-1.hpp)（頂点数が小さい場合に高速に動作する）
+- [Dijkstra 法 1](Dijkstra-1.hpp)（密グラフに対して高速に動作する）
 
-- [Dijkstra 法 2](Dijkstra-2.hpp)（頂点数が大きい場合でも高速に動作する）
+- [Dijkstra 法 2](Dijkstra-2.hpp)（疎グラフに対して高速に動作する）
 
 ### 単一始点最短路（負辺あり）
 
@@ -70,7 +70,9 @@
 
 - [Primal-Dual 法 1](Primal-Dual-1.hpp)
 
-- [Primal-Dual 法 2](Primal-Dual-2.hpp)（ポテンシャルを用いた高速化）
+- [Primal-Dual 法 2](Primal-Dual-2.hpp)（ポテンシャルを用いた高速化、疎グラフに対して高速に動作する）
+
+- [Primal-Dual 法 3](Primal-Dual-3.hpp)（密グラフに対して高速に動作する）
 
 ### 2 部グラフの最大マッチング
 
