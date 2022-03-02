@@ -46,6 +46,8 @@
 
 - [モンモール数](Montmort_Number.hpp)（完全順列の個数のテーブル）
 
+- [分割数](Partition_Function.hpp)（分割数のテーブル）
+
 ## K 乗根
 
 体において K 乗根を求めるアルゴリズム。
