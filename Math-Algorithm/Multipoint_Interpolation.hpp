@@ -28,24 +28,18 @@ vector<T> multipoint_interpolation(const vector<T> &ys, const T &c, const int &m
     for (int i = n - 1; i > 0; i--) ifac[i - 1] = ifac[i] * i;
     vector<T> f(n);
     for (int i = 0; i < n; i++) {
-        if ((n - 1 - i) & 1)
-            f[i] = -ys[i] * ifac[i] * ifac[n - 1 - i];
-        else
-            f[i] = ys[i] * ifac[i] * ifac[n - 1 - i];
+        T tmp = ys[i] * ifac[i] * ifac[n - 1 - i];
+        f[i] += ((n - 1 - i) & 1 ? -tmp : tmp);
     }
     vector<T> p(n + m, 1), ip(n + m);
     for (int i = 1; i < n + m; i++) {
-        if (c - n + i == 0)
-            p[i] = p[i - 1];
-        else
-            p[i] = p[i - 1] * (c - n + i);
+        p[i] = p[i - 1];
+        if (c - n + i != 0) p[i] *= c - n + i;
     }
     ip[n + m - 1] = T(1) / p[n + m - 1];
     for (int i = n + m - 1; i > 0; i--) {
-        if (c - n + i == 0)
-            ip[i - 1] = ip[i];
-        else
-            ip[i - 1] = ip[i] * (c - n + i);
+        ip[i - 1] = ip[i];
+        if (c - n + i != 0) ip[i - 1] *= c - n + i;
     }
     vector<T> g(n + m - 1);
     for (int i = 0; i < n + m - 1; i++) g[i] = p[i] * ip[i + 1];
@@ -53,10 +47,11 @@ vector<T> multipoint_interpolation(const vector<T> &ys, const T &c, const int &m
     vector<T> ret(m);
     for (int i = 0; i < m; i++) {
         int x = (c + i).x;
-        if (0 <= x && x < n)
+        if (0 <= x && x < n) {
             ret[i] = ys[x];
-        else
+        } else {
             ret[i] = f[n - 1 + i] * p[n + i] * ip[i];
+        }
     }
     return ret;
 }

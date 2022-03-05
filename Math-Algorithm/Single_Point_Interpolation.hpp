@@ -28,10 +28,8 @@ T single_point_interpolation(const vector<T> &ys, T c) {
     for (int i = n - 1; i >= 0; i--) R[i] = R[i + 1] * (c - i);
     T ret = 0;
     for (int i = 0; i < n; i++) {
-        if ((n - 1 - i) & 1)
-            ret -= ys[i] * L[i] * R[i + 1] * ifac[i] * ifac[n - 1 - i];
-        else
-            ret += ys[i] * L[i] * R[i + 1] * ifac[i] * ifac[n - 1 - i];
+        T tmp = ys[i] * L[i] * R[i + 1] * comb::ifac(i) * comb::ifac(n - 1 - i);
+        ret += ((n - 1 - i) & 1 ? -tmp : tmp);
     }
     return ret;
 }
