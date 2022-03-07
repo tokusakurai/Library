@@ -114,17 +114,19 @@ bool intersect(const Line &l, const Line &m) {
 
 bool intersect(const Line &l, const Segment &s) { return sgn(det(l.b - l.a, s.a - l.a) * det(l.b - l.a, s.b - l.a)) <= 0; }
 
-Real distance(const Line &l, const Point &p);
-
-bool intersect(const Circle &c, const Line &l) { return sgn(c.r - distance(l, c.p)) >= 0; }
-
-bool intersect(const Circle &c, const Point &p) { return eq(abs(p - c.p), c.r); }
+bool intersect(const Segment &s, const Line &l) { return intersect(l, s); }
 
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_2_B&lang=ja
 bool intersect(const Segment &s, const Segment &t) {
     if (ccw(s.a, s.b, t.a) * ccw(s.a, s.b, t.b) > 0) return false;
     return ccw(t.a, t.b, s.a) * ccw(t.a, t.b, s.b) <= 0;
 }
+
+Real distance(const Line &l, const Point &p);
+
+bool intersect(const Circle &c, const Line &l) { return sgn(c.r - distance(l, c.p)) >= 0; }
+
+bool intersect(const Circle &c, const Point &p) { return eq(abs(p - c.p), c.r); }
 
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_7_A&lang=ja
 int intersect(Circle c1, Circle c2) { // 共通接線の本数
@@ -150,15 +152,17 @@ Real distance(const Segment &s, const Point &p) {
 
 Real distance(const Line &l, const Line &m) { return intersect(l, m) ? 0.0 : distance(l, m.a); }
 
+Real distance(const Line &l, const Segment &s) {
+    if (intersect(l, s)) return 0.0;
+    return min(distance(l, s.a), distance(l, s.b));
+}
+
+Real distance(const Segment &s, const Line &l) { return distance(l, s); }
+
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_2_D&lang=ja
 Real distance(const Segment &s, const Segment &t) {
     if (intersect(s, t)) return 0.0;
     return min({distance(s, t.a), distance(s, t.b), distance(t, s.a), distance(t, s.b)});
-}
-
-Real distance(const Line &l, const Segment &s) {
-    if (intersect(l, s)) return 0.0;
-    return min(distance(l, s.a), distance(l, s.b));
 }
 
 vector<Point> crosspoint(const Line &l, const Line &m) {
@@ -184,6 +188,8 @@ vector<Point> crosspoint(const Line &l, const Segment &s) { // 平行な場合�
     }
     return ret;
 }
+
+vector<Point> crosspoint(const Segment &s, const Line &l) { return crosspoint(l, s); }
 
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_2_C&lang=ja
 vector<Point> crosspoint(const Segment &s, const Segment &t) {

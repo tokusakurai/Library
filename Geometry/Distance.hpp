@@ -25,12 +25,14 @@ Real distance(const Segment &s, const Point &p) {
 
 Real distance(const Line &l, const Line &m) { return intersect(l, m) ? 0.0 : distance(l, m.a); }
 
-Real distance(const Segment &s, const Segment &t) {
-    if (intersect(s, t)) return 0.0;
-    return min({distance(s, t.a), distance(s, t.b), distance(t, s.a), distance(t, s.b)});
-}
-
 Real distance(const Line &l, const Segment &s) {
     if (intersect(l, s)) return 0.0;
     return min(distance(l, s.a), distance(l, s.b));
+}
+
+Real distance(const Segment &s, const Line &l) { return distance(l, s); }
+
+Real distance(const Segment &s, const Segment &t) {
+    if (intersect(s, t)) return 0.0;
+    return min({distance(s, t.a), distance(s, t.b), distance(t, s.a), distance(t, s.b)});
 }

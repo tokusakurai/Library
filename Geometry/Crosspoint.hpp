@@ -38,6 +38,8 @@ vector<Point> crosspoint(const Line &l, const Segment &s) { // 平行な場合�
     return ret;
 }
 
+vector<Point> crosspoint(const Segment &s, const Line &l) { return crosspoint(l, s); }
+
 vector<Point> crosspoint(const Segment &s, const Segment &t) {
     if (!intersect(s, t)) return {};
     vector<Point> ret, tmp;
@@ -53,7 +55,6 @@ vector<Point> crosspoint(const Segment &s, const Segment &t) {
     }
     return ret;
 }
-
 
 vector<Point> crosspoint(const Circle &c, const Line &l) {
     Point h = projection(l, c.p);
