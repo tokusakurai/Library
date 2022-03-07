@@ -69,11 +69,11 @@ Real det(const Point &p, const Point &q) { return real(p) * imag(q) - imag(p) * 
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_1_C&lang=ja
 int ccw(const Point &a, Point b, Point c) { // 線分 ab に対する c の位置関係
     b = b - a, c = c - a;
-    if (sgn(det(b, c)) == 1) return +1;  // COUNTER_CLOCKWISE
-    if (sgn(det(b, c)) == -1) return -1; // CLOCKWISE
-    if (dot(b, c) < 0.0) return +2;      // ONLINE_BACK
-    if (norm(b) < norm(c)) return -2;    // ONLINE_FRONT
-    return 0;                            // ON_SEGMENT
+    if (sgn(det(b, c)) == 1) return +1;         // COUNTER_CLOCKWISE
+    if (sgn(det(b, c)) == -1) return -1;        // CLOCKWISE
+    if (sgn(dot(b, c)) == -1) return +2;        // ONLINE_BACK
+    if (sgn(norm(c) - norm(b)) == 1) return -2; // ONLINE_FRONT
+    return 0;                                   // ON_SEGMENT
 }
 
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_2_A&lang=ja
@@ -161,10 +161,10 @@ Real distance(const Line &l, const Segment &s) {
     return min(distance(l, s.a), distance(l, s.b));
 }
 
-// https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_3_C&lang=ja
 vector<Point> crosspoint(const Line &l, const Line &m) {
+    if (!intersect(l, m)) return {};
+    if (parallel(l, m)) return {l.a, l.b};
     vector<Point> ret;
-    if (!intersect(l, m)) return ret;
     Real A = det(l.b - l.a, m.b - m.a);
     Real B = det(l.b - l.a, l.b - m.a);
     if (eq(A, 0.0) && eq(B, 0.0)) {
@@ -175,8 +175,32 @@ vector<Point> crosspoint(const Line &l, const Line &m) {
     return ret;
 }
 
+vector<Point> crosspoint(const Line &l, const Segment &s) { // 平行な場合は共通する区間の端点を返す
+    if (!intersect(l, s)) return {};
+    if (parallel(l, Line(s))) return {s.a, s.b};
+    vector<Point> ret, tmp = crosspoint(Line(l), Line(s));
+    for (auto &p : tmp) {
+        if (ccw(s.a, s.b, p) == 0) ret.push_back(p);
+    }
+    return ret;
+}
+
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_2_C&lang=ja
-vector<Point> crosspoint(const Segment &s, const Segment &t) { return crosspoint(Line(s), Line(t)); }
+vector<Point> crosspoint(const Segment &s, const Segment &t) {
+    if (!intersect(s, t)) return {};
+    vector<Point> ret, tmp;
+    if (parallel(Line(s), Line(t))) {
+        tmp = {s.a, s.b};
+        if (sgn(distance(t.a, s.a)) == 1 && sgn(distance(t.a, s.b)) == 1) tmp.push_back(t.a);
+        if (sgn(distance(t.b, s.a)) == 1 && sgn(distance(t.b, s.b)) == 1) tmp.push_back(t.b);
+    } else {
+        tmp = crosspoint(Line(s), Line(t));
+    }
+    for (auto &p : tmp) {
+        if (ccw(s.a, s.b, p) == 0 && ccw(t.a, t.b, p) == 0) ret.push_back(p);
+    }
+    return ret;
+}
 
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_7_D&lang=ja
 vector<Point> crosspoint(const Circle &c, const Line &l) {

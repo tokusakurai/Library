@@ -56,11 +56,11 @@ Real det(const Point &p, const Point &q) { return real(p) * imag(q) - imag(p) * 
 
 int ccw(const Point &a, Point b, Point c) {
     b = b - a, c = c - a;
-    if (sgn(det(b, c)) == 1) return +1;  // COUNTER_CLOCKWISE
-    if (sgn(det(b, c)) == -1) return -1; // CLOCKWISE
-    if (dot(b, c) < 0.0) return +2;      // ONLINE_BACK
-    if (norm(b) < norm(c)) return -2;    // ONLINE_FRONT
-    return 0;                            // ON_SEGMENT
+    if (sgn(det(b, c)) == 1) return +1;         // COUNTER_CLOCKWISE
+    if (sgn(det(b, c)) == -1) return -1;        // CLOCKWISE
+    if (sgn(dot(b, c)) == -1) return +2;        // ONLINE_BACK
+    if (sgn(norm(c) - norm(b)) == 1) return -2; // ONLINE_FRONT
+    return 0;                                   // ON_SEGMENT
 }
 
 struct Line {
