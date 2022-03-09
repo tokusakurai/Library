@@ -1,6 +1,6 @@
 
 // Segment Tree Beats
-// 計算量：区間 chmin・chmax：（ならし）O(log(n)^2)、区間 add・update・min・max・sum：O(log(n))
+// 計算量：区間 chmin・chmax：（ならし）O(log^2(n))、区間 add・update・min・max・sum：O(log(n))
 // 空間計算量 O(n)
 
 // 概要

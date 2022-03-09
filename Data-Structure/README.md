@@ -69,3 +69,11 @@ Segment Tree に Segment Tree や双対 Segment Tree を乗せることで、2 �
 静的な配列に対して、様々なクエリをオンラインで扱うことができる。
 
 - [ウェーブレット行列](Wavelet_Matrix.hpp)
+
+## 永続データ構造
+
+過去のデータにアクセスし、そこから派生して更新することのできるデータ構造。
+
+- [永続配列](Persistent_Array.hpp)
+
+- [永続 Union-Find Tree](Persistent_Union_Find_Tree.hpp)
