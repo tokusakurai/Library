@@ -77,3 +77,7 @@ Segment Tree に Segment Tree や双対 Segment Tree を乗せることで、2 �
 - [永続配列](Persistent_Array.hpp)
 
 - [永続 Union-Find Tree](Persistent_Union_Find_Tree.hpp)
+
+- [永続 Segment Tree](Persistent_Segment_Tree.hpp)
+
+- [永続遅延評価付き Segment Tree](Persistent_Lazy_Segment_Tree.hpp)

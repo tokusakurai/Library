@@ -1,6 +1,6 @@
 
 // 永続 Union-Find Tree
-// 計算量 （任意時刻 t における）併合・結合判定・サイズ：O(log^2(n))
+// 計算量 併合・結合判定・サイズ：O(log^2(n))、複製：O(1)
 // 空間計算量 O(n+q log(n))（q はクエリの回数）
 
 // 概要
@@ -16,33 +16,36 @@ using namespace std;
 
 #include "../Data-Structure/Persistent_Array.hpp"
 
-template <typename S = int>
 struct Persistent_Union_Find_Tree {
-    Persistent_Array<int, S> pa;
-    const int n;
+    Persistent_Array<int> data;
 
-    Persistent_Union_Find_Tree(int n, S t = -1) : n(n), pa(n, -1, 2 * t) {}
+    Persistent_Union_Find_Tree(int n) : data(n, -1) {}
 
-    int root(const S &t, int x) const { // 時刻 t での根
-        int y = pa.query(2 * t, x);
+    Persistent_Union_Find_Tree() : data() {}
+
+    void resize(int n) { data.resize(n, -1); }
+
+    void copy(const Persistent_Union_Find_Tree &uf) { data.copy(uf.data); }
+
+    int root(int x) const {
+        int y = data.get(x);
         if (y < 0) return x;
-        return root(t, y);
+        return root(y);
     }
 
-    bool unite(const S &s, const S &t, int x, int y) { // 時刻 s でのグラフの頂点 x,y を結んだものを時刻 t でのグラフとする
-        x = root(s, x), y = root(s, y);
-        if (x == y) {
-            pa.change(2 * s, 2 * t, -1, 0);
-            return false;
-        }
-        int a = pa.query(2 * s, x), b = pa.query(2 * s, y);
+    int operator[](int i) const { return root(i); }
+
+    bool unite(int x, int y) {
+        x = root(x), y = root(y);
+        if (x == y) return false;
+        int a = data.get(x), b = data.get(y);
         if (a > b) swap(x, y), swap(a, b);
-        pa.change(2 * s, 2 * t - 1, x, a + b);
-        pa.change(2 * t - 1, 2 * t, y, x);
+        data.change(x, a + b);
+        data.change(y, x);
         return true;
     }
 
-    int size(const S &t, int x) const { return -pa.query(2 * t, root(t, x)); }
+    int size(int x) const { return -data.get(root(x)); }
 
-    bool same(const S &t, int x, int y) const { return root(t, x) == root(t, y); }
+    bool same(int x, int y) const { return root(x) == root(y); }
 };

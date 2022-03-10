@@ -1,11 +1,9 @@
 
 // 永続配列
-// 計算量 更新・取得：O(log(n))
+// 計算量 1 点更新・1 点取得：O(log(n))、複製：O(1)
 // 空間計算量 O(n+q log(n))（q はクエリの回数）
 
 // 概要
-// 更新：時刻 s での配列の i 番目の要素を x に変えたものを時刻 t での配列とする
-// 取得：時刻 t での配列の i 番目の要素を取得
 // 配列を Segment Tree のように二分木で表す。この二分木の高さを h (= ceil(log(n))) とする。
 // 区間を表す二分木のノードをメモリで管理することによって、更新で新たに作られるノードは h 個とすることができる。
 // 取得は、h 回二分木を下ることで得られる。
@@ -14,101 +12,80 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template <typename T, typename S = int> // 配列の要素の型、時刻の型
+template <typename T>
 struct Persistent_Array {
     struct Node {
         Node *lch, *rch;
         T x;
 
-        Node(const T &x) : lch(NULL), rch(NULL), x(x) {}
+        Node(Node *lch, Node *rch, const T &x) : lch(lch), rch(rch), x(x) {}
 
-        Node() : Node(0) {}
+        Node(Node *lch, Node *rch) : lch(lch), rch(rch) {}
     };
 
-    vector<Node *> roots, used;
-    vector<S> ts;
+    Node *root;
+    vector<Node *> used;
     int n;
 
-    Persistent_Array(const vector<T> &v, S t = -1) {
-        int m = v.size();
-        n = 1;
-        while (n < m) n <<= 1;
-        ts.push_back(t);
-        roots.push_back(make_node());
-        init(v, 0, n, roots[0]);
-    }
+    Persistent_Array(const vector<T> &v) { resize(v); }
 
-    Persistent_Array(int m, const T &x, S t = -1) : Persistent_Array(vector<T>(m, x), t) {}
+    Persistent_Array(int m, const T &x) { resize(m, x); }
+
+    Persistent_Array() : root(NULL) {}
 
     ~Persistent_Array() {
         for (int i = 0; i < (int)used.size(); i++) delete used[i];
     }
 
-    Node *make_node(const T &x) {
-        Node *ret = new Node(x);
+    Node *make_node(Node *lch, Node *rch, const T &x) {
+        Node *ret = new Node(lch, rch, x);
         used.push_back(ret);
         return ret;
     }
 
-    Node *make_node() {
-        Node *ret = new Node();
+    Node *make_node(const T &x) { return make_node(NULL, NULL, x); }
+
+    Node *make_node(Node *lch, Node *rch) {
+        Node *ret = new Node(lch, rch);
         used.push_back(ret);
         return ret;
     }
 
-    void init(const vector<T> &v, int l, int r, Node *now) {
-        if (r - l == 1) {
-            if (l < (int)v.size()) now->x = v[l];
-            return;
-        }
+    void resize(const vector<T> &v) {
+        n = v.size();
+        root = build(v, 0, n);
+    }
+
+    void resize(int m, const T &x) { resize(vector<T>(m, x)); }
+
+    Node *build(const vector<T> &v, int l, int r) {
+        if (r - l == 1) return make_node(v[l]);
         int m = (l + r) >> 1;
-        now->lch = make_node(), now->rch = make_node();
-        init(v, l, m, now->lch), init(v, m, r, now->rch);
+        return make_node(build(v, l, m), build(v, m, r));
     }
 
-    void change(const S &s, const S &t, int i, const T &x) { // 時刻 s での配列の i 番目の要素を x に変えたものを時刻 t での配列とする
-        int k = lower_bound(begin(ts), end(ts), s) - begin(ts);
-        ts.push_back(t);
-        if (i == -1) {
-            roots.push_back(roots[k]);
-            return;
-        }
-        roots.push_back(make_node());
-        Node *now = roots.back(), *pre = roots[k];
-        int l = 0, r = n;
-        while (true) {
-            if (r - l == 1) {
-                now->x = x;
-                break;
-            }
-            now->lch = pre->lch, now->rch = pre->rch;
-            int m = (l + r) >> 1;
-            if (i < m) {
-                now->lch = make_node();
-                now = now->lch, pre = pre->lch;
-                r = m;
-            } else {
-                now->rch = make_node();
-                now = now->rch, pre = pre->rch;
-                l = m;
-            }
-        }
+    void copy(const Persistent_Array<T> &a) {
+        root = a.root;
+        n = a.n;
     }
 
-    T query(const S &t, int i) const { // 時刻 t での配列の i 番目の要素を取得
-        int k = lower_bound(begin(ts), end(ts), t) - begin(ts);
-        int l = 0, r = n;
-        Node *now = roots[k];
-        while (r - l > 1) {
-            int m = (l + r) >> 1;
-            if (i < m) {
-                now = now->lch;
-                r = m;
-            } else {
-                now = now->rch;
-                l = m;
-            }
-        }
-        return now->x;
+    Node *change(int i, const T &x, int l, int r, Node *pre) {
+        if (r - l == 1) return make_node(x);
+        int m = (l + r) >> 1;
+        if (i < m) return make_node(change(i, x, l, m, pre->lch), pre->rch);
+        return make_node(pre->lch, change(i, x, m, r, pre->rch));
     }
+
+    void change(int i, const T &x) { root = change(i, x, 0, n, root); }
+
+    T get(int i, int l, int r, Node *now) const {
+        if (r - l == 1) return now->x;
+        int m = (l + r) >> 1;
+        if (i < m) return get(i, l, m, now->lch);
+        return get(i, m, r, now->rch);
+    }
+
+    T get(int i) const { return get(i, 0, n, root); }
+
+    T operator[](int i) const { return get(i); }
 };
