@@ -1,8 +1,10 @@
 
 // マトロイド（分割マトロイド、グラフ的マトロイド、横断マトロイド）
 // 計算量
+
 // set(X)：分割マトロイド O(m+n)、グラフ的マトロイド O(m+n)、横断マトロイド O(e√(m+n))
-// サーキット検出：分割マトロイド O(m)、グラフ的マトロイド O(m+n)、横断マトロイド O(e+m+n)
+// サーキット検出：分割マトロイド O(max d_i)、グラフ的マトロイド O(m+n)、横断マトロイド O(e+m+n)
+// C(X,y) は、X ∈ F に y を加えた集合のサーキット（これは一意に定まることが示される）
 
 // 概要
 // 分割マトロイド：E(|E| = m) を互いに素な集合 B_1,B_2,...,B_n に分け、B_i からは d_i 個以下しか取ってないものが F に含まれるとしたときのマトロイド (E,F)
@@ -27,6 +29,7 @@ struct Partition_Matroid {
     vector<vector<int>> used;
 
     Partition_Matroid(int m, int n, const vector<vector<int>> &ids, vector<int> &d) : m(m), n(n), ids(ids), d(d), cnt(n), used(n) {
+        assert(ids.size() == n && d.size() == n);
         belong.assign(m, -1);
         for (int i = 0; i < n; i++) {
             for (auto &e : ids[i]) belong[e] = i;
@@ -36,7 +39,7 @@ struct Partition_Matroid {
     int size() { return m; }
 
     template <typename T>
-    void set(const vector<T> &X) { // X∈F
+    void set(const vector<T> &X) { // X∈F 計算量 O(m+n)
         fill(begin(cnt), end(cnt), 0);
         for (int i = 0; i < n; i++) used[i].clear();
         for (int i = 0; i < m; i++) {
@@ -52,7 +55,7 @@ struct Partition_Matroid {
         }
     }
 
-    vector<int> circuit(int y) const { // C(X,y)
+    vector<int> circuit(int y) const { // C(X,y) 計算量 O(max d_i)
         int p = belong[y];
         if (cnt[p] == d[p]) {
             vector<int> ret = used[p];
@@ -89,7 +92,7 @@ struct Graphic_Matroid {
     int size() { return m; }
 
     template <typename T>
-    void set(const vector<T> &X) { // X∈F
+    void set(const vector<T> &X) { // X∈F 計算量 O(m+n)
         fill(begin(pre_v), end(pre_v), -1);
         fill(begin(pre_e), end(pre_e), -1);
         fill(begin(root), end(root), -1);
@@ -116,7 +119,7 @@ struct Graphic_Matroid {
         }
     }
 
-    vector<int> circuit(int y) const { // C(X,y)
+    vector<int> circuit(int y) const { // C(X,y) 計算量 O(n)
         auto [s, t] = es[y];
         if (root[s] != root[t]) return {};
         int r = root[s];
@@ -136,7 +139,7 @@ struct Graphic_Matroid {
 };
 
 struct Transversal_Matroid {
-    const int m; // |E| (= |L|)
+    const int m; // |L|
     const int n; // |R|
     vector<vector<int>> es;
     vector<bool> fixed;
@@ -147,7 +150,7 @@ struct Transversal_Matroid {
     int size() { return m; }
 
     template <typename T>
-    void set(const vector<T> &X) { // X∈F
+    void set(const vector<T> &X) { // X∈F 計算量 O(e√(m+n)+m+n+e)
         fill(begin(fixed), end(fixed), true);
         for (int i = 0; i < m + n; i++) res[i].clear();
         Dulmage_Mendelsohn_Decomposition DM(m, n);
@@ -171,7 +174,7 @@ struct Transversal_Matroid {
         }
     }
 
-    vector<int> circuit(int y) const { // C(X,y)
+    vector<int> circuit(int y) const { // C(X,y) 計算量 O(e+m+n)
         for (auto &e : es[y]) {
             if (!fixed[e]) return {};
         }
