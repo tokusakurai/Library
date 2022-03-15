@@ -1,5 +1,5 @@
 
-// Convex-Hull-Trick（追加する直線の傾きが、最小値クエリなら単調非増加、最大値クエリなら単調非減少のときのみ）
+// Convex-Hull-Trick（追加する直線の傾きが、両方向について単調のときのみ）
 // 計算量 直線追加：O(1)、最小値（最大値）クエリ：O(log(n))、単調な最小値(最大値)クエリ：（ならし）O(1)
 
 // 概要
@@ -14,51 +14,83 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template <typename T, bool ismin = true> // ismin : 最小値クエリかどうか
+template <typename T, bool is_min = true>
 struct Convex_Hull_Trick {
-    vector<T> a, b; // y = ax+b
-    deque<int> que;
+    struct Line {
+        T a, b;
+
+        Line(const T &a, const T &b) : a(a), b(b) {}
+
+        T get(const T &x) { return a * x + b; }
+    };
+
+    deque<Line> ls;
 
     Convex_Hull_Trick(){};
 
-    bool empty() const { return que.empty(); }
+    bool empty() const { return ls.empty(); }
 
-    T f(int i, const T &x) const { return a[i] * x + b[i]; }
-
-    bool judge(int i, int j, int k) const { return (b[k] - b[j]) * (a[j] - a[i]) >= (b[j] - b[i]) * (a[k] - a[j]); }
-
-    void add_line(T p, T q) { // y = px+q を追加
-        if (!ismin) p *= -1, q *= -1;
-        assert(empty() || a.back() >= p);
-        int k = a.size();
-        a.push_back(p), b.push_back(q);
-        if (!empty() && a[que.back()] == p) {
-            if (b[que.back()] <= q) return;
-            que.pop_back();
-        }
-        while (que.size() >= 2 && judge(que[que.size() - 2], que[que.size() - 1], k)) que.pop_back();
-        que.push_back(k);
+    bool judge(const Line &l1, const Line &l2, const Line &l3) const { // (l1,l2,l3) の中で l2 を消してもいいか
+        T a1 = l2.a - l1.a, b1 = l2.b - l1.b;
+        T a2 = l3.a - l2.a, b2 = l3.b - l2.b;
+        // return a2 * b1 <= a1 * b2;
+        return __int128_t(a2) * b1 <= __int128_t(a1) * b2;
     }
 
-    T query(T x) {
+    void add_line_left(const Line &l) { // 最小値クエリなら傾き単調増加、最大値クエリなら傾き単調減少
+        assert(empty() || l.a >= ls.front().a);
+        if (!empty() && l.a == ls.front().a) {
+            if (l.b >= ls.front().b) return;
+            ls.pop_front();
+        }
+        while (ls.size() >= 2) {
+            Line l2 = ls.front(), l3 = ls[1];
+            if (!judge(l, l2, l3)) break;
+            ls.pop_front();
+        }
+        ls.push_front(l);
+    }
+
+    void add_line_left(const T &a, const T &b) { add_line_left(Line(is_min ? a : -a, is_min ? b : -b)); }
+
+    void add_line_right(const Line &l) { // 最小値クエリなら傾き単調減少、最大値クエリなら傾き単調増加
+        assert(empty() || ls.back().a >= l.a);
+        if (!empty() && ls.back().a == l.a) {
+            if (ls.back().b <= l.b) return;
+            ls.pop_back();
+        }
+        while (ls.size() >= 2) {
+            Line l1 = ls[ls.size() - 2], l2 = ls.back();
+            if (!judge(l1, l2, l)) break;
+            ls.pop_back();
+        }
+        ls.push_back(l);
+    }
+
+    void add_line_right(const T &a, const T &b) { add_line_right(Line(is_min ? a : -a, is_min ? b : -b)); }
+
+    T query(const T &x) {
         assert(!empty());
-        int l = 0, r = que.size();
+        int l = 0, r = ls.size();
         while (r - l > 1) {
             int m = (l + r) / 2;
-            (f(que[m - 1], x) >= f(que[m], x) ? l : r) = m;
+            (ls[m - 1].get(x) >= ls[m].get(x) ? l : r) = m;
         }
-        return ismin ? f(que[l], x) : -f(que[l], x);
+        T ret = ls[l].get(x);
+        return is_min ? ret : -ret;
     }
 
-    T query_monotone_inc(T x) {
+    T query_monotone_inc(const T &x) {
         assert(!empty());
-        while (que.size() >= 2 && f(que[0], x) >= f(que[1], x)) que.pop_front();
-        return ismin ? f(que[0], x) : -f(que[0], x);
+        while (ls.size() >= 2 && ls.front().get(x) >= ls[1].get(x)) ls.pop_front();
+        T ret = ls.front().get(x);
+        return is_min ? ret : -ret;
     }
 
-    T query_monotone_dec(T x) {
+    T query_monotone_dec(const T &x) {
         assert(!empty());
-        while (que.size() >= 2 && f(que[que.size() - 1], x) >= f(que[que.size() - 2], x)) que.pop_back();
-        return ismin ? f(que[que.size() - 1], x) : -f(que[que.size() - 1], x);
+        while (ls.size() >= 2 && ls[ls.size() - 2].get(x) <= ls.back().get(x)) ls.pop_back();
+        T ret = ls.back().get(x);
+        return is_min ? ret : -ret;
     }
 };

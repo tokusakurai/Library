@@ -34,9 +34,13 @@
 
 ## Convex-Hull-Trick
 
-直線の追加クエリ（ただし、追加する直線の傾きは単調）と、追加された直線群におけるある点での値の最小値（または最大値）クエリを扱える。
+直線の追加クエリと、追加された直線群におけるある点での値の最小値（または最大値）クエリを扱える。
 
-- [Convex-Hull-Trick](Convex_Hull_Trick.hpp)
+- [Convex-Hull-Trick](Convex_Hull_Trick.hpp)（追加する直線の傾きが単調である場合）
+
+- [Li-Chao Tree](Li-Chao_Tree.hpp)
+
+- [Li-Chao Tree（オフライン）](Li-Chao_Tree_2.hpp)（最小値クエリの座標があらかじめわかっている場合）
 
 ## Slope-Trick
 
