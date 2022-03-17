@@ -25,7 +25,7 @@ struct Graph {
     vector<vector<edge>> es;
     vector<int> par, si, depth;
     vector<int> root;       // 属する連結成分の根
-    vector<int> id_v, id_e; // 各頂点、各辺が一列に並べたときに何番目に相当するか
+    vector<int> id_v, id_e; // 各頂点、各辺が一列に並べたときに何番目に相当するか（辺の番号は 1,2,...,n-1 となることに注意）
     const int n;
     int m;
 
