@@ -24,7 +24,7 @@ struct Li_Chao_Tree {
         T get(const T &x) const { return a * x + b; }
     };
 
-    const T INF_T = numeric_limits<T>::max() / 2;
+    const T INF_T = INF * 2; // numeric_limits<T>::max() / 2;
     vector<Line> ls;
     vector<T> xs;
     int n;
@@ -66,6 +66,7 @@ struct Li_Chao_Tree {
     }
 
     void add_line(const T &a, const T &b) { // 直線 y = ax+b を追加
+        if (n == 0) return;
         Line k(is_min ? a : -a, is_min ? b : -b);
         add_line(k, 1, 0, n - 1);
     }
@@ -79,6 +80,7 @@ struct Li_Chao_Tree {
     }
 
     void add_segment(const T &l, const T &r, const T &a, const T &b) { // [l,r) に直線 y = ax+b を追加
+        if (n == 0) return;
         int s = lower_bound(begin(xs), end(xs), l) - begin(xs);
         int t = lower_bound(begin(xs), end(xs), r) - begin(xs);
         if (t == n || xs[t] >= r) t--;
