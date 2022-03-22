@@ -6,15 +6,14 @@
 // O(n^2) の Dijkstra 法を用いることで、頂点が少なく辺が多い場合に高速に動作する。
 
 // verified with
-// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_6_B&lang=ja
-// https://atcoder.jp/contests/abc214/tasks/abc214_h
+// https://judge.yosupo.jp/problem/assignment
 
 #pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
 template <typename F, typename T = F> // 流量の型、費用の型
-struct Min_Cost_Flow {
+struct Primal_Dual {
     struct edge {
         int to;
         F cap;
@@ -31,7 +30,7 @@ struct Min_Cost_Flow {
     const T INF_T = numeric_limits<T>::max() / 2;
     const int n;
 
-    Min_Cost_Flow(int n) : es(n), d(n), h(n), pre_v(n), pre_e(n), n(n) {}
+    Primal_Dual(int n) : es(n), d(n), h(n), pre_v(n), pre_e(n), n(n) {}
 
     void add_edge(int from, int to, F cap, T cost) {
         es[from].emplace_back(to, cap, cost, (int)es[to].size());

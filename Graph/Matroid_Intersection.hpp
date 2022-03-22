@@ -22,7 +22,7 @@ int Matroid_Intersection(Matroid_1 M1, Matroid_2 M2) {
     vector<bool> X(m, false);
     for (int i = 0;; i++) {
         M1.set(X), M2.set(X);
-        Graph<true> G(m + 2); // 最短路を求める
+        BFS<true> G(m + 2); // 最短路を求める
         int s = m, t = m + 1;
         for (int y = 0; y < m; y++) {
             if (X[y]) continue;
@@ -36,7 +36,8 @@ int Matroid_Intersection(Matroid_1 M1, Matroid_2 M2) {
                 if (x != y) G.add_edge(y, x);
             }
         }
-        vector<int> path = G.shortest_path(s, t);
+        G.shortest_path(s);
+        vector<int> path = G.restore_path(s, t);
         if (path.empty()) return i;
         for (auto &e : path) {
             if (e != s && e != t) X[e] = !X[e];

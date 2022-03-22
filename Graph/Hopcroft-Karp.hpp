@@ -1,6 +1,6 @@
 
 // Hopcroft-Karp 法（2 部グラフの最大マッチング）
-// 計算量 O(e√(n+m))（e は辺の総数）
+// 計算量 O(e√(n+m)+n+m)（e は辺の総数）
 
 // 概要
 // 左側のマッチングに含まれない点の深さを 0 として BFS で各点の深さを決定する。
@@ -16,13 +16,13 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-struct Bipartite_Matching {
+struct Hopcroft_Karp {
     vector<vector<int>> es;
     vector<int> d, match;
     vector<bool> used, used2;
     const int n, m;
 
-    Bipartite_Matching(int n, int m) : es(n), d(n), match(m), used(n), used2(n), n(n), m(m) {}
+    Hopcroft_Karp(int n, int m) : es(n), d(n), match(m), used(n), used2(n), n(n), m(m) {}
 
     void add_edge(int u, int v) { es[u].push_back(v); }
 
@@ -60,7 +60,7 @@ struct Bipartite_Matching {
         return false;
     }
 
-    int bipartite_matching() { // 右側の i は左側の match[i] とマッチングする
+    int max_matching() { // 右側の i は左側の match[i] とマッチングする
         fill(begin(match), end(match), -1), fill(begin(used), end(used), false);
         int ret = 0;
         while (true) {

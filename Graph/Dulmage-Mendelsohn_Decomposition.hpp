@@ -1,6 +1,6 @@
 
 // DM 分解
-// 計算量 O((e√(n+m)+n+m+e)（e は辺の総数）
+// 計算量 O((e√(n+m)+n+m)（e は辺の総数）
 
 // 概要
 // 2 部グラフの隣接行列の行と列を並び替えて、できるだけ細かくなるようにブロック三角化する。
@@ -23,8 +23,8 @@ using namespace std;
 
 #include "../Graph/Hopcroft-Karp.hpp"
 
-struct Dulmage_Mendelsohn_Decomposition : Bipartite_Matching {
-    using BM = Bipartite_Matching;
+struct Dulmage_Mendelsohn_Decomposition : Hopcroft_Karp {
+    using BM = Hopcroft_Karp;
     vector<vector<int>> rs;
     vector<vector<int>> ids_l, ids_r; // 左側と右側のブロック
     vector<int> comp_l, comp_r;       // 属するブロックの番号
@@ -49,7 +49,7 @@ struct Dulmage_Mendelsohn_Decomposition : Bipartite_Matching {
     }
 
     void decompose() {
-        this->bipartite_matching();
+        this->max_matching();
         for (int i = 0; i < n; i++) {
             for (auto &e : this->es[i]) {
                 int to = this->match[e];

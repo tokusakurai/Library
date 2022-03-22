@@ -16,8 +16,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template <typename F, typename T = F> // 流量の型、費用の型
-struct Min_Cost_Flow {
+template <typename F, typename T = F>
+struct Primal_Dual {
     struct edge {
         int to;
         F cap;
@@ -34,7 +34,7 @@ struct Min_Cost_Flow {
     const T INF_T = numeric_limits<T>::max() / 2;
     const int n;
 
-    Min_Cost_Flow(int n) : es(n), d(n), h(n), pre_v(n), pre_e(n), n(n) {}
+    Primal_Dual(int n) : es(n), d(n), h(n), pre_v(n), pre_e(n), n(n) {}
 
     void add_edge(int from, int to, F cap, T cost) {
         es[from].emplace_back(to, cap, cost, (int)es[to].size());

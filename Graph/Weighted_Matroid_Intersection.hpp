@@ -26,7 +26,7 @@ vector<T> Weighted_Matroid_Intersection(Matroid_1 M1, Matroid_2 M2, vector<T> w)
     ret[0] = 0;
     for (int i = 1; i <= m; i++) {
         M1.set(X), M2.set(X);
-        Weighted_Graph<T, true> G(m + 2);
+        Bellman_Ford<T, true> G(m + 2);
         int s = m, t = m + 1;
         for (int y = 0; y < m; y++) {
             if (X[y]) continue;
@@ -40,7 +40,8 @@ vector<T> Weighted_Matroid_Intersection(Matroid_1 M1, Matroid_2 M2, vector<T> w)
                 if (x != y) G.add_edge(y, x, -w[y] + 1);
             }
         }
-        vector<int> path = G.shortest_path(s, t); // コスト最小のパスのうち通る辺数が最小のものを求める
+        G.shortest_path(s);
+        vector<int> path = G.restore_path(s, t); // コスト最小のパスのうち通る辺数が最小のものを求める
         if (path.empty()) break;
         for (auto &e : path) {
             if (e != s && e != t) X[e] = !X[e];

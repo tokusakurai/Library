@@ -15,7 +15,7 @@
 using namespace std;
 
 template <typename F> // 流量の型
-struct Max_Flow {
+struct Dinic {
     struct edge {
         int to;
         F cap;
@@ -28,7 +28,7 @@ struct Max_Flow {
     const F INF_F = numeric_limits<F>::max() / 2;
     const int n;
 
-    Max_Flow(int n) : es(n), d(n), pos(n), n(n) {}
+    Dinic(int n) : es(n), d(n), pos(n), n(n) {}
 
     void add_edge(int from, int to, F cap, bool directed = true) {
         es[from].emplace_back(to, cap, (int)es[to].size());
