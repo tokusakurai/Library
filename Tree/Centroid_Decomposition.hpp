@@ -5,12 +5,16 @@
 // 概要
 // DFS を用いて、各頂点についてその点を除いたときの残る部分木のサイズの最大値を列挙することで重心を求める。
 
+// verified with
+// https://atcoder.jp/contests/yahoo-procon2018-final-open/tasks/yahoo_procon2018_final_c
+// https://judge.yosupo.jp/problem/frequency_table_of_tree_distance
+
 #pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
 template <bool directed = false>
-struct Graph {
+struct Centroid_Decomposition {
     struct edge {
         int to, id;
         edge(int to, int id) : to(to), id(id) {}
@@ -23,7 +27,7 @@ struct Graph {
     vector<int> si;
     vector<bool> used;
 
-    Graph(int n) : es(n), n(n), m(0), si(n), used(n, false) {}
+    Centroid_Decomposition(int n) : es(n), n(n), m(0), si(n), used(n, false) {}
 
     void add_edge(int from, int to) {
         es[from].emplace_back(to, m);

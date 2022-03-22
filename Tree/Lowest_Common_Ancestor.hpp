@@ -1,5 +1,5 @@
 
-// 最近共通祖先（LCA）
+// 最近共通祖先 (LCA)
 // 計算量 構築：O(n log(n))、2 頂点の LCA・距離：O(log(n))
 // 空間計算量 O(n log(n))
 
@@ -18,7 +18,7 @@
 using namespace std;
 
 template <bool directed = false>
-struct Graph {
+struct Lowest_Common_Ancestor {
     struct edge {
         int to, id;
         edge(int to, int id) : to(to), id(id) {}
@@ -32,7 +32,7 @@ struct Graph {
     vector<int> depth;
     int height;
 
-    Graph(int n) : es(n), n(n), m(0), depth(n) {
+    Lowest_Common_Ancestor(int n) : es(n), n(n), m(0), depth(n) {
         height = 1;
         while ((1 << height) < n) height++;
         par.assign(height, vector<int>(n));

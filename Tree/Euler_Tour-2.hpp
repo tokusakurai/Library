@@ -14,7 +14,7 @@
 using namespace std;
 
 template <typename T, bool directed = false>
-struct Weighted_Graph {
+struct Euler_Tour_Edge {
     struct edge {
         int to;
         T cost;
@@ -23,14 +23,13 @@ struct Weighted_Graph {
     };
 
     vector<vector<edge>> es;
+    vector<int> vs, edges;     // 辺を親方向にたどるときは id を -m して記録
+    vector<int> ls, rs, depth; // vs の中で i のものの index の最小値が ls[i]、最大値が rs[i]
     const T INF_T;
     const int n;
     int m;
 
-    vector<int> vs, edges;     // 辺を親方向にたどるときは -m して記録
-    vector<int> ls, rs, depth; // vs の中で i のものの index の最小値が ls[i]、最大値が rs[i]
-
-    Weighted_Graph(int n) : es(n), INF_T(numeric_limits<T>::max() / 2), n(n), m(0), ls(n), rs(n), depth(n) {}
+    Euler_Tour_Edge(int n) : es(n), INF_T(numeric_limits<T>::max() / 2), n(n), m(0), ls(n), rs(n), depth(n) {}
 
     void add_edge(int from, int to, T cost) {
         es[from].emplace_back(to, cost, m);
@@ -38,14 +37,15 @@ struct Weighted_Graph {
         m++;
     }
 
-    void euler_tour(int now, int pre = -1) {
+    void build(int now, int pre = -1) {
         if (pre == -1) depth[now] = 0;
         vs.push_back(now);
         ls[now] = edges.size();
         for (auto &e : es[now]) {
             if (e.to == pre) continue;
             edges.push_back(e.id);
-            depth[e.to] = depth[now] + 1, euler_tour(e.to, now);
+            depth[e.to] = depth[now] + 1;
+            build(e.to, now);
             vs.push_back(now), edges.push_back(e.id - m);
         }
         rs[now] = edges.size();
