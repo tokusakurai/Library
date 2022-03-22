@@ -16,7 +16,7 @@
 using namespace std;
 
 template <bool directed = false>
-struct Graph {
+struct Heavy_Light_Decomposition {
     struct edge {
         int to, id;
         edge(int to, int id) : to(to), id(id) {}
@@ -29,7 +29,7 @@ struct Graph {
     const int n;
     int m;
 
-    Graph(int n) : es(n), par(n), si(n), depth(n), root(n), id_v(n), id_e(n - 1), n(n), m(0) {}
+    Heavy_Light_Decomposition(int n) : es(n), par(n), si(n), depth(n), root(n), id_v(n), id_e(n - 1), n(n), m(0) {}
 
     void add_edge(int from, int to) {
         es[from].emplace_back(to, m);

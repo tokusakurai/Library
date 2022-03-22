@@ -48,6 +48,10 @@ struct Link_Cut_Tree {
         for (int i = 0; i < n; i++) { nodes[i] = make_node(i, v[i]); }
     }
 
+    ~Link_Cut_Tree() {
+        for (int i = 0; i < (int)nodes.size(); i++) delete nodes[i];
+    }
+
     Node *make_node(int id, const Monoid &x) { return new Node(id, x); }
 
     void toggle(Node *t) {
