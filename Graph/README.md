@@ -30,15 +30,15 @@
 
 ### 単一始点最短路（負辺なし）
 
-- [Dijkstra 法 1](Dijkstra-1.hpp)（密グラフに対して高速に動作する）
+- [Dijkstra 法 1](Dijkstra-1.hpp)（疎グラフに対して高速に動作する）
 
-- [Dijkstra 法 2](Dijkstra-2.hpp)（疎グラフに対して高速に動作する）
+- [Dijkstra 法 2](Dijkstra-2.hpp)（密グラフに対して高速に動作する）
 
 ### 単一始点最短路（負辺あり）
 
 - [Bellman-Ford 法](Bellman-Ford.hpp)
 
-- [Shortest-Path-Faster-Algorithm](Shortest_Path_Fast_Algorithm.hpp)（最悪計算量と比べて高速に動作することも多い）
+- [Shortest-Path-Faster-Algorithm](Shortest-Path-Faster-Algorithm.hpp)（最悪計算量と比べて高速に動作することも多い）
 
 ### 全点対最短路
 
@@ -48,9 +48,9 @@
 
 辺のコストが全て非負のときに全域木を構成するための最小コストを求めるアルゴリズム。
 
-- [Prim 法 1](Prim-1.hpp)（頂点数が小さい場合に高速に動作する）
+- [Prim 法 1](Prim-1.hpp)（疎グラフに対して高速に動作する）
 
-- [Prim 法 2](Prim-2.hpp)（頂点数が大きい場合でも高速に動作する）
+- [Prim 法 2](Prim-2.hpp)（密グラフに対して高速に動作する）
 
 - [Kruscal 法](Kruscal.hpp)
 

@@ -1,5 +1,5 @@
 
-// クラスカル法（最小全域木）
+// Kruscal 法（最小全域木）
 // 計算量 O(n α(n)+m log(m))
 
 // 概要
@@ -17,7 +17,7 @@ using namespace std;
 #include "../Data-Structure/Union_Find_Tree.hpp"
 
 template <typename T, bool directed = false>
-struct Edges {
+struct Kruscal {
     struct edge {
         int from, to;
         T cost;
@@ -26,11 +26,11 @@ struct Edges {
     };
 
     vector<edge> es;
-    const T INF_T;
+    const T INF_T = numeric_limits<T>::max / 2;
     const int n;
     int m;
 
-    Edges(int n) : INF_T(numeric_limits<T>::max() / 2), n(n), m(0) {}
+    Kruscal(int n) : n(n), m(0) {}
 
     void add_edge(int from, int to, T cost) {
         es.emplace_back(from, to, cost, m);
@@ -38,7 +38,7 @@ struct Edges {
         m++;
     }
 
-    T kruscal() {
+    T min_spanning_tree() {
         sort(begin(es), end(es), [](const edge &e1, const edge &e2) { return e1.cost < e2.cost; });
         Union_Find_Tree uf(n);
         T ret = 0;

@@ -1,51 +1,57 @@
 
-// プリム法（最小全域木）
-// 計算量 O(n^2)
+// Prim 法（最小全域木）
+// 計算量 O(m log(n))
 
 // 概要
-// ある頂点から始めて1つずつ辺を加えて木を構成する。
+// ある頂点から始めて 1 つずつ辺を加えて木を構成する。
 // 今木に含まれている頂点と木に含まれていない頂点を結ぶ辺のうち、もっともコストが小さいものを採用する。
-// 各ステップで、木に含まれていない頂点を全てチェックする。
+// 昇順の priority_queue を用いる。
+// 新たに木に加えた頂点と木に入っていない頂点を結ぶ辺を priority_queue に入れる。（この操作は合計で最大 m 回となる）
+
+// verified with
+// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_2_A&lang=ja
 
 #pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
 template <typename T, bool directed = false>
-struct Table {
-    vector<vector<T>> es;
+struct Prim {
+    struct edge {
+        int to;
+        T cost;
+        int id;
+        edge(int to, T cost, int id) : to(to), cost(cost), id(id) {}
+    };
+
+    vector<vector<edge>> es;
     const T INF_T = numeric_limits<T>::max() / 2;
     const int n;
+    int m;
 
-    inline const vector<T> &operator[](int k) const { return es[k]; }
+    Prim(int n) : es(n), n(n), m(0) {}
 
-    inline vector<T> &operator[](int k) { return es[k]; }
-
-    Table(int n) : es(n), n(n) {
-        for (int i = 0; i < n; i++) es[i].assign(n, INF_T);
-        for (int i = 0; i < n; i++) es[i][i] = 0;
+    void add_edge(int from, int to, T cost) {
+        es[from].emplace_back(to, cost, m);
+        if (!directed) es[to].emplace_back(from, cost, m);
+        m++;
     }
 
-    void add_edge(int from, int to, T cost = 1) {
-        es[from][to] = min(es[from][to], cost);
-        if (!directed) es[to][from] = min(es[to][from], cost);
-    }
-
-    T prim() {
+    T min_spanning_tree() {
         vector<T> mincost(n, INF_T);
         vector<bool> used(n, false);
-        mincost[0] = 0;
+        using P = pair<T, int>;
+        priority_queue<P, vector<P>, greater<P>> que;
+        que.emplace(mincost[0] = 0, 0);
         T ret = 0;
-        for (int i = 0; i < n; i++) {
-            int u = -1;
-            for (int j = 0; j < n; j++) {
-                if (used[j]) continue;
-                if (u == -1 || mincost[j] < mincost[u]) u = j;
+        while (!que.empty()) {
+            auto [p, i] = que.top();
+            que.pop();
+            if (used[i]) continue;
+            used[i] = true, ret += p;
+            for (auto &e : es[i]) {
+                if (!used[e.to] && e.cost < mincost[e.to]) que.emplace(mincost[e.to] = e.cost, e.to);
             }
-            if (mincost[u] == INF_T) continue;
-            used[u] = true;
-            ret += mincost[u];
-            for (int j = 0; j < n; j++) mincost[j] = min(mincost[j], es[u][j]);
         }
         for (int i = 0; i < n; i++) {
             if (!used[i]) return INF_T;

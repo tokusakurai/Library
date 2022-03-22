@@ -15,7 +15,7 @@
 using namespace std;
 
 template <typename T, bool directed = false>
-struct Table {
+struct Warshall_Floyd {
     vector<vector<T>> es;
     const T INF_T = numeric_limits<T>::max() / 2;
     const int n;
@@ -24,8 +24,8 @@ struct Table {
 
     inline vector<T> &operator[](int k) { return es[k]; }
 
-    Table(int n) : es(n), n(n) {
-        for (int i = 0; i < n; i++) es[i].assign(n, INF_T);
+    Warshall_Floyd(int n) : es(n, vector<T>(n)), n(n) {
+        for (int i = 0; i < n; i++) fill(begin(es[i]), end(es[i]), INF_T);
         for (int i = 0; i < n; i++) es[i][i] = 0;
     }
 
@@ -34,7 +34,7 @@ struct Table {
         if (!directed) es[to][from] = min(es[to][from], cost);
     }
 
-    void warshall_floyd() {
+    vector<vector<T>> shortest_path() {
         for (int k = 0; k < n; k++) {
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
@@ -43,5 +43,6 @@ struct Table {
                 }
             }
         }
+        return es;
     }
 };

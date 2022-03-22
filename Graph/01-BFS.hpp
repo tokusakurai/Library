@@ -14,32 +14,31 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template <typename T, bool directed = false>
-struct Weighted_Graph {
+template <bool directed = false>
+struct BFS_01 {
     struct edge {
         int to;
-        T cost;
+        int cost;
         int id;
-        edge(int to, T cost, int id) : to(to), cost(cost), id(id) {}
+        edge(int to, int cost, int id) : to(to), cost(cost), id(id) {}
     };
 
     vector<vector<edge>> es;
-    const T INF_T = numeric_limits<T>::max() / 2;
+    vector<int> d;
+    vector<int> pre_v, pre_e;
+    const int INF_T = (1 << 30) - 1;
     const int n;
     int m;
 
-    vector<T> d;
-    vector<int> pre_v, pre_e;
+    BFS_01(int n) : es(n), d(n), pre_v(n), pre_e(n), n(n), m(0) {}
 
-    Weighted_Graph(int n) : es(n), n(n), m(0), d(n), pre_v(n), pre_e(n) {}
-
-    void add_edge(int from, int to, T cost) {
+    void add_edge(int from, int to, int cost) {
         es[from].emplace_back(to, cost, m);
         if (!directed) es[to].emplace_back(from, cost, m);
         m++;
     }
 
-    T bfs(int s, int t = 0) {
+    int shortest_path(int s, int t = 0) {
         fill(begin(d), end(d), INF_T);
         deque<int> que;
         d[s] = 0;
@@ -62,8 +61,8 @@ struct Weighted_Graph {
         return d[t];
     }
 
-    vector<int> shortest_path(int s, int t, bool use_id = false) {
-        if (bfs(s, t) == INF_T) return {};
+    vector<int> restore_path(int s, int t, bool use_id = false) {
+        if (d[t] == INF_T) return {};
         vector<int> ret;
         for (int now = t; now != s; now = pre_v[now]) ret.push_back(use_id ? pre_e[now] : now);
         if (!use_id) ret.push_back(s);

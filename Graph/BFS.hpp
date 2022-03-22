@@ -15,20 +15,20 @@
 using namespace std;
 
 template <bool directed = false>
-struct Graph {
+struct BFS {
     struct edge {
         int to, id;
         edge(int to, int id) : to(to), id(id) {}
     };
 
     vector<vector<edge>> es;
+    vector<int> d;
+    vector<int> pre_v, pre_e;
+    const int INF_T = (1 << 30) - 1;
     const int n;
     int m;
 
-    vector<int> d;
-    vector<int> pre_v, pre_e;
-
-    Graph(int n) : es(n), n(n), m(0), d(n), pre_v(n), pre_e(n) {}
+    BFS(int n) : es(n), d(n), pre_v(n), pre_e(n), n(n), m(0) {}
 
     void add_edge(int from, int to) {
         es[from].emplace_back(to, m);
@@ -36,8 +36,8 @@ struct Graph {
         m++;
     }
 
-    int bfs(int s, int t = 0) {
-        fill(begin(d), end(d), -1);
+    int shortest_path(int s, int t = 0) {
+        fill(begin(d), end(d), INF_T);
         queue<int> que;
         d[s] = 0;
         que.emplace(s);
@@ -45,7 +45,7 @@ struct Graph {
             int i = que.front();
             que.pop();
             for (auto &e : es[i]) {
-                if (d[e.to] == -1) {
+                if (d[i] + 1 < d[e.to]) {
                     d[e.to] = d[i] + 1;
                     pre_v[e.to] = i, pre_e[e.to] = e.id;
                     que.push(e.to);
@@ -55,8 +55,8 @@ struct Graph {
         return d[t];
     }
 
-    vector<int> shortest_path(int s, int t, bool use_id = false) {
-        if (bfs(s, t) == -1) return {};
+    vector<int> restore_path(int s, int t, bool use_id = false) {
+        if (d[t] == INF_T) return {};
         vector<int> ret;
         for (int now = t; now != s; now = pre_v[now]) ret.push_back(use_id ? pre_e[now] : now);
         if (!use_id) ret.push_back(s);

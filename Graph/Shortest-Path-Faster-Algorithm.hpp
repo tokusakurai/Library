@@ -1,5 +1,5 @@
 
-// Shortest-Path-Fast-Algorithm（負辺があっても動作する単一始点最短路）
+// Shortest-Path-Faster-Algorithm（負辺があっても動作する単一始点最短路）
 // 計算量 O(nm)
 
 // 概要
@@ -15,7 +15,7 @@
 using namespace std;
 
 template <typename T, bool directed = false>
-struct Weighted_Graph {
+struct Shortest_Path_Faster_Algorithm {
     struct edge {
         int to;
         T cost;
@@ -24,14 +24,13 @@ struct Weighted_Graph {
     };
 
     vector<vector<edge>> es;
+    vector<T> d;
+    vector<int> pre_v, pre_e;
     const T INF_T = numeric_limits<T>::max() / 2;
     const int n;
     int m;
 
-    vector<T> d;
-    vector<int> pre_v, pre_e;
-    
-    Weighted_Graph(int n) : es(n), d(n), n(n), m(0), pre_v(n), pre_e(n) {}
+    Shortest_Path_Faster_Algorithm(int n) : es(n), d(n), pre_v(n), pre_e(n), n(n), m(0) {}
 
     void add_edge(int from, int to, T cost) {
         es[from].emplace_back(to, cost, m);
@@ -39,7 +38,7 @@ struct Weighted_Graph {
         m++;
     }
 
-    T shortest_path_faster_algorithm(int s, int t = 0) {
+    T shortest_path(int s, int t = 0) { // s から到達可能な負閉路があれば -INF
         fill(begin(d), end(d), INF_T);
         queue<int> que;
         vector<bool> inque(n, false);
@@ -57,7 +56,7 @@ struct Weighted_Graph {
                     d[e.to] = d[i] + e.cost;
                     pre_v[e.to] = i, pre_e[e.to] = e.id;
                     if (!inque[e.to]) {
-                        if (++cnt[e.to] >= n) return -INF_T; // s から到達できる負閉路あり
+                        if (++cnt[e.to] >= n) return -INF_T;
                         que.emplace(e.to);
                         inque[e.to] = true;
                     }
@@ -67,8 +66,7 @@ struct Weighted_Graph {
         return d[t];
     }
 
-    vector<int> shortest_path(int s, int t, bool use_id = false) {
-        shortest_path_faster_algorithm(s);
+    vector<int> restore_path(int s, int t, bool use_id = false) {
         if (abs(d[t]) == INF_T) return {};
         vector<int> ret;
         for (int now = t; now != s; now = pre_v[now]) ret.push_back(use_id ? pre_e[now] : now);

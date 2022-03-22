@@ -14,7 +14,7 @@
 using namespace std;
 
 template <typename T, bool directed = false>
-struct Weighted_Graph {
+struct Bellman_Ford {
     struct edge {
         int to;
         T cost;
@@ -23,14 +23,13 @@ struct Weighted_Graph {
     };
 
     vector<vector<edge>> es;
+    vector<T> d;
+    vector<int> pre_v, pre_e;
     const T INF_T = numeric_limits<T>::max() / 2;
     const int n;
     int m;
 
-    vector<T> d;
-    vector<int> pre_v, pre_e;
-
-    Weighted_Graph(int n) : es(n), n(n), m(0), d(n), pre_v(n), pre_e(n) {}
+    Bellman_Ford(int n) : es(n), d(n), pre_v(n), pre_e(n), n(n), m(0) {}
 
     void add_edge(int from, int to, T cost) {
         es[from].emplace_back(to, cost, m);
@@ -38,26 +37,22 @@ struct Weighted_Graph {
         m++;
     }
 
-    bool bellman_ford(int s) { // s　から到達可能な負閉路を検出
+    T shortest_path(int s, int t = 0) { // 到達不可能なら INF、コストをいくらでも小さくできるなら -INF
         fill(begin(d), end(d), INF_T);
         d[s] = 0;
-        bool ret = false;
         for (int i = 0; i < 2 * n; i++) {
             for (int j = 0; j < n; j++) {
+                if (d[j] == INF_T) continue;
                 for (auto &e : es[j]) {
-                    if (d[j] == INF_T) continue;
                     if (d[j] + e.cost < d[e.to]) {
                         d[e.to] = d[j] + e.cost;
                         pre_v[e.to] = j, pre_e[e.to] = e.id;
-                        if (i >= n - 1) {
-                            d[e.to] = -INF_T;
-                            ret = true;
-                        }
+                        if (i >= n - 1) d[e.to] = -INF_T;
                     }
                 }
             }
         }
-        return ret;
+        return d[t];
     }
 
     bool negative_loop() { // 全ての負閉路を検出
@@ -74,8 +69,7 @@ struct Weighted_Graph {
         }
     }
 
-    vector<int> shortest_path(int s, int t, bool use_id = false) {
-        bellman_ford(s);
+    vector<int> restore_path(int s, int t, bool use_id = false) {
         if (abs(d[t]) == INF_T) return {};
         vector<int> ret;
         for (int now = t; now != s; now = pre_v[now]) ret.push_back(use_id ? pre_e[now] : now);
