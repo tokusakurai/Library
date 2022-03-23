@@ -20,9 +20,13 @@
 
 根付き木の 2 点の共通の祖先で最も根から深いものを求めるアルゴリズム。
 
-- [最近共通祖先（重みなし木）](Lowest_Common_Ancestor.hpp)（ダブリングを用いる）
+- [（ダブリング）最近共通祖先（重みなし木）](Lowest_Common_Ancestor-1.hpp)
 
-- [最近共通祖先（重み付き木）](Lowest_Common_Ancestor_Weighted.hpp)
+- [（ダブリング）最近共通祖先（重み付き木）](Lowest_Common_Ancestor_Weighted-1.hpp)
+
+- [（HLD ベース）最近共通祖先（重みなし木）](Lowest_Common_Ancestor-2.hpp)
+
+- [（HLD ベース）最近共通祖先（重み付き木）](Lowest_Common_Ancestor_Weighted-2.hpp)
 
 ## 全方位木 DP
 
