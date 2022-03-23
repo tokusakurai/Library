@@ -70,6 +70,8 @@
 
 - [抽象化行列](Abstract_Matrix.hpp)（半環に対して行列積の演算を行うことができる）
 
+- [任意 mod 行列式](Arbitrary_Mod_Determinant.hpp)（素数とは限らない自然数 m に対する Z/mZ での行列式）
+
 - [疎行列の行列式](Sparse_Matrix_Determinant.hpp)（black box in linear algebra の適用例）
 
 ## 線形漸化式
