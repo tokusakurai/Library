@@ -3,7 +3,7 @@
 // 計算量 O(n^2(n+log(m)))
 
 // 概要
-// 掃き出し法を互除法を用いながら行う。各列について O(log(m)) 回行の加減を行う必要がある。
+// 掃き出し法を互除法を用いながら行う。各列について O(log(m)) 回行ベクトルの加減を行う必要がある。
 
 // verified with
 // https://judge.yosupo.jp/problem/matrix_det_arbitrary_mod
