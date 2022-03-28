@@ -22,16 +22,14 @@ struct Lowest_Common_Ancestor {
     };
 
     vector<vector<edge>> es;
-    const T INF_T = numeric_limits<T>::max() / 2;
-    const int n;
-    int m;
-
     vector<vector<int>> par; // par[i][j] := 頂点 j の 2^i 個前の祖先
     vector<int> depth;
     vector<T> d;
-    int height;
+    const T INF_T = numeric_limits<T>::max() / 2;
+    const int n;
+    int m, height;
 
-    Lowest_Common_Ancestor(int n) : es(n), n(n), m(0), depth(n), d(n) {
+    Lowest_Common_Ancestor(int n) : es(n), depth(n), d(n), n(n), m(0) {
         height = 1;
         while ((1 << height) < n) height++;
         par.assign(height, vector<int>(n));
@@ -68,12 +66,17 @@ struct Lowest_Common_Ancestor {
         }
     }
 
+    int ancestor(int u, int k) { // u の k 個前の祖先
+        for (int i = 0; i < height; i++) {
+            if ((k >> i) & 1) u = par[i][u];
+            if (u == -1) return -1;
+        }
+        return u;
+    }
+
     int lca(int u, int v) {
         if (depth[u] < depth[v]) swap(u, v);
-        int D = depth[u] - depth[v];
-        for (int i = 0; i < height; i++) {
-            if ((D >> i) & 1) u = par[i][u];
-        }
+        u = ancestor(u, depth[u] - depth[v]);
         if (u == v) return u;
         for (int i = height - 1; i >= 0; i--) {
             if (par[i][u] != par[i][v]) u = par[i][u], v = par[i][v];
