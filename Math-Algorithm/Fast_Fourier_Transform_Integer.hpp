@@ -51,5 +51,3 @@ struct Fast_Fourier_Transform_Integer {
         return c;
     }
 };
-
-using FFT = Fast_Fourier_Transform_Integer;
