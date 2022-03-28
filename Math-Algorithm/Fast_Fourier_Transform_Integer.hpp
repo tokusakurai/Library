@@ -6,6 +6,7 @@
 // 畳み込んだ結果が 64 ビット符号付き整数に収まるならば、10^9 程度の 3 種類の NTT-mod（10^9 程度）での畳み込みの結果から一意に復元することができる。
 
 // verified with
+// https://atcoder.jp/contests/atc001/tasks/fft_c
 // https://atcoder.jp/contests/utpc2021/tasks/utpc2021_c
 
 #pragma once
