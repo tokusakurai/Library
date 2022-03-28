@@ -110,6 +110,8 @@ NTT 素数を、自身から 1 引いたものが（配列の長さより）十�
 
 - [任意 mod 数論変換 (NTT)](Arbitrary_Mod_Number_Theoretic_Transform.hpp)（任意 mod における畳込み）
 
+- [高速フーリエ変換（64 ビット符号付き整数）](Fast_Fourier_Transform_Integer.hpp)（結果が 64 ビット符号付き整数に収まる場合の畳み込み）
+
 ### 多変数畳み込み
 
 FFT (NTT) を用いることで、多変数多項式の積を次数が大きくなるところは切り捨てで求めることができる。

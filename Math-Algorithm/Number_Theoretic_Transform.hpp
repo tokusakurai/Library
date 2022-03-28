@@ -77,6 +77,7 @@ struct Number_Theoretic_Transform {
     }
 
     static vector<T> convolve(vector<T> a, vector<T> b) {
+        if (a.empty() || b.empty()) return {};
         int k = (int)a.size() + (int)b.size() - 1, n = 1;
         while (n < k) n <<= 1;
         a.resize(n), b.resize(n);

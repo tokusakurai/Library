@@ -70,7 +70,7 @@ T floor_sum(const T &n, const T &m, T a, T b) { // Σ[0<=i<n] floor((ai+b)/m)
 }
 
 template <typename T>
-pair<T, T> Chinese_reminder_theorem(const T &a1, const T &m1, const T &a2, const T &m2) {
+pair<T, T> Chinese_remainder_theorem(const T &a1, const T &m1, const T &a2, const T &m2) {
     T x, y, g = extgcd(m1, m2, x, y);
     if ((a2 - a1) % g != 0) return make_pair(0, -1);
     T m = m1 * (m2 / g);
