@@ -30,7 +30,8 @@ struct Sparse_Table {
     // 例えば min や gcd はこれらを満たすが、+ や * は満たさない
 
     Sparse_Table(const vector<T> &table, const F &f, const T &e) : n((int)table.size()), f(f), e(e) {
-        height = 32 - __builtin_popcount(n);
+        height = 0;
+        while (n >> height) height++;
         st.assign(height, vector<T>(n));
         for (int i = 0; i < n; i++) st[0][i] = table[i];
         for (int j = 0; j < height - 1; j++) {
