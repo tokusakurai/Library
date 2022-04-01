@@ -74,6 +74,8 @@
 
 - [疎行列の行列式](Sparse_Matrix_Determinant.hpp)（black box in linear algebra の適用例）
 
+- [固有多項式](Characteristic_Polynomial.hpp)
+
 ## 線形漸化式
 
 初期値と線形漸化式で与えられる数列の任意の項を求めるアルゴリズム。
