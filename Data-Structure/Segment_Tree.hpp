@@ -55,7 +55,7 @@ struct Segment_Tree {
             seg[i + n] = f(seg[i + n], x);
         }
         i += n;
-        while (i >>= 1) { seg[i] = f(seg[2 * i], seg[2 * i + 1]); }
+        while (i >>= 1) seg[i] = f(seg[2 * i], seg[2 * i + 1]);
     }
 
     Monoid query(int l, int r) const {
