@@ -26,11 +26,11 @@ struct Kruscal {
     };
 
     vector<edge> es;
-    const T INF_T = numeric_limits<T>::max / 2;
+    const T zero_T, INF_T;
     const int n;
     int m;
 
-    Kruscal(int n) : n(n), m(0) {}
+    Kruscal(int n, T zero_T = 0, T INF_T = numeric_limits<T>::max / 2) : zero_T(zero_T), INF_T(INF_T), n(n), m(0) {}
 
     void add_edge(int from, int to, T cost) {
         es.emplace_back(from, to, cost, m);
@@ -41,7 +41,7 @@ struct Kruscal {
     T min_spanning_tree() {
         sort(begin(es), end(es), [](const edge &e1, const edge &e2) { return e1.cost < e2.cost; });
         Union_Find_Tree uf(n);
-        T ret = 0;
+        T ret = zero_T;
         for (auto &e : es) {
             if (uf.unite(e.from, e.to)) ret += e.cost;
         }

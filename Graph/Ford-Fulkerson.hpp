@@ -24,38 +24,39 @@ struct Ford_Fulkerson {
 
     vector<vector<edge>> es;
     vector<bool> used;
-    const F INF_F = numeric_limits<F>::max() / 2;
+    const F zero_F = 0, INF_F;
     const int n;
 
-    Ford_Fulkerson(int n) : es(n), used(n), n(n) {}
+    Ford_Fulkerson(int n, F zero_F = 0, F INF_F = numeric_limits<F>::max() / 2) : es(n), used(n), zero_F(zero_F), INF_F(INF_F), n(n) {}
 
     void add_edge(int from, int to, F cap, bool directed = true) {
         es[from].emplace_back(to, cap, (int)es[to].size());
-        es[to].emplace_back(from, directed ? 0 : cap, (int)es[from].size() - 1);
+        es[to].emplace_back(from, directed ? zero_F : cap, (int)es[from].size() - 1);
     }
 
     F _dfs(int now, int t, F flow) {
         if (now == t) return flow;
         used[now] = true;
         for (auto &e : es[now]) {
-            if (!used[e.to] && e.cap > 0) {
+            if (!used[e.to] && e.cap > zero_F) {
                 F f = _dfs(e.to, t, min(flow, e.cap));
-                if (f > 0) {
+                if (f > zero_F) {
                     e.cap -= f, es[e.to][e.rev].cap += f;
                     return f;
                 }
             }
         }
-        return 0;
+        return zero_F;
     }
 
     F max_flow(int s, int t) { // 操作後の used 配列は最小カットの 1 つを表す(true なら s 側、false ならt側)
-        F flow = 0;
+        F flow = zero_F;
         for (;;) {
             fill(begin(used), end(used), false);
             F f = _dfs(s, t, INF_F);
-            if (f == 0) return flow;
+            if (f == zero_F) return flow;
             flow += f;
         }
+        return flow;
     }
 };

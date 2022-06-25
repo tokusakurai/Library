@@ -26,27 +26,28 @@ struct Primal_Dual {
     vector<vector<edge>> es;
     vector<T> d;
     vector<int> pre_v, pre_e;
-    const F INF_F = numeric_limits<F>::max() / 2;
-    const T INF_T = numeric_limits<T>::max() / 2;
+    const F zero_F, INF_F;
+    const T zero_T, INF_T;
     const int n;
 
-    Primal_Dual(int n) : es(n), d(n), pre_v(n), pre_e(n), n(n) {}
+    Primal_Dual(int n, F zero_F = 0, F INF_F = numeric_limits<F>::max() / 2, T zero_T = 0, T INF_T = numeric_limits<T>::max() / 2)
+        : es(n), d(n), pre_v(n), pre_e(n), zero_F(zero_F), INF_F(INF_F), zero_T(zero_T), INF_T(INF_T), n(n) {}
 
     void add_edge(int from, int to, F cap, T cost) {
         es[from].emplace_back(to, cap, cost, (int)es[to].size());
-        es[to].emplace_back(from, 0, -cost, (int)es[from].size() - 1);
+        es[to].emplace_back(from, zero_F, -cost, (int)es[from].size() - 1);
     }
 
     void bellman_ford(int s) {
         fill(begin(d), end(d), INF_T);
-        d[s] = 0;
+        d[s] = zero_T;
         while (true) {
             bool update = false;
             for (int i = 0; i < n; i++) {
                 if (d[i] == INF_T) continue;
                 for (int j = 0; j < (int)es[i].size(); j++) {
                     edge &e = es[i][j];
-                    if (e.cap > 0 && d[i] + e.cost < d[e.to]) {
+                    if (e.cap > zero_F && d[i] + e.cost < d[e.to]) {
                         d[e.to] = d[i] + e.cost;
                         pre_v[e.to] = i, pre_e[e.to] = j;
                         update = true;
@@ -58,12 +59,12 @@ struct Primal_Dual {
     }
 
     T min_cost_flow(int s, int t, F flow) {
-        T ret = 0;
-        while (flow > 0) {
+        T ret = zero_T;
+        while (flow > zero_F) {
             bellman_ford(s);
-            if (d[t] == INF_T) return -1;
+            if (d[t] == INF_T) return INF_T;
             F f = flow;
-            for (int now = t; now != s; now = pre_v[now]) { f = min(f, es[pre_v[now]][pre_e[now]].cap); }
+            for (int now = t; now != s; now = pre_v[now]) f = min(f, es[pre_v[now]][pre_e[now]].cap);
             ret += f * d[t], flow -= f;
             for (int now = t; now != s; now = pre_v[now]) {
                 edge &e = es[pre_v[now]][pre_e[now]];

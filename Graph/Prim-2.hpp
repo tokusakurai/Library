@@ -24,11 +24,11 @@ struct Prim {
     };
 
     vector<vector<edge>> es;
-    const T INF_T = numeric_limits<T>::max() / 2;
+    const T zero_T, INF_T;
     const int n;
     int m;
 
-    Prim(int n) : es(n), n(n), m(0) {}
+    Prim(int n, T zero_T = 0, T INF_T = numeric_limits<T>::max() / 2) : es(n), zero_T(zero_T), INF_T(INF_T), n(n), m(0) {}
 
     void add_edge(int from, int to, T cost) {
         es[from].emplace_back(to, cost, m);
@@ -39,8 +39,8 @@ struct Prim {
     T min_spanning_tree() {
         vector<T> mincost(n, INF_T);
         vector<bool> used(n, false);
-        mincost[0] = 0;
-        T ret = 0;
+        mincost[0] = zero_T;
+        T ret = zero_T;
         for (int i = 0; i < n; i++) {
             int u = -1;
             for (int j = 0; j < n; j++) {

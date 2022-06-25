@@ -27,11 +27,11 @@ struct Dijkstra {
     vector<vector<edge>> es;
     vector<T> d;
     vector<int> pre_v, pre_e;
-    const T INF_T = numeric_limits<T>::max() / 2;
+    const T zero_T, INF_T;
     const int n;
     int m;
 
-    Dijkstra(int n) : es(n), d(n), pre_v(n), pre_e(n), n(n), m(0) {}
+    Dijkstra(int n, T zero_T = 0, T INF_T = numeric_limits<T>::max() / 2) : es(n), d(n), pre_v(n), pre_e(n), zero_T(zero_T), INF_T(INF_T), n(n), m(0) {}
 
     void add_edge(int from, int to, T cost) {
         es[from].emplace_back(to, cost, m);
@@ -43,7 +43,7 @@ struct Dijkstra {
         fill(begin(d), end(d), INF_T);
         using P = pair<T, int>;
         priority_queue<P, vector<P>, greater<P>> que;
-        que.emplace(d[s] = 0, s);
+        que.emplace(d[s] = zero_T, s);
         while (!que.empty()) {
             auto [p, i] = que.top();
             que.pop();

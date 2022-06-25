@@ -36,11 +36,11 @@ struct Weighted_Graph {
     };
 
     vector<vector<edge>> es;
-    const T INF_T = numeric_limits<T>::max() / 2;
+    const T zero_T, INF_T;
     const int n;
     int m;
 
-    Weighted_Graph(int n) : es(n), n(n), m(0) {}
+    Weighted_Graph(int n, T zero_T = 0, T INF_T = numeric_limits<T>::max() / 2) : es(n), zero_T(zero_T), INF_T(INF_T), n(n), m(0) {}
 
     void add_edge(int from, int to, T cost) {
         es[from].emplace_back(to, cost, m);
@@ -52,14 +52,14 @@ struct Weighted_Graph {
 template <typename T, bool directed = false>
 struct Table {
     vector<vector<T>> es;
-    const T INF_T = numeric_limits<T>::max() / 2;
+    const T zero_T, INF_T;
     const int n;
 
     inline const vector<T> &operator[](int k) const { return es[k]; }
 
     inline vector<T> &operator[](int k) { return es[k]; }
 
-    Table(int n) : es(n), n(n) {
+    Table(int n, T zero_T = 0, T INF_T = numeric_limits<T>::max() / 2) : es(n), n(n) {
         for (int i = 0; i < n; i++) es[i].assign(n, INF_T);
         for (int i = 0; i < n; i++) es[i][i] = 0;
     }
@@ -80,11 +80,11 @@ struct Edges {
     };
 
     vector<edge> es;
-    const T INF_T = numeric_limits<T>::max() / 2;
+    const T zero_T, INF_T;
     const int n;
     int m;
 
-    Edges(int n) : n(n), m(0) {}
+    Edges(int n, T zero_T = 0, T INF_T = numeric_limits<T>::max() / 2) : zero_T(zero_T), INF_T(INF_T), n(n), m(0) {}
 
     void add_edge(int from, int to, T cost) {
         es.emplace_back(from, to, cost, m);

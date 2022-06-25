@@ -25,11 +25,11 @@ struct Boruvka {
     };
 
     vector<edge> es;
-    const T INF_T = numeric_limits<T>::max() / 2;
+    const T zero_T, INF_T;
     const int n;
     int m;
 
-    Boruvka(int n) : n(n), m(0) {}
+    Boruvka(int n, T zero_T = 0, T INF_T = numeric_limits<T>::max / 2) : zero_T(zero_T), INF_T(INF_T), n(n), m(0) {}
 
     void add_edge(int from, int to, T cost) {
         es.emplace_back(from, to, cost, m);
@@ -39,7 +39,7 @@ struct Boruvka {
 
     T min_spanning_tree() {
         Union_Find_Tree uf(n);
-        T ret = 0;
+        T ret = zero_T;
         while (uf.size(0) < n) {
             vector<pair<T, int>> mincost(n, make_pair(INF_T, -1));
             for (auto &e : es) {

@@ -17,16 +17,16 @@ using namespace std;
 template <typename T, bool directed = false>
 struct Warshall_Floyd {
     vector<vector<T>> es;
-    const T INF_T = numeric_limits<T>::max() / 2;
+    const T zero_T, INF_T;
     const int n;
 
     inline const vector<T> &operator[](int k) const { return es[k]; }
 
     inline vector<T> &operator[](int k) { return es[k]; }
 
-    Warshall_Floyd(int n) : es(n, vector<T>(n)), n(n) {
+    Warshall_Floyd(int n, T zero_T = 0, T INF_T = numeric_limits<T>::max() / 2) : es(n, vector<T>(n)), zero_T(zero_T), INF_T(INF_T), n(n) {
         for (int i = 0; i < n; i++) fill(begin(es[i]), end(es[i]), INF_T);
-        for (int i = 0; i < n; i++) es[i][i] = 0;
+        for (int i = 0; i < n; i++) es[i][i] = zero_T;
     }
 
     void add_edge(int from, int to, T cost = 1) {

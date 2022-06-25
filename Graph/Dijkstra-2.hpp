@@ -22,11 +22,11 @@ struct Dijkstra {
     vector<vector<edge>> es;
     vector<T> d;
     vector<int> pre_v, pre_e;
-    const T INF_T = numeric_limits<T>::max() / 2;
+    const T zero_T, INF_T;
     const int n;
     int m;
 
-    Dijkstra(int n) : es(n), d(n), pre_v(n), pre_e(n), n(n), m(0) {}
+    Dijkstra(int n, T zero_T = 0, T INF_T = numeric_limits<T>::max() / 2) : es(n), d(n), pre_v(n), pre_e(n), zero_T(zero_T), INF_T(INF_T), n(n), m(0) {}
 
     void add_edge(int from, int to, T cost) {
         es[from].emplace_back(to, cost, m);
@@ -37,7 +37,7 @@ struct Dijkstra {
     T shortest_path(int s, int t = 0) {
         fill(begin(d), end(d), INF_T);
         vector<bool> used(n, false);
-        d[s] = 0;
+        d[s] = zero_T;
         for (int i = 0; i < n; i++) {
             int u = -1;
             for (int j = 0; j < n; j++) {

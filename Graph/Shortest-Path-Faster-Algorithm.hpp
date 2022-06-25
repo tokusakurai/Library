@@ -26,11 +26,11 @@ struct Shortest_Path_Faster_Algorithm {
     vector<vector<edge>> es;
     vector<T> d;
     vector<int> pre_v, pre_e;
-    const T INF_T = numeric_limits<T>::max() / 2;
+    const T zero_T, INF_T;
     const int n;
     int m;
 
-    Shortest_Path_Faster_Algorithm(int n) : es(n), d(n), pre_v(n), pre_e(n), n(n), m(0) {}
+    Shortest_Path_Faster_Algorithm(int n, T zero_T = 0, T INF_T = numeric_limits<T>::max() / 2) : es(n), d(n), pre_v(n), pre_e(n), zero_T(zero_T), INF_T(INF_T), n(n), m(0) {}
 
     void add_edge(int from, int to, T cost) {
         es[from].emplace_back(to, cost, m);
@@ -43,7 +43,7 @@ struct Shortest_Path_Faster_Algorithm {
         queue<int> que;
         vector<bool> inque(n, false);
         vector<int> cnt(n, 0);
-        d[s] = 0;
+        d[s] = zero_T;
         que.emplace(s);
         inque[s] = true;
         cnt[s]++;

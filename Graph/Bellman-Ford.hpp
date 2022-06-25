@@ -25,11 +25,11 @@ struct Bellman_Ford {
     vector<vector<edge>> es;
     vector<T> d;
     vector<int> pre_v, pre_e;
-    const T INF_T = numeric_limits<T>::max() / 2;
+    const T zero_T, INF_T;
     const int n;
     int m;
 
-    Bellman_Ford(int n) : es(n), d(n), pre_v(n), pre_e(n), n(n), m(0) {}
+    Bellman_Ford(int n, T zero_T = 0, T INF_T = numeric_limits<T>::max() / 2) : es(n), d(n), pre_v(n), pre_e(n), zero_T(zero_T), INF_T(INF_T), n(n), m(0) {}
 
     void add_edge(int from, int to, T cost) {
         es[from].emplace_back(to, cost, m);
@@ -39,7 +39,7 @@ struct Bellman_Ford {
 
     T shortest_path(int s, int t = 0) { // 到達不可能なら INF、コストをいくらでも小さくできるなら -INF
         fill(begin(d), end(d), INF_T);
-        d[s] = 0;
+        d[s] = zero_T;
         for (int i = 0; i < 2 * n; i++) {
             for (int j = 0; j < n; j++) {
                 if (d[j] == INF_T) continue;
@@ -56,7 +56,7 @@ struct Bellman_Ford {
     }
 
     bool negative_loop() { // 全ての負閉路を検出
-        fill(begin(d), end(d), 0);
+        fill(begin(d), end(d), zero_T);
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 for (auto &e : es[j]) {
