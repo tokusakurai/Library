@@ -19,7 +19,8 @@ using namespace std;
 
 #include "../Data-Structure/Segment_Tree.hpp"
 
-template <typename T, typename S> // S は座標の型
+// S は座標の型
+template <typename T, typename S>
 struct Segment_Tree_2D {
     using F = function<T(T, T)>;
     int n;
@@ -32,7 +33,8 @@ struct Segment_Tree_2D {
 
     Segment_Tree_2D(const F &f, const T &e1) : f(f), e1(e1) {}
 
-    void insert(const S &x, const S &y) { // 値を変更する箇所を先に全て挿入しておく
+    // 値を変更する箇所を先に全て挿入しておく
+    void insert(const S &x, const S &y) {
         xs.push_back(x);
         all_points.emplace_back(x, y);
     }

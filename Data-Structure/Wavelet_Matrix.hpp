@@ -1,6 +1,6 @@
 
 // ウェーブレット行列
-// 計算量 構築：O(n log(m))、rank・access・range_freq：O(log(m))、select：O(log(m)^2)（m は配列の要素の最大値）
+// 計算量 構築：O(n log(m))、rank・access・range_freq：O(log(m))、select：O(log(m)^2) (m は配列の要素の最大値)
 // 空間計算量 O(n)
 
 // 概要
@@ -50,12 +50,14 @@ struct Wavelet_Matrix {
         }
     }
 
-    int rank_01(int i, int r, int bit) const { // [0,r) に含まれる i ビット目が bit（0 か 1）であるものの個数
+    // [0,r) に含まれる i ビット目が bit (0 か 1) であるものの個数
+    int rank_01(int i, int r, int bit) const {
         int res = S[i][r >> 6] + __builtin_popcountll(B[i][r >> 6] & mask[r & 63]);
         return bit ? res : r - res;
     }
 
-    int rank(int l, int r, const T &x) const { // [l,r) に含まれる x の個数
+    // [l,r) に含まれる x の個数
+    int rank(int l, int r, const T &x) const {
         for (int i = h - 1; i >= 0; i--) {
             if ((x >> i) & 1) {
                 l = c[i] + rank_01(i, l, 1), r = c[i] + rank_01(i, r, 1);
@@ -66,7 +68,8 @@ struct Wavelet_Matrix {
         return r - l;
     }
 
-    T access(int k) const { // a[k]
+    // a[k]
+    T access(int k) const {
         assert(k >= 0 && k < n);
         T ret = 0;
         for (int i = h - 1; i >= 0; i--) {
@@ -82,7 +85,8 @@ struct Wavelet_Matrix {
 
     T operator[](int k) const { return access(k); }
 
-    int select_01(int i, int k, int bit) const { // k 番目 (0-indexed) の i ビット目が bit（0 か 1）であるものの位置
+    // k 番目 (0-indexed) の i ビット目が bit (0 か 1) であるものの位置
+    int select_01(int i, int k, int bit) const {
         int L = 0, R = m + 1;
         while (R - L > 1) {
             int M = (L + R) / 2, t = S[i][M];
@@ -100,7 +104,8 @@ struct Wavelet_Matrix {
         return ((L << 6) + l < n ? (L << 6) + l : -1);
     }
 
-    int select(int k, const T &x) const { // k 番目 (0-indexed) の x の位置
+    // k 番目 (0-indexed) の x の位置
+    int select(int k, const T &x) const {
         int l = 0, r = n;
         for (int i = h - 1; i >= 0; i--) {
             if ((x >> i) & 1) {
@@ -121,7 +126,8 @@ struct Wavelet_Matrix {
         return p;
     }
 
-    int range_freq(int l, int r, const T &upper) const { // [l,r) で upper 未満のものの個数
+    // [l,r) で upper 未満のものの個数
+    int range_freq(int l, int r, const T &upper) const {
         if (upper > mask[h]) return r - l;
         int ret = 0;
         for (int i = h - 1; i >= 0; i--) {
@@ -135,12 +141,14 @@ struct Wavelet_Matrix {
         return ret;
     }
 
-    int range_freq(int l, int r, const T &lower, const T &upper) const { // [l,r) で lower 以上 upper 未満のものの個数
+    // [l,r) で lower 以上 upper 未満のものの個数
+    int range_freq(int l, int r, const T &lower, const T &upper) const {
         if (lower >= upper) return 0;
         return range_freq(l, r, upper) - range_freq(l, r, lower);
     }
 
-    T quantile(int l, int r, int k) const { // [l,r) で小さい方から k 番目 (0-indexed) の値
+    // [l,r) で小さい方から k 番目 (0-indexed) の値
+    T quantile(int l, int r, int k) const {
         assert(k >= 0 && k < r - l);
         T ret = 0;
         for (int i = h - 1; i >= 0; i--) {

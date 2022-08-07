@@ -17,7 +17,8 @@ using namespace std;
 
 #include "../Data-Structure/Dual_Segment_Tree.hpp"
 
-template <typename T, typename S> // S は座標の型
+// S は座標の型
+template <typename T, typename S>
 struct Dual_Segment_Tree_2D {
     using H = function<T(T, T)>;
     int n;
@@ -30,7 +31,8 @@ struct Dual_Segment_Tree_2D {
 
     Dual_Segment_Tree_2D(const H &h, const T &e2) : h(h), e2(e2) {}
 
-    void insert(const S &x, const S &y) { // 値が欲しい箇所を先に全て挿入しておく
+    // 値が欲しい箇所を先に全て挿入しておく
+    void insert(const S &x, const S &y) {
         xs.push_back(x);
         all_points.emplace_back(x, y);
     }

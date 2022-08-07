@@ -46,14 +46,7 @@ struct Lazy_Segment_Tree {
         for (int i = n - 1; i > 0; i--) seg[i] = f(seg[2 * i], seg[2 * i + 1]);
     }
 
-    Lazy_Segment_Tree(int m, const Monoid &x, const F &f, const G &g, const H &h, const Monoid &e1, const Operator_Monoid &e2) : f(f), g(g), h(h), e1(e1), e2(e2) {
-        n = 1, height = 0;
-        while (n < m) n <<= 1, height++;
-        seg.assign(2 * n, e1), lazy.assign(2 * n, e2);
-        vector<Monoid> v(m, x);
-        copy(begin(v), end(v), seg.begin() + n);
-        for (int i = n - 1; i > 0; i--) seg[i] = f(seg[2 * i], seg[2 * i + 1]);
-    }
+    Lazy_Segment_Tree(int m, const Monoid &x, const F &f, const G &g, const H &h, const Monoid &e1, const Operator_Monoid &e2) : Lazy_Segment_Tree(vector<Monoid>(m, x), f, g, h, e1, e2) {}
 
     inline Monoid reflect(int i) const { return (lazy[i] == e2 ? seg[i] : g(seg[i], lazy[i])); }
 
@@ -118,8 +111,9 @@ struct Lazy_Segment_Tree {
         return i - n;
     }
 
+    // check((区間 [l,r] での演算結果), x) を満たす最小の r (なければ n 以上の値)
     template <typename C>
-    int find_first(int l, const C &check, const Monoid &x) { // check((区間 [l,r] での演算結果), x) を満たす最小の r
+    int find_first(int l, const C &check, const Monoid &x) {
         Monoid L = e1;
         int a = l + n, b = n + n;
         thrust(a);
@@ -134,8 +128,9 @@ struct Lazy_Segment_Tree {
         return n;
     }
 
+    // check((区間 [l,r) での演算結果), x) を満たす最大の l (なければ -1)
     template <typename C>
-    int find_last(int r, const C &check, const Monoid &x) { // check((区間 [l,r) での演算結果), x) を満たす最大の l
+    int find_last(int r, const C &check, const Monoid &x) {
         Monoid R = e1;
         int a = n, b = r + n;
         thrust(b - 1);

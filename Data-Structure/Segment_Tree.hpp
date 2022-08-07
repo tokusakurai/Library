@@ -39,14 +39,7 @@ struct Segment_Tree {
         for (int i = n - 1; i > 0; i--) seg[i] = f(seg[2 * i], seg[2 * i + 1]);
     }
 
-    Segment_Tree(int m, const Monoid &x, const F &f, const Monoid &e1) : f(f), e1(e1) {
-        n = 1;
-        while (n < m) n <<= 1;
-        seg.assign(2 * n, e1);
-        vector<Monoid> v(m, x);
-        copy(begin(v), end(v), begin(seg) + n);
-        for (int i = n - 1; i > 0; i--) seg[i] = f(seg[2 * i], seg[2 * i + 1]);
-    }
+    Segment_Tree(int m, const Monoid &x, const F &f, const Monoid &e1) : Segment_Tree(vector<Monoid>(m, x), f, e1) {}
 
     void change(int i, const Monoid &x, bool update = true) {
         if (update) {
@@ -59,6 +52,7 @@ struct Segment_Tree {
     }
 
     Monoid query(int l, int r) const {
+        l = max(l, 0), r = min(r, n);
         Monoid L = e1, R = e1;
         l += n, r += n;
         while (l < r) {
@@ -85,8 +79,9 @@ struct Segment_Tree {
         return i - n;
     }
 
+    // check((区間 [l,r] での演算結果), x) を満たす最小の r (存在しなければ n 以上の値)
     template <typename C>
-    int find_first(int l, const C &check, const Monoid &x) const { // check((区間 [l,r] での演算結果), x) を満たす最小の r
+    int find_first(int l, const C &check, const Monoid &x) const {
         Monoid L = e1;
         int a = l + n, b = n + n;
         while (a < b) {
@@ -100,8 +95,9 @@ struct Segment_Tree {
         return n;
     }
 
+    // check((区間 [l,r) での演算結果), x) を満たす最大の l (存在しなければ -1)
     template <typename C>
-    int find_last(int r, const C &check, const Monoid &x) const { // check((区間 [l,r) での演算結果), x) を満たす最大の l
+    int find_last(int r, const C &check, const Monoid &x) const {
         Monoid R = e1;
         int a = n, b = r + n;
         while (a < b) {

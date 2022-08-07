@@ -1,6 +1,6 @@
 
-// 部分永続 Union-Find Tree（任意時刻でのクエリを扱える）
-// 計算量 構築：O(n)、（任意時刻 t における）併合・結合判定・サイズ：O(log(n))
+// 部分永続 Union-Find Tree (任意時刻でのクエリを扱える)
+// 計算量 構築：O(n)、(任意時刻 t における) 併合・結合判定・サイズ：O(log(n))
 // 空間計算量 O(n)
 
 // 概要
@@ -16,7 +16,7 @@ using namespace std;
 
 struct Partitially_Persistent_Union_Find_Tree {
     vector<int> data;
-    vector<int> last;                   // 別の頂点にくっつけられた（自分が根でなくなった）時刻
+    vector<int> last;                   // 別の頂点にくっつけられた (自分が根でなくなった) 時刻
     vector<vector<pair<int, int>>> add; // 併合が起きたときの時刻と連結成分のサイズを記録
     const int n;
 

@@ -1,6 +1,6 @@
 
 // Undo 可能 Union-Find Tree
-// 計算量 構築：O(n)、併合・結合判定・サイズ：O(log(n))、Undo：O(1)
+// 計算量 構築：O(n)、併合・結合判定・サイズ：O(log(n))、undo：O(1)
 // 空間計算量 O(n)
 
 // 概要
@@ -16,7 +16,7 @@ using namespace std;
 
 struct Undo_Union_Find_Tree {
     vector<int> data;
-    stack<pair<int, int>> history; // data配列の変更を記録
+    stack<pair<int, int>> history; // data 配列の変更を記録
     const int n;
 
     Undo_Union_Find_Tree(int n) : data(n, -1), n(n) {}
@@ -41,7 +41,8 @@ struct Undo_Union_Find_Tree {
 
     bool same(int x, int y) const { return root(x) == root(y); }
 
-    void undo(int k) { // 直前k回分のUnion操作をなかったことにする
+    // 直前 k 回分の union 操作をなかったことにする
+    void undo(int k) {
         k <<= 1;
         while (k--) {
             data[history.top().first] = history.top().second;

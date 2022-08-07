@@ -1,6 +1,6 @@
 
-// 重み付き Union-Find Tree（等式差分制約を扱える）
-// 計算量 構築：O(n)、併合・結合判定・サイズ・ポテンシャル取得：（ならし）O(α(n))
+// 重み付き Union-Find Tree (等式差分制約を扱える)
+// 計算量 構築：O(n)、併合・結合判定・サイズ・ポテンシャル取得：(ならし) O(α(n))
 
 // 概要
 // 各頂点の (自分の重み) - (親の重み) を記録することによって、(自分の重み) - (根の重み) を計算できる。
@@ -35,7 +35,8 @@ struct Weighted_Union_Find_Tree {
         return ws[x];
     }
 
-    bool unite(int x, int y, T w) { // weight(y) - weight(x) = w
+    // weight(y) - weight(x) = w
+    bool unite(int x, int y, T w) {
         w += weight(x), w -= weight(y);
         x = root(x), y = root(y);
         if (x == y) return false;

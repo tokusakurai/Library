@@ -1,6 +1,6 @@
 
 // スプレー木
-// 計算量 挿入・削除・i 番目の値にアクセス・二分探索：（ならし）O(log(n))
+// 計算量 挿入・削除・i 番目の値にアクセス・二分探索：(ならし) O(log(n))
 
 // 概要
 // 平衡二分探索木で、要素にアクセスするときに splay 操作をしてアクセスした頂点を根に持ってくる。
@@ -31,7 +31,8 @@ struct Splay_Tree {
             return 0;
         }
         
-        void rec_delete() { // 再帰的に子の Node のメモリを解放していく
+        // 再帰的に子の Node のメモリを解放していく
+        void rec_delete() {
             deleter(lch);
             deleter(rch);
         }
@@ -90,7 +91,8 @@ struct Splay_Tree {
         root = t;
     }
 
-    Node *get(int i) { // i 番目 (0-indexed) の値
+    // i 番目 (0-indexed) の値
+    Node *get(int i) {
         if (i >= root->size) return NULL;
         Node *now = root;
         while (true) {
@@ -110,7 +112,8 @@ struct Splay_Tree {
 
     Node *make_node(const T &x) { return new Node(x); }
 
-    Node *lower_bound(T x) { // x 以上で最小のノード
+    // x 以上で最小のノード
+    Node *lower_bound(T x) {
         Node *now = root, *ret = NULL;
         while (now) {
             if (now->x < x) {
@@ -124,7 +127,8 @@ struct Splay_Tree {
         return ret;
     }
 
-    Node *upper_bound(T x) { // x 以上の最小のノード
+    // x より大きい最小のノード
+    Node *upper_bound(T x) {
         Node *now = root, *ret = NULL;
         while (now) {
             if (now->x <= x) {

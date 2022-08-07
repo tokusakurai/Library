@@ -18,7 +18,8 @@ using namespace std;
 
 #include "../Data-Structure/Binary_Indexed_Tree.hpp"
 
-template <typename T, typename S> // S は座標の型
+// S は座標の型
+template <typename T, typename S>
 struct Binary_Indexed_Tree_2D {
     int n;
     vector<S> xs;
@@ -28,7 +29,8 @@ struct Binary_Indexed_Tree_2D {
 
     Binary_Indexed_Tree_2D() {}
 
-    void insert(const S &x, const S &y) { // 値を変更する箇所を先に全て挿入しておく
+    // 値を変更する箇所を先に全て挿入しておく
+    void insert(const S &x, const S &y) {
         xs.push_back(x);
         all_points.emplace_back(x, y);
     }

@@ -1,6 +1,6 @@
 
-// Binary Trie（非負整数値の Trie 木）
-// 計算量 挿入・削除・検索・最大（最小）値・k 番目の最小値・x 未満の個数 : O(b)（b は要素の 2 進数表記に必要な桁数）
+// Binary Trie (非負整数値の Trie 木)
+// 計算量 挿入・削除・検索・最大 (最小) 値・k 番目の最小値・x 未満の個数 : O(b) (b は要素の 2 進数表記に必要な桁数)
 
 // 概要
 // 非負整数を 2 進数表記で上の桁から見ることで文字列のようにすることで Trie 木を構築する。
@@ -103,7 +103,8 @@ struct Binary_Trie {
         return ret;
     }
 
-    T kth_element(int k, const T &xor_val = 0) const { // k 番目 (0-indexed)
+    // k 番目 (0-indexed)
+    T kth_element(int k, const T &xor_val = 0) const {
         int now = 0;
         T ret = 0;
         for (int i = MAX_LOG - 1; i >= 0; i--) {
@@ -121,7 +122,8 @@ struct Binary_Trie {
         return ret;
     }
 
-    int count_less(const T &x, const T &xor_val = 0) const { // x 未満の個数
+    // x 未満の個数
+    int count_less(const T &x, const T &xor_val = 0) const {
         int now = 0;
         int ret = 0;
         for (int i = MAX_LOG - 1; i >= 0; i--) {

@@ -38,13 +38,7 @@ struct Segment_Tree_Beats {
         for (int i = n - 1; i > 0; i--) seg[i] = f(seg[2 * i], seg[2 * i + 1]);
     }
 
-    Segment_Tree_Beats(int m, const Monoid &x, const F &f, const G &g, const H &h, const Monoid &e1, const Operator &e2) : f(f), g(g), h(h), e1(e1), e2(e2) {
-        n = 1, height = 0;
-        while (n < m) n <<= 1, height++;
-        seg.assign(2 * n, e1), lazy.assign(2 * n, e2);
-        for (int i = 0; i < m; i++) seg[n + i] = x;
-        for (int i = n - 1; i > 0; i--) seg[i] = f(seg[2 * i], seg[2 * i + 1]);
-    }
+    Segment_Tree_Beats(int m, const Monoid &x, const F &f, const G &g, const H &h, const Monoid &e1, const Operator &e2) : Segment_Tree_Beats(vector<Monoid>(m, x), f, g, h, e1, e2) {}
 
     void update(int i) { seg[i] = f(seg[2 * i], seg[2 * i + 1]); }
 
