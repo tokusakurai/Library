@@ -12,8 +12,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// 分割数 P(n,k) := 整数 n をちょうど k 個の非負整数の和で表す方法 (順序は区別しない)
 template <typename T>
-vector<vector<T>> Partition_Number(int n, int k) { // 分割数 P(n,k) := 整数 n をちょうど k 個の非負整数の和で表す方法（順序は区別しない）
+vector<vector<T>> Partition_Number(int n, int k) {
     vector<vector<T>> dp(n + 1, vector<T>(k + 1, 0));
     dp[0][0] = 1;
     for (int i = 0; i <= n; i++) {

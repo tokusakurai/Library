@@ -1,6 +1,6 @@
 
-// Convex-Hull-Trick（追加する直線の傾きが、両方向について単調のときのみ）
-// 計算量 直線追加：O(1)、最小値（最大値）クエリ：O(log(n))、単調な最小値(最大値)クエリ：（ならし）O(1)
+// Convex-Hull-Trick (追加する直線の傾きが、両方向について単調のときのみ)
+// 計算量 直線追加：O(1)、最小値 (最大値) クエリ：O(log(n))、単調な最小値(最大値)クエリ：(ならし) O(1)
 
 // 概要
 // 直線を追加していく際、直線群の中で最も下になることがありえないようなものを除去していく。
@@ -30,14 +30,16 @@ struct Convex_Hull_Trick {
 
     bool empty() const { return ls.empty(); }
 
-    bool judge(const Line &l1, const Line &l2, const Line &l3) const { // (l1,l2,l3) の中で l2 を消してもいいか
+    // (l1,l2,l3) の中で l2 を消してもいいか
+    bool judge(const Line &l1, const Line &l2, const Line &l3) const {
         T a1 = l2.a - l1.a, b1 = l2.b - l1.b;
         T a2 = l3.a - l2.a, b2 = l3.b - l2.b;
         // return a2 * b1 <= a1 * b2;
         return __int128_t(a2) * b1 <= __int128_t(a1) * b2;
     }
 
-    void add_line_left(const Line &l) { // 最小値クエリなら傾き単調増加、最大値クエリなら傾き単調減少
+    // 最小値クエリなら傾き単調増加、最大値クエリなら傾き単調減少
+    void add_line_left(const Line &l) {
         assert(empty() || l.a >= ls.front().a);
         if (!empty() && l.a == ls.front().a) {
             if (l.b >= ls.front().b) return;
@@ -53,7 +55,8 @@ struct Convex_Hull_Trick {
 
     void add_line_left(const T &a, const T &b) { add_line_left(Line(is_min ? a : -a, is_min ? b : -b)); }
 
-    void add_line_right(const Line &l) { // 最小値クエリなら傾き単調減少、最大値クエリなら傾き単調増加
+    // 最小値クエリなら傾き単調減少、最大値クエリなら傾き単調増加
+    void add_line_right(const Line &l) {
         assert(empty() || ls.back().a >= l.a);
         if (!empty() && ls.back().a == l.a) {
             if (ls.back().b <= l.b) return;

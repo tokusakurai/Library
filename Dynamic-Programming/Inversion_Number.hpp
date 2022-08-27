@@ -32,8 +32,9 @@ long long inversion_number(const vector<T> &a) {
     return ret;
 }
 
+// a を b に変換するのに必要な最小バブルソート回数
 template <typename T>
-long long inversion_number(const vector<T> &a, const vector<T> &b) { // a を b に変換するのに必要な最小バブルソート回数
+long long inversion_number(const vector<T> &a, const vector<T> &b) {
     int n = a.size();
     assert(b.size() == n);
     vector<int> u(n), v(n);

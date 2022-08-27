@@ -21,11 +21,13 @@ struct Cumulative_Sum_1D {
 
     Cumulative_Sum_1D(int n) : v(n, 0), n(n) {}
 
-    void build() { // 累積和を構築
+    // 累積和を構築
+    void build() {
         for (int i = 1; i < n; i++) v[i] += v[i - 1];
     }
 
-    void add(int l, int r, T x) { // 区間 [l,r) に imos 法で加算
+    // 区間 [l,r) に imos 法で加算
+    void add(int l, int r, T x) {
         l = max(l, 0), r = min(r, n);
         if (r <= l) return;
         v[l] += x;
@@ -34,7 +36,8 @@ struct Cumulative_Sum_1D {
 
     T fold(int a) { return (a <= 0 ? 0 : v[min(n, a) - 1]); }
 
-    T sum(int l, int r) { // 区間 [l,r) の総和
+    // 区間 [l,r) の総和
+    T sum(int l, int r) {
         l = max(l, 0), r = min(r, n);
         if (r <= l) return 0;
         return fold(r) - fold(l);

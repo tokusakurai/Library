@@ -2,13 +2,13 @@
 
 ## 典型的な DP 問題
 
-- [各種ナップザック問題](Knapsack.hpp)（01 ナップザック問題、個数制限なしナップザック問題、個数制限付きナップザック問題）
+- [各種ナップザック問題](Knapsack.hpp) (01 ナップザック問題、個数制限なしナップザック問題、個数制限付きナップザック問題)
 
 - [最長共通部分列 (LCS)](Longest_Common_Subsequence.hpp)
 
 - [編集距離](Edit_Distance.hpp)
 
-- [最長増加部分列 (LIS)](Longest_Increasing_Subsequence.hpp)（DP 配列の再利用で計算量が落ちるインライン DP）
+- [最長増加部分列 (LIS)](Longest_Increasing_Subsequence.hpp) (DP 配列の再利用で計算量が落ちるインライン DP)
 
 - [転倒数](Inversion_Number.hpp)
 
@@ -34,17 +34,17 @@
 
 ## Convex-Hull-Trick
 
-直線の追加クエリと、追加された直線群におけるある点での値の最小値（または最大値）クエリを扱える。
+直線の追加クエリと、追加された直線群におけるある点での値の最小値 (または最大値) クエリを扱える。
 
-- [Convex-Hull-Trick](Convex_Hull_Trick.hpp)（追加する直線の傾きが単調である場合）
+- [Convex-Hull-Trick](Convex_Hull_Trick.hpp) (追加する直線の傾きが単調である場合)
 
 - [Li-Chao Tree](Li-Chao_Tree.hpp)
 
-- [Li-Chao Tree（オフライン）](Li-Chao_Tree_2.hpp)（最小値クエリの座標があらかじめわかっている場合）
+- [Li-Chao Tree (オフライン)](Li-Chao_Tree_2.hpp) (最小値クエリの座標があらかじめわかっている場合)
 
 ## Slope-Trick
 
-全ての点において傾きが（存在すれば）整数となるような凸関数を、傾きが変化する点の座標を管理することによって効率的に扱うことができる。
+全ての点において傾きが (存在すれば) 整数となるような凸関数を、傾きが変化する点の座標を管理することによって効率的に扱うことができる。
 
 - [Slope-Trick](Slope_Trick.hpp)
 
@@ -52,6 +52,6 @@
 
 配列が静的かつ区間クエリの先読みが出来る場合、処理するクエリの順番を工夫することで効率的にクエリを処理できる。
 
-- [Mo のアルゴリズム（雛形）](Mo_Template.hpp)
+- [Mo のアルゴリズム (雛形)](Mo_Template.hpp)
 
-- [Mo のアルゴリズム（例）](Mo_Example.hpp)（区間内の要素の種類数を扱える）
+- [Mo のアルゴリズム (例)](Mo_Example.hpp) (区間内の要素の種類数を扱える)

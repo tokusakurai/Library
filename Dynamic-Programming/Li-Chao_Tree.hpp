@@ -1,7 +1,7 @@
 
 // Li-Chao Tree
-// 計算量 構築：O(1)、直線追加：O(log(D))、線分追加：O(log^2(D))　最小値（最大値）クエリ：O(log(D)) （D はクエリの取りうる x 座標の幅）
-// 空間計算量 O(Q_1 log(D)+Q_2 log(D))（Q_1, Q_2 はそれぞれ直線追加、線分追加クエリの個数）
+// 計算量 構築：O(1)、直線追加：O(log(D))、線分追加：O(log^2(D))　最小値（最大値）クエリ：O(log(D)) (D はクエリの取りうる x 座標の幅)
+// 空間計算量 O(Q_1 log(D)+Q_2 log(D)) (Q_1, Q_2 はそれぞれ直線追加、線分追加クエリの個数)
 
 // 概要
 // Segment Tree の要領で、各区間に 1 つの直線を対応させる。
@@ -77,7 +77,8 @@ struct Li_Chao_Tree {
         return now;
     }
 
-    void add_line(const T &a, const T &b) { // 直線 y = ax+b を追加
+    // 直線 y = ax+b を追加
+    void add_line(const T &a, const T &b) {
         Line k(is_min ? a : -a, is_min ? b : -b);
         root = add_line(k, root, min_x, max_x);
     }
@@ -92,7 +93,8 @@ struct Li_Chao_Tree {
         return now;
     }
 
-    void add_segment(const T &l, const T &r, const T &a, const T &b) { // [l,r) に直線 y = ax+b を追加
+    // [l,r) に直線 y = ax+b を追加
+    void add_segment(const T &l, const T &r, const T &a, const T &b) {
         Line k(is_min ? a : -a, is_min ? b : -b);
         root = add_segment(l, r - 1, k, root, min_x, max_x);
     }

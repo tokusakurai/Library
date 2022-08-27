@@ -10,8 +10,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// 各 i について min{v[i], v[i+1],..., v[i+k-1]} を記録した配列を返す
 template <typename T>
-vector<T> slide_min(vector<T> v, int k) { // 各 i について min{v[i],v[i+1],...,v[i+k-1]} を記録した配列を返す
+vector<T> slide_min(vector<T> v, int k) {
     deque<int> que;
     vector<T> ret;
     for (int i = 0; i < (int)v.size(); i++) {

@@ -1,5 +1,5 @@
 
-// 最長増加部分列（LIS）
+// 最長増加部分列 (LIS)
 // 計算量 O(n log(n))
 
 // 概要
@@ -13,8 +13,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// strict：狭義単調増加か広義単調増加か
 template <typename T>
-int longest_increasing_subsequence(const vector<T> &a, bool strict) { // strict：狭義単調増加か広義単調増加か
+int longest_increasing_subsequence(const vector<T> &a, bool strict) {
     vector<T> dp;
     for (auto &e : a) {
         typename vector<T>::iterator it;

@@ -3,9 +3,9 @@
 // 計算量 O(n+m)
 
 // 概要
-// 数列 a[0],a[1],...,a[n-1] と数列 b[0],b[1],...,b[m-1] が（下に）凸であるとき、
-// 各 k に対して c[k] := min{a[i]+b[j]|i+j = k} を求める。
-// c[k] = a[i]+b[j], i+j = k となるような (i,j) が取れるとき、c[k+1] = min(a[i+1]+b[j],a[i]+b[j+1]) となる。
+// 数列 a[0],a[1],...,a[n-1] と数列 b[0],b[1],...,b[m-1] が (下に) 凸であるとき、
+// 各 k に対して c[k] := min{a[i] + b[j] | i + j = k} を求める。
+// c[k] = a[i] + b[j], i + j = k となるような (i,j) が取れるとき、c[k+1] = min{a[i+1] + b[j], a[i] + b[j+1]} となる。
 
 // verified with
 // https://atcoder.jp/contests/abc218/tasks/abc218_h
