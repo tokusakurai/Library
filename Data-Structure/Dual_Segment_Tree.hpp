@@ -9,6 +9,7 @@
 // 1 点取得：取得する点より上の部分の遅延評価を解消する。
 
 // verified with
+// https://judge.yosupo.jp/problem/range_affine_point_get
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_D&lang=ja
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_E&lang=ja
 
