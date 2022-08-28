@@ -7,7 +7,7 @@
 // 配列 dp[i] と配列 dp[i+1] で値が異なる箇所は高々 1 個であるため、配列を使い回すことで計算量が落ちる。
 
 // verified with
-// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_1_D&lang=ja
+// https://judge.yosupo.jp/problem/longest_increasing_subsequence
 
 #pragma once
 #include <bits/stdc++.h>
@@ -15,20 +15,27 @@ using namespace std;
 
 // strict：狭義単調増加か広義単調増加か
 template <typename T>
-int longest_increasing_subsequence(const vector<T> &a, bool strict) {
-    vector<T> dp;
-    for (auto &e : a) {
-        typename vector<T>::iterator it;
-        if (strict) {
-            it = lower_bound(begin(dp), end(dp), e);
+vector<int> longest_increasing_subsequence(const vector<T> &a, bool strict) {
+    int n = a.size();
+    vector<int> dp, pre(n, -1);
+    dp.reserve(n);
+    auto comp = [&](int x, int y) { return a[x] < a[y]; };
+    for (int i = 0; i < n; i++) {
+        int t = (strict ? lower_bound(begin(dp), end(dp), i, comp) : upper_bound(begin(dp), end(dp), i, comp)) - begin(dp);
+        if (t >= 1) pre[i] = dp[t - 1];
+        if (t == dp.size()) {
+            dp.push_back(i);
         } else {
-            it = upper_bound(begin(dp), end(dp), e);
-        }
-        if (it == end(dp)) {
-            dp.push_back(e);
-        } else {
-            *it = e;
+            dp[t] = i;
         }
     }
-    return dp.size();
+    vector<int> ret;
+    ret.reserve(n);
+    int i = dp.back();
+    while (i != -1) {
+        ret.push_back(i);
+        i = pre[i];
+    }
+    reverse(begin(ret), end(ret));
+    return ret;
 }
