@@ -1,5 +1,5 @@
 
-// 木の重心分解（雛形）
+// 木の重心分解 (雛形)
 // 計算量 O(n)
 
 // 概要
@@ -44,7 +44,8 @@ struct Centroid_Decomposition {
         return si[now];
     }
 
-    pair<int, int> search_centroid(int now, int sz, int pre = -1) { // (残りの最大部分木の頂点数、重心)
+    // (残りの最大部分木の頂点数、重心)
+    pair<int, int> search_centroid(int now, int sz, int pre = -1) {
         pair<int, int> ret = make_pair(INT_MAX, -1);
         int M = 0, S = 1;
         for (auto &e : es[now]) {
@@ -58,7 +59,8 @@ struct Centroid_Decomposition {
         return ret;
     }
 
-    int centroid(int s) { // 頂点 s を含む連結成分の重心を返す
+    // 頂点 s を含む連結成分の重心を返す
+    int centroid(int s) {
         calc_size(s);
         return search_centroid(s, si[s]).second;
     }

@@ -1,5 +1,5 @@
 
-// （ダブリング）最近共通祖先 (LCA)
+// (ダブリング) 最近共通祖先 (LCA)
 // 計算量 構築：O(n log(n))、2 頂点の LCA・距離：O(log(n))
 // 空間計算量 O(n log(n))
 
@@ -66,7 +66,8 @@ struct Lowest_Common_Ancestor {
         }
     }
 
-    int ancestor(int u, int k) { // u の k 個前の祖先
+    // u の k 個前の祖先
+    int ancestor(int u, int k) {
         for (int i = 0; i < height; i++) {
             if ((k >> i) & 1) u = par[i][u];
             if (u == -1) return -1;

@@ -1,13 +1,13 @@
 
 // Link-Cut Tree
-// 計算量 辺の追加・削除・1 点更新・パスクエリ：（ならし）O(log(n))
+// 計算量 辺の追加・削除・1 点更新・パスクエリ：(ならし) O(log(n))
 
 // 概要
 // 木を HL 分解のようにいくつかのパスにして管理する。
 // 各パスの成分をスプレー木で持ち、一番左側が根で左から順番に葉方向に進んでいる状態にする。
 // スプレー木の結合・分離操作によって、辺の追加・削除を扱うことができる。
 // グラフは常に森でなければならない。
-// クエリはモノイドを乗せることができる（可換でなくても良い）。
+// クエリはモノイドを乗せることができる (可換でなくても良い)。
 
 // verified with
 // https://judge.yosupo.jp/problem/dynamic_tree_vertex_add_path_sum
@@ -113,7 +113,8 @@ struct Link_Cut_Tree {
         }
     }
 
-    Node *expose(Node *t) { // t から根までの辺を全て Heavy-edge にする
+    // t から根までの辺を全て Heavy-edge にする
+    Node *expose(Node *t) {
         Node *pre = NULL;
         for (Node *now = t; now; now = now->par) {
             splay(now);
@@ -127,7 +128,8 @@ struct Link_Cut_Tree {
 
     Node expose(int t) { return expose(nodes[t]); };
 
-    void evert(Node *t) { // t を根にする(tを含むスプレー木の向きは反転する)
+    // t を根にする (t を含むスプレー木の向きは反転する)
+    void evert(Node *t) {
         expose(t);
         toggle(t);
         push(t);
@@ -135,7 +137,8 @@ struct Link_Cut_Tree {
 
     void evert(int c) { evert(nodes[c]); };
 
-    void link(Node *c, Node *p) { // c の親を p にするようにしてマージする
+    // c の親を p にするようにしてマージする
+    void link(Node *c, Node *p) {
         expose(c), expose(p);
         c->par = p, p->rch = c;
     }
@@ -145,7 +148,8 @@ struct Link_Cut_Tree {
         link(nodes[u], nodes[v]);
     };
 
-    void cut(Node *c) { // c を親から分離する
+    // c を親から分離する
+    void cut(Node *c) {
         expose(c);
         Node *p = c->lch;
         c->lch = NULL, p->par = NULL;

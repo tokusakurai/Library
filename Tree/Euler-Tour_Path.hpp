@@ -3,7 +3,7 @@
 // 計算量 O(n log(n))
 
 // 概要
-// 根付き木の頂点と辺を DFS で訪問した順（戻るときに使った辺や頂点もカウントする）に並べる。
+// 根付き木の頂点と辺を DFS で訪問した順 (戻るときに使った辺や頂点もカウントする) に並べる。
 // 逆元が存在すれば、辺 (u,v) と辺 (v,u) が互いに打ち消し合うようにすることでパスクエリを区間クエリとすることができる。
 // Segment Tree を用いて w = lca(u,v) を求めて、w-u パスと w-v パスに分けて扱う。
 
@@ -60,7 +60,8 @@ struct Euler_Tour_Path {
         _dfs(root, -1, cnt1, cnt2);
     }
 
-    int lca(int u, int v) const { // w = lca(u,v) とすると、u-v パスは [p[w],p[u]) と [p[w],p[v]) を合算したものになる。
+    // w = lca(u,v) とすると、u-v パスは [p[w],p[u]) と [p[w],p[v]) を合算したものになる。
+    int lca(int u, int v) const {
         if (p[u] > p[v]) swap(u, v);
         return seg.query(p[u], p[v] + 1).second;
     }

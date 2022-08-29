@@ -3,7 +3,7 @@
 // 計算量 O(n)
 
 // 概要
-// 根付き木の頂点を DFS で訪問した順（初めてその頂点に到達した場合のみ）に並べると、各頂点より下の部分木は区間に相当する。
+// 根付き木の頂点を DFS で訪問した順 (初めてその頂点に到達した場合のみ) に並べると、各頂点より下の部分木は区間に相当する。
 
 // verified with
 // https://judge.yosupo.jp/problem/vertex_add_subtree_sum
@@ -20,7 +20,7 @@ struct Euler_Tour_Subtree {
     };
 
     vector<vector<edge>> es;
-    vector<int> l, r; // 部分木 i は区間 [l[i],r[i]) に対応する。また、頂点 i は l[i] に対応する。
+    vector<int> l, r; // 部分木 i は区間 [l[i], r[i]) に対応する。また、頂点 i は l[i] に対応する。
     const int n;
     int m;
 

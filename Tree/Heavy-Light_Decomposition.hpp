@@ -25,7 +25,7 @@ struct Heavy_Light_Decomposition {
     vector<vector<edge>> es;
     vector<int> par, si, depth;
     vector<int> root;       // 属する連結成分の根
-    vector<int> id_v, id_e; // 各頂点、各辺が一列に並べたときに何番目に相当するか（辺の番号は 1,2,...,n-1 となることに注意）
+    vector<int> id_v, id_e; // 各頂点、各辺が一列に並べたときに何番目に相当するか (辺の番号は 1,2,...,n-1 となることに注意)
     const int n;
     int m;
 
@@ -77,7 +77,8 @@ struct Heavy_Light_Decomposition {
         _dfs2(root, true, s);
     }
 
-    vector<pair<int, int>> get_path(int u, int v, bool use_edge = false) { // パスに対応する区間たちを列挙
+    // パスに対応する区間たちを列挙
+    vector<pair<int, int>> get_path(int u, int v, bool use_edge = false) {
         vector<pair<int, int>> ret;
         while (root[u] != root[v]) {
             if (depth[root[u]] > depth[root[v]]) swap(u, v);
@@ -89,7 +90,8 @@ struct Heavy_Light_Decomposition {
         return ret;
     }
 
-    vector<pair<int, int>> get_path_noncommutative(int u, int v, bool use_edge = false) { // クエリが非可換の場合
+    // クエリが非可換の場合
+    vector<pair<int, int>> get_path_noncommutative(int u, int v, bool use_edge = false) {
         vector<pair<int, int>> l, r;
         while (root[u] != root[v]) {
             if (depth[root[u]] > depth[root[v]]) {

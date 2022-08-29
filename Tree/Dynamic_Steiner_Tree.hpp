@@ -1,11 +1,11 @@
 
-// 木上の最小シュタイナー木（頂点集合の削除・追加ができる）
+// 木上の最小シュタイナー木 (頂点集合の削除・追加ができる)
 // 計算量 前計算：O(n log(n))、追加・削除：O(log(n))
 // 空間計算量 O(n log(n))
 
 // 概要
 // x を頂点集合に追加するとき、DFS 順で x の直前に入っている頂点を l、直後に入っている頂点を r とする。
-// このとき、最小シュタイナー木のサイズは (dist(l,x)+dist(x,r)-dist(l,r))/2 だけ増える。
+// このとき、最小シュタイナー木のサイズは (dist(l,x) + dist(x,r) - dist(l,r)) / 2 だけ増える。
 // 削除するときは挿入するときの増加分だけ減らせばよい。
 // 2 頂点の距離を求めるのに LCA を用いる。
 
@@ -27,7 +27,8 @@ struct Graph {
     const int n;
     int m;
 
-    vector<vector<int>> par; // par[i][j] := 頂点 j の 2^i 個前の祖先
+    // par[i][j] := 頂点 j の 2^i 個前の祖先
+    vector<vector<int>> par;
     vector<int> depth;
     int height;
 
@@ -60,7 +61,8 @@ struct Graph {
         }
     }
 
-    void build(int root = 0) { // root を根として前準備する
+    // root を根として前準備する
+    void build(int root = 0) {
         prepare(root);
         for (int j = 0; j < height - 1; j++) {
             for (int i = 0; i < n; i++) {

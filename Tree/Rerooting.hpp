@@ -1,6 +1,6 @@
 
 // 全方位木 DP
-// 計算量 O(nα)（α は部分木マージと辺追加にかかる計算量）
+// 計算量 O(nα) (α は部分木マージと辺追加にかかる計算量)
 
 // 概要
 // 1回目の DFS で各部分木における情報を計算する。
@@ -22,7 +22,7 @@ struct Rerooting {
     struct edge {
         int to;
         key_t data;
-        sum_t dp, ndp; // to 側の部分木 dp（辺も含む）、from 側の部分木 dp（辺は含まない）
+        sum_t dp, ndp; // to 側の部分木 dp (辺も含む)、from 側の部分木 dp (辺は含まない)
         edge(int to, key_t data, sum_t dp, sum_t ndp) : to(to), data(data), dp(dp), ndp(ndp) {}
     };
 
