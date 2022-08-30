@@ -1,5 +1,5 @@
 
-// ローリングハッシュ、配列ハッシュ（mod：(2^61)-1、基数：mod の原始根からランダムに取る）
+// ローリングハッシュ、配列ハッシュ (mod：(2^61)-1、基数：mod の原始根からランダムに取る)
 // 計算量 構築：O(n)、ハッシュクエリ：O(1)
 
 // 概要
@@ -44,7 +44,8 @@ struct Rolling_Hash {
     ull base; // 基数
     vector<ull> hashed, pw;
 
-    void set_base() { // 基数は乱数を用いて生成する
+    // 基数は乱数を用いて生成する
+    void set_base() {
         while (true) {
             ull k = rng(mod);
             if (gcd(mod - 1, k) != 1) continue;
@@ -66,7 +67,8 @@ struct Rolling_Hash {
         }
     }
 
-    ull query(int l, int r) const { // 文字列の [l,r) の部分のハッシュ値
+    // 文字列の [l,r) の部分のハッシュ値
+    ull query(int l, int r) const {
         ull ret = hashed[r] + mod - mul(hashed[l], pw[r - l]);
         return ret - (ret >= mod ? mod : 0);
     }
@@ -119,7 +121,8 @@ struct Array_Hash {
         }
     }
 
-    Array_Hash(int n, T m) { // 配列の長さ、要素の最大値
+    // 配列の長さ、要素の最大値
+    Array_Hash(int n, T m) {
         set_base(m);
         pw.resize(n + 1);
         pw[0] = 1;

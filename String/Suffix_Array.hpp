@@ -2,7 +2,7 @@
 // 接尾辞配列、高さ配列
 // 計算量 接尾辞配列構築：O(|S|log(|S|))、二分探索：O(|T|log(|S|))、高さ配列構築：O(|S|)
 
-// 接尾辞配列 (suffix array)：文字列の全ての接尾辞を辞書順にソートしたものを記録する（実際には何文字目からの接尾辞かを記録する）。
+// 接尾辞配列 (suffix array)：文字列の全ての接尾辞を辞書順にソートしたものを記録する (実際には何文字目からの接尾辞かを記録する)。
 // 高さ配列 (longest common prefix array)：接尾辞配列の隣同士で接頭辞が何文字一致しているかを記録する。
 
 // 概要
@@ -66,7 +66,8 @@ struct Suffix_Array {
         return si == n && ti < m;
     }
 
-    int lower_bound(const string &t) const { // 辞書順で t 以降となるもので最初の接尾辞
+    // 辞書順で t 以降となるもので最初の接尾辞
+    int lower_bound(const string &t) const {
         int l = -1, r = n;
         while (r - l > 1) {
             int m = (l + r) / 2;

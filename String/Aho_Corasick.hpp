@@ -1,11 +1,11 @@
 
-// Aho-Corasick 法（複数文字列についてパターンマッチするオートマトンを構築する）
+// Aho-Corasick 法 (複数文字列についてパターンマッチするオートマトンを構築する)
 // 計算量 構築 : O(Σ[i]|S_i|)、遷移 : O(1)
 
 // 概要
 // 既に構築されているトライ木に情報を加える。
-//トライ木では葉が存在したが、葉から出る後退辺を構築することによって遷移を繰り返すことができる。
-// 1文字加えた際の suffix で該当する頂点があり、最も長いものに該当する頂点に移動する。
+// トライ木では葉が存在したが、葉から出る後退辺を構築することによって遷移を繰り返すことができる。
+// 1 文字加えた際の suffix で該当する頂点があり、最も長いものに該当する頂点に移動する。
 
 // verified with
 // https://yukicoder.me/problems/no/430
@@ -21,9 +21,10 @@ using namespace std;
 template <int char_size, char base>
 struct Aho_Corasick : Trie<char_size + 1, base> {
     const int FAIL = char_size;
-    vector<int> correct; // 接尾辞とマッチする文字列の種類数（最大でも O(√Σ|S_i|)）
+    vector<int> correct; // 接尾辞とマッチする文字列の種類数 (最大でも O(√Σ|S_i|))
 
-    void build(bool heavy = true) { // heavy := 接尾辞とマッチする文字列を全て持つかどうか
+    // heavy : 接尾辞とマッチする文字列を全て持つかどうか
+    void build(bool heavy = true) {
         correct.resize(this->size());
         for (int i = 0; i < (int)this->size(); i++) { correct[i] = (this->nodes[i].accept).size(); }
         queue<int> que;
@@ -58,7 +59,8 @@ struct Aho_Corasick : Trie<char_size + 1, base> {
         }
     }
 
-    map<int, int> match(int now, const string &s) const { // now から s に沿って進めたときのマッチしたパターンの id と回数の組
+    // now から s に沿って進めたときのマッチしたパターンの id と回数の組
+    map<int, int> match(int now, const string &s) const {
         map<int, int> ret;
         for (auto &c : s) {
             now = this->nodes[now].next[c - base];
@@ -69,7 +71,8 @@ struct Aho_Corasick : Trie<char_size + 1, base> {
 
     map<int, int> match(const string &s) const { return match(0, s); }
 
-    pair<long long, int> move(int now, const char &c) const { // now から c の方向に進めたときのマッチしたパターン数と移動先のノードの組
+    // now から c の方向に進めたときのマッチしたパターン数と移動先のノードの組
+    pair<long long, int> move(int now, const char &c) const {
         now = this->nodes[now].next[c - base];
         return make_pair(correct[now], now);
     }
