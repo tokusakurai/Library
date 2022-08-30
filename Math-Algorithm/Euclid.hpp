@@ -1,16 +1,18 @@
 
 // ユークリッドの互除法を用いた種々の計算
-// 計算量 gcd・lcm・extgcd・modinv・floor_sum・中国剰余定理：O(log(max(a, b)))、Garner：O(n^2)
+// 計算量 gcd・lcm・extgcd・modinv・floor_sum・linear_mod_min・中国剰余定理：O(log(max(a, b)))、Garner：O(n^2)
 
 // extgcd：ax+by = gcd(a,b) を満たす (x,y) の組の 1 つ
 // floor_sum：Σ[0<=i<n] floor((ai+b)/m)
+// linear_mod_min：min{(ai+b) mod m | 0<=i<n}
 // 中国剰余定理：x ≡ a_1(mod m_1), x ≡ a_2(mod m_2) を満たす最小の非負整数 x
 // Garner：x ≡ a_i(mod m_i) (0<=i<n) を満たす最小の非負整数 x を M で割った余り
 
 // 概要
 // gcd・lcm・extgcd：ユークリッドの互除法を使って再帰的に解く。
 // modinv：ax+my = 1 を満たす x を extgcd で求める。
-// floor_sum：領域内の格子点の数とみなし、 A < M なら縦横をひっくり返すなどする。
+// floor_sum：領域内の格子点の数とみなし、a < m なら縦横をひっくり返すなどする。
+// linear_mod_min：答えが a 未満である場合、先頭 a 個の推移にのみ注目して再帰することで解ける。
 // 中国剰余定理：解が存在する <-> a_1 ≡ a_2(mod gcd(m_1,m_2))
 // Garnerの定理：解が存在する <-> 任意の i,j について a_i ≡ a_j(mod gcd(m_i,m_j))
 
@@ -27,18 +29,19 @@
 using namespace std;
 
 template <typename T>
-T gcd(const T &a, const T &b) {
+T _gcd(const T &a, const T &b) {
     if (b == 0) return a;
-    return gcd(b, a % b);
+    return _gcd(b, a % b);
 }
 
 template <typename T>
-T lcm(const T &a, const T &b) {
-    return a * (b / gcd(a, b));
+T _lcm(const T &a, const T &b) {
+    return a * (b / _gcd(a, b));
 }
 
+// |x| と |y| は結果として max(a,b) 以下になる。
 template <typename T>
-T extgcd(const T &a, const T &b, T &x, T &y) { // |x| と |y| は結果として max(a,b) 以下になる。
+T extgcd(const T &a, const T &b, T &x, T &y) {
     if (b == 0) {
         x = 1, y = 0;
         return a;
@@ -53,20 +56,50 @@ int mod(const long long &a, const int &m) {
     return ret + (ret < 0 ? m : 0);
 }
 
-int modinv(const int &a, const int &m) { // a と m は互いに素
+// a と m は互いに素
+int modinv(const int &a, const int &m) {
     int x, y;
     extgcd(a, m, x, y);
     return mod(x, m);
 }
 
+// Σ[0<=i<n] floor((ai+b)/m)
 template <typename T>
-T floor_sum(const T &n, const T &m, T a, T b) { // Σ[0<=i<n] floor((ai+b)/m)
+T floor_sum(const T &n, const T &m, T a, T b) {
     T ret = (a / m) * (n * (n - 1) / 2) + (b / m) * n;
     a %= m, b %= m;
     T y = (a * n + b) / m;
     if (y == 0) return ret;
     ret += floor_sum(y, a, m, a * n - (m * y - b));
     return ret;
+}
+
+// min{ai+b mod m | 0<=i<n} またがないときコスト p, またぐときコスト q
+template <typename T>
+T linear_mod_min(T n, const T &m, T a, T b, bool is_min = true, T p = 1, T q = 1) {
+    if (a == 0) return b;
+    if (is_min) {
+        if (b >= a) {
+            T t = (m - b + a - 1) / a;
+            T c = (t - 1) * p + q;
+            if (n <= c) return b;
+            n -= c;
+            b += a * t - m;
+        }
+        b = a - 1 - b;
+    } else {
+        if (b < m - a) {
+            T t = (m - b - 1) / a;
+            T c = t * p;
+            if (n <= c) return a * ((n - 1) / p) + b;
+            n -= c;
+            b += a * t;
+        }
+        b = m - 1 - b;
+    }
+    T d = m / a;
+    T c = linear_mod_min(n, a, m % a, b, !is_min, (d - 1) * p + q, d * p + q);
+    return is_min ? a - 1 - c : m - 1 - c;
 }
 
 template <typename T>
@@ -79,7 +112,8 @@ pair<T, T> Chinese_remainder_theorem(const T &a1, const T &m1, const T &a2, cons
     return make_pair(a, m);
 }
 
-bool prepare_Garner(vector<int> &a, vector<int> &m) { // m の各要素がそれぞれ互いに素とは限らない場合の前処理
+// m の各要素がそれぞれ互いに素とは限らない場合の前処理
+bool prepare_Garner(vector<int> &a, vector<int> &m) {
     int n = a.size();
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < i; j++) {
@@ -97,7 +131,8 @@ bool prepare_Garner(vector<int> &a, vector<int> &m) { // m の各要素がそれ
     return true;
 }
 
-int Garner(vector<int> a, vector<int> m, const int &M) { // m の各要素はそれぞれ互いに素
+// m の各要素はそれぞれ互いに素
+int Garner(vector<int> a, vector<int> m, const int &M) {
     m.push_back(M);
     vector<long long> coeffs(m.size(), 1);
     vector<long long> constants(m.size(), 0);
