@@ -11,7 +11,7 @@ using Point = complex<Real>;
 const Real EPS = 1e-10; // ここは適宜調節する
 const Real pi = acos(-1.0);
 
-int sgn(Real a) { return (a < -EPS) ? -1 : (a > EPS) ? 1 : 0; } // 符号関数
+int sgn(Real a) { return (a < -EPS) ? -1 : (a > EPS) ? 1 : 0; }
 
 bool eq(Real a, Real b) { return sgn(b - a) == 0; }
 
@@ -67,7 +67,8 @@ Real dot(const Point &p, const Point &q) { return real(p) * real(q) + imag(p) * 
 Real det(const Point &p, const Point &q) { return real(p) * imag(q) - imag(p) * real(q); }
 
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_1_C&lang=ja
-int ccw(const Point &a, Point b, Point c) { // 線分 ab に対する c の位置関係
+// 線分 ab に対する c の位置関係
+int ccw(const Point &a, Point b, Point c) {
     b = b - a, c = c - a;
     if (sgn(det(b, c)) == 1) return +1;         // COUNTER_CLOCKWISE
     if (sgn(det(b, c)) == -1) return -1;        // CLOCKWISE
@@ -77,16 +78,15 @@ int ccw(const Point &a, Point b, Point c) { // 線分 ab に対する c の位�
 }
 
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_2_A&lang=ja
-bool parallel(const Line &a, const Line &b) { // 平行判定
-    return eq(det(a.b - a.a, b.b - b.a), 0.0);
-}
+// 平行判定
+bool parallel(const Line &a, const Line &b) { return eq(det(a.b - a.a, b.b - b.a), 0.0); }
 
-bool orthogonal(const Line &a, const Line &b) { // 垂直判定
-    return eq(dot(a.b - a.a, b.b - b.a), 0.0);
-}
+// 垂直判定
+bool orthogonal(const Line &a, const Line &b) { return eq(dot(a.b - a.a, b.b - b.a), 0.0); }
 
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_1_A&lang=ja
-Point projection(const Line &l, const Point &p) { // 垂線の足
+// 垂線の足
+Point projection(const Line &l, const Point &p) {
     Real t = dot(p - l.a, l.b - l.a) / norm(l.b - l.a);
     return l.a + (l.b - l.a) * t;
 }
@@ -97,13 +97,10 @@ Point projection(const Segment &s, const Point &p) {
 }
 
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_1_B&lang=ja
-Point reflection(const Line &l, const Point &p) { // 線対称の位置にある点
-    return p + (projection(l, p) - p) * 2.0;
-}
+// 線対称の位置にある点
+Point reflection(const Line &l, const Point &p) { return p + (projection(l, p) - p) * 2.0; }
 
-bool intersect(const Line &l, const Point &p) { // 交点を持つか判定
-    return abs(ccw(l.a, l.b, p)) != 1;
-}
+bool intersect(const Line &l, const Point &p) { return abs(ccw(l.a, l.b, p)) != 1; }
 
 bool intersect(const Segment &s, const Point &p) { return ccw(s.a, s.b, p) == 0; }
 
@@ -129,7 +126,8 @@ bool intersect(const Circle &c, const Line &l) { return sgn(c.r - distance(l, c.
 bool intersect(const Circle &c, const Point &p) { return eq(abs(p - c.p), c.r); }
 
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_7_A&lang=ja
-int intersect(Circle c1, Circle c2) { // 共通接線の本数
+// 共通接線の本数
+int intersect(Circle c1, Circle c2) {
     if (c1.r < c2.r) swap(c1, c2);
     Real d = abs(c1.p - c2.p);
     int a = sgn(d - c1.r - c2.r);
@@ -137,9 +135,7 @@ int intersect(Circle c1, Circle c2) { // 共通接線の本数
     return 1 + sgn(d - c1.r + c2.r);
 }
 
-Real distance(const Point &p, const Point &q) { // 最短距離
-    return abs(q - p);
-}
+Real distance(const Point &p, const Point &q) { return abs(q - p); }
 
 Real distance(const Line &l, const Point &p) { return abs(p - Point(projection(l, p))); }
 
@@ -179,7 +175,8 @@ vector<Point> crosspoint(const Line &l, const Line &m) {
     return ret;
 }
 
-vector<Point> crosspoint(const Line &l, const Segment &s) { // 平行な場合は共通する区間の端点を返す
+// 平行な場合は共通する区間の端点を返す
+vector<Point> crosspoint(const Line &l, const Segment &s) {
     if (!intersect(l, s)) return {};
     if (parallel(l, Line(s))) return {s.a, s.b};
     vector<Point> ret, tmp = crosspoint(Line(l), Line(s));
@@ -240,14 +237,16 @@ vector<Point> crosspoint(const Circle &c1, const Circle &c2) {
     return ret;
 }
 
-Line vertical_bisector(const Point &p, const Point &q) { // 垂直二等分線
+// 垂直二等分線
+Line vertical_bisector(const Point &p, const Point &q) {
     Line l;
     l.a = (p + q) * 0.5;
     l.b = l.a + rotate(q - p, pi * 0.5);
     return l;
 }
 
-Circle Apollonius(const Point &p, const Point &q, const Real &a, const Real &b) { // アポロニウスの円
+// アポロニウスの円
+Circle Apollonius(const Point &p, const Point &q, const Real &a, const Real &b) {
     Point p1 = (p * b + q * a) / (a + b), p2 = (-p * b + q * a) / (a - b);
     Circle c;
     c.p = (p1 + p2) * 0.5;
@@ -256,7 +255,7 @@ Circle Apollonius(const Point &p, const Point &q, const Real &a, const Real &b) 
 }
 
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_3_A&lang=ja
-Real area(const vector<Point> &p) { // 多角形の面積
+Real area(const vector<Point> &p) {
     Real ret = 0.0;
     int n = p.size();
     for (int i = 0; i < n; i++) ret += det(p[i], p[(i + 1) % n]);
@@ -264,7 +263,8 @@ Real area(const vector<Point> &p) { // 多角形の面積
 }
 
 // https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_3_C&lang=ja
-int in_polygon(const vector<Point> &p, const Point &q) { // IN:2, ON:1, OUT:0
+// IN:2, ON:1, OUT:0
+int in_polygon(const vector<Point> &p, const Point &q) {
     int n = p.size();
     int ret = 0;
     for (int i = 0; i < n; i++) {
@@ -277,12 +277,12 @@ int in_polygon(const vector<Point> &p, const Point &q) { // IN:2, ON:1, OUT:0
 }
 
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_7_F&lang=ja
-vector<Point> tangent(const Circle &c, const Point &p) { // 点 p を通る円 c の接線と c の接点
-    return crosspoint(c, Circle(p, sqrt(norm(p - c.p) - c.r * c.r)));
-}
+// 点 p を通る円 c の接線と c の接点
+vector<Point> tangent(const Circle &c, const Point &p) { return crosspoint(c, Circle(p, sqrt(norm(p - c.p) - c.r * c.r))); }
 
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_7_G&lang=ja
-vector<Line> tangent(Circle c1, Circle c2) { // 共通接線
+// 共通接線
+vector<Line> tangent(Circle c1, Circle c2) {
     vector<Line> ret;
     if (c1.r < c2.r) swap(c1, c2);
     Real r = abs(c2.p - c1.p);
@@ -303,7 +303,7 @@ vector<Line> tangent(Circle c1, Circle c2) { // 共通接線
 }
 
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_4_A&lang=ja
-vector<Point> convex_hull(vector<Point> p) { // 凸包
+vector<Point> convex_hull(vector<Point> p) {
     sort(begin(p), end(p), compare_x);
     p.erase(unique(begin(p), end(p)), end(p));
     int n = p.size(), k = 0;
@@ -320,7 +320,7 @@ vector<Point> convex_hull(vector<Point> p) { // 凸包
 }
 
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_5_A&lang=ja
-Real closest_pair(vector<Point> p) { // 最近点対の距離
+Real closest_pair(vector<Point> p) {
     if (p.size() <= 1) return 1e18;
     sort(begin(p), end(p), compare_x);
     vector<Point> memo(p.size());

@@ -36,7 +36,8 @@ bool intersect(const Circle &c, const Line &l) { return sgn(c.r - distance(l, c.
 
 bool intersect(const Circle &c, const Point &p) { return eq(abs(p - c.p), c.r); }
 
-int intersect(Circle c1, Circle c2) { // 共通接線の本数
+// 共通接線の本数
+int intersect(Circle c1, Circle c2) {
     if (c1.r < c2.r) swap(c1, c2);
     Real d = abs(c1.p - c2.p);
     int a = sgn(d - c1.r - c2.r);

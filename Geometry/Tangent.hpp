@@ -12,11 +12,11 @@ using namespace std;
 
 #include "../Geometry/Crosspoint.hpp"
 
-vector<Point> tangent(const Circle &c, const Point &p) { // 点 p を通る円 c の接線と c の接点
-    return crosspoint(c, Circle(p, sqrt(norm(p - c.p) - c.r * c.r)));
-}
+// 点 p を通る円 c の接線と c の接点
+vector<Point> tangent(const Circle &c, const Point &p) { return crosspoint(c, Circle(p, sqrt(norm(p - c.p) - c.r * c.r))); }
 
-vector<Line> tangent(Circle c1, Circle c2) { // 共通接線
+// 共通接線
+vector<Line> tangent(Circle c1, Circle c2) {
     vector<Line> ret;
     if (c1.r < c2.r) swap(c1, c2);
     Real r = abs(c2.p - c1.p);

@@ -1,5 +1,5 @@
 
-// 多角形（面積、内外判定）
+// 多角形 (面積、内外判定)
 // 計算量 O(n)
 
 // 概要
@@ -23,7 +23,8 @@ Real area(const vector<Point> &p) {
     return abs(ret * 0.5);
 }
 
-int in_polygon(const vector<Point> &p, const Point &q) { // IN:2, ON:1, OUT:0
+// IN:2, ON:1, OUT:0
+int in_polygon(const vector<Point> &p, const Point &q) {
     int n = p.size();
     int ret = 0;
     for (int i = 0; i < n; i++) {

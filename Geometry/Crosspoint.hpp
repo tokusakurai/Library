@@ -13,6 +13,8 @@ using namespace std;
 
 #include "../Geometry/Intersect.hpp"
 #include "../Geometry/Projection_Reflection.hpp"
+#include "../Geometry/Parallel_Orthogonal.hpp"
+#include "../Geometry/Distance.hpp"
 
 vector<Point> crosspoint(const Line &l, const Line &m) {
     if (!intersect(l, m)) return {};
@@ -28,7 +30,8 @@ vector<Point> crosspoint(const Line &l, const Line &m) {
     return ret;
 }
 
-vector<Point> crosspoint(const Line &l, const Segment &s) { // 平行な場合は共通する区間の端点を返す
+// 平行な場合は共通する区間の端点を返す
+vector<Point> crosspoint(const Line &l, const Segment &s) {
     if (!intersect(l, s)) return {};
     if (parallel(l, Line(s))) return {s.a, s.b};
     vector<Point> ret, tmp = crosspoint(Line(l), Line(s));

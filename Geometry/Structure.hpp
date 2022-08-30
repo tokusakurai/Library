@@ -1,12 +1,12 @@
 
-// 点・直線（線分）・円に関する基本的な計算
+// 点・直線 (線分)・円に関する基本的な計算
 // 計算量 構築：O(1)、内積・行列式・CCW：O(1)
 
 // 概要
 // 点：複素数平面として complex で管理する。
-// 直線（線分）：2 点で管理する。
+// 直線 (線分)：2 点で管理する。
 // 円：中心と半径で管理する。
-// CCW：線分 ab に対する c の位置関係を求める。（詳しくは verify URL）
+// CCW：線分 ab に対する c の位置関係を求める。(詳しくは verify URL)
 
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_1_C&lang=ja
@@ -21,7 +21,7 @@ using Point = complex<Real>;
 const Real EPS = 1e-10; // ここは適宜調節する
 const Real pi = acos(-1.0);
 
-int sgn(Real a) { return (a < -EPS) ? -1 : (a > EPS) ? 1 : 0; } // 符号関数
+int sgn(Real a) { return (a < -EPS) ? -1 : (a > EPS) ? 1 : 0; }
 
 bool eq(Real a, Real b) { return sgn(b - a) == 0; }
 
