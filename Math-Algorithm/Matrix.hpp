@@ -64,7 +64,8 @@ struct Matrix {
         // return abs(a-b) <= EPS;
     }
 
-    pair<int, T> row_reduction(vector<T> &b) { // 行基本変形を用いて簡約化を行い、(rank, det) の組を返す
+    // 行基本変形を用いて簡約化を行い、(rank, det) の組を返す
+    pair<int, T> row_reduction(vector<T> &b) {
         int m = height(), n = width(), check = 0, rank = 0;
         T det = 1;
         assert(b.size() == m);
@@ -104,7 +105,8 @@ struct Matrix {
         return row_reduction(b);
     }
 
-    Matrix inverse() { // 行基本変形によって正方行列の逆行列を求める
+    // 行基本変形を行い、逆行列を求める
+    Matrix inverse() {
         if (height() != width()) return Matrix(0, 0);
         int n = height();
         Matrix ret = I(n);
@@ -132,7 +134,8 @@ struct Matrix {
         return ret;
     }
 
-    vector<vector<T>> Gausiann_elimination(vector<T> b) { // Ax = b の解の 1 つと解空間の基底の組を返す
+    // Ax = b の解の 1 つと解空間の基底の組を返す
+    vector<vector<T>> Gausiann_elimination(vector<T> b) {
         int m = height(), n = width();
         row_reduction(b);
         vector<vector<T>> ret;

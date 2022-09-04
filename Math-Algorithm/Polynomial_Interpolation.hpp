@@ -25,7 +25,7 @@ Formal_Power_Series<T> polynomial_interpolation(const vector<T> &xs, const vecto
     vector<Formal_Power_Series<T>> g = subproduct_tree(xs);
     int k = g.size() / 2;
     vector<Formal_Power_Series<T>> f(2 * k);
-    f[1] = g[1].diff();
+    f[1] = g[1].derivative();
     for (int i = 2; i < k + n; i++) f[i] = f[i / 2] % g[i];
     for (int i = 0; i < n; i++) f[k + i][0] = ys[i] / f[k + i][0];
     for (int i = k - 1; i > 0; i--) f[i] = f[2 * i] * g[2 * i + 1] + f[2 * i + 1] * g[2 * i];
