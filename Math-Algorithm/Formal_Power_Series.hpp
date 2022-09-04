@@ -1,6 +1,6 @@
 
 // 形式的冪級数
-// 計算量 加算・減算・微分・積分：O(n)、積・除算・inv・log・exp・pow・Taylor Shift：O(n log(n))
+// 計算量 加算・減算・微分・積分：O(n)、積・除算・inv・log・exp・pow・sqrt・Taylor Shift：O(n log(n))
 
 // 定義
 // df/dx := Σ[k=0,1,...]k([x^k]f(x))x^(k-1)

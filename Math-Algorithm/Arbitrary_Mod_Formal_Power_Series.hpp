@@ -1,6 +1,6 @@
 
 // 形式的冪級数 (任意 mod)
-// 計算量 加算・減算・微分・積分：O(n)、除算・inv・log・exp・pow：O(n log(n))
+// 計算量 加算・減算・微分・積分：O(n)、除算・inv・log・exp・sqrt・pow：O(n log(n))
 
 // 概要
 // 複数の mod での結果を用いて復元する。
@@ -220,6 +220,54 @@ struct Formal_Power_Series : vector<T> {
         }
         Formal_Power_Series ret(n, 0);
         if (k == 0) ret[0] = 1;
+        return ret;
+    }
+
+    // √f(x) mod x^n (存在しなければ空)
+    Formal_Power_Series sqrt(int n = -1) const {
+        if (n == -1) n = this->size();
+        int mod = T::get_mod();
+
+        auto sqrt_mod = [mod](const T &a) {
+            if (mod == 2) return a;
+            int s = mod - 1, t = 0;
+            while (s % 2 == 0) s /= 2, t++;
+            T root = 2;
+            while (root.pow((mod - 1) / 2) == 1) root++;
+            T x = a.pow((s + 1) / 2);
+            T u = root.pow(s);
+            T y = x * x * a.inverse();
+            while (y != 1) {
+                int k = 0;
+                T z = y;
+                while (z != 1) k++, z *= z;
+                for (int i = 0; i < t - k - 1; i++) u *= u;
+                x *= u, u *= u, y *= u;
+                t = k;
+            }
+            return x;
+        };
+
+        if ((*this)[0] == 0) {
+            for (int i = 1; i < (int)this->size(); i++) {
+                if ((*this)[i] != 0) {
+                    if (i & 1) return {};
+                    if ((*this)[i].pow((mod - 1) / 2) != 1) return {};
+                    if (n <= i / 2) break;
+                    return ((*this) >> i).sqrt(n - i / 2) << (i / 2);
+                }
+            }
+            return Formal_Power_Series(n, 0);
+        }
+        if ((*this)[0].pow((mod - 1) / 2) != 1) return {};
+        T tw = T(2).inverse();
+        Formal_Power_Series ret{sqrt_mod((*this)[0])};
+        for (int m = 1; m < n; m *= 2) {
+            Formal_Power_Series g = (*this).pre(m * 2) * ret.inv(m * 2);
+            g.resize(2 * m);
+            ret = (ret + g) * tw;
+        }
+        ret.resize(n);
         return ret;
     }
 

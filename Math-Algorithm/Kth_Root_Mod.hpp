@@ -12,9 +12,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#include "../Other/Random.hpp"
 #include "../Math-Algorithm/Factor_Ring.hpp"
 #include "../Math-Algorithm/Fast_Prime_Factorization.hpp"
+#include "../Other/Random.hpp"
 
 // 素数 p について、x^2 ≡ a (mod p) となる x を 1 つ求める (存在しなければ -1)
 int sqrt_mod(int a, const int &p) {
@@ -24,8 +24,8 @@ int sqrt_mod(int a, const int &p) {
     int s = p - 1, t = 0;
     while (s % 2 == 0) s /= 2, t++;
     long long x = modpow(a, (s + 1) / 2, p);
-    long long u = 1;
-    while (modpow(u, (p - 1) / 2, p) == 1) u = rng(1, p);
+    long long u = 2;
+    while (modpow(u, (p - 1) / 2, p) == 1) u = rng(2, p);
     u = modpow(u, s, p);
     long long y = (1LL * x * x % p) * modinv(a, p) % p;
     while (y != 1) {
@@ -49,8 +49,8 @@ int prime_power_root_mod(int m, int e, int a, const int &p) {
     for (int i = 0; i < t; i++) pw[i + 1] = pw[i] * m;
     int q = pw[e];
     long long x = modpow(a, (1 + 1LL * s * (q - modinv(s, q))) / q, p);
-    long long u = 1;
-    while (modpow(u, (p - 1) / m, p) == 1) u = rng(1, p);
+    long long u = 2;
+    while (modpow(u, (p - 1) / m, p) == 1) u = rng(2, p);
     u = modpow(u, s, p);
     long long y = modpow(x, q, p) * modinv(a, p) % p;
     while (y != 1) {
