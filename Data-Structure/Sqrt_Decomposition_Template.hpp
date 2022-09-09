@@ -20,11 +20,7 @@ struct Sqrt_Decomposition {
             copy(begin(a) + l, begin(a) + r, begin(v));
         }
 
-        T eval(const T &x) const { return; }
-
-        void eval_all() {
-            for (auto &e : v) e = eval(e);
-        }
+        void eval_all() {}
 
         void query1(int a, int b, const T &x) {
             a = max(a, l), b = min(b, r);
@@ -33,14 +29,16 @@ struct Sqrt_Decomposition {
                 query1_all(x);
                 return;
             }
+            a -= l, b -= l;
         }
 
         void query1_all(const T &x) {}
 
         T query2(int a, int b) {
             a = max(a, l), b = min(b, r);
-            if (a >= b) return;
-            if (a == l && b == r) { return query2_all(); }
+            if (a >= b) return 0;
+            if (a == l && b == r) return query2_all();
+            a -= l, b -= l;
         }
 
         T query2_all() {}
@@ -56,13 +54,12 @@ struct Sqrt_Decomposition {
     }
 
     void query1(int a, int b, const T &x) {
-        for (auto &e : nodes) query1(a, b, x);
+        for (auto &e : nodes) e.query1(a, b, x);
     }
 
     T query2(int a, int b) {
-        T ret = ;
-        for (auto &e : nodes)
-            ;
+        T ret = 0;
+        for (auto &e : nodes) ret += e.query2(a, b);
         return ret;
     }
 };
