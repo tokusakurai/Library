@@ -1,6 +1,6 @@
 
 // Heavy-Light 分解
-// 計算量 HL 分解：O(n)、パス検出・パスが通る区間の個数：O(log(n))
+// 計算量 HL 分解：O(n)、パス検出・パスが通る区間の個数：O(log(n))、lca・距離・level ancestor：O(log(n))
 
 // 概要
 // 根付き木の各頂点の重みを、その頂点を根とする部分木の頂点数とする。
@@ -26,10 +26,11 @@ struct Heavy_Light_Decomposition {
     vector<int> par, si, depth;
     vector<int> root;       // 属する連結成分の根
     vector<int> id_v, id_e; // 各頂点、各辺が一列に並べたときに何番目に相当するか (辺の番号は 1,2,...,n-1 となることに注意)
+    vector<int> vs;
     const int n;
     int m;
 
-    Heavy_Light_Decomposition(int n) : es(n), par(n), si(n), depth(n), root(n), id_v(n), id_e(n - 1), n(n), m(0) {}
+    Heavy_Light_Decomposition(int n) : es(n), par(n), si(n), depth(n), root(n), id_v(n), id_e(n - 1), vs(n), n(n), m(0) {}
 
     void add_edge(int from, int to) {
         es[from].emplace_back(to, m);
@@ -53,6 +54,7 @@ struct Heavy_Light_Decomposition {
     void _dfs2(int now, bool st, int &s, int pre = -1) {
         root[now] = (st ? now : root[pre]);
         id_v[now] = s++;
+        vs[id_v[now]] = now;
         edge heavy = {-1, -1};
         int M = 0;
         for (auto &e : es[now]) {
@@ -75,6 +77,39 @@ struct Heavy_Light_Decomposition {
         _dfs1(root);
         int s = 0;
         _dfs2(root, true, s);
+    }
+
+    int lca(int u, int v) {
+        while (root[u] != root[v]) {
+            if (depth[root[u]] > depth[root[v]]) swap(u, v);
+            v = par[root[v]];
+        }
+        if (depth[u] > depth[v]) swap(u, v);
+        return u;
+    }
+
+    int dist(int u, int v) { return depth[u] + depth[v] - depth[lca(u, v)] * 2; }
+
+    // u の k 個前の祖先
+    int ancestor(int u, int k) {
+        if (k > depth[u]) return -1;
+        while (k > 0) {
+            int r = root[u];
+            int l = depth[u] - depth[r];
+            if (k <= l) return vs[id_v[r] + l - k];
+            u = par[r];
+            k -= l + 1;
+        }
+        return u;
+    }
+
+    // u から v の方向へ k 回移動
+    int move(int u, int v, int k) {
+        int w = lca(u, v);
+        int l = depth[u] + depth[v] - depth[w] * 2;
+        if (k > l) return -1;
+        if (k <= depth[u] - depth[w]) return ancestor(u, k);
+        return ancestor(v, l - k);
     }
 
     // パスに対応する区間たちを列挙

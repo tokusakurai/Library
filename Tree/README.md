@@ -18,15 +18,11 @@
 
 ## 最近共通祖先
 
-根付き木の 2 点の共通の祖先で最も根から深いものを求めるアルゴリズム。
+根付き木の 2 点の共通の祖先で最も根から深いものをダブリンぐを用いて求めるアルゴリズム。
 
-- [(ダブリング) 最近共通祖先 (重みなし木)](Lowest_Common_Ancestor-1.hpp)
+- [最近共通祖先 (重みなし木)](Lowest_Common_Ancestor.hpp)
 
-- [(ダブリング) 最近共通祖先 (重み付き木)](Lowest_Common_Ancestor_Weighted-1.hpp)
-
-- [(HLD ベース) 最近共通祖先 (重みなし木)](Lowest_Common_Ancestor-2.hpp)
-
-- [(HLD ベース) 最近共通祖先 (重み付き木)](Lowest_Common_Ancestor_Weighted-2.hpp)
+- [最近共通祖先 (重み付き木)](Lowest_Common_Ancestor_Weighted.hpp)
 
 ## 全方位木 DP
 
@@ -42,7 +38,7 @@
 
 ## Heavy-Light 分解
 
-木をいくつかの列に分割し、単純パスをいくつかの列の一部区間をつなげたものとして表現することで効率的にパスクエリを扱うことができる。
+木をいくつかの列に分割し、単純パスをいくつかの列の一部区間をつなげたものとして表現することで効率的に最近共通祖先問題やパスクエリを扱うことができる。
 
 - [Heavy-Light 分解](Heavy-Light_Decomposition.hpp)
 
@@ -50,7 +46,7 @@
 
 辺の追加・削除によって、木構造そのものが変化するときに効率的にパスクエリを扱うことができる。
 
-- [Link-Cut Tree](Link_Cut_Tree.hpp)（パスをスプレー木で管理することで辺の追加・削除とパスクエリを扱える）
+- [Link-Cut Tree](Link_Cut_Tree.hpp) (パスをスプレー木で管理することで辺の追加・削除とパスクエリを扱える)
 
 ## Cartesian tree
 
