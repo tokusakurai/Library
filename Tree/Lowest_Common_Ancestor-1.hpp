@@ -1,6 +1,6 @@
 
-// （ダブリング）最近共通祖先 (LCA)
-// 計算量 構築：O(n log(n))、2 頂点の LCA・距離：O(log(n))
+// (ダブリング) 最近共通祖先 (LCA)
+// 計算量 構築：O(n log(n))、2 頂点の LCA・距離：O(log(n))、level ancestor：O(log(n))
 // 空間計算量 O(n log(n))
 
 // 概要
@@ -11,6 +11,7 @@
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_5_C&lang=ja
 // https://judge.yosupo.jp/problem/lca
+// https://judge.yosupo.jp/problem/jump_on_tree
 // https://atcoder.jp/contests/abc014/tasks/abc014_4
 
 #pragma once
@@ -53,7 +54,7 @@ struct Lowest_Common_Ancestor {
         }
     }
 
-    void build(int root = 0) { // root を根として前準備する
+    void build(int root = 0) {
         prepare(root);
         for (int j = 0; j < height - 1; j++) {
             for (int i = 0; i < n; i++) {
@@ -64,14 +65,6 @@ struct Lowest_Common_Ancestor {
                 }
             }
         }
-    }
-
-    int ancestor(int u, int k) { // u の k 個前の祖先
-        for (int i = 0; i < height; i++) {
-            if ((k >> i) & 1) u = par[i][u];
-            if (u == -1) return -1;
-        }
-        return u;
     }
 
     int lca(int u, int v) {
@@ -85,4 +78,22 @@ struct Lowest_Common_Ancestor {
     }
 
     int dist(int u, int v) { return depth[u] + depth[v] - depth[lca(u, v)] * 2; }
+
+    // u の k 個前の祖先
+    int ancestor(int u, int k) {
+        if (k > depth[u]) return -1;
+        for (int i = 0; i < height; i++) {
+            if ((k >> i) & 1) u = par[i][u];
+        }
+        return u;
+    }
+
+    // u から v の方向へ k 回移動
+    int move(int u, int v, int k) {
+        int w = lca(u, v);
+        int l = depth[u] + depth[v] - depth[w] * 2;
+        if (k > l) return -1;
+        if (k <= depth[u] - depth[w]) return ancestor(u, k);
+        return ancestor(v, l - k);
+    }
 };

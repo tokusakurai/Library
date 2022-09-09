@@ -1,6 +1,6 @@
 
 // (ダブリング) 最近共通祖先 (LCA)
-// 計算量 構築：O(n log(n))、2 頂点の LCA・距離：O(log(n))
+// 計算量 構築：O(n log(n))、2 頂点の LCA・距離：O(log(n))、level ancestor：O(log(n))
 // 空間計算量 O(n log(n))
 
 // verified with
@@ -66,15 +66,6 @@ struct Lowest_Common_Ancestor {
         }
     }
 
-    // u の k 個前の祖先
-    int ancestor(int u, int k) {
-        for (int i = 0; i < height; i++) {
-            if ((k >> i) & 1) u = par[i][u];
-            if (u == -1) return -1;
-        }
-        return u;
-    }
-
     int lca(int u, int v) {
         if (depth[u] < depth[v]) swap(u, v);
         u = ancestor(u, depth[u] - depth[v]);
@@ -86,4 +77,22 @@ struct Lowest_Common_Ancestor {
     }
 
     T dist(int u, int v) { return d[u] + d[v] - d[lca(u, v)] * 2; }
+
+    // u の k 個前の祖先
+    int ancestor(int u, int k) {
+        if (k > depth[u]) return -1;
+        for (int i = 0; i < height; i++) {
+            if ((k >> i) & 1) u = par[i][u];
+        }
+        return u;
+    }
+
+    // u から v の方向へ k 回移動
+    int move(int u, int v, int k) {
+        int w = lca(u, v);
+        int l = depth[u] + depth[v] - depth[w] * 2;
+        if (k > l) return -1;
+        if (k <= depth[u] - depth[w]) return ancestor(u, k);
+        return ancestor(v, l - k);
+    }
 };

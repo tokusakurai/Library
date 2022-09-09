@@ -1,6 +1,6 @@
 
-// （HLD ベース）最近共通祖先 (LCA)
-// 計算量 構築：O(n)、2 頂点の LCA・距離：O(log(n))
+// (HLD ベース) 最近共通祖先 (LCA)
+// 計算量 構築：O(n)、2 頂点の LCA・距離：O(log(n))、level ancestor：O(log(n))
 // 空間計算量 O(n)
 
 // 概要
@@ -10,6 +10,7 @@
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_5_C&lang=ja
 // https://judge.yosupo.jp/problem/lca
+// https://judge.yosupo.jp/problem/jump_on_tree
 // https://atcoder.jp/contests/abc014/tasks/abc014_4
 
 #pragma once
@@ -25,11 +26,12 @@ struct Lowest_Common_Ancestor {
 
     vector<vector<edge>> es;
     vector<int> par, si, depth;
-    vector<int> root; // 属する連結成分の根
+    vector<int> root;        // 属する連結成分の根
+    vector<vector<int>> ids; // 各パスの頂点を並べて保持
     const int n;
     int m;
 
-    Lowest_Common_Ancestor(int n) : es(n), par(n), si(n), depth(n), root(n), n(n), m(0) {}
+    Lowest_Common_Ancestor(int n) : es(n), par(n), si(n), depth(n), root(n), ids(n), n(n), m(0) {}
 
     void add_edge(int from, int to) {
         es[from].emplace_back(to, m);
@@ -52,6 +54,7 @@ struct Lowest_Common_Ancestor {
 
     void _dfs2(int now, bool st, int &s, int pre = -1) {
         root[now] = (st ? now : root[pre]);
+        ids[root[now]].push_back(now);
         edge heavy = {-1, -1};
         int M = 0;
         for (auto &e : es[now]) {
@@ -80,4 +83,26 @@ struct Lowest_Common_Ancestor {
     }
 
     int dist(int u, int v) { return depth[u] + depth[v] - depth[lca(u, v)] * 2; }
+
+    // u の k 個前の祖先
+    int ancestor(int u, int k) {
+        if (k > depth[u]) return -1;
+        while (k > 0) {
+            int r = root[u];
+            int l = depth[u] - depth[r];
+            if (k <= l) return ids[r][l - k];
+            u = par[r];
+            k -= l + 1;
+        }
+        return u;
+    }
+
+    // u から v の方向へ k 回移動
+    int move(int u, int v, int k) {
+        int w = lca(u, v);
+        int l = depth[u] + depth[v] - depth[w] * 2;
+        if (k > l) return -1;
+        if (k <= depth[u] - depth[w]) return ancestor(u, k);
+        return ancestor(v, l - k);
+    }
 };
