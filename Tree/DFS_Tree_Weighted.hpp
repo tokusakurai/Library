@@ -2,22 +2,23 @@
 // 重み付き木の基本的な DFS
 // 計算量 根からの距離・部分木のサイズ・直径・パス検出：O(n)
 
-// 直径：最短距離が最大になるような2点間のパス
+// 直径：最短距離が最大になるような 2 点間の単純パス
 
 // 概要
-// 根からの距離・部分木のサイズ：木上で DP を行っているとみることができる。
 // 直径：適当に頂点を決めて、その頂点から最も遠い点を s とし、s から最も遠い点を t とすると、パス s-t は直径となる。
 
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_5_A&lang=ja
 // https://judge.yosupo.jp/problem/tree_diameter
+// https://atcoder.jp/contests/abc270/tasks/abc270_c
+// https://codeforces.com/contest/455/problem/C
 
 #pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
 template <typename T, bool directed = false>
-struct Weighted_Graph {
+struct Weighted_Tree {
     struct edge {
         int to;
         T cost;
@@ -33,7 +34,7 @@ struct Weighted_Graph {
     vector<T> d;
     vector<int> si;
 
-    Weighted_Graph(int n) : es(n), INF_T(numeric_limits<T>::max() / 2), n(n), m(0), d(n), si(n) {}
+    Weighted_Tree(int n) : es(n), INF_T(numeric_limits<T>::max() / 2), n(n), m(0), d(n), si(n) {}
 
     void add_edge(int from, int to, T cost) {
         es[from].emplace_back(to, cost, m);
@@ -41,11 +42,18 @@ struct Weighted_Graph {
         m++;
     }
 
-    void calc_depth(int now, int pre = -1) {
+    // 始点から最も遠い点を出力
+    int calc_depth(int now, int pre = -1) {
         if (pre == -1) d[now] = 0;
+        int ret = now;
         for (auto &e : es[now]) {
-            if (e.to != pre) d[e.to] = d[now] + e.cost, calc_depth(e.to, now);
+            if (e.to != pre) {
+                d[e.to] = d[now] + e.cost;
+                int t = calc_depth(e.to, now);
+                if (d[t] > d[ret]) ret = t;
+            }
         }
+        return ret;
     }
 
     int calc_size(int now, int pre = -1) {
@@ -56,32 +64,20 @@ struct Weighted_Graph {
         return si[now];
     }
 
-    int farthest_point(int s) {
-        calc_depth(s);
-        T max_d = -1;
-        int t = -1;
-        for (int i = 0; i < n; i++) {
-            if (d[i] > max_d) max_d = d[i], t = i;
-        }
-        return t;
-    }
-
-    pair<T, pair<int, int>> diameter() {
-        int a = farthest_point(0), b = farthest_point(a);
+    pair<T, pair<int, int>> diameter(int root) {
+        int a = calc_depth(root), b = calc_depth(a);
         return make_pair(d[b], make_pair(a, b));
     }
 
-    vector<int> ret_path;
-
-    bool detect_path(int now, int t, bool use_id = false, int pre = -1) {
+    bool detect_path(int now, int t, vector<int> &ret, bool use_id = false, int pre = -1) {
         if (now == t) {
-            if (!use_id) ret_path.push_back(now);
+            if (!use_id) ret.push_back(now);
             return true;
         }
         for (auto &e : es[now]) {
             if (e.to == pre) continue;
-            if (detect_path(e.to, t, use_id, now)) {
-                ret_path.push_back(use_id ? e.id : now);
+            if (detect_path(e.to, t, ret, use_id, now)) {
+                ret.push_back(use_id ? e.id : now);
                 return true;
             }
         }
@@ -89,9 +85,9 @@ struct Weighted_Graph {
     }
 
     vector<int> find_path(int s, int t, bool use_id = false) {
-        ret_path.clear();
-        detect_path(s, t, use_id);
-        reverse(begin(ret_path), end(ret_path));
-        return ret_path;
+        vector<int> ret;
+        detect_path(s, t, ret, use_id);
+        reverse(begin(ret), end(ret));
+        return ret;
     }
 };
