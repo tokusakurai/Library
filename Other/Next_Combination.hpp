@@ -12,8 +12,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// サイズが同じで辞書順で次に大きい部分集合を求める
 template <typename T>
-T next_combination(T comb) { // comb の辞書順で次に大きい部分集合を求める
+T next_combination(T comb) {
     assert(comb > 0);
     T x = comb & (-comb), y = comb + x, z = comb & (~y);
     return ((z / x) >> 1) | y;

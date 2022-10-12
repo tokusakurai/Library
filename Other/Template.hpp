@@ -3,20 +3,28 @@
 
 #include <bits/stdc++.h>
 using namespace std;
-#define rep(i, n) for (int i = 0; i < n; i++)
-#define rep2(i, x, n) for (int i = x; i <= n; i++)
-#define rep3(i, x, n) for (int i = x; i >= n; i--)
+#define rep(i, n) for (int i = 0; i < (n); i++)
+#define per(i, n) for (int i = (n)-1; i >= 0; i--)
+#define rep2(i, l, r) for (int i = (l); i < (r); i++)
+#define per2(i, l, r) for (int i = (r)-1; i >= (l); i--)
 #define each(e, v) for (auto &e : v)
+#define MM << " " <<
 #define pb push_back
 #define eb emplace_back
-#define all(x) x.begin(), x.end()
-#define rall(x) x.rbegin(), x.rend()
+#define all(x) begin(x), end(x)
+#define rall(x) rbegin(x), rend(x)
 #define sz(x) (int)x.size()
 using ll = long long;
 using pii = pair<int, int>;
 using pil = pair<int, ll>;
 using pli = pair<ll, int>;
 using pll = pair<ll, ll>;
+
+template <typename T>
+using minheap = priority_queue<T, vector<T>, greater<T>>;
+
+template <typename T>
+using maxheap = priority_queue<T>;
 
 template <typename T>
 bool chmax(T &x, const T &y) {
@@ -105,5 +113,5 @@ struct io_setup {
 
 const int inf = (1 << 30) - 1;
 const ll INF = (1LL << 60) - 1;
-const int MOD = 1000000007;
-// const int MOD = 998244353;
+// const int MOD = 1000000007;
+const int MOD = 998244353;
