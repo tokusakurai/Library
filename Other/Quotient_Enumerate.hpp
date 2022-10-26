@@ -13,7 +13,7 @@
 // https://atcoder.jp/contests/arc150/tasks/arc150_b
 
 #pragma once
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 template <typename T>
