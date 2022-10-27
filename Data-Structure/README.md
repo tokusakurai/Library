@@ -6,6 +6,8 @@
 
 - [Union-Find Tree](Union_Find_Tree.hpp)
 
+- [二部 Union-Find Tree](Bipartite_Union_Find_Tree.hpp) (各頂点を二色で塗りわけ、2 頂点を同色にする、異色にするのクエリを扱える)
+
 - [重み付き Union-Find Tree](Weighted_Union_Find_Tree.hpp)（各頂点に重みを与えたとき、weight(y) - weight(x) = w の制約を扱える）
 
 - [部分永続 Union-Find Tree](Partitially_Persistent_Union_Find_Tree.hpp)（各 Union 操作に時刻を与えたとき、任意の時刻での Find クエリを扱える）
