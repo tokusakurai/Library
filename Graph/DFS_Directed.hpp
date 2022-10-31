@@ -52,18 +52,16 @@ struct Graph {
         }
     }
 
-    vector<int> ret_path;
-
-    bool detect_path(int now, int t, bool use_id = false) {
+    bool detect_path(int now, int t, vector<int> &ret, bool use_id = false) {
         used[now] = true;
         if (now == t) {
-            if (!use_id) ret_path.push_back(now);
+            if (!use_id) ret.push_back(now);
             return true;
         }
         for (auto &e : es[now]) {
             if (used[e.to]) continue;
-            if (detect_path(e.to, t, use_id)) {
-                ret_path.push_back(use_id ? e.id : now);
+            if (detect_path(e.to, t, ret, use_id)) {
+                ret.push_back(use_id ? e.id : now);
                 return true;
             }
         }
@@ -71,10 +69,11 @@ struct Graph {
     }
 
     vector<int> find_path(int s, int t, bool use_id = false) {
-        ret_path.clear(), fill(begin(used), end(used), false);
-        detect_path(s, t, use_id);
-        reverse(begin(ret_path), end(ret_path));
-        return ret_path;
+        vector<int> ret;
+        fill(begin(used), end(used), false);
+        detect_path(s, t, ret, use_id);
+        reverse(begin(ret), end(ret));
+        return ret;
     }
 
     vector<int> find_cycle(bool use_id = false) {
