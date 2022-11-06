@@ -1,6 +1,6 @@
 
 // 二元体での行列
-// 計算量 簡約化・ガウスの消去法：O(mn^2/64)
+// 計算量 簡約化・ガウスの消去法：O(nm^2/w) (w はワードサイズ)
 
 // 概要
 // 行 i に行 j を足す操作は行 i に行 j を XOR する操作と同値なので、bitset で高速化できる。
@@ -52,7 +52,7 @@ struct F2_Matrix {
     }
 
     // Ax = b の解の 1 つと解空間の基底の組を返す
-    vector<vector<int>> Gausiann_elimination(vector<int> b) {
+    vector<vector<int>> Gaussian_elimination(vector<int> b) {
         row_reduction(b);
         vector<vector<int>> ret;
         vector<int> p(n, m);

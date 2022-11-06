@@ -1,6 +1,6 @@
 
 // 行列計算
-// 計算量 積：O(mnp)、k 乗：O(n^3 log(k))、簡約化・ガウスの消去法：O(mn^2)
+// 計算量 積：O(nmk)、k 乗：O(n^3 log(k))、簡約化・ガウスの消去法：O(nm^2)、逆行列：O(n^3)
 
 // 累乗：ダブリング
 // ガウスの消去法：行基本変形を繰り返すことで連立一次方程式の解を求める。
@@ -8,6 +8,7 @@
 // verified with
 // https://judge.yosupo.jp/problem/matrix_product
 // https://judge.yosupo.jp/problem/matrix_det
+// https://judge.yosupo.jp/problem/inverse_matrix
 // https://judge.yosupo.jp/problem/system_of_linear_equations
 
 #pragma once
@@ -104,9 +105,9 @@ struct Matrix {
     }
 
     // 行基本変形を行い、逆行列を求める
-    Matrix inverse() {
-        assert(n == m);
-        if (n == 0) return Matrix(0, 0);
+    pair<bool, Matrix> inverse() {
+        if (n != m) return make_pair(false, Matrix(0, 0));
+        if (n == 0) return make_pair(true, Matrix(0, 0));
         Matrix ret = I(n);
         for (int j = 0; j < n; j++) {
             int pivot = j;
@@ -115,7 +116,7 @@ struct Matrix {
                 // if(abs(A[i][j]) > abs(A[pivot][j])) pivot = i; // T が小数の場合はこちら
             }
             swap(A[j], A[pivot]), swap(ret[j], ret[pivot]);
-            if (eq(A[j][j], T(0))) return Matrix(0, 0);
+            if (eq(A[j][j], T(0))) return make_pair(false, Matrix(0, 0));
             T r = T(1) / A[j][j];
             for (int k = j + 1; k < n; k++) A[j][k] *= r;
             for (int k = 0; k < n; k++) ret[j][k] *= r;
@@ -129,11 +130,11 @@ struct Matrix {
                 A[i][j] = T(0);
             }
         }
-        return ret;
+        return make_pair(true, ret);
     }
 
     // Ax = b の解の 1 つと解空間の基底の組を返す
-    vector<vector<T>> Gausiann_elimination(vector<T> b) {
+    vector<vector<T>> Gaussian_elimination(vector<T> b) {
         row_reduction(b);
         vector<vector<T>> ret;
         vector<int> p(n, m);
