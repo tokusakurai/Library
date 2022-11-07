@@ -18,6 +18,8 @@
 
 - [スライド最小値](Slide_Min.hpp)
 
+- [find first, find last](Find_First_Last.hpp)
+
 ## 累積和
 
 累積和を DP で前計算することによって区間和を効率的に求めることができる。
