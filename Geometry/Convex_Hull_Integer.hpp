@@ -23,7 +23,8 @@ vector<pair<T, T>> convex_hull_integer(vector<pair<T, T>> p) {
         while (k >= 2) {
             T x1 = ch[k - 1].first - ch[k - 2].first, y1 = ch[k - 1].second - ch[k - 2].second;
             T x2 = p[i].first - ch[k - 1].first, y2 = p[i].second - ch[k - 1].second;
-            if (x1 * y2 - x2 * y1 > 0) break;
+            // if (x1 * y2 - x2 * y1 > 0) break;
+            if (__int128_t(x1) * y2 - __int128_t(x2) * y1 > 0) break;
             k--;
         }
     }
@@ -31,7 +32,8 @@ vector<pair<T, T>> convex_hull_integer(vector<pair<T, T>> p) {
         while (k >= t) {
             T x1 = ch[k - 1].first - ch[k - 2].first, y1 = ch[k - 1].second - ch[k - 2].second;
             T x2 = p[i].first - ch[k - 1].first, y2 = p[i].second - ch[k - 1].second;
-            if (x1 * y2 - x2 * y1 > 0) break;
+            // if (x1 * y2 - x2 * y1 > 0) break;
+            if (__int128_t(x1) * y2 - __int128_t(x2) * y1 > 0) break;
             k--;
         }
     }
