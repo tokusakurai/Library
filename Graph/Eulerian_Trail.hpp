@@ -9,7 +9,7 @@
 // 有向グラフ：すべての頂点について (入次数) = (出次数)
 // 無向グラフ：全ての頂点の次数が偶数
 // 連結グラフがオイラー路をもつ（かつオイラー閉路はもたない）必要十分条件
-// 有向グラフ：(入次数) - (出次数) = 1,-1 である頂点がちょうど 1 つずつあり、それ以外は全て 0
+// 有向グラフ：(入次数) - (出次数) = +1, -1 である頂点がちょうど 1 つずつあり、それ以外は全て 0
 // 無向グラフ：次数が奇数である頂点がちょうど 2 つある
 
 // verified with
@@ -73,7 +73,8 @@ struct Eulerian_Trail {
         return ret;
     }
 
-    vector<vector<int>> eulerian_trail(bool use_id = false) { // 各連結成分に対してオイラー路を列挙
+    // 各連結成分に対してオイラー閉路を列挙
+    vector<vector<int>> eulerian_trail(bool use_id = false) {
         vector<vector<int>> ret;
         fill(begin(used_v), end(used_v), false);
         if (directed) {
@@ -92,7 +93,8 @@ struct Eulerian_Trail {
         return ret;
     }
 
-    vector<vector<int>> semi_eulerian_trail(bool use_id = false) { // 各連結成分に対して準オイラー路を列挙
+    // 各連結成分に対してオイラー路を列挙
+    vector<vector<int>> semi_eulerian_trail(bool use_id = false) {
         Union_Find_Tree uf(n);
         for (int i = 0; i < n; i++) {
             for (auto &e : es[i]) uf.unite(i, e.to);
