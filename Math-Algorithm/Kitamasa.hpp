@@ -28,7 +28,8 @@ struct Kitamasa {
         for (int i = 1; i <= d; i++) f[d - i] = -c[i];
     }
 
-    vector<T> mul(const vector<T> &p, const vector<T> &q) const { // p(x)*q(x) を f(x) で割った余り
+    // p(x)*q(x) を f(x) で割った余り
+    vector<T> mul(const vector<T> &p, const vector<T> &q) const {
         int n = p.size(), m = q.size();
         vector<T> ret(n + m - 1, 0);
         for (int i = 0; i < n; i++) {
@@ -41,7 +42,8 @@ struct Kitamasa {
         return ret;
     }
 
-    vector<T> pow(vector<T> p, long long n) const { // p(x)^n を f(x) で割った余り
+    // p(x)^n を f(x) で割った余り
+    vector<T> pow(vector<T> p, long long n) const {
         vector<T> ret(1, 0);
         ret[0] = 1;
         while (n) {
@@ -51,7 +53,8 @@ struct Kitamasa {
         return ret;
     }
 
-    T operator[](long long n) const { // a[n] (0-indexed)
+    // a[n] (0-indexed)
+    T operator[](long long n) const {
         if (n < d) return a[n];
         vector<T> x(d + 1, 0);
         x[1] = 1, x = pow(x, n);

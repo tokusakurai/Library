@@ -19,7 +19,8 @@ using namespace std;
 
 #include "../Math-Algorithm/Factor_Ring.hpp"
 
-long long modpow(long long x, long long n, const int &m, int &flag) { // 答えが m 以上になるなら flag を立てる
+// 答えが m 以上になるなら flag を立てる
+long long modpow(long long x, long long n, const int &m, int &flag) {
     long long ret = 1;
     for (; n > 0; n >>= 1, x *= x, x %= m) {
         if (n & 1) {
@@ -30,7 +31,8 @@ long long modpow(long long x, long long n, const int &m, int &flag) { // 答え�
     return ret;
 }
 
-long long modtetration(const long long &x, const long long &n, const int &m, int &flag) { // flag が立っていれば x^n は周期に入っている (n >= φ(m))
+// flag が立っていれば x^n は周期に入っている (n >= φ(m))
+long long modtetration(const long long &x, const long long &n, const int &m, int &flag) {
     if (m == 1) return flag = 1;
     if (x == 0) return (n & 1 ? 0 : 1);
     if (x == 1 || n == 0) return 1;

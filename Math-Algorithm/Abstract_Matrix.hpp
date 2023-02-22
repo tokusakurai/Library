@@ -9,6 +9,7 @@
 
 // verified with
 // https://atcoder.jp/contests/abc009/tasks/abc009_4
+// https://atcoder.jp/contests/abc236/tasks/abc236_g
 
 #pragma once
 #include <bits/stdc++.h>
@@ -98,3 +99,5 @@ struct Abstract_Matrix {
         return ret;
     }
 };
+
+// .x でアクセスすることに注意

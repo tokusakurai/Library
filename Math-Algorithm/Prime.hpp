@@ -52,8 +52,9 @@ bool is_prime(const T &n) {
     return true;
 }
 
+// 1,2,...,n のうち k と互いに素である自然数の個数
 template <typename T>
-T coprime(T n, T k) { // 1,2,...,n のうち k と互いに素である自然数の個数
+T count_coprime(T n, T k) {
     vector<pair<T, int>> ps = prime_factor(k);
     int m = ps.size();
     T ret = 0;
@@ -90,7 +91,8 @@ vector<int> Eratosthenes2(const int &n) {
     return ret;
 }
 
-vector<int> enumerate_prime(int n) { // n 以下の素数の列挙
+// n 以下の素数の列挙
+vector<int> enumerate_prime(int n) {
     if (n < 2) return {};
     if (n == 2) return {2};
     int m = n / 6;
@@ -113,8 +115,9 @@ vector<int> enumerate_prime(int n) { // n 以下の素数の列挙
     return ret;
 }
 
+// n 以下の素数の数え上げ
 template <typename T>
-T prime_count(T n) { // n 以下の素数の数え上げ
+T count_prime(T n) {
     if (n < 2) return 0;
     vector<T> ns = {0};
     for (T i = n; i > 0; i = n / (n / i + 1)) ns.push_back(i);

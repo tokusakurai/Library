@@ -28,7 +28,8 @@ struct Montgomery_Mod_Int_64 {
 
     Montgomery_Mod_Int_64(long long b) : x(reduce((u128(b) + mod) * n2)) {}
 
-    static u64 get_r() { // mod 2^64 での逆元
+    // mod 2^64 での逆元
+    static u64 get_r() {
         u64 ret = mod;
         for (int i = 0; i < 5; i++) ret *= 2 - mod * ret;
         return ret;

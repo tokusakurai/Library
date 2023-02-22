@@ -27,8 +27,9 @@ vector<T> gcd_convolve(vector<T> a, vector<T> b) {
     return a;
 }
 
+// lcm(i, j) >= n の場合は a[i] * b[j] は c[0] に足される
 template <typename T>
-vector<T> lcm_convolve(vector<T> a, vector<T> b) { // lcm(i, j) >= n の場合は a[i] * b[j] は c[0] に足される
+vector<T> lcm_convolve(vector<T> a, vector<T> b) {
     int n = a.size();
     assert((int)b.size() == n);
     divisors_zeta_transform(a, false), divisors_zeta_transform(b, false);

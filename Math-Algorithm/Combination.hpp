@@ -53,12 +53,14 @@ struct Combination {
         return fac(n) * ifac(n - k) * ifac(k);
     }
 
-    static T H(int n, int k) { // k 個の区別できない玉を n 個の区別できる箱に入れる場合の数
+    // n 個の区別できる箱に、k 個の区別できない玉を入れる場合の数
+    static T H(int n, int k) {
         if (n < 0 || k < 0) return 0;
         return k == 0 ? 1 : C(n + k - 1, k);
     }
 
-    static T second_stirling_number(int n, int k) { // n 個の区別できる玉を、k 個の区別しない箱に、各箱に 1 個以上玉が入るように入れる場合の数
+    // n 個の区別できる玉を、k 個の区別しない箱に、各箱に 1 個以上玉が入るように入れる場合の数
+    static T second_stirling_number(int n, int k) {
         T ret = 0;
         for (int i = 0; i <= k; i++) {
             T tmp = C(k, i) * T(i).pow(n);
@@ -67,7 +69,8 @@ struct Combination {
         return ret * ifac(k);
     }
 
-    static T bell_number(int n, int k) { // n 個の区別できる玉を、k 個の区別しない箱に入れる場合の数
+    // n 個の区別できる玉を、k 個の区別しない箱に入れる場合の数
+    static T bell_number(int n, int k) {
         if (n == 0) return 1;
         k = min(k, n);
         vector<T> pref(k + 1);
