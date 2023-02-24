@@ -17,27 +17,23 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template <typename Operator_Monoid>
+template <typename Operator>
 struct Dual_Segment_Tree {
-    using H = function<Operator_Monoid(Operator_Monoid, Operator_Monoid)>;
-    int n, height;
-    vector<Operator_Monoid> lazy;
-    const H h;
-    const Operator_Monoid e2;
+    using O = typename Operator::V;
+    int n, m, height;
+    vector<O> lazy;
 
-    // h(h(p,q),r) = h(p,h(q,r)), h(e2,p) = h(p,e2) = p
-
-    Dual_Segment_Tree(int m, const H &h, const Operator_Monoid &e2) : h(h), e2(e2) {
-        n = 1, height = 0;
-        while (n < m) n <<= 1, height++;
-        lazy.assign(2 * n, e2);
+    Dual_Segment_Tree(int n) : n(n) {
+        m = 1, height = 0;
+        while (m < n) m <<= 1, height++;
+        lazy.assign(2 * m, Operator::id);
     }
 
     inline void eval(int i) {
-        if (i < n && lazy[i] != e2) {
-            lazy[2 * i] = h(lazy[2 * i], lazy[i]);
-            lazy[2 * i + 1] = h(lazy[2 * i + 1], lazy[i]);
-            lazy[i] = e2;
+        if (i < m && lazy[i] != Operator::id) {
+            lazy[2 * i] = Operator::merge(lazy[2 * i], lazy[i]);
+            lazy[2 * i + 1] = Operator::merge(lazy[2 * i + 1], lazy[i]);
+            lazy[i] = Operator::id;
         }
     }
 
@@ -45,22 +41,22 @@ struct Dual_Segment_Tree {
         for (int j = height; j > 0; j--) eval(i >> j);
     }
 
-    void apply(int l, int r, const Operator_Monoid &x) {
+    void update(int l, int r, const O &x) {
         l = max(l, 0), r = min(r, n);
         if (l >= r) return;
-        l += n, r += n;
+        l += m, r += m;
         thrust(l), thrust(r - 1);
         while (l < r) {
-            if (l & 1) lazy[l] = h(lazy[l], x), l++;
-            if (r & 1) r--, lazy[r] = h(lazy[r], x);
+            if (l & 1) lazy[l] = Operator::merge(lazy[l], x), l++;
+            if (r & 1) r--, lazy[r] = Operator::merge(lazy[r], x);
             l >>= 1, r >>= 1;
         }
     }
 
-    Operator_Monoid get(int i) {
-        thrust(i + n);
-        return lazy[i + n];
+    O get(int i) {
+        thrust(i + m);
+        return lazy[i + m];
     }
 
-    Operator_Monoid operator[](int i) { return get(i); }
+    O operator[](int i) { return get(i); }
 };

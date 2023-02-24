@@ -20,6 +20,10 @@
 
 - [Binary Indexed Tree](Binary_Indexed_Tree.hpp)
 
+BIT を 2 本持つことによって、区間加算・区間和クエリを行える。
+
+- [区間加算・区間和](Range_Add_Range_Sum.hpp)
+
 Binary Indexed Tree に Binary Indexed Tree を乗せることで、2 次元平面上の 1 点加算と矩形和取得ができる。
 
 - [2 次元 Binary Indexed Tree](Binary_Indexed_Tree_2D.hpp)
@@ -43,6 +47,10 @@ Segment Tree に Segment Tree や双対 Segment Tree を乗せることで、2 �
 - [2 次元 Segment Tree](Segment_Tree_2D.hpp)
 
 - [2 次元双対 Segment Tree](Dual_Segment_Tree_2D.hpp)
+
+## 長方形の和集合の面積
+
+- [長方形の和集合の面積](Rectangle_Union_Area.hpp)
 
 ## スパーステーブル
 

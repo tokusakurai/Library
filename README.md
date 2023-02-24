@@ -14,4 +14,6 @@
 
 - [幾何](Geometry)
 
+- [代数構造](Algebraic-Structure)
+
 - [その他](Other)

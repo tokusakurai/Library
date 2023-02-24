@@ -41,12 +41,14 @@ struct Binary_Indexed_Tree {
 
     T sum(int i) const {
         i = min(i, n);
+        if (i <= 0) return 0;
         T ret = 0;
         for (; i > 0; i -= (i & -i)) ret += bit[i];
         return ret;
     }
 
     T query(int l, int r) const {
+        l = max(l, 0), r = min(r, n);
         if (l >= r) return 0;
         return sum(r) - sum(l);
     }

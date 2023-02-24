@@ -77,6 +77,7 @@
 - [Hopcroft-Karp 法](Hopcroft-Karp.hpp)
 
 ### 割り当て問題
+
 最小重み最大マッチングを求めるアルゴリズム。最小費用流問題の特殊ケースとなっている。
 
 - [Hungarian 法](Hungarian.hpp)

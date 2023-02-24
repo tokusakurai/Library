@@ -17,22 +17,20 @@ using namespace std;
 
 #include "../Data-Structure/Dual_Segment_Tree.hpp"
 
-// S は座標の型
-template <typename T, typename S>
+// C は座標の型
+template <typename Commutative_Operator, typename C>
 struct Dual_Segment_Tree_2D {
-    using H = function<T(T, T)>;
-    int n;
-    vector<S> xs;
-    vector<pair<S, S>> all_points;
-    vector<vector<pair<S, S>>> points;
-    vector<Dual_Segment_Tree<T>> segs;
-    const H h;
-    const T e2;
+    using O = typename Commutative_Operator::V;
+    int n, m;
+    vector<C> xs;
+    vector<pair<C, C>> all_points;
+    vector<vector<pair<C, C>>> points;
+    vector<Dual_Segment_Tree<Commutative_Operator>> segs;
 
-    Dual_Segment_Tree_2D(const H &h, const T &e2) : h(h), e2(e2) {}
+    Dual_Segment_Tree_2D() {}
 
     // 値が欲しい箇所を先に全て挿入しておく
-    void insert(const S &x, const S &y) {
+    void insert(const C &x, const C &y) {
         xs.push_back(x);
         all_points.emplace_back(x, y);
     }
@@ -40,55 +38,54 @@ struct Dual_Segment_Tree_2D {
     void build() {
         sort(begin(xs), end(xs));
         xs.erase(unique(begin(xs), end(xs)), end(xs));
-        int m = xs.size();
-        n = 1;
-        while (n < m) n <<= 1;
-        points.resize(2 * n);
+        n = xs.size(), m = 1;
+        while (m < n) m <<= 1;
+        points.resize(2 * m);
         for (auto &p : all_points) {
             auto [x, y] = p;
             int i = lower_bound(begin(xs), end(xs), x) - begin(xs);
-            i += n;
+            i += m;
             while (i) {
                 points[i].emplace_back(y, x);
                 i >>= 1;
             }
         }
-        for (int i = 0; i < 2 * n; i++) {
+        for (int i = 0; i < 2 * m; i++) {
             sort(begin(points[i]), end(points[i]));
             points[i].erase(unique(begin(points[i]), end(points[i])), end(points[i]));
-            segs.emplace_back((int)points[i].size(), h, e2);
+            segs.emplace_back((int)points[i].size());
         }
     }
 
-    void apply(const S &lx, const S &rx, const S &ly, const S &ry, const T &a) {
+    void update(const C &lx, const C &rx, const C &ly, const C &ry, const O &a) {
         int li = lower_bound(begin(xs), end(xs), lx) - begin(xs);
         int ri = lower_bound(begin(xs), end(xs), rx) - begin(xs);
-        li += n, ri += n;
-        S mi = (xs.empty() ? 0 : xs.front());
+        li += m, ri += m;
+        C mi = (xs.empty() ? 0 : xs.front());
         while (li < ri) {
             if (li & 1) {
                 int l = lower_bound(begin(points[li]), end(points[li]), make_pair(ly, mi)) - begin(points[li]);
                 int r = lower_bound(begin(points[li]), end(points[li]), make_pair(ry, mi)) - begin(points[li]);
-                segs[li].apply(l, r, a);
+                segs[li].update(l, r, a);
                 li++;
             }
             if (ri & 1) {
                 ri--;
                 int l = lower_bound(begin(points[ri]), end(points[ri]), make_pair(ly, mi)) - begin(points[ri]);
                 int r = lower_bound(begin(points[ri]), end(points[ri]), make_pair(ry, mi)) - begin(points[ri]);
-                segs[ri].apply(l, r, a);
+                segs[ri].update(l, r, a);
             }
             li >>= 1, ri >>= 1;
         }
     }
 
-    T get(const S &x, const S &y) {
-        T ret = e2;
+    O get(const C &x, const C &y) {
+        O ret = Commutative_Operator::id;
         int i = lower_bound(begin(xs), end(xs), x) - begin(xs);
-        i += n;
+        i += m;
         while (i) {
             int j = lower_bound(begin(points[i]), end(points[i]), make_pair(y, x)) - begin(points[i]);
-            ret = h(ret, segs[i].get(j));
+            ret = Commutative_Operator::merge(ret, segs[i].get(j));
             i >>= 1;
         }
         return ret;

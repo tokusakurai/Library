@@ -16,28 +16,26 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template <typename T>
+template <typename Idempotent_Monoid>
 struct Sparse_Table {
-    using F = function<T(T, T)>;
+    using M = typename Idempotent_Monoid::V;
     const int n;
     int height;
-    vector<vector<T>> st; // st[i][j] := 区間 [j,j+2^i) での演算の結果
+    vector<vector<M>> st; // st[i][j] := 区間 [j,j+2^i) での演算の結果
     vector<int> lookup;
-    const F f;
-    const T e;
 
     // f(f(a,b),c) = f(a,f(b,c)), f(e,a) = f(a,e) = a, f(a,a) = a
     // 例えば min や gcd はこれらを満たすが、+ や * は満たさない
 
-    Sparse_Table(const vector<T> &table, const F &f, const T &e) : n((int)table.size()), f(f), e(e) {
+    Sparse_Table(const vector<M> &table) : n((int)table.size()) {
         height = 0;
         while (n >> height) height++;
-        st.assign(height, vector<T>(n));
+        st.assign(height, vector<M>(n));
         for (int i = 0; i < n; i++) st[0][i] = table[i];
         for (int j = 0; j < height - 1; j++) {
             for (int i = 0; i < n; i++) {
                 if (i + (1 << j) < n) {
-                    st[j + 1][i] = f(st[j][i], st[j][i + (1 << j)]);
+                    st[j + 1][i] = Idempotent_Monoid::merge(st[j][i], st[j][i + (1 << j)]);
                 } else {
                     st[j + 1][i] = st[j][i];
                 }
@@ -47,11 +45,11 @@ struct Sparse_Table {
         for (int i = 1; i <= n; i++) lookup[i] = lookup[i / 2] + 1;
     }
 
-    T query(int l, int r) const {
-        if (l >= r) return e;
+    M query(int l, int r) const {
+        if (l >= r) return Idempotent_Monoid::id;
         int k = lookup[r - l];
-        return f(st[k][l], st[k][r - (1 << k)]);
+        return Idempotent_Monoid::merge(st[k][l], st[k][r - (1 << k)]);
     }
 
-    T operator[](int i) const { return st[0][i]; }
+    M operator[](int i) const { return st[0][i]; }
 };

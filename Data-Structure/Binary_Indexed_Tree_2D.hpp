@@ -18,19 +18,19 @@ using namespace std;
 
 #include "../Data-Structure/Binary_Indexed_Tree.hpp"
 
-// S は座標の型
-template <typename T, typename S>
+// C は座標の型
+template <typename T, typename C>
 struct Binary_Indexed_Tree_2D {
     int n;
-    vector<S> xs;
-    vector<pair<S, S>> all_points;
-    vector<vector<S>> ys;
+    vector<C> xs;
+    vector<pair<C, C>> all_points;
+    vector<vector<C>> ys;
     vector<Binary_Indexed_Tree<T>> bits;
 
     Binary_Indexed_Tree_2D() {}
 
     // 値を変更する箇所を先に全て挿入しておく
-    void insert(const S &x, const S &y) {
+    void insert(const C &x, const C &y) {
         xs.push_back(x);
         all_points.emplace_back(x, y);
     }
@@ -52,7 +52,7 @@ struct Binary_Indexed_Tree_2D {
         }
     }
 
-    void add(const S &x, const S &y, const T &a) {
+    void add(const C &x, const C &y, const T &a) {
         int i = lower_bound(begin(xs), end(xs), x) - begin(xs);
         for (i++; i <= n; i += (i & -i)) {
             int j = lower_bound(begin(ys[i]), end(ys[i]), y) - begin(ys[i]);
@@ -60,7 +60,7 @@ struct Binary_Indexed_Tree_2D {
         }
     }
 
-    T sum(const S &x, const S &ly, const S &ry) {
+    T sum(const C &x, const C &ly, const C &ry) {
         int i = lower_bound(begin(xs), end(xs), x) - begin(xs);
         T ret = 0;
         for (; i > 0; i -= (i & -i)) {
@@ -71,5 +71,8 @@ struct Binary_Indexed_Tree_2D {
         return ret;
     }
 
-    T query(const S &lx, const S &rx, const S &ly, const S &ry) { return sum(rx, ly, ry) - sum(lx, ly, ry); }
+    T query(const C &lx, const C &rx, const C &ly, const C &ry) {
+        if (lx >= rx) return 0;
+        return sum(rx, ly, ry) - sum(lx, ly, ry);
+    }
 };

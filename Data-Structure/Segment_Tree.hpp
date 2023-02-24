@@ -22,88 +22,82 @@ using namespace std;
 
 template <typename Monoid>
 struct Segment_Tree {
-    using F = function<Monoid(Monoid, Monoid)>;
-    int n;
-    vector<Monoid> seg;
-    const F f;
-    const Monoid e1;
+    using M = typename Monoid::V;
+    int n, m;
+    vector<M> seg;
 
     // f(f(a,b),c) = f(a,f(b,c)), f(e1,a) = f(a,e1) = a
 
-    Segment_Tree(const vector<Monoid> &v, const F &f, const Monoid &e1) : f(f), e1(e1) {
-        int m = v.size();
-        n = 1;
-        while (n < m) n <<= 1;
-        seg.assign(2 * n, e1);
-        copy(begin(v), end(v), seg.begin() + n);
-        for (int i = n - 1; i > 0; i--) seg[i] = f(seg[2 * i], seg[2 * i + 1]);
+    Segment_Tree(const vector<M> &v) : n(v.size()) {
+        m = 1;
+        while (m < n) m <<= 1;
+        seg.assign(2 * m, Monoid::id);
+        copy(begin(v), end(v), begin(seg) + m);
+        for (int i = m - 1; i > 0; i--) seg[i] = Monoid::merge(seg[2 * i], seg[2 * i + 1]);
     }
 
-    Segment_Tree(int m, const Monoid &x, const F &f, const Monoid &e1) : Segment_Tree(vector<Monoid>(m, x), f, e1) {}
+    Segment_Tree(int n, const M &x) : Segment_Tree(vector<M>(n, x)) {}
 
-    void change(int i, const Monoid &x, bool update = true) {
-        if (update) {
-            seg[i + n] = x;
-        } else {
-            seg[i + n] = f(seg[i + n], x);
-        }
-        i += n;
-        while (i >>= 1) seg[i] = f(seg[2 * i], seg[2 * i + 1]);
+    void update(int i, const M &x, bool apply = false) {
+        seg[i + m] = apply ? Monoid::merge(seg[i + m], x) : x;
+        i += m;
+        while (i >>= 1) seg[i] = Monoid::merge(seg[2 * i], seg[2 * i + 1]);
     }
 
-    Monoid query(int l, int r) const {
+    M query(int l, int r) const {
         l = max(l, 0), r = min(r, n);
-        Monoid L = e1, R = e1;
-        l += n, r += n;
+        M L = Monoid::id, R = Monoid::id;
+        l += m, r += m;
         while (l < r) {
-            if (l & 1) L = f(L, seg[l++]);
-            if (r & 1) R = f(seg[--r], R);
+            if (l & 1) L = Monoid::merge(L, seg[l++]);
+            if (r & 1) R = Monoid::merge(seg[--r], R);
             l >>= 1, r >>= 1;
         }
-        return f(L, R);
+        return Monoid::merge(L, R);
     }
 
-    Monoid operator[](int i) const { return seg[n + i]; }
+    M operator[](int i) const { return seg[i + m]; }
 
     template <typename C>
-    int find_subtree(int i, const C &check, const Monoid &x, Monoid &M, int type) const {
-        while (i < n) {
-            Monoid nxt = type ? f(seg[2 * i + type], M) : f(M, seg[2 * i + type]);
-            if (check(nxt, x)) {
+    int find_subtree(int i, const C &check, M &x, int type) const {
+        while (i < m) {
+            M nxt = type ? Monoid::merge(seg[2 * i + type], x) : Monoid::merge(x, seg[2 * i + type]);
+            if (check(nxt)) {
                 i = 2 * i + type;
             } else {
-                M = nxt;
+                x = nxt;
                 i = 2 * i + (type ^ 1);
             }
         }
-        return i - n;
+        return i - m;
     }
 
-    // check((区間 [l,r] での演算結果), x) を満たす最小の r (存在しなければ n 以上の値)
+    // check(区間 [l,r] での演算結果) を満たす最小の r (存在しなければ n)
     template <typename C>
-    int find_first(int l, const C &check, const Monoid &x) const {
-        Monoid L = e1;
-        int a = l + n, b = n + n;
+    int find_first(int l, const C &check) const {
+        M L = Monoid::id;
+        int a = l + m, b = 2 * m;
         while (a < b) {
             if (a & 1) {
-                Monoid nxt = f(L, seg[a]);
-                if (check(nxt, x)) return find_subtree(a, check, x, L, 0);
-                L = nxt, a++;
+                M nxt = Monoid::merge(L, seg[a]);
+                if (check(nxt)) return find_subtree(a, check, L, 0);
+                L = nxt;
+                a++;
             }
             a >>= 1, b >>= 1;
         }
         return n;
     }
 
-    // check((区間 [l,r) での演算結果), x) を満たす最大の l (存在しなければ -1)
+    // check((区間 [l,r) での演算結果)) を満たす最大の l (存在しなければ -1)
     template <typename C>
-    int find_last(int r, const C &check, const Monoid &x) const {
-        Monoid R = e1;
-        int a = n, b = r + n;
+    int find_last(int r, const C &check) const {
+        M R = Monoid::id;
+        int a = m, b = r + m;
         while (a < b) {
             if ((b & 1) || a == 1) {
-                Monoid nxt = f(seg[--b], R);
-                if (check(nxt, x)) return find_subtree(b, check, x, R, 1);
+                M nxt = Monoid::merge(seg[--b], R);
+                if (check(nxt)) return find_subtree(b, check, R, 1);
                 R = nxt;
             }
             a >>= 1, b >>= 1;
