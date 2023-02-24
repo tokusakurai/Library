@@ -60,6 +60,8 @@
 
 - [木上の最小シュタイナー木](Dynamic_Steiner_Tree.hpp)
 
+- [Auxiliary Tree](Auxiliary_Tree.hpp) （最小シュタイナー木のパスを圧縮して得られる木を構築する）
+
 ## 根付き木の同型性判定
 
 根付き木の各部分木を同型性に基づいて分類する。
