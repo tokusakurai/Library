@@ -20,6 +20,8 @@
 
 - [剰余環における演算](Factor_Ring.hpp)（累乗、オイラーの φ 関数、離散対数、位数、原始根）
 
+- [原子根](Primitive_Root.hpp)
+
 - [テトレーション](Tetration.hpp)
 
 ## mod-int 構造体
