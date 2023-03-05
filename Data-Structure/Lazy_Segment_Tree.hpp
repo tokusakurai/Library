@@ -13,6 +13,7 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_H&lang=ja
 // https://judge.yosupo.jp/problem/range_affine_range_sum
 // https://codeforces.com/contest/1404/problem/C
+// https://atcoder.jp/contests/abc292/tasks/abc292_h
 
 #pragma once
 #include <bits/stdc++.h>
@@ -97,7 +98,7 @@ struct Lazy_Segment_Tree {
         while (i < m) {
             eval(i);
             M nxt = type ? Monoid::merge(reflect(2 * i + type), x) : Monoid::merge(x, reflect(2 * i + type));
-            if (check(nxt, x)) {
+            if (check(nxt)) {
                 i = 2 * i + type;
             } else {
                 x = nxt;
