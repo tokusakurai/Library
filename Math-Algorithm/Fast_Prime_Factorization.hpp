@@ -16,15 +16,15 @@ using namespace std;
 #include "../Math-Algorithm/Montgomery_Mod_Int_64.hpp"
 #include "../Other/Random.hpp"
 
-bool Miller_Rabin(unsigned long long n, vector<unsigned long long> as) {
+bool Miller_Rabin(long long n, vector<long long> as) {
     using Mint = Montgomery_Mod_Int_64;
     if (Mint::get_mod() != n) Mint::set_mod(n);
-    unsigned long long d = n - 1;
+    long long d = n - 1;
     while (!(d & 1)) d >>= 1;
     Mint e = 1, rev = n - 1;
-    for (unsigned long long a : as) {
+    for (long long a : as) {
         if (n <= a) break;
-        unsigned long long t = d;
+        long long t = d;
         Mint y = Mint(a).pow(t);
         while (t != n - 1 && y != e && y != rev) {
             y *= y;
@@ -35,14 +35,14 @@ bool Miller_Rabin(unsigned long long n, vector<unsigned long long> as) {
     return true;
 }
 
-bool is_prime(unsigned long long n) {
+bool is_prime(long long n) {
     if (!(n & 1)) return n == 2;
     if (n <= 1) return false;
     if (n < (1LL << 30)) return Miller_Rabin(n, {2, 7, 61});
     return Miller_Rabin(n, {2, 325, 9375, 28178, 450775, 9780504, 1795265022});
 }
 
-unsigned long long Pollard_rho(unsigned long long n) {
+long long Pollard_rho(long long n) {
     using Mint = Montgomery_Mod_Int_64;
     if (!(n & 1)) return 2;
     if (is_prime(n)) return n;
@@ -53,7 +53,7 @@ unsigned long long Pollard_rho(unsigned long long n) {
     while (true) {
         Mint x, y, ys, q = one;
         R = rnd(), y = rnd();
-        unsigned long long g = 1;
+        long long g = 1;
         int m = 128;
         for (int r = 1; g == 1; r <<= 1) {
             x = y;
@@ -72,9 +72,9 @@ unsigned long long Pollard_rho(unsigned long long n) {
     return 0;
 }
 
-vector<unsigned long long> factorize(unsigned long long n) {
+vector<long long> factorize(long long n) {
     if (n <= 1) return {};
-    unsigned long long p = Pollard_rho(n);
+    long long p = Pollard_rho(n);
     if (p == n) return {n};
     auto l = factorize(p);
     auto r = factorize(n / p);
@@ -82,10 +82,10 @@ vector<unsigned long long> factorize(unsigned long long n) {
     return l;
 }
 
-vector<pair<unsigned long long, int>> prime_factor(unsigned long long n) {
+vector<pair<long long, int>> prime_factor(long long n) {
     auto ps = factorize(n);
     sort(begin(ps), end(ps));
-    vector<pair<unsigned long long, int>> ret;
+    vector<pair<long long, int>> ret;
     for (auto &e : ps) {
         if (!ret.empty() && ret.back().first == e) {
             ret.back().second++;
@@ -93,5 +93,23 @@ vector<pair<unsigned long long, int>> prime_factor(unsigned long long n) {
             ret.emplace_back(e, 1);
         }
     }
+    return ret;
+}
+
+vector<long long> divisors(long long n) {
+    auto ps = prime_factor(n);
+    int cnt = 1;
+    for (auto &[p, t] : ps) cnt *= t + 1;
+    vector<long long> ret(cnt, 1);
+    cnt = 1;
+    for (auto &[p, t] : ps) {
+        long long pw = 1;
+        for (int i = 1; i <= t; i++) {
+            pw *= p;
+            for (int j = 0; j < cnt; j++) ret[cnt * i + j] = ret[j] * pw;
+        }
+        cnt *= t + 1;
+    }
+    sort(begin(ret), end(ret));
     return ret;
 }
