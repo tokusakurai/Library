@@ -9,12 +9,13 @@
 
 // verified with
 // https://judge.yosupo.jp/problem/lca
-// https://atcoder.jp/contests/abc014/tasks/abc014_4
+// https://atcoder.jp/contests/abc294/tasks/abc294_g
 
 #pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
+#include "../Algebraic-Structure/Monoid_Example.hpp"
 #include "../Data-Structure/Segment_Tree.hpp"
 
 template <bool directed = false>
@@ -25,15 +26,13 @@ struct Euler_Tour_Path {
     };
 
     vector<vector<edge>> es;
-    vector<int> depth, p;
-    vector<int> l, r; // 辺 i は l[i] 回目と r[i] 回目に通る。
-    using P = pair<int, int>;
-    const function<P(P, P)> f = [](const P &a, const P &b) { return min(a, b); };
-    Segment_Tree<P> seg;
+    vector<int> depth, id_v, vs; // 根から頂点 i までのパスに相当する区間は [0, id_v[i])
+    vector<int> down, up;        // 辺 i の行き帰りに対応する番号
+    Segment_Tree<Min_Monoid<int>> seg;
     const int n;
     int m;
 
-    Euler_Tour_Path(int n) : es(n), depth(n), p(n), seg(2 * n - 1, {n, -1}, f, {n, -1}), n(n), m(0) {}
+    Euler_Tour_Path(int n) : es(n), depth(n), id_v(n), vs(2 * n - 1), seg(2 * n - 1, Min_Monoid<int>::id), n(n), m(0) {}
 
     void add_edge(int from, int to) {
         es[from].emplace_back(to, m);
@@ -41,28 +40,31 @@ struct Euler_Tour_Path {
         m++;
     }
 
-    void _dfs(int now, int pre, int &cnt1, int &cnt2) {
-        p[now] = cnt1++;
+    void _dfs(int now, int pre, int &cnt_v, int &cnt_e) {
+        id_v[now] = cnt_v, vs[cnt_v] = now;
         depth[now] = (pre == -1 ? 0 : depth[pre] + 1);
-        seg.change(p[now], {depth[now], now});
+        seg.update(cnt_v++, depth[now]);
         for (auto &e : es[now]) {
             if (e.to == pre) continue;
-            l[e.id] = cnt2++;
-            _dfs(e.to, now, cnt1, cnt2);
-            r[e.id] = cnt2++;
-            seg.change(cnt1++, {depth[now], now});
+            down[e.id] = cnt_e++;
+            _dfs(e.to, now, cnt_v, cnt_e);
+            up[e.id] = cnt_e++;
+            vs[cnt_v] = now;
+            seg.update(cnt_v++, depth[now]);
         }
     }
 
     void build(int root = 0) {
-        l.resize(m), r.resize(m);
-        int cnt1 = 0, cnt2 = 0;
-        _dfs(root, -1, cnt1, cnt2);
+        down.resize(m), up.resize(m);
+        int cnt_v = 0, cnt_e = 0;
+        _dfs(root, -1, cnt_v, cnt_e);
     }
 
-    // w = lca(u,v) とすると、u-v パスは [p[w],p[u]) と [p[w],p[v]) を合算したものになる。
+    // [0, id_v[u]) +  [0, id_v[v]) - [0, id_v[lca(u, v)]) * 2 のようにして使う
     int lca(int u, int v) const {
-        if (p[u] > p[v]) swap(u, v);
-        return seg.query(p[u], p[v] + 1).second;
+        if (id_v[u] > id_v[v]) swap(u, v);
+        int d = seg.query(id_v[u], id_v[v] + 1);
+        auto c = [d](int x) { return x <= d; };
+        return vs[seg.find_first(id_v[u], c)];
     }
 };
