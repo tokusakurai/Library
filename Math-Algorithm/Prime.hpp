@@ -1,7 +1,8 @@
 
 // 素数・約数に関する計算
 // 計算量 約数列挙・素因数分解・素数判定：O(√n)、1,2,...,n のうち k と互いに素な自然数の数え上げ：O(2^#{k の素因数})
-// エラトステネスの篩：O(n log(log(n)))、n 以下の素数の数え上げ：O(n^(3/4)/log(n))
+// エラトステネスの篩：O(n log(log(n)))、オイラーの φ 関数テーブル：O(n log(log(n)))
+// n 以下の素数の数え上げ：O(n^(3/4)/log(n))
 
 // 概要
 // 約数列挙・素因数分解・素数判定：自然数 n の素因数で √n より大きいものは高々 1 つなので、√n 以下の数全てについて割り切れるか調べる。
@@ -13,6 +14,7 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=NTL_1_A&lang=jp
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_1_C&lang=jp
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_1_C
+// https://yukicoder.me/problems/no/2249
 
 #pragma once
 #include <bits/stdc++.h>
@@ -113,6 +115,22 @@ vector<int> enumerate_prime(int n) {
         }
     }
     return ret;
+}
+
+// i 以下で i と互いに素な自然数の個数のテーブル
+vector<int> Euler_totient_table(const int &n) {
+    vector<int> dp(n + 1, 0);
+    for (int i = 1; i <= n; i++) dp[i] = i;
+    for (int i = 2; i <= n; i++) {
+        if (dp[i] == i) {
+            dp[i]--;
+            for (int j = i + i; j <= n; j += i) {
+                dp[j] /= i;
+                dp[j] *= i - 1;
+            }
+        }
+    }
+    return dp;
 }
 
 // n 以下の素数の数え上げ
