@@ -41,6 +41,13 @@ int flg(T x, int i) {
     return (x >> i) & 1;
 }
 
+int popcount(int x) { return __builtin_popcount(x); }
+int popcount(ll x) { return __builtin_popcountll(x); }
+int topbit(int x) { return (x == 0 ? -1 : 31 - __builtin_clz(x)); }
+int topbit(ll x) { return (x == 0 ? -1 : 63 - __builtin_clzll(x)); }
+int botbit(int x) { return (x == 0 ? -1 : __builtin_ctz(x)); }
+int botbit(ll x) { return (x == 0 ? -1 : __builtin_ctzll(x)); }
+
 template <typename T>
 void print(const vector<T> &v, T x = 0) {
     int n = v.size();
