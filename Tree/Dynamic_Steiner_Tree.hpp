@@ -16,105 +16,47 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+#include "../Data-Structure/Binary_Indexed_Tree.hpp"
+#include "../Tree/Heavy-Light_Decomposition.hpp"
+
 template <bool directed = false>
-struct Graph {
-    struct edge {
-        int to, id;
-        edge(int to, int id) : to(to), id(id) {}
-    };
+struct Dynamic_Steiner_Tree : Heavy_Light_Decomposition<directed> {
+    using H = Heavy_Light_Decomposition<directed>;
+    Binary_Indexed_Tree<int> bit;
+    vector<int> cnt;
+    int si, Steiner_size;
 
-    vector<vector<edge>> es;
-    const int n;
-    int m;
-
-    // par[i][j] := 頂点 j の 2^i 個前の祖先
-    vector<vector<int>> par;
-    vector<int> depth;
-    int height;
-
-    vector<int> vs, ids;
-    set<int> s;
-    int Steiner_size;
-
-    Graph(int n) : es(n), n(n), m(0), depth(n), ids(n), Steiner_size(0) {
-        height = 1;
-        while ((1 << height) < n) height++;
-        par.assign(height, vector<int>(n));
-    }
-
-    void add_edge(int from, int to) {
-        es[from].emplace_back(to, m);
-        if (!directed) es[to].emplace_back(from, m);
-        m++;
-    }
-
-    void prepare(int now, int pre = -1) {
-        if (pre == -1) depth[now] = 0;
-        par[0][now] = pre;
-        ids[now] = vs.size();
-        vs.push_back(now);
-        for (auto &e : es[now]) {
-            if (e.to != pre) {
-                depth[e.to] = depth[now] + 1;
-                prepare(e.to, now);
-            }
-        }
-    }
-
-    // root を根として前準備する
-    void build(int root = 0) {
-        prepare(root);
-        for (int j = 0; j < height - 1; j++) {
-            for (int i = 0; i < n; i++) {
-                if (par[j][i] == -1) {
-                    par[j + 1][i] = -1;
-                } else {
-                    par[j + 1][i] = par[j][par[j][i]];
-                }
-            }
-        }
-    }
-
-    int lca(int u, int v) {
-        if (depth[u] < depth[v]) swap(u, v);
-        int D = depth[u] - depth[v];
-        for (int i = 0; i < height; i++) {
-            if ((D >> i) & 1) u = par[i][u];
-        }
-        if (u == v) return u;
-        for (int i = height - 1; i >= 0; i--) {
-            if (par[i][u] != par[i][v]) u = par[i][u], v = par[i][v];
-        }
-        return par[0][u];
-    }
-
-    int dist(int u, int v) { return depth[u] + depth[v] - 2 * depth[lca(u, v)]; }
+    Dynamic_Steiner_Tree(int n) : H(n), bit(n, 0), cnt(n, 0), si(0), Steiner_size(0) {}
 
     int insert(int x) {
-        if (s.count(ids[x])) return Steiner_size;
-        if (s.empty()) {
-            Steiner_size++;
-        } else {
-            auto l = s.upper_bound(ids[x]);
-            auto r = l--;
-            if (r == begin(s) || r == end(s)) l = begin(s), r = end(s), r--;
-            Steiner_size += (dist(vs[*l], x) + dist(x, vs[*r]) - dist(vs[*l], vs[*r])) / 2;
+        if (cnt[x]++ != 0) return Steiner_size;
+        int c = bit.sum(this->id_v[x]);
+        int l = (c == 0 ? -1 : bit.lower_bound(c));
+        int r = bit.lower_bound(c + 1);
+        if (l == -1 && r == this->n) {
+            bit.add(this->id_v[x], 1);
+            si++;
+            return ++Steiner_size;
         }
-        s.insert(ids[x]);
-        return Steiner_size;
+        if (l == -1) l = r, r = bit.lower_bound(si);
+        if (r == this->n) r = l, l = bit.lower_bound(1);
+        l = this->vs[l], r = this->vs[r];
+        bit.add(this->id_v[x], 1);
+        si++;
+        return Steiner_size += (this->dist(x, l) + this->dist(x, r) - this->dist(l, r)) / 2;
     }
 
     int erase(int x) {
-        if (!s.count(ids[x])) return Steiner_size;
-        s.erase(ids[x]);
-        if (s.empty()) {
-            Steiner_size--;
-        } else {
-            auto l = s.upper_bound(ids[x]);
-            auto r = l--;
-            if (r == begin(s) || r == end(s)) l = begin(s), r = end(s), r--;
-            Steiner_size -= (dist(vs[*l], x) + dist(x, vs[*r]) - dist(vs[*l], vs[*r])) / 2;
-        }
-        return Steiner_size;
+        if (--cnt[x] != 0) return Steiner_size;
+        bit.add(this->id_v[x], -1);
+        si--;
+        int c = bit.sum(this->id_v[x]);
+        int l = (c == 0 ? -1 : bit.lower_bound(c));
+        int r = bit.lower_bound(c + 1);
+        if (l == -1 && r == this->n) return --Steiner_size;
+        if (l == -1) l = r, r = bit.lower_bound(si);
+        if (r == this->n) r = l, l = bit.lower_bound(1);
+        l = this->vs[l], r = this->vs[r];
+        return Steiner_size -= (this->dist(x, l) + this->dist(x, r) - this->dist(l, r)) / 2;
     }
 };
