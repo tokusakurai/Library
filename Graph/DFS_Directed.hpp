@@ -38,7 +38,6 @@ struct Graph {
 
     void _dfs(int now) {
         used[now] = true;
-        int s = 0;
         for (auto &e : es[now]) {
             if (!used[e.to]) _dfs(e.to);
         }
