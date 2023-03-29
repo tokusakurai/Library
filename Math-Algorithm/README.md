@@ -167,3 +167,7 @@ FFT (NTT) を用いることで、多変数多項式の積を次数が大きく�
 - [ラグランジュ補間（多項式）](Polynomial_Interpolation.hpp)（多点での値から多項式そのものを復元する）
 
 - [多点評価](Multipoint_Evaluation.hpp)（多項式が与えられたときに多点での値を求める）
+
+## 階段状のグリッドにおける最短経路数え上げ
+
+- [階段状のグリッドにおける最短経路数え上げ](Step_Grid_Path_Count.hpp)
