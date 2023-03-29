@@ -1,87 +1,86 @@
 
 // 永続 Segment Tree
-// 計算量 1 点更新・区間取得：O(log(n))、複製：O(1)
+// 計算量 1 点更新・区間取得：O(log(n))
 // 空間計算量 O(n+q log(n))（q はクエリの回数）
 
 // 概要
 // 永続配列とほぼ同様にして実装できる。
 
+// verified with
+// https://atcoder.jp/contests/abc253/tasks/abc253_f
+
 #pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
-template <typename Monoid>
+template <typename Monoid, bool del = false>
 struct Persistent_Segment_Tree {
-    using F = function<Monoid(Monoid, Monoid)>;
+    using M = typename Monoid::V;
 
     struct Node {
         Node *lch, *rch;
-        Monoid x;
+        M x;
 
-        Node(Node *lch, Node *rch, const Monoid &x) : lch(lch), rch(rch), x(x) {}
+        Node(Node *lch, Node *rch, const M &x) : lch(lch), rch(rch), x(x) {}
     };
 
-    Node *root;
-    vector<Node *> used;
     int n;
-    const F f;
-    const Monoid e1;
+    unordered_map<int, Node *> root;
+    vector<Node *> used;
 
-    Persistent_Segment_Tree(const vector<Monoid> &v, const F &f, const Monoid &e1) : f(f), e1(e1) { resize(v); }
+    Persistent_Segment_Tree(const vector<M> &v, int init_id = 0) { resize(v, init_id); }
 
-    Persistent_Segment_Tree(int m, const Monoid &x, const F &f, const Monoid &e1) : f(f), e1(e1) { resize(m, x); }
-
-    Persistent_Segment_Tree(const F &f, const Monoid &e1) : root(NULL), f(f), e1(e1) {}
+    Persistent_Segment_Tree(int n, const M &x, int init_id = 0) { resize(n, x, init_id); }
 
     ~Persistent_Segment_Tree() {
         for (int i = 0; i < (int)used.size(); i++) delete used[i];
     }
 
-    void copy(const Persistent_Segment_Tree<Monoid> &seg) {
-        root = seg.root;
-        n = seg.n;
-    }
-
-    Node *make_node(Node *lch, Node *rch, const Monoid &x) {
+    Node *make_node(Node *lch, Node *rch, const M &x) {
         Node *ret = new Node(lch, rch, x);
-        used.push_back(ret);
+        if (del) used.push_back(ret);
         return ret;
     }
 
-    Node *make_node(const Monoid &x) { return make_node(NULL, NULL, x); }
+    Node *make_node(const M &x) { return make_node(NULL, NULL, x); }
 
-    void resize(const vector<Monoid> &v) {
+    void resize(const vector<M> &v, int init_id = 0) {
         n = v.size();
-        root = build(v, 0, n);
+        root[init_id] = build(v, 0, n);
     }
 
-    void resize(int m, const Monoid &x) { resize(vector<Monoid>(m, x)); }
+    void resize(int n, const M &x, int init_id = 0) { resize(vector<M>(n, x), init_id); }
 
-    Node *merge(Node *lch, Node *rch) { return make_node(lch, rch, f(lch->x, rch->x)); }
+    Node *merge(Node *lch, Node *rch) { return make_node(lch, rch, Monoid::merge(lch->x, rch->x)); }
 
-    Node *build(const vector<Monoid> &v, int l, int r) {
+    Node *build(const vector<M> &v, int l, int r) {
         if (r - l == 1) return make_node(v[l]);
         int m = (l + r) >> 1;
         return merge(build(v, l, m), build(v, m, r));
     }
 
-    Node *change(int i, const Monoid &x, int l, int r, Node *pre) {
+    Node *update(int i, const M &x, int l, int r, Node *pre) {
         if (r - l == 1) return make_node(x);
         int m = (l + r) >> 1;
-        if (i < m) return merge(change(i, x, l, m, pre->lch), pre->rch);
-        return merge(pre->lch, change(i, x, m, r, pre->rch));
+        if (i < m) return merge(update(i, x, l, m, pre->lch), pre->rch);
+        return merge(pre->lch, update(i, x, m, r, pre->rch));
     }
 
-    void change(int i, const Monoid &x) { root = change(i, x, 0, n, root); }
+    // ref_id に対応するデータから派生して new_id に対応する新しいデータを作る
+    void update(int ref_id, int new_id, int i, const M &x, bool apply = false) {
+        assert(root.count(ref_id));
+        root[new_id] = update(i, apply ? Monoid::merge(query(ref_id, i, i + 1), x) : x, 0, n, root[ref_id]);
+    }
 
-    Monoid query(int a, int b, int l, int r, Node *now) const {
-        if (a >= b || b <= l || r <= a) return e1;
+    M query(int a, int b, int l, int r, Node *now) const {
+        if (a >= b || b <= l || r <= a) return Monoid::id;
         if (a <= l && r <= b) return now->x;
         int m = (l + r) >> 1;
-        return f(query(a, b, l, m, now->lch), query(a, b, m, r, now->rch));
+        return Monoid::merge(query(a, b, l, m, now->lch), query(a, b, m, r, now->rch));
     }
 
-    Monoid query(int l, int r) const { return query(l, r, 0, n, root); }
-
-    Monoid operator[](int i) const { return query(i, i + 1); }
+    M query(int ref_id, int l, int r) {
+        assert(root.count(ref_id));
+        return query(l, r, 0, n, root[ref_id]);
+    }
 };

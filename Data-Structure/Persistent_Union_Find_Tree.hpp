@@ -19,33 +19,28 @@ using namespace std;
 struct Persistent_Union_Find_Tree {
     Persistent_Array<int> data;
 
-    Persistent_Union_Find_Tree(int n) : data(n, -1) {}
-
-    Persistent_Union_Find_Tree() : data() {}
+    Persistent_Union_Find_Tree(int n, int init_id = 0) : data(n, -1, init_id) {}
 
     void resize(int n) { data.resize(n, -1); }
 
-    void copy(const Persistent_Union_Find_Tree &uf) { data.copy(uf.data); }
-
-    int root(int x) const {
-        int y = data.get(x);
+    int root(int ref_id, int x) {
+        int y = data.get(ref_id, x);
         if (y < 0) return x;
-        return root(y);
+        return root(ref_id, y);
     }
 
-    int operator[](int i) const { return root(i); }
-
-    bool unite(int x, int y) {
-        x = root(x), y = root(y);
+    // ref_id に対応するデータから派生して new_id に対応する新しいデータを作る
+    bool unite(int ref_id, int new_id, int x, int y) {
+        x = root(ref_id, x), y = root(ref_id, y);
         if (x == y) return false;
-        int a = data.get(x), b = data.get(y);
+        int a = data.get(ref_id, x), b = data.get(ref_id, y);
         if (a > b) swap(x, y), swap(a, b);
-        data.change(x, a + b);
-        data.change(y, x);
+        data.update(ref_id, new_id, x, a + b);
+        data.update(new_id, new_id, y, x);
         return true;
     }
 
-    int size(int x) const { return -data.get(root(x)); }
+    int size(int ref_id, int x) { return -data.get(ref_id, root(ref_id, x)); }
 
-    bool same(int x, int y) const { return root(x) == root(y); }
+    bool same(int ref_id, int x, int y) { return root(ref_id, x) == root(ref_id, y); }
 };

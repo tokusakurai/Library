@@ -12,7 +12,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template <typename T>
+template <typename T, bool del = false>
 struct Persistent_Array {
     struct Node {
         Node *lch, *rch;
@@ -23,15 +23,13 @@ struct Persistent_Array {
         Node(Node *lch, Node *rch) : lch(lch), rch(rch) {}
     };
 
-    Node *root;
-    vector<Node *> used;
     int n;
+    unordered_map<int, Node *> root;
+    vector<Node *> used;
 
-    Persistent_Array(const vector<T> &v) { resize(v); }
+    Persistent_Array(const vector<T> &v, int init_id = 0) { resize(v, init_id); }
 
-    Persistent_Array(int m, const T &x) { resize(m, x); }
-
-    Persistent_Array() : root(NULL) {}
+    Persistent_Array(int n, const T &x, int init_id = 0) { resize(n, x, init_id); }
 
     ~Persistent_Array() {
         for (int i = 0; i < (int)used.size(); i++) delete used[i];
@@ -39,7 +37,7 @@ struct Persistent_Array {
 
     Node *make_node(Node *lch, Node *rch, const T &x) {
         Node *ret = new Node(lch, rch, x);
-        used.push_back(ret);
+        if (del) used.push_back(ret);
         return ret;
     }
 
@@ -47,16 +45,16 @@ struct Persistent_Array {
 
     Node *make_node(Node *lch, Node *rch) {
         Node *ret = new Node(lch, rch);
-        used.push_back(ret);
+        if (del) used.push_back(ret);
         return ret;
     }
 
-    void resize(const vector<T> &v) {
+    void resize(const vector<T> &v, int init_id = 0) {
         n = v.size();
-        root = build(v, 0, n);
+        root[init_id] = build(v, 0, n);
     }
 
-    void resize(int m, const T &x) { resize(vector<T>(m, x)); }
+    void resize(int n, const T &x, int init_id = 0) { resize(vector<T>(n, x), init_id); }
 
     Node *build(const vector<T> &v, int l, int r) {
         if (r - l == 1) return make_node(v[l]);
@@ -64,19 +62,18 @@ struct Persistent_Array {
         return make_node(build(v, l, m), build(v, m, r));
     }
 
-    void copy(const Persistent_Array<T> &a) {
-        root = a.root;
-        n = a.n;
-    }
-
-    Node *change(int i, const T &x, int l, int r, Node *pre) {
+    Node *update(int i, const T &x, int l, int r, Node *pre) {
         if (r - l == 1) return make_node(x);
         int m = (l + r) >> 1;
-        if (i < m) return make_node(change(i, x, l, m, pre->lch), pre->rch);
-        return make_node(pre->lch, change(i, x, m, r, pre->rch));
+        if (i < m) return make_node(update(i, x, l, m, pre->lch), pre->rch);
+        return make_node(pre->lch, update(i, x, m, r, pre->rch));
     }
 
-    void change(int i, const T &x) { root = change(i, x, 0, n, root); }
+    // ref_id に対応するデータから派生して new_id に対応する新しいデータを作る
+    void update(int ref_id, int new_id, int i, const T &x) {
+        assert(root.count(ref_id));
+        root[new_id] = update(i, x, 0, n, root[ref_id]);
+    }
 
     T get(int i, int l, int r, Node *now) const {
         if (r - l == 1) return now->x;
@@ -85,7 +82,8 @@ struct Persistent_Array {
         return get(i, m, r, now->rch);
     }
 
-    T get(int i) const { return get(i, 0, n, root); }
-
-    T operator[](int i) const { return get(i); }
+    T get(int ref_id, int i) {
+        assert(root.count(ref_id));
+        return get(i, 0, n, root[ref_id]);
+    }
 };
