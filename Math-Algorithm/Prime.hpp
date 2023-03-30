@@ -148,3 +148,15 @@ T count_prime(T n) {
     }
     return h[1];
 }
+
+// 約数包除に用いる係数テーブル (平方数で割り切れるなら 0、素因数の種類が偶数なら +1、奇数なら -1)
+vector<int> inclusion_exclusion_table(int n) {
+    auto p = Eratosthenes2(n);
+    vector<int> ret(n + 1, 0);
+    if (n >= 1) ret[1] = 1;
+    for (int i = 2; i <= n; i++) {
+        int x = p[i], j = i / x;
+        ret[i] = (p[j] == x ? 0 : -ret[j]);
+    }
+    return ret;
+}

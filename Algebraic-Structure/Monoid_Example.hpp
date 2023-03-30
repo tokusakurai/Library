@@ -85,6 +85,35 @@ struct Affine_Monoid {
 template <typename T>
 const pair<T, T> Affine_Monoid<T>::id = make_pair(1, 0);
 
+// n 次正方行列の積
+template <typename T, int n>
+struct Matrix_Monoid {
+    using V = array<T, n * n>;
+    static constexpr V I() {
+        V ret;
+        fill(begin(ret), end(ret), 0);
+        for (int i = 0; i < n; i++) ret[n * i + i] = 1;
+        return ret;
+    }
+    static constexpr V merge(V l, V r) {
+        V ret;
+        fill(begin(ret), end(ret), 0);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                for (int k = 0; k < n; k++) {
+                    int x = n * i + j, y = n * j + k, z = n * i + k;
+                    ret[z] += l[x] * r[y];
+                }
+            }
+        }
+        return ret;
+    }
+    static const V id;
+};
+
+template <typename T, int n>
+const array<T, n * n> Matrix_Monoid<T, n>::id = Matrix_Monoid<T, n>::I();
+
 // モノイドの直積
 template <typename Monoid_1, typename Monoid_2>
 struct Cartesian_Product_Monoid {
