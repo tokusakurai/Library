@@ -62,6 +62,11 @@ struct Persistent_Array {
         return make_node(build(v, l, m), build(v, m, r));
     }
 
+    void copy(int ref_id, int new_id) {
+        assert(root.count(ref_id));
+        root[new_id] = root[ref_id];
+    }
+
     Node *update(int i, const T &x, int l, int r, Node *pre) {
         if (r - l == 1) return make_node(x);
         int m = (l + r) >> 1;

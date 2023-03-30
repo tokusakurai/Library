@@ -23,6 +23,8 @@ struct Persistent_Union_Find_Tree {
 
     void resize(int n) { data.resize(n, -1); }
 
+    void copy(int ref_id, int new_id) { data.copy(ref_id, new_id); }
+
     int root(int ref_id, int x) {
         int y = data.get(ref_id, x);
         if (y < 0) return x;
@@ -32,7 +34,10 @@ struct Persistent_Union_Find_Tree {
     // ref_id に対応するデータから派生して new_id に対応する新しいデータを作る
     bool unite(int ref_id, int new_id, int x, int y) {
         x = root(ref_id, x), y = root(ref_id, y);
-        if (x == y) return false;
+        if (x == y) {
+            copy(ref_id, new_id);
+            return false;
+        }
         int a = data.get(ref_id, x), b = data.get(ref_id, y);
         if (a > b) swap(x, y), swap(a, b);
         data.update(ref_id, new_id, x, a + b);

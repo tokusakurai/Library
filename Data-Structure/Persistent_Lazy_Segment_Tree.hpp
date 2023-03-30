@@ -64,6 +64,11 @@ struct Persistent_Lazy_Segment_Tree {
         return merge(build(v, l, m), build(v, m, r));
     }
 
+    void copy(int ref_id, int new_id) {
+        assert(root.count(ref_id));
+        root[new_id] = root[ref_id];
+    }
+
     void eval(Node *now) {
         Node *l = now->lch, *r = now->rch;
         now->lch = make_node(l->lch, l->rch, Acted_Monoid::merge(l->x, now->lazy), Operator::merge(l->lazy, now->lazy));
