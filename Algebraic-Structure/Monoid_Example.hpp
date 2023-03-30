@@ -44,6 +44,21 @@ struct Max_Monoid {
 template <typename T>
 const T Max_Monoid<T>::id = numeric_limits<T>::min();
 
+// 代入
+template <typename T>
+struct Update_Monoid {
+    using V = T;
+    static constexpr V merge(V l, V r) {
+        if (l == id) return r;
+        if (r == id) return l;
+        return r;
+    }
+    static const V id;
+};
+
+template <typename T>
+const T Update_Monoid<T>::id = numeric_limits<T>::max();
+
 // min count (T：最大値の型、S：個数の型)
 template <typename T, typename S>
 struct Min_Count_Monoid {
@@ -84,35 +99,6 @@ struct Affine_Monoid {
 
 template <typename T>
 const pair<T, T> Affine_Monoid<T>::id = make_pair(1, 0);
-
-// n 次正方行列の積
-template <typename T, int n>
-struct Matrix_Monoid {
-    using V = array<T, n * n>;
-    static constexpr V I() {
-        V ret;
-        fill(begin(ret), end(ret), 0);
-        for (int i = 0; i < n; i++) ret[n * i + i] = 1;
-        return ret;
-    }
-    static constexpr V merge(V l, V r) {
-        V ret;
-        fill(begin(ret), end(ret), 0);
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                for (int k = 0; k < n; k++) {
-                    int x = n * i + j, y = n * j + k, z = n * i + k;
-                    ret[z] += l[x] * r[y];
-                }
-            }
-        }
-        return ret;
-    }
-    static const V id;
-};
-
-template <typename T, int n>
-const array<T, n * n> Matrix_Monoid<T, n>::id = Matrix_Monoid<T, n>::I();
 
 // モノイドの直積
 template <typename Monoid_1, typename Monoid_2>
@@ -165,6 +151,46 @@ struct Max_Count_Add_Acted_Monoid {
     using M = pair<T, S>;
     using O = T;
     static constexpr M merge(M l, O r) { return make_pair(l.first + r, l.second); };
+};
+
+// range add range sum
+template <typename T>
+struct Plus_Plus_Monoid {
+    using Monoid = Cartesian_Product_Monoid<Plus_Monoid<T>, Plus_Monoid<int>>;
+    using Operator = Plus_Monoid<T>;
+    using M = pair<T, int>;
+    using O = T;
+    static constexpr M merge(M l, O r) { return M(l.first + r * l.second, l.second); }
+};
+
+// range update range sum
+template <typename T>
+struct Plus_Update_Monoid {
+    using Monoid = Cartesian_Product_Monoid<Plus_Monoid<T>, Plus_Monoid<int>>;
+    using Operator = Update_Monoid<T>;
+    using M = pair<T, int>;
+    using O = T;
+    static constexpr M merge(M l, O r) { return M(r * l.second, l.second); }
+};
+
+// range update range min
+template <typename T>
+struct Min_Update_Monoid {
+    using Monoid = Min_Monoid<T>;
+    using Operator = Update_Monoid<T>;
+    using M = T;
+    using O = T;
+    static constexpr M merge(M l, M r) { return r == Operator::id ? l : r; }
+};
+
+// range update range max
+template <typename T>
+struct Max_Update_Monoid {
+    using Monoid = Max_Monoid<T>;
+    using Operator = Update_Monoid<T>;
+    using M = T;
+    using O = T;
+    static constexpr M merge(M l, M r) { return r == Operator::id ? l : r; }
 };
 
 // range affine range sum
