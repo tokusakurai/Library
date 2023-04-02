@@ -40,6 +40,8 @@
 
 全ての点の座標が整数のときに、整数計算のみで扱える幾何。
 
+- [多角形](Polygon_Integer.hpp)
+
 - [凸包](Convex_Hull_Integer.hpp)
 
 - [最近点対](Closest_Pair_Integer.hpp)
