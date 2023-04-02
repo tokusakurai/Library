@@ -264,6 +264,7 @@ Real area(const vector<Point> &p) {
 
 // https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_3_C&lang=ja
 // IN:2, ON:1, OUT:0
+// 反時計回り、O(n)
 int in_polygon(const vector<Point> &p, const Point &q) {
     int n = p.size();
     int ret = 0;
@@ -274,6 +275,23 @@ int in_polygon(const vector<Point> &p, const Point &q) {
         if (sgn(imag(a)) <= 0 && sgn(imag(b)) == 1 && sgn(det(a, b)) == 1) ret ^= 2;
     }
     return ret;
+}
+
+// https://atcoder.jp/contests/abc296/tasks/abc296_g
+// 反時計回り、凸多角形、O(log(n))
+int in_convex_polygon(const vector<Point> &p, const Point &q) {
+    int n = p.size();
+    assert(n >= 3);
+    Real b1 = det(p[1] - p[0], q - p[0]);
+    Real b2 = det(p[n - 1] - p[0], q - p[0]);
+    if (sgn(b1) == -1 || sgn(b2) == 1) return 0;
+    int l = 1, r = n - 1;
+    while (r - l > 1) {
+        int m = (l + r) / 2;
+        (det(p[m] - p[0], q - p[0]) >= 0 ? l : r) = m;
+    }
+    Real v = det(p[l] - q, p[r] - q);
+    return (sgn(v) == 0 ? 1 : sgn(v) == -1 ? 0 : sgn(b1) == 0 || sgn(b2) == 0 ? 1 : 2);
 }
 
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_7_F&lang=ja
@@ -300,6 +318,46 @@ vector<Line> tangent(Circle c1, Circle c2) {
         }
     }
     return ret;
+}
+
+// 下側凸包
+vector<Point> lower_convex_hull(vector<Point> p) {
+    sort(begin(p), end(p), compare_x);
+    p.erase(unique(begin(p), end(p)), end(p));
+    int n = p.size(), k = 0;
+    if (n == 1) return p;
+    vector<Point> ch(n);
+    for (int i = 0; i < n; i++) {
+        if (k == 1 && eq(real(ch[0]), real(p[i]))) {
+            if (imag(ch[0]) > imag(p[i])) ch[0] = p[i];
+            continue;
+        }
+        while (k >= 2 && sgn(det(ch[k - 1] - ch[k - 2], p[i] - ch[k - 1])) <= 0) k--;
+        ch[k++] = p[i];
+    }
+    if (k >= 2 && eq(real(ch[k - 1]), real(ch[k - 2]))) k--;
+    ch.resize(k);
+    return ch;
+}
+
+// 上側凸包
+vector<Point> upper_convex_hull(vector<Point> p) {
+    sort(begin(p), end(p), compare_x);
+    p.erase(unique(begin(p), end(p)), end(p));
+    int n = p.size(), k = 0;
+    if (n == 1) return p;
+    vector<Point> ch(n);
+    for (int i = 0; i < n; i++) {
+        if (k == 1 && eq(real(ch[0]), real(p[i]))) {
+            if (imag(ch[0]) < imag(p[i])) ch[0] = p[i];
+            continue;
+        }
+        while (k >= 2 && sgn(det(ch[k - 1] - ch[k - 2], p[i] - ch[k - 1])) >= 0) k--;
+        ch[k++] = p[i];
+    }
+    if (k >= 2 && eq(real(ch[k - 1]), real(ch[k - 2]))) k--;
+    ch.resize(k);
+    return ch;
 }
 
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_4_A&lang=ja
