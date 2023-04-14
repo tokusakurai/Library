@@ -4,9 +4,8 @@ class FoldableQueue {
     vector<M> head, tail, head_sum, tail_sum;
 
     void scan_head() {
-        head_sum.resize(1);
-        head_sum.reserve(head.size() + 1);
-        partial_sum(begin(head), end(head), back_inserter(head_sum),
+        head_sum.resize(head.size() + 1);
+        partial_sum(begin(head), end(head), begin(head_sum) + 1,
                     [](M l, M r){ return Monoid::merge(l, r); });
     }
 
