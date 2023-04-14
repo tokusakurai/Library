@@ -1,6 +1,6 @@
 
 // ユークリッドの互除法を用いた種々の計算
-// 計算量 gcd・lcm・extgcd・modinv・floor_sum・linear_mod_min・中国剰余定理：O(log(max(a, b)))、Garner：O(n^2)
+// 計算量 binary gcd・lcm・extgcd・modinv・floor_sum・linear_mod_min・中国剰余定理：O(log(max(a, b)))、Garner：O(n^2)
 
 // extgcd：ax+by = gcd(a,b) を満たす (x,y) の組の 1 つ
 // floor_sum：Σ[0<=i<n] floor((ai+b)/m)
@@ -9,7 +9,8 @@
 // Garner：x ≡ a_i(mod m_i) (0<=i<n) を満たす最小の非負整数 x を M で割った余り
 
 // 概要
-// gcd・lcm・extgcd：ユークリッドの互除法を使って再帰的に解く。
+// binary gcd：a, b が 2 で割り切れるなら割り切れるだけ割る。どちらも奇数なら大きい方から小さい方を引くことで偶数にする。
+// extgcd：ユークリッドの互除法を使って再帰的に解く。
 // modinv：ax+my = 1 を満たす x を extgcd で求める。
 // floor_sum：領域内の格子点の数とみなし、a < m なら縦横をひっくり返すなどする。
 // linear_mod_min：答えが a 未満である場合、先頭 a 個の推移にのみ注目して再帰することで解ける。
@@ -29,14 +30,34 @@
 using namespace std;
 
 template <typename T>
-T _gcd(const T &a, const T &b) {
-    if (b == 0) return a;
-    return _gcd(b, a % b);
+T binary_gcd(T a, T b) {
+    T g = 1;
+    while (true) {
+        if (a < b) swap(a, b);
+        if (b == 0) {
+            g *= a;
+            break;
+        }
+        if (!(a & 1)) {
+            if (!(b & 1)) {
+                a >>= 1, b >>= 1, g <<= 1;
+            } else {
+                a >>= 1;
+            }
+        } else {
+            if (!(b & 1)) {
+                b >>= 1;
+            } else {
+                a = (a - b) >> 1;
+            }
+        }
+    }
+    return g;
 }
 
 template <typename T>
-T _lcm(const T &a, const T &b) {
-    return a * (b / _gcd(a, b));
+T binary_lcm(const T &a, const T &b) {
+    return a * (b / binary_gcd(a, b));
 }
 
 // |x| と |y| は結果として max(a,b) 以下になる。
@@ -117,12 +138,12 @@ bool prepare_Garner(vector<int> &a, vector<int> &m) {
     int n = a.size();
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < i; j++) {
-            int g = gcd(m[i], m[j]);
+            int g = binary_gcd(m[i], m[j]);
             if ((a[i] - a[j]) % g != 0) return false;
             m[i] /= g, m[j] /= g;
-            int gi = gcd(m[i], g), gj = g / gi;
+            int gi = binary_gcd(m[i], g), gj = g / gi;
             do {
-                g = gcd(gi, gj);
+                g = binary_gcd(gi, gj);
                 gi *= g, gj /= g;
             } while (g > 1);
             m[i] *= gi, m[j] *= gj;
