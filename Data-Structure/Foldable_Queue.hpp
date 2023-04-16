@@ -1,9 +1,20 @@
+
+// Sliding Window Aggrication (SWAG)
+// 計算量: push,pop amortized O(1), それ以外 O(1)
+
+// 概要
+// 2本の stack で queue をシミュレートできることを利用して queue に入っているモノイドの和を計算する。
+// 具体的には2本のstackそれぞれの累積和を保持している。
+
+// verified with
+// https://judge.yosupo.jp/problem/queue_operate_all_composite
+
 #pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
 template<class Monoid>
-class FoldableQueue {
+class Foldable_Queue {
     using M = typename Monoid::V;
 
     struct Node {
@@ -23,8 +34,10 @@ class FoldableQueue {
     }
 
     public:
-    FoldableQueue() : head(1), tail(1) {}
+    Foldable_Queue() : head(1), tail(1) {}
 
+    // 中に入っている要素の和を計算する。
+    // 非可換のモノイドでは右のほうが先頭側であることに注意 (back <-> front)
     M fold() const {
         if(tail.size() == 1) return head.back().sum;
         else if(head.size() == 1) return tail.back().sum; 
