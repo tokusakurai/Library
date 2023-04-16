@@ -1,58 +1,69 @@
+#pragma once
+#include <bits/stdc++.h>
+using namespace std;
+
 template<class Monoid>
 class FoldableQueue {
     using M = typename Monoid::V;
-    vector<M> head, tail, head_sum, tail_sum;
+
+    struct Node {
+        M value;
+        M sum;
+        Node() : value(Monoid::id), sum(Monoid::id) {}
+        Node(M v) : value(v), sum(v) {}
+        Node(M v, M s) : value(v), sum(s) {}
+    };
+    
+    vector<Node> head, tail;
 
     void scan_head() {
-        head_sum.resize(head.size() + 1);
-        partial_sum(begin(head), end(head), begin(head_sum) + 1,
-                    [](M l, M r){ return Monoid::merge(l, r); });
+        for(size_t i = 1; i < head.size(); i++) {
+            head[i].sum = Monoid::merge(head[i - 1].sum, head[i].value);
+        }
     }
 
     public:
-    FoldableQueue() : head(), tail(), head_sum(1, Monoid::id), tail_sum(1, Monoid::id) {}
-
-    FoldableQueue(const vector<M> &v) : head(v), tail(), tail_sum(1, Monoid::id) {
-        reverse(begin(head), end(head));
-    }
+    FoldableQueue() : head(1), tail(1) {}
 
     M fold() const {
-        return Monoid::merge(tail_sum.back(), head_sum.back());
+        if(tail.size() == 1) return head.back().sum;
+        else if(head.size() == 1) return tail.back().sum; 
+        else return Monoid::merge(tail.back().sum, head.back().sum);
     }
 
     M front() const {
         assert(!empty());
-        return head.back();
+        if(head.size() == 1) return tail.at(1).value;
+        return head.back().value;
     }
 
     M back() const {
         assert(!empty());
-        if(tail.empty()) {
-            return head.at(0);
+        if(tail.size() == 1) {
+            return head.at(1).value;
         } else {
-            return tail.back();
+            return tail.back().value;
         }
     }
 
     void push(const M &x) {
-        if(head.empty()) {
-            head.push_back(x);
+        if(head.size() == 1) {
+            head.emplace_back(x);
             scan_head();
         } else {
-            tail.push_back(x);
-            tail_sum.emplace_back(Monoid::merge(x, tail_sum.back()));
+            tail.emplace_back(x, Monoid::merge(x, tail.back().sum));
         }
     }
 
     template <class... Args>
     decltype(auto) emplace(Args&&... args) {
-        if(head.empty()) {
-            auto res = head.emplace_back(std::forward<Args>(args)...);
+        if(head.size() == 1) {
+            auto res = head.emplace_back(typename Monoid::V(std::forward<Args>(args)...));
             scan_head();
             return res;
         } else {
-            auto res = tail.emplace_back(std::forward<Args>(args)...);
-            tail_sum.emplace_back(Monoid::merge(tail.back(), tail_sum.back()));
+            auto val = typename Monoid::V(std::forward<Args>(args)...);
+            auto res = tail.emplace_back(val, Monoid::merge(val, tail.back().sum));
             return res;
         }
     }
@@ -60,18 +71,15 @@ class FoldableQueue {
     void pop() {
         assert(!empty());
         head.pop_back();
-        head_sum.pop_back();
-        if(head.empty()) {
+        if(head.size() == 1) {
             swap(head, tail);
-            swap(head_sum, tail_sum);
-            reverse(begin(head), end(head));
+            reverse(begin(head) + 1, end(head));
             scan_head();
-            tail_sum.resize(1);
         }
     }
 
     size_t size() const {
-        return head.size() + tail.size();
+        return head.size() + tail.size() - 2;
     }
 
     bool empty() const {
