@@ -38,6 +38,8 @@
 
 - [接尾辞配列・高さ配列](Suffix_Array.hpp)
 
+- [最長共通（連続）部分文字列](Longest_Common_Substring.hpp)（2 つの文字列の最長共通部分文字列を求める）
+
 ## run 列挙
 
 文字列の run を全て列挙するアルゴリズム。
