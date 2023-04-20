@@ -46,7 +46,7 @@ struct Tree_Compressor : Heavy_Light_Decomposition<directed> {
 
     Tree_Compressor(int n) : H(n), par(n, -1), id(n, -1) {}
 
-    void build(int root = 0) { this->decompose(root); }
+    void build() { this->decompose(); }
 
     Auxiliary_Tree<int, directed> compress(vector<int> x) {
         int k = x.size();
