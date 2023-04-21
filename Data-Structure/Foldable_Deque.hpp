@@ -1,3 +1,14 @@
+
+// Forldable Queue ( SWAG の deque 版)
+// 計算量: push,pop amortized O(1), それ以外 O(1)
+
+// 概要
+// 2本の stack で deque をシミュレートできることを利用して deque に入っているモノイドの和を計算する。
+// 具体的には2本のstackそれぞれの累積和を保持している。
+
+// verified with
+// https://judge.yosupo.jp/problem/deque_operate_all_composite
+
 #pragma once
 #include <bits/stdc++.h>
 using namespace std;
