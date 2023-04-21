@@ -31,21 +31,29 @@ class Foldable_Deque {
     M front() const {
         assert(!empty());
         if(head.empty()) return tail.at(0).value;
-        return head.back().value;
+        else return head.back().value;
     }
 
     M back() const {
         assert(!empty());
         if(tail.empty()) return head.at(0).value;
-        else tail.back().value;
+        else return tail.back().value;
     }
 
     void push_front(const M &x) {
-        head.emplace_back(x, Monoid::merge(head.back().sum, x));
+        if(head.empty()) {
+            head.emplace_back(x, x);
+        } else {
+            head.emplace_back(x, Monoid::merge(head.back().sum, x));
+        }
     }
 
     void push_back(const M &x) {
-        tail.emplace_back(x, Monoid::merge(x, tail.back().sum));
+        if(tail.empty()) {
+            tail.emplace_back(x, x);
+        } else {
+            tail.emplace_back(x, Monoid::merge(x, tail.back().sum));
+        }
     }
 
     template <class... Args>
