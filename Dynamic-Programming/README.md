@@ -20,6 +20,12 @@
 
 - [find first, find last](Find_First_Last.hpp)
 
+## SWAG
+
+モノイドの列を持って、左端を削除、右端に追加、総積を計算のクエリを効率的に扱えるアルゴリズム。
+
+- [SWAG](Sliding_Window_Aggregation.hpp)
+
 ## 累積和
 
 累積和を DP で前計算することによって区間和を効率的に求めることができる。

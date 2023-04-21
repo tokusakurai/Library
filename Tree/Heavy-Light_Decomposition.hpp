@@ -30,7 +30,7 @@ struct Heavy_Light_Decomposition {
     const int n;
     int m;
 
-    Heavy_Light_Decomposition(int n) : es(n), par(n), si(n), depth(n), root(n), id_v(n), id_e(n - 1), vs(n), n(n), m(0) {}
+    Heavy_Light_Decomposition(int n) : es(n), par(n), si(n, -1), depth(n), root(n), id_v(n), id_e(n - 1), vs(n), n(n), m(0) {}
 
     void add_edge(int from, int to) {
         es[from].emplace_back(to, m);
@@ -73,10 +73,13 @@ struct Heavy_Light_Decomposition {
         }
     }
 
-    void decompose(int root = 0) {
-        _dfs1(root);
+    void decompose() {
         int s = 0;
-        _dfs2(root, true, s);
+        for (int i = 0; i < n; i++) {
+            if (si[i] != -1) continue;
+            _dfs1(i);
+            _dfs2(i, true, s);
+        }
     }
 
     int lca(int u, int v) {
@@ -125,7 +128,7 @@ struct Heavy_Light_Decomposition {
         return ret;
     }
 
-    // クエリが非可換の場合
+    // クエリが非可換の場合 (l > r なら子から親方向で [r,l)、l < r なら親から子方向で [l,r))
     vector<pair<int, int>> get_path_noncommutative(int u, int v, bool use_edge = false) {
         vector<pair<int, int>> l, r;
         while (root[u] != root[v]) {
