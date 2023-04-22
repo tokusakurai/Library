@@ -73,6 +73,19 @@ struct Rolling_Hash {
     }
 
     ull get_all_hash() const { return hashed[n]; }
+
+    // s[l1:r1) と s[l2:r2) の辞書順大小比較 (-1 : <, 0 : =, 1 : >)
+    int comp(int l1, int r1, int l2, int r2) {
+        int l = 0, r = min(r1 - l1, r2 - l2) + 1;
+        while (r - l > 1) {
+            int m = (l + r) / 2;
+            (get_hash(l1, l1 + m) == get_hash(l2, l2 + m) ? l : r) = m;
+        }
+        if (r1 == l1 + l && r2 == l2 + l) return 0;
+        if (r1 == l1 + l) return -1;
+        if (r2 == l2 + l) return 1;
+        return get_hash(l1 + l, l1 + l + 1) < get_hash(l2 + l, l2 + l + 1) ? -1 : 1;
+    }
 };
 
 template <typename T>
