@@ -67,7 +67,6 @@ struct Matrix {
         if (n == 0) return make_pair(0, m > 0 ? 0 : 1);
         int check = 0, rank = 0;
         T det = (n == m ? 1 : 0);
-        assert(b.size() == n);
         for (int j = 0; j < m; j++) {
             int pivot = check;
             for (int i = check; i < n; i++) {
