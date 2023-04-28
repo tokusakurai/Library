@@ -58,6 +58,8 @@
 
 - [Boruvka 法](Boruvka.hpp)
 
+- [Manhattan 最小全域木](Manhattan_MST.hpp)（辺重みが Manhattan 距離で与えられる完全グラフの MST）
+
 ## ネットワークフロー
 
 グラフ上のフローを扱うアルゴリズム。
