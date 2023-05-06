@@ -7,6 +7,9 @@
 // この問題は分割統治を用いることで解くことができる。
 // 参考：https://twitter.com/noshi91/status/1640315787528519680
 
+// verified with
+// https://codeforces.com/gym/102220
+
 #pragma once
 #include <bits/stdc++.h>
 using namespace std;
