@@ -78,6 +78,14 @@ struct Number_Theoretic_Transform {
 
     static vector<T> convolve(vector<T> a, vector<T> b) {
         if (a.empty() || b.empty()) return {};
+        if (min(a.size(), b.size()) < 40) {
+            int n = a.size(), m = b.size();
+            vector<T> c(n + m - 1, 0);
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m; j++) c[i + j] += a[i] * b[j];
+            }
+            return c;
+        }
         int k = (int)a.size() + (int)b.size() - 1, n = 1;
         while (n < k) n <<= 1;
         a.resize(n), b.resize(n);
