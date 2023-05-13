@@ -30,15 +30,15 @@ struct Splay_Tree {
             if (this->par->rch == this) return -1;
             return 0;
         }
-        
+
         // 再帰的に子の Node のメモリを解放していく
         void rec_delete() {
             deleter(lch);
             deleter(rch);
         }
 
-        void deleter(Node* child) {
-            if(child) {
+        void deleter(Node *child) {
+            if (child) {
                 child->rec_delete();
                 delete child;
             }
@@ -49,8 +49,35 @@ struct Splay_Tree {
 
     Splay_Tree() : root(NULL) {}
 
+    Splay_Tree(const Splay_Tree &s) : root(new Node(*s.root)) {}
+
+    Splay_Tree(Splay_Tree &&s) : root(s.root) { s.root = NULL; }
+
+    Splay_Tree &operator=(const Splay_Tree &s) {
+        if (&s != this) {
+            if (root) {
+                root->rec_delete();
+                delete root;
+            }
+            root = new Node(*s.root);
+        }
+        return *this;
+    }
+
+    Splay_Tree &operator=(Splay_Tree &&s) {
+        if (&s != this) {
+            if (root) {
+                root->rec_delete();
+                delete root;
+            }
+            root = s.root;
+            s.root = NULL;
+        }
+        return *this;
+    }
+
     ~Splay_Tree() {
-        if(root) {
+        if (root) {
             root->rec_delete();
             delete root;
         }
@@ -113,7 +140,7 @@ struct Splay_Tree {
     Node *make_node(const T &x) { return new Node(x); }
 
     // x 以上で最小のノード
-    Node *lower_bound(T x) {
+    Node *greater_equal(const T &x) {
         Node *now = root, *ret = NULL;
         while (now) {
             if (now->x < x) {
@@ -128,7 +155,7 @@ struct Splay_Tree {
     }
 
     // x より大きい最小のノード
-    Node *upper_bound(T x) {
+    Node *greater_than(const T &x) {
         Node *now = root, *ret = NULL;
         while (now) {
             if (now->x <= x) {
@@ -142,14 +169,44 @@ struct Splay_Tree {
         return ret;
     }
 
-    Node *find(T x) {
-        Node *ret = lower_bound(x);
+    // x 以下で最大のノード
+    Node *less_equal(const T &x) {
+        Node *now = root, *ret = NULL;
+        while (now) {
+            if (now->x > x) {
+                now = now->lch;
+            } else {
+                ret = now;
+                now = now->rch;
+            }
+        }
+        if (ret) splay(ret);
+        return ret;
+    }
+
+    // x 未満で最大のノード
+    Node *less_than(const T &x) {
+        Node *now = root, *ret = NULL;
+        while (now) {
+            if (now->x >= x) {
+                now = now->lch;
+            } else {
+                ret = now;
+                now = now->rch;
+            }
+        }
+        if (ret) splay(ret);
+        return ret;
+    }
+
+    Node *find(const T &x) {
+        Node *ret = greater_equal(x);
         if (!ret || ret->x != x) return NULL;
         return ret;
     }
 
-    void insert(T x) {
-        Node *c = lower_bound(x);
+    void insert(const T &x) {
+        Node *c = greater_equal(x);
         if (c && c->x == x) return;
         Node *t = make_node(x);
         if (!c) {
@@ -165,12 +222,12 @@ struct Splay_Tree {
         update(t), root = t;
     }
 
-    void erase(T x) {
+    void erase(const T &x) {
         Node *t = find(x);
         if (!t) return;
         if (t->rch) {
             t->rch->par = NULL;
-            Node *c = upper_bound(x);
+            Node *c = greater_than(x);
             c->lch = t->lch;
             if (t->lch) t->lch->par = c;
             update(c);
