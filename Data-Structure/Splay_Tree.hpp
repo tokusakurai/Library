@@ -205,6 +205,38 @@ struct Splay_Tree {
         return ret;
     }
 
+    // x 以下の要素数
+    int count_lower_equal(const T &x) {
+        Node *now = root;
+        int ret = 0;
+        while (now) {
+            int lsize = (now->lch ? now->lch->size : 0);
+            if (now->x <= x) {
+                ret += lsize + 1;
+                now = now->rch;
+            } else {
+                now = now->lch;
+            }
+        }
+        return ret;
+    }
+
+    // x 未満の要素数
+    int count_lower_than(const T &x) {
+        Node *now = root;
+        int ret = 0;
+        while (now) {
+            int lsize = (now->lch ? now->lch->size : 0);
+            if (now->x < x) {
+                ret += lsize + 1;
+                now = now->rch;
+            } else {
+                now = now->lch;
+            }
+        }
+        return ret;
+    }
+
     void insert(const T &x) {
         Node *c = greater_equal(x);
         if (c && c->x == x) return;
