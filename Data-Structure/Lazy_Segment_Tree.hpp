@@ -44,19 +44,17 @@ struct Lazy_Segment_Tree {
 
     Lazy_Segment_Tree(int n, const M &x) : Lazy_Segment_Tree(vector<M>(n, x)) {}
 
-    inline M reflect(int i) const { return (lazy[i] == Operator::id ? seg[i] : Acted_Monoid::merge(seg[i], lazy[i])); }
+    inline M reflect(int i) const { return Acted_Monoid::merge(seg[i], lazy[i]); }
 
     inline void recalc(int i) {
         while (i >>= 1) seg[i] = Monoid::merge(reflect(2 * i), reflect(2 * i + 1));
     }
 
     inline void eval(int i) {
-        if (i < m && lazy[i] != Operator::id) {
-            lazy[2 * i] = Operator::merge(lazy[2 * i], lazy[i]);
-            lazy[2 * i + 1] = Operator::merge(lazy[2 * i + 1], lazy[i]);
-            seg[i] = reflect(i);
-            lazy[i] = Operator::id;
-        }
+        lazy[2 * i] = Operator::merge(lazy[2 * i], lazy[i]);
+        lazy[2 * i + 1] = Operator::merge(lazy[2 * i + 1], lazy[i]);
+        seg[i] = reflect(i);
+        lazy[i] = Operator::id;
     }
 
     inline void thrust(int i) {

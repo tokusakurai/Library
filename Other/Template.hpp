@@ -86,6 +86,28 @@ vector<int> id_sort(const vector<T> &v, bool greater = false) {
     return ret;
 }
 
+template <typename T>
+void reorder(vector<T> &a, const vector<int> &ord) {
+    int n = a.size();
+    vector<T> b(n);
+    for (int i = 0; i < n; i++) b[i] = a[ord[i]];
+    swap(a, b);
+}
+
+template <typename T>
+T floor(T x, T y) {
+    assert(y != 0);
+    if (y < 0) x = -x, y = -y;
+    return (x >= 0 ? x / y : (x - y + 1) / y);
+}
+
+template <typename T>
+T ceil(T x, T y) {
+    assert(y != 0);
+    if (y < 0) x = -x, y = -y;
+    return (x >= 0 ? (x + y - 1) / y : x / y);
+}
+
 template <typename S, typename T>
 pair<S, T> operator+(const pair<S, T> &p, const pair<S, T> &q) {
     return make_pair(p.first + q.first, p.second + q.second);
@@ -118,7 +140,7 @@ struct io_setup {
     }
 } io_setup;
 
-const int inf = (1 << 30) - 1;
-const ll INF = (1LL << 60) - 1;
-// const int MOD = 1000000007;
-const int MOD = 998244353;
+constexpr int inf = (1 << 30) - 1;
+constexpr ll INF = (1LL << 60) - 1;
+// constexpr int MOD = 1000000007;
+constexpr int MOD = 998244353;
