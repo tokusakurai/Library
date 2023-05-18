@@ -1,12 +1,13 @@
 
 // 高速素因数分解
-// 計算量 O(n^(1/4)log(n))
+// 計算量 素数判定：O(log(n))、素因数分解：O(n^(1/4)log(n))
 
 // 概要
 // ミラーラビンの素数判定法で素数判定をし、素数なら終了する。
 // 素数でないならばポラードのロー法で非自明な約数を発見し、再帰的に素因数分解する。
 
 // verified with
+// https://judge.yosupo.jp/problem/primarity_test
 // https://judge.yosupo.jp/problem/factorize
 
 #pragma once
@@ -18,7 +19,7 @@ using namespace std;
 
 bool Miller_Rabin(long long n, vector<long long> as) {
     using Mint = Montgomery_Mod_Int_64;
-    if (Mint::get_mod() != n) Mint::set_mod(n);
+    if (Mint::get_mod() != uint64_t(n)) Mint::set_mod(n);
     long long d = n - 1;
     while (!(d & 1)) d >>= 1;
     Mint e = 1, rev = n - 1;
@@ -46,7 +47,7 @@ long long Pollard_rho(long long n) {
     using Mint = Montgomery_Mod_Int_64;
     if (!(n & 1)) return 2;
     if (is_prime(n)) return n;
-    if (Mint::get_mod() != n) Mint::set_mod(n);
+    if (Mint::get_mod() != uint64_t(n)) Mint::set_mod(n);
     Mint R, one = 1;
     auto f = [&](Mint x) { return x * x + R; };
     auto rnd = [&]() { return rng(n - 2) + 2; };

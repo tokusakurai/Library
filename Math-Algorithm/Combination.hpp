@@ -13,6 +13,7 @@
 // ベル数：第 2 種スターリング数の和
 
 // verified with
+// https://judge.yosupo.jp/problem/binomial_coefficient_prime_mod
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_5_B&lang=ja
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_5_D&lang=ja
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_5_E&lang=ja

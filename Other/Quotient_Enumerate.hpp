@@ -9,6 +9,7 @@
 // ceil(n/i) = x ⇔ x-1 < n/i <= x ⇔ n/x <= i < n/(x-1) ⇔ ceil(n/x) <= i < ceil(n/(x-1))
 
 // verified with
+// https://judge.yosupo.jp/problem/enumerate_quotients
 // https://atcoder.jp/contests/abc230/tasks/abc230_e
 // https://atcoder.jp/contests/arc150/tasks/arc150_b
 
@@ -16,25 +17,27 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// (x,l,r)
 template <typename T>
-vector<pair<pair<T, T>, T>> quotient_floor_enumerate(T n) {
-    vector<pair<pair<T, T>, T>> ret;
+vector<tuple<T, T, T>> quotient_floor_enumerate(T n) {
+    vector<tuple<T, T, T>> ret;
     for (T l = 1; l <= n;) {
         T x = n / l;
         T r = n / x + 1;
-        ret.emplace_back(make_pair(l, r), x);
+        ret.emplace_back(x, l, r);
         l = r;
     }
     return ret;
 }
 
+// (x,l,r)
 template <typename T>
-vector<pair<pair<T, T>, T>> quotient_ceil_enumerate(T n) {
-    vector<pair<pair<T, T>, T>> ret;
+vector<tuple<T, T, T>> quotient_ceil_enumerate(T n) {
+    vector<tuple<T, T, T>> ret;
     for (T l = 1; l <= n;) {
         T x = (n + l - 1) / l;
         T r = (x == 1 ? n + 1 : (n + x - 2) / (x - 1));
-        ret.emplace_back(make_pair(l, r), x);
+        ret.emplace_back(x, l, r);
         l = r;
     }
     return ret;
