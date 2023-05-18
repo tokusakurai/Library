@@ -120,10 +120,12 @@
 
 - [重み付きマトロイド交差](Weighted_Matroid_Intersection.hpp)
 
-## その他発展的なアルゴリズム
+## その他
 
 - [オイラー路・オイラー閉路](Eulerian_Trail.hpp)（全ての辺をちょうど一度通るパスや閉路を検出する）
 
 - [彩色数](Choromatic_Number.hpp)（隣接頂点の色が異なるように彩色するのに必要な最小の色の数を求める）
 
 - [最大安定集合](Maximum_Independent_Set.hpp)（どの 2 点も元のグラフで隣接しないような点集合でサイズが最大のものを求める）
+
+- [三角形列挙](Triangle_Enumerate.hpp)（グラフの長さ 3 のサイクルを列挙する）
