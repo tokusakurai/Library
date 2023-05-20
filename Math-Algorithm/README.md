@@ -168,6 +168,10 @@ FFT (NTT) を用いることで、多変数多項式の積を次数が大きく�
 
 - [多点評価](Multipoint_Evaluation.hpp)（多項式が与えられたときに多点での値を求める）
 
+## 多項式とべき乗の積和
+
+- [多項式とべき乗の積和](Polynomial_R_Power_Sum.hpp) ($\sum_{i=0}^{n-1} i^kr^i$, $\sum_{i=0}^{\infty} i^kr^i$)
+
 ## 階段状のグリッドにおける最短経路数え上げ
 
 - [階段状のグリッドにおける最短経路数え上げ](Step_Grid_Path_Count.hpp)
