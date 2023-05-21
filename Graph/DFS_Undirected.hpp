@@ -14,7 +14,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template <bool directed = false>
 struct Graph {
     struct edge {
         int to, id;
@@ -31,7 +30,7 @@ struct Graph {
 
     void add_edge(int from, int to) {
         es[from].emplace_back(to, m);
-        if (!directed) es[to].emplace_back(from, m);
+        es[to].emplace_back(from, m);
         m++;
     }
 

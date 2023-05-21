@@ -1,5 +1,5 @@
 
-// 強連結成分分解（分解後は DAG になる）
+// 強連結成分分解 (分解後は DAG になる)
 // 計算量 O(n+m)
 
 // 概要
@@ -15,7 +15,6 @@ using namespace std;
 
 #include "../Graph/Graph_Template.hpp"
 
-template <bool directed = true>
 struct Strongly_Connected_Components {
     struct edge {
         int to, id;
@@ -32,7 +31,6 @@ struct Strongly_Connected_Components {
 
     void add_edge(int from, int to) {
         es[from].emplace_back(to, m);
-        if (!directed) es[to].emplace_back(from, m);
         m++;
     }
 

@@ -1,5 +1,5 @@
 
-// 2-SAT（リテラル数が 2 のクロージャーの乗法標準形の充足可能性を判定する）
+// 2-SAT (リテラル数が 2 のクロージャーの乗法標準形の充足可能性を判定する)
 // 計算量 O(n)
 
 // 概要
@@ -18,7 +18,7 @@ using namespace std;
 #include "../Graph/Strongly-Connected_Components.hpp"
 
 struct Two_SAT {
-    Strongly_Connected_Components<true> G;
+    Strongly_Connected_Components G;
     const int n;
 
     Two_SAT(int n) : n(n), G(2 * n) {}

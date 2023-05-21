@@ -1,5 +1,5 @@
 
-// Dinic 法（最大流）
+// Dinic 法 (最大流)
 // 計算量 O(mn^2)
 
 // 概要
@@ -14,7 +14,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template <typename F> // 流量の型
+// F : 流量の型
+template <typename F>
 struct Dinic {
     struct edge {
         int to;
@@ -69,7 +70,8 @@ struct Dinic {
         return zero_F;
     }
 
-    F max_flow(int s, int t) { // 操作後の d 配列は最小カットの 1 つを表す（0 以上なら s 側、-1 なら t 側）
+    // 操作後の d 配列は最小カットの 1 つを表す (0 以上なら s 側、-1 なら t 側)
+    F max_flow(int s, int t) {
         F flow = zero_F;
         while (_bfs(s, t)) {
             fill(begin(pos), end(pos), 0);

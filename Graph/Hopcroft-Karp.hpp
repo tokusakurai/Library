@@ -1,6 +1,6 @@
 
-// Hopcroft-Karp 法（2 部グラフの最大マッチング）
-// 計算量 O(e√(n+m)+n+m)（e は辺の総数）
+// Hopcroft-Karp 法 (2 部グラフの最大マッチング)
+// 計算量 O(e√(n+m)+n+m) (e は辺の総数)
 
 // 概要
 // 左側のマッチングに含まれない点の深さを 0 として BFS で各点の深さを決定する。
@@ -60,7 +60,8 @@ struct Hopcroft_Karp {
         return false;
     }
 
-    int max_matching() { // 右側の i は左側の match[i] とマッチングする
+    // 右側の i は左側の match[i] とマッチングする
+    int max_matching() {
         fill(begin(match), end(match), -1), fill(begin(used), end(used), false);
         int ret = 0;
         while (true) {

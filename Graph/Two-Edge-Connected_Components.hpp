@@ -1,15 +1,15 @@
 
-// 二重辺連結成分分解（分解後は森になる）
+// 二重辺連結成分分解 (分解後は森になる)
 // 計算量 O(n+m)
 
 // 定義
 // 二重辺連結グラフ：どの一辺を取り除いても連結性が保たれるグラフ
 // v_1 ～ v_2 <-> v_1 から v_2 に至る 2 つの辺素なパスが存在する
-// という（頂点集合における）同値関係における同値類が二重辺連結成分となる。
+// という (頂点集合における) 同値関係における同値類が二重辺連結成分となる。
 
 // 概要
 // Low-Link を用いる。
-// 辺 (u,v) が橋であれば u と v は別の連結成分、そうでなければ u と v は同じ連結成分に含まれる。
+// 辺 {u,v} が橋であれば u と v は別の連結成分、そうでなければ u と v は同じ連結成分に含まれる。
 
 // verified with
 // https://atcoder.jp/contests/arc039/tasks/arc039_d
@@ -22,9 +22,8 @@ using namespace std;
 #include "../Graph/Graph_Template.hpp"
 #include "../Graph/Low_Link.hpp"
 
-template <bool directed = false>
-struct Two_Edge_Connected_Components : Low_Link<directed> {
-    using L = Low_Link<directed>;
+struct Two_Edge_Connected_Components : Low_Link {
+    using L = Low_Link;
     vector<int> comp;
     const int n;
 
@@ -42,14 +41,14 @@ struct Two_Edge_Connected_Components : Low_Link<directed> {
         return k;
     }
 
-    Graph<directed> decompose() {
+    Graph<false> decompose() {
         this->build();
         fill(begin(comp), end(comp), -1);
         int k = 0;
         for (int i = 0; i < n; i++) {
             if (comp[i] == -1) k = _dfs(i, -1, k);
         }
-        Graph<directed> ret(k);
+        Graph<false> ret(k);
         vector<int> is_bridge(this->m, 0);
         for (auto &e : this->bridge) is_bridge[e]++;
         for (int i = 0; i < n; i++) {

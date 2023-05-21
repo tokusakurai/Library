@@ -3,7 +3,7 @@
 // 計算量 O(n+m)
 
 // 定義
-// 二重連結グラフ：どの 1 頂点（とそれに接続する辺）を取り除いても連結性が保たれるグラフ
+// 二重連結グラフ：どの 1 頂点 (とそれに接続する辺) を取り除いても連結性が保たれるグラフ
 // e_1 ～ e_2 <-> e_1,e_2 を含む点素な閉路が存在する
 // という（辺集合における）同値関係における同値類が二重辺連結成分となる。
 
@@ -20,14 +20,13 @@ using namespace std;
 
 #include "../Graph/Low_Link.hpp"
 
-template <bool directed = false>
-struct Biconnected_Components : Low_Link<directed> {
-    using L = Low_Link<directed>;
+struct Biconnected_Components : Low_Link {
+    using L = Low_Link;
     vector<int> comp;
     vector<bool> used;
     const int n;
 
-    Biconnected_Components(int n) : L(n), comp(n), used(n), n(n) {}
+    Biconnected_Components(int n) : L(n), used(n), n(n) {}
 
     int _dfs(int now, int pre, int top, int k) {
         used[now] = true;

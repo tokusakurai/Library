@@ -1,5 +1,6 @@
 
-// ハミルトンサイクルを持つ部分集合の列挙：O(N*2^N)、部分集合 S におけるハミルトンサイクルの復元：O(|S|*2^|S|)
+// ハミルトンサイクルの検出
+// ハミルトンサイクルを持つ部分集合の列挙：O(n*2^n)、部分集合 S におけるハミルトンサイクルの復元：O(|S|*2^|S|)
 
 // 概要
 // 始点 s から出発して頂点集合 S を通った時に、最終的にいる位置としてありえるものを管理する。
@@ -34,7 +35,7 @@ vector<bool> enumerate_Hamilton_cycle(const vector<int> &es) {
     return ret;
 }
 
-// 部分集合 S におけるハミルトンサイクルを 1 つ復元（存在しなければ空）
+// 部分集合 S におけるハミルトンサイクルを 1 つ復元 (存在しなければ空)
 vector<int> recover_Hamilton_cycle(const vector<int> &es, int S) {
     int n = es.size();
     vector<int> nodes;

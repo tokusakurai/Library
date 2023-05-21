@@ -1,11 +1,11 @@
 
-// Shortest-Path-Faster-Algorithm（負辺があっても動作する単一始点最短路）
+// Shortest-Path-Faster-Algorithm (負辺があっても動作する単一始点最短路)
 // 計算量 O(nm)
 
 // 概要
 // queue を用いる。
-// 始点から始めて最短路が更新される点があれば queue に入れる。（既に入っていれば入れない）
-// 負閉路が存在しない場合、各頂点について queue に入れられる回数は最大で V-1 回になる。（V 回入れられたら負閉路が存在する）
+// 始点から始めて最短路が更新される点があれば queue に入れる。(既に入っていれば入れない)
+// 負閉路が存在しない場合、各頂点について queue に入れられる回数は最大で V-1 回になる。(V 回入れられたら負閉路が存在する)
 
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_1_B&lang=ja
@@ -38,7 +38,8 @@ struct Shortest_Path_Faster_Algorithm {
         m++;
     }
 
-    T shortest_path(int s, int t = 0) { // s から到達可能な負閉路があれば -INF
+    // s から到達可能な負閉路があれば -INF
+    T shortest_path(int s, int t = 0) {
         fill(begin(d), end(d), INF_T);
         queue<int> que;
         vector<bool> inque(n, false);

@@ -1,5 +1,5 @@
 
-// Prim 法（最小全域木）
+// Prim 法 (最小全域木)
 // 計算量 O(n^2+m)
 
 // 概要
@@ -14,7 +14,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template <typename T, bool directed = false>
+template <typename T>
 struct Prim {
     struct edge {
         int to;
@@ -32,7 +32,7 @@ struct Prim {
 
     void add_edge(int from, int to, T cost) {
         es[from].emplace_back(to, cost, m);
-        if (!directed) es[to].emplace_back(from, cost, m);
+        es[to].emplace_back(from, cost, m);
         m++;
     }
 

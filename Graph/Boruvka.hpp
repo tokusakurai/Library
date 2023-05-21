@@ -1,5 +1,5 @@
 
-// Boruvka 法（最小全域木）
+// Boruvka 法 (最小全域木)
 // 計算量 O(m log(n))
 
 // 概要
@@ -15,7 +15,7 @@ using namespace std;
 
 #include "../Data-Structure/Union_Find_Tree.hpp"
 
-template <typename T, bool directed = false>
+template <typename T>
 struct Boruvka {
     struct edge {
         int from, to;
@@ -33,7 +33,7 @@ struct Boruvka {
 
     void add_edge(int from, int to, T cost) {
         es.emplace_back(from, to, cost, m);
-        if (!directed) es.emplace_back(to, from, cost, m);
+        es.emplace_back(to, from, cost, m);
         m++;
     }
 

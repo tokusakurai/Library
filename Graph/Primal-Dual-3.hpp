@@ -1,5 +1,5 @@
 
-// s から t への流量 f の最小費用流を求める（最初のグラフに負の閉路が存在しない場合）
+// s から t への流量 f の最小費用流を求める (最初のグラフに負の閉路が存在しない場合)
 // 計算量 O(nm+fn^2)、初期状態でコストが負の辺が存在しないまたはグラフが DAG である場合：O(fn^2)
 
 // 概要
@@ -12,7 +12,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template <typename F, typename T = F> // 流量の型、費用の型
+// F : 流量の型、T : 費用の型
+template <typename F, typename T = F>
 struct Primal_Dual {
     struct edge {
         int to;

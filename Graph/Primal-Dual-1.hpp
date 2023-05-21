@@ -1,5 +1,5 @@
 
-// Primal-Dual 法（最小費用流）
+// Primal-Dual 法 (最小費用流)
 // 計算量 O(fnm)
 
 // 概要
@@ -13,7 +13,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template <typename F, typename T = F> // 流量の型、費用の型
+// F : 流量の型、T : 費用の型
+template <typename F, typename T = F>
 struct Primal_Dual {
     struct edge {
         int to;
