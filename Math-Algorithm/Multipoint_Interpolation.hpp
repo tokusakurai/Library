@@ -1,5 +1,5 @@
 
-// ラグランジュ補間（多点）
+// ラグランジュ補間 (多点)
 // 計算量 O((n+m)log(n+m))
 
 // 概要
@@ -15,20 +15,19 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+#include "../Math-Algorithm/Combination.hpp"
 #include "../Math-Algorithm/Number_Theoretic_Transform.hpp"
 
+// n 次多項式 f の f(0),...,f(n) を与えて f(c),f(c+1),...,f(c+m-1) を計算
+// comb を n まで初期化する
 template <typename T>
 vector<T> multipoint_interpolation(const vector<T> &ys, const T &c, const int &m) {
+    using comb_ = Combination<T>;
     using NTT_ = Number_Theoretic_Transform<T>;
     int n = ys.size();
-    vector<T> ifac(n);
-    ifac[n - 1] = 1;
-    for (int i = 1; i < n; i++) ifac[n - 1] *= i;
-    ifac[n - 1] = T(1) / ifac[n - 1];
-    for (int i = n - 1; i > 0; i--) ifac[i - 1] = ifac[i] * i;
     vector<T> f(n);
     for (int i = 0; i < n; i++) {
-        T tmp = ys[i] * ifac[i] * ifac[n - 1 - i];
+        T tmp = ys[i] * comb_::ifac(i) * comb_::ifac(n - 1 - i);
         f[i] += ((n - 1 - i) & 1 ? -tmp : tmp);
     }
     vector<T> p(n + m, 1), ip(n + m);
