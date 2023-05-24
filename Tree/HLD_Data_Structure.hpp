@@ -203,7 +203,7 @@ struct HLD_Lazy_Segment_Tree_Noncommutative : Heavy_Light_Decomposition<directed
     using Operator = typename Acted_Monoid::Operator;
     using M = typename Monoid::V;
     using O = typename Operator::V;
-    Lazy_Segment_Tree<Monoid> seg1, seg2;
+    Lazy_Segment_Tree<Acted_Monoid> seg1, seg2;
     vector<M> v;
     const int n;
 
