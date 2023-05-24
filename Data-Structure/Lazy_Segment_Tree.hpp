@@ -39,10 +39,16 @@ struct Lazy_Segment_Tree {
         while (m < n) m <<= 1, height++;
         seg.assign(2 * m, Monoid::id), lazy.assign(2 * m, Operator::id);
         copy(begin(v), end(v), begin(seg) + m);
-        for (int i = m - 1; i > 0; i--) seg[i] = Monoid::merge(seg[2 * i], seg[2 * i + 1]);
+        build();
     }
 
-    Lazy_Segment_Tree(int n, const M &x) : Lazy_Segment_Tree(vector<M>(n, x)) {}
+    Lazy_Segment_Tree(int n, M x = Monoid::id) : Lazy_Segment_Tree(vector<M>(n, x)) {}
+
+    void set(int i, const M &x) { seg[m + i] = x; }
+
+    void build() {
+        for (int i = m - 1; i > 0; i--) seg[i] = Monoid::merge(seg[2 * i], seg[2 * i + 1]);
+    }
 
     inline M reflect(int i) const { return Acted_Monoid::merge(seg[i], lazy[i]); }
 

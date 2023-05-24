@@ -6,6 +6,8 @@
 
 - [モノイド（例）](Monoid_Example.hpp)
 
+- [モノイド（テンプレート）](Monoid_Template.hpp)
+
 ## 半環
 
 主に行列積を計算するときに載せられる代数構造。

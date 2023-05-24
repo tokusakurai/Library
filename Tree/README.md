@@ -42,6 +42,8 @@
 
 - [Heavy-Light 分解](Heavy-Light_Decomposition.hpp)
 
+- [Heavy-Light 分解 + データ構造](HLD_Data_Structure.hpp)
+
 ## 動的木
 
 辺の追加・削除によって、木構造そのものが変化するときに効率的にパスクエリを扱うことができる。

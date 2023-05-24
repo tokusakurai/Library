@@ -30,7 +30,7 @@ struct Heavy_Light_Decomposition {
     const int n;
     int m;
 
-    Heavy_Light_Decomposition(int n) : es(n), par(n), si(n, -1), depth(n), root(n), id_v(n), id_e(n - 1), vs(n), n(n), m(0) {}
+    Heavy_Light_Decomposition(int n) : es(n), par(n), si(n, 1), depth(n, -1), root(n), id_v(n), id_e(n - 1), vs(n), n(n), m(0) {}
 
     void add_edge(int from, int to) {
         es[from].emplace_back(to, m);
@@ -38,37 +38,60 @@ struct Heavy_Light_Decomposition {
         m++;
     }
 
-    int _dfs1(int now, int pre = -1) {
-        par[now] = pre;
-        if (pre == -1) depth[now] = 0;
-        si[now] = 1;
-        for (auto &e : es[now]) {
-            if (e.to != pre) {
-                depth[e.to] = depth[now] + 1;
-                si[now] += _dfs1(e.to, now);
+    int bfs_sz(int r, int s) {
+        int t = s;
+        queue<int> que;
+        que.push(r);
+        depth[r] = 0;
+        vs[t++] = r;
+        while (!que.empty()) {
+            int i = que.front();
+            que.pop();
+            for (auto &e : es[i]) {
+                if (depth[e.to] != -1) continue;
+                par[e.to] = i;
+                depth[e.to] = depth[i] + 1;
+                vs[t++] = e.to;
+                que.push(e.to);
             }
         }
-        return si[now];
+        for (int i = t - 1; i >= s; i--) {
+            for (auto &e : es[vs[i]]) {
+                if (e.to != par[vs[i]]) si[vs[i]] += si[e.to];
+            }
+        }
+        return t;
     }
 
-    void _dfs2(int now, bool st, int &s, int pre = -1) {
-        root[now] = (st ? now : root[pre]);
-        id_v[now] = s++;
-        vs[id_v[now]] = now;
-        edge heavy = {-1, -1};
-        int M = 0;
-        for (auto &e : es[now]) {
-            if (e.to == pre) continue;
-            if (M < si[e.to]) M = si[e.to], heavy = e;
-        }
-        if (heavy.id != -1) {
-            id_e[heavy.id] = s;
-            _dfs2(heavy.to, false, s, now);
-        }
-        for (auto &e : es[now]) {
-            if (e.to != pre && e.id != heavy.id) {
-                id_e[e.id] = s;
-                _dfs2(e.to, true, s, now);
+    void bfs_hld(int r, int s) {
+        id_v[r] = s;
+        root[r] = r;
+        queue<int> que;
+        que.push(r);
+        while (!que.empty()) {
+            int i = que.front();
+            que.pop();
+            edge heavy = {-1, -1};
+            int ma = 0;
+            for (auto &e : es[i]) {
+                if (e.to == par[i]) continue;
+                if (ma < si[e.to]) ma = si[e.to], heavy = e;
+            }
+            int cnt = id_v[i] + 1;
+            if (heavy.id != -1) {
+                root[heavy.to] = root[i];
+                id_e[heavy.id] = cnt;
+                id_v[heavy.to] = cnt;
+                que.push(heavy.to);
+                cnt += si[heavy.to];
+            }
+            for (auto &e : es[i]) {
+                if (e.to == par[i] || e.id == heavy.id) continue;
+                root[e.to] = e.to;
+                id_e[e.id] = cnt;
+                id_v[e.to] = cnt;
+                que.push(e.to);
+                cnt += si[e.to];
             }
         }
     }
@@ -76,10 +99,12 @@ struct Heavy_Light_Decomposition {
     void decompose() {
         int s = 0;
         for (int i = 0; i < n; i++) {
-            if (si[i] != -1) continue;
-            _dfs1(i);
-            _dfs2(i, true, s);
+            if (depth[i] != -1) continue;
+            int t = bfs_sz(i, s);
+            bfs_hld(i, s);
+            s = t;
         }
+        for (int i = 0; i < n; i++) vs[id_v[i]] = i;
     }
 
     int lca(int u, int v) {

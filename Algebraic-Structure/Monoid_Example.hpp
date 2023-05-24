@@ -20,7 +20,7 @@ struct Plus_Monoid {
 };
 
 template <typename T>
-constexpr T Plus_Monoid<T>::id = 0;
+const T Plus_Monoid<T>::id = 0;
 
 // prod
 template <typename T>
@@ -31,7 +31,7 @@ struct Product_Monoid {
 };
 
 template <typename T>
-constexpr T Product_Monoid<T>::id = 1;
+const T Product_Monoid<T>::id = 1;
 
 // min
 template <typename T>
@@ -109,7 +109,7 @@ struct Affine_Monoid {
 };
 
 template <typename T>
-constexpr pair<T, T> Affine_Monoid<T>::id = make_pair(1, 0);
+const pair<T, T> Affine_Monoid<T>::id = make_pair(1, 0);
 
 // モノイドの直積
 template <typename Monoid_1, typename Monoid_2>
@@ -122,7 +122,7 @@ struct Cartesian_Product_Monoid {
 };
 
 template <typename Monoid_1, typename Monoid_2>
-constexpr pair<typename Monoid_1::V, typename Monoid_2::V> Cartesian_Product_Monoid<Monoid_1, Monoid_2>::id = make_pair(Monoid_1::id, Monoid_2::id);
+const pair<typename Monoid_1::V, typename Monoid_2::V> Cartesian_Product_Monoid<Monoid_1, Monoid_2>::id = make_pair(Monoid_1::id, Monoid_2::id);
 
 // range add range min
 template <typename T>
@@ -212,36 +212,4 @@ struct Plus_Affine_Acted_Monoid {
     using M = pair<T, T>;
     using O = pair<T, T>;
     static constexpr M merge(const M &a, const O &b) { return M(b.first * a.first + b.second * a.second, a.second); };
-};
-
-struct Data_1 {
-    constexpr Data_1() {}
-};
-
-struct Monoid_1 {
-    using V = Data_1;
-    static V merge(V a, V b) { return a; }
-    static const V id;
-};
-
-constexpr Monoid_1::V Monoid_1::id = Data_1();
-
-struct Func_1 {
-    constexpr Func_1() {}
-};
-
-struct Operator_1 {
-    using V = Func_1;
-    static V merge(V a, V b) { return a; }
-    static const V id;
-};
-
-constexpr Operator_1::V Operator_1::id = Func_1();
-
-struct Acted_Monoid_1 {
-    using Monoid = Monoid_1;
-    using Operator = Operator_1;
-    using M = Data_1;
-    using O = Func_1;
-    static M merge(M a, O b) { return a; }
 };
