@@ -12,4 +12,6 @@
 
 - [有理数の floor・ceil](Rational_Floor_Ceil.hpp)
 
+- [有理数型](Rational.hpp)
+
 - [フィボナッチ探索](Fibonacci_Search.hpp)
