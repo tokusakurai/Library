@@ -18,24 +18,28 @@ using namespace std;
 
 template <typename T>
 struct Range_Add_Range_Sum {
-    Binary_Indexed_Tree<T> bit0, bit1;
+    Binary_Indexed_Tree<T> bit_0, bit_1;
     const int n;
 
-    Range_Add_Range_Sum(const vector<T> &v) : n(v.size()), bit0(v), bit1(v.size(), 0) {}
+    Range_Add_Range_Sum(const vector<T> &v) : bit_0(v), bit_1((int)v.size(), 0), n((int)v.size()) {}
 
-    Range_Add_Range_Sum(int n, const T &x) : Range_Add_Range_Sum(vector<T>(n, x)) {}
+    Range_Add_Range_Sum(int n, T x = 0) : Range_Add_Range_Sum(vector<T>(n, x)) {}
+
+    void set(int i, const T &x) { bit_0.set(i, x); }
+
+    void build() { bit_0.build(); }
 
     void add(int l, int r, const T &x) {
         l = max(l, 0), r = min(r, n);
         if (l >= r) return;
-        bit0.add(l, -x * T(l)), bit1.add(l, x);
-        if (r < n) bit0.add(r, x * T(r)), bit1.add(r, -x);
+        bit_0.add(l, -x * T(l)), bit_1.add(l, x);
+        if (r < n) bit_0.add(r, x * T(r)), bit_1.add(r, -x);
     }
 
     T sum(int i) const {
         i = min(i, n);
         if (i < 0) return 0;
-        return bit0.sum(i) + bit1.sum(i) * T(i);
+        return bit_0.sum(i) + bit_1.sum(i) * T(i);
     }
 
     T query(int l, int r) const {
@@ -43,4 +47,6 @@ struct Range_Add_Range_Sum {
         if (l >= r) return 0;
         return sum(r) - sum(l);
     }
+
+    T operator[](int i) const { return query(i, i + 1); }
 };
