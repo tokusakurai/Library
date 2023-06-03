@@ -16,6 +16,7 @@
 using namespace std;
 
 #include "../Algebraic-Structure/Monoid_Example.hpp"
+#include "../Data-Structure/Binary_Indexed_Tree.hpp"
 #include "../Data-Structure/Segment_Tree.hpp"
 
 template <bool directed = false>
@@ -66,5 +67,41 @@ struct Euler_Tour_Path {
         int d = seg.query(id_v[u], id_v[v] + 1);
         auto c = [d](int x) { return x <= d; };
         return vs[seg.find_first(id_v[u], c)];
+    }
+};
+
+template <typename T, bool directed = false>
+struct ETP_Binary_Indexed_Tree : Euler_Tour_Path<directed> {
+    using ETP = Euler_Tour_Path<directed>;
+    Binary_Indexed_Tree<T> bit;
+    vector<T> v;
+    const int n;
+
+    ETP_Binary_Indexed_Tree(int n, T x = 0) : ETP(n), bit(2 * n - 2, x), v(n - 1, x), n(n) {}
+
+    void set(int i, const T &x) { v[i] = x; }
+
+    void build() {
+        this->build_etp();
+        for (int i = 0; i < n - 1; i++) {
+            bit.set(this->down[i], v[i]);
+            bit.set(this->up[i], -v[i]);
+        }
+        bit.build();
+    }
+
+    void add(int i, const T &x) {
+        bit.add(this->down[i], x);
+        bit.add(this->up[i], -x);
+    }
+
+    void change(int i, const T &x) {
+        bit.change(this->down[i], x);
+        bit.change(this->up[i], -x);
+    }
+
+    T query(int u, int v) {
+        int w = this->lca(u, v);
+        return bit.sum(this->id_v[u]) + bit.sum(this->id_v[v]) - bit.sum(this->id_v[w]) * 2;
     }
 };
