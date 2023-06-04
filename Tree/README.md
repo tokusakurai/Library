@@ -69,3 +69,7 @@
 根付き木の各部分木を同型性に基づいて分類する。
 
 - [根付き木の同型性判定](Rooted_Tree_Isomorphism.hpp)
+
+## おまけ
+
+- [木上のスケジューリング問題](Tree_Scheduling.hpp)
