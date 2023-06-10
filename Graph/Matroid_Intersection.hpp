@@ -16,11 +16,12 @@ using namespace std;
 #include "../Graph/BFS.hpp"
 
 template <typename Matroid_1, typename Matroid_2>
-int Matroid_Intersection(Matroid_1 M1, Matroid_2 M2) {
+int matroid_intersection(Matroid_1 M1, Matroid_2 M2) {
     assert(M1.size() == M2.size());
     const int m = M1.size();
     vector<bool> X(m, false);
     for (int i = 0;; i++) {
+        M2.d[i]++;
         M1.set(X), M2.set(X);
         BFS<true> G(m + 2); // 最短路を求める
         int s = m, t = m + 1;

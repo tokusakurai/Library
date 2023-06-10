@@ -28,8 +28,8 @@ struct Partition_Matroid {
     vector<int> d, cnt;
     vector<vector<int>> used;
 
-    Partition_Matroid(int m, int n, const vector<vector<int>> &ids, vector<int> &d) : m(m), n(n), ids(ids), d(d), cnt(n), used(n) {
-        assert(ids.size() == n && d.size() == n);
+    Partition_Matroid(int m, int n, const vector<vector<int>> &ids, const vector<int> &d) : m(m), n(n), ids(ids), d(d), cnt(n), used(n) {
+        assert((int)ids.size() == n && (int)d.size() == n);
         belong.assign(m, -1);
         for (int i = 0; i < n; i++) {
             for (auto &e : ids[i]) belong[e] = i;
@@ -126,7 +126,6 @@ struct Graphic_Matroid {
     vector<int> circuit(int y) const {
         auto [s, t] = es[y];
         if (root[s] != root[t]) return {};
-        int r = root[s];
         vector<int> ret;
         while (s != t) {
             if (depth[s] > depth[t]) {

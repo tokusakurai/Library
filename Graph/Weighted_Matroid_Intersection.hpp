@@ -17,7 +17,7 @@ using namespace std;
 #include "../Graph/Bellman-Ford.hpp"
 
 template <typename Matroid_1, typename Matroid_2, typename T>
-vector<T> Weighted_Matroid_Intersection(Matroid_1 M1, Matroid_2 M2, vector<T> w) {
+vector<T> weighted_matroid_intersection(Matroid_1 M1, Matroid_2 M2, vector<T> w) {
     assert(M1.size() == M2.size());
     const int m = M1.size();
     for (int i = 0; i < m; i++) w[i] *= m + 1;
