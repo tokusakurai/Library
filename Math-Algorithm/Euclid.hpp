@@ -32,27 +32,16 @@ using namespace std;
 template <typename T>
 T binary_gcd(T a, T b) {
     T g = 1;
-    while (true) {
-        if (a < b) swap(a, b);
-        if (b == 0) {
-            g *= a;
-            break;
-        }
-        if (!(a & 1)) {
-            if (!(b & 1)) {
-                a >>= 1, b >>= 1, g <<= 1;
-            } else {
-                a >>= 1;
-            }
-        } else {
-            if (!(b & 1)) {
-                b >>= 1;
-            } else {
-                a = (a - b) >> 1;
-            }
+    while (a != 0 && b != 0) {
+        g <<= ((1 ^ (a & 1)) & (1 ^ (b & 1)));
+        a >>= (1 ^ (a & 1));
+        b >>= (1 ^ (b & 1));
+        if (a & b & 1) {
+            if (a < b) swap(a, b);
+            a = (a - b) >> 1;
         }
     }
-    return g;
+    return g * (a + b);
 }
 
 template <typename T>
