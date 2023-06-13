@@ -30,7 +30,7 @@ struct Dual_Segment_Tree {
     }
 
     inline void eval(int i) {
-        if (i < m && lazy[i] != Operator::id) {
+        if (i < m) {
             lazy[2 * i] = Operator::merge(lazy[2 * i], lazy[i]);
             lazy[2 * i + 1] = Operator::merge(lazy[2 * i + 1], lazy[i]);
             lazy[i] = Operator::id;
