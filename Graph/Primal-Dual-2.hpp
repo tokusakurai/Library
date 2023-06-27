@@ -129,4 +129,28 @@ struct Primal_Dual {
         }
         return ret;
     }
+
+    T min_cost_flow_max(int s, int t, bool dag = false) {
+        T ret = zero_T;
+        if (negative) dag ? dag_shortest_path(s) : bellman_ford(s);
+        while (true) {
+            dijkstra(s);
+            if (d[t] == INF_T) break;
+            for (int i = 0; i < n; i++) {
+                if (h[i] == INF_T || d[i] == INF_T) {
+                    h[i] = INF_T;
+                } else {
+                    h[i] += d[i];
+                }
+            }
+            F f = INF_F;
+            for (int now = t; now != s; now = pre_v[now]) f = min(f, es[pre_v[now]][pre_e[now]].cap);
+            ret += h[t] * f;
+            for (int now = t; now != s; now = pre_v[now]) {
+                edge &e = es[pre_v[now]][pre_e[now]];
+                e.cap -= f, es[now][e.rev].cap += f;
+            }
+        }
+        return ret;
+    }
 };
