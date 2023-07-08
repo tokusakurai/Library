@@ -127,8 +127,8 @@ struct Primal_Dual {
         return ret;
     }
 
-    T min_cost_flow_max(int s, int t, bool dag = false) {
-        T ret = zero_T;
+    vector<pair<T, F>> min_cost_flow_slope(int s, int t, bool dag = false) {
+        vector<pair<T, F>> ret;
         if (negative) dag ? dag_shortest_path(s) : bellman_ford(s);
         while (true) {
             dijkstra(s);
@@ -142,7 +142,11 @@ struct Primal_Dual {
             }
             F f = INF_F;
             for (int now = t; now != s; now = pre_v[now]) f = min(f, es[pre_v[now]][pre_e[now]].cap);
-            ret += h[t] * f;
+            if (!ret.empty() && ret.back().first == h[t]) {
+                ret.back().second += f;
+            } else {
+                ret.emplace_back(h[t], f);
+            }
             for (int now = t; now != s; now = pre_v[now]) {
                 edge &e = es[pre_v[now]][pre_e[now]];
                 e.cap -= f, es[now][e.rev].cap += f;
