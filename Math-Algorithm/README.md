@@ -168,6 +168,8 @@ FFT (NTT) を用いることで、多変数多項式の積を次数が大きく�
 
 - [多点評価](Multipoint_Evaluation.hpp)（多項式が与えられたときに多点での値を求める）
 
+- [多点評価（幾何級数）](Multipoint_Evaluation_Geometric_Series.hpp)（評価点が幾何級数のときの多点評価）
+
 ## 多項式とべき乗の積和
 
 - [多項式とべき乗の積和](Polynomial_R_Power_Sum.hpp) ($\sum_{i=0}^{n-1} i^kr^i$, $\sum_{i=0}^{\infty} i^kr^i$)
