@@ -59,15 +59,17 @@ struct Mo {
             if (x % 2 == 0) return q1.r < q2.r;
             return q1.r > q2.r;
         };
+
         auto comp2 = [&](const query &q1, const query &q2) {
             int x = (q1.l + b / 2) / b, y = (q2.l + b / 2) / b;
             if (x != y) return x < y;
             if (x % 2 == 0) return q1.r < q2.r;
             return q1.r > q2.r;
         };
+
         auto step_num = [&](const vector<query> &qs1) {
             long long ret = 0;
-            for (int i = 0; i < q; i++) ret += abs(qs1[i + 1].l - qs1[i].l) + abs(qs1[i + 1].r - qs1[i].r);
+            for (int i = 0; i < q - 1; i++) ret += abs(qs1[i + 1].l - qs1[i].l) + abs(qs1[i + 1].r - qs1[i].r);
             return ret;
         };
 
