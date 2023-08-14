@@ -8,6 +8,7 @@
 // この際に、各頂点から出る辺について左右からの累積和を持っておくことで効率的に計算できる。
 
 // verified with
+// https://judge.yosupo.jp/problem/tree_path_composite_sum
 // https://atcoder.jp/contests/abc160/tasks/abc160_f
 // https://atcoder.jp/contests/s8pc-4/tasks/s8pc_4_d
 // https://atcoder.jp/contests/dp/tasks/dp_v

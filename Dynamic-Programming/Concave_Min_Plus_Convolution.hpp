@@ -9,6 +9,7 @@
 
 // verified with
 // https://atcoder.jp/contests/abc218/tasks/abc218_h
+// https://judge.yosupo.jp/problem/min_plus_convolution_convex_convex
 
 #pragma once
 #include <bits/stdc++.h>
