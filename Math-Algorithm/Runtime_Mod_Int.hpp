@@ -1,5 +1,5 @@
 
-// 実行時入力 mod-int 構造体（素数）
+// 実行時入力 mod-int 構造体 (素数)
 // 計算量 加減乗算：O(1)、除算：O(log(mod))、k 乗：O(log(k))
 
 // verified with
@@ -21,11 +21,11 @@ struct Runtime_Mod_Int {
     }
 
     static inline int &get_mod() {
-        static int mod = 0;
+        static int mod = INT_MAX;
         return mod;
     }
 
-    static void set_mod(int md) { get_mod() = md; }
+    static void set_mod(int mod) { get_mod() = mod; }
 
     Runtime_Mod_Int &operator+=(const Runtime_Mod_Int &p) {
         if ((x += p.x) >= get_mod()) x -= get_mod();

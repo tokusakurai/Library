@@ -15,3 +15,9 @@
 - [有理数型](Rational.hpp)
 
 - [フィボナッチ探索](Fibonacci_Search.hpp)
+
+- [Segment Tree (旧バージョン)](Segment_Tree_Old.hpp)
+
+- [双対 Segment Tree (旧バージョン)](Dual_Segment_Tree_Old.hpp)
+
+- [遅延評価付き Segment Tree (旧バージョン)](Lazy_Segment_Tree_Old.hpp)

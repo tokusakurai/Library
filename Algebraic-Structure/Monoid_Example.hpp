@@ -124,6 +124,58 @@ struct Cartesian_Product_Monoid {
 template <typename Monoid_1, typename Monoid_2>
 const pair<typename Monoid_1::V, typename Monoid_2::V> Cartesian_Product_Monoid<Monoid_1, Monoid_2>::id = make_pair(Monoid_1::id, Monoid_2::id);
 
+// 行列積 (l*r)
+template <typename T, int n>
+struct Matrix_Monoid {
+    using V = array<array<T, n>, n>;
+    static constexpr V I() {
+        V ret;
+        for (int i = 0; i < n; i++) fill(begin(ret[i]), end(ret[i]), T(0));
+        for (int i = 0; i < n; i++) ret[i][i] = 1;
+        return ret;
+    }
+    static constexpr V merge(V l, V r) {
+        V ret;
+        for (int i = 0; i < n; i++) fill(begin(ret[i]), end(ret[i]), T(0));
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                for (int k = 0; k < n; k++) ret[i][k] += l[i][j] * r[j][k];
+            }
+        }
+        return ret;
+    }
+    static const V id;
+};
+
+template <typename T, int n>
+const array<array<T, n>, n> Matrix_Monoid<T, n>::id = Matrix_Monoid<T, n>::I();
+
+// 行列積 (r*l)
+template <typename T, int n>
+struct Matrix_Monoid_Rev {
+    using V = array<array<T, n>, n>;
+    static constexpr V I() {
+        V ret;
+        for (int i = 0; i < n; i++) fill(begin(ret[i]), end(ret[i]), T(0));
+        for (int i = 0; i < n; i++) ret[i][i] = 1;
+        return ret;
+    }
+    static constexpr V merge(V l, V r) {
+        V ret;
+        for (int i = 0; i < n; i++) fill(begin(ret[i]), end(ret[i]), T(0));
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                for (int k = 0; k < n; k++) ret[i][k] += r[i][j] * l[j][k];
+            }
+        }
+        return ret;
+    }
+    static const V id;
+};
+
+template <typename T, int n>
+const array<array<T, n>, n> Matrix_Monoid_Rev<T, n>::id = Matrix_Monoid_Rev<T, n>::I();
+
 // range add range min
 template <typename T>
 struct Min_Plus_Acted_Monoid {
