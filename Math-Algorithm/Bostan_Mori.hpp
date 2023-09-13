@@ -18,49 +18,56 @@ using namespace std;
 
 #include "../Math-Algorithm/Number_Theoretic_Transform.hpp"
 
-// [x^k](P(x)/Q(x))
 template <typename T>
-T Bostan_Mori(vector<T> P, vector<T> Q, long long k) {
+T Bostan_Mori(vector<T> f, vector<T> g, long long k) {
+    assert(!g.empty() && g[0] != 0);
+    if (f.empty()) return 0;
     using NTT_ = Number_Theoretic_Transform<T>;
-    int n = max((int)P.size(), (int)Q.size());
-    P.resize(n, 0), Q.resize(n, 0);
-    assert(n > 0 && Q[0] != 0);
-    int t = 1;
-    while (t < 2 * n - 1) t <<= 1;
-    for (; k > 0; k >>= 1) {
-        vector<T> R = Q;
-        for (int i = 1; i < n; i += 2) R[i] = -R[i];
-        P.resize(t, 0), NTT_::ntt(P);
-        Q.resize(t, 0), NTT_::ntt(Q);
-        R.resize(t, 0), NTT_::ntt(R);
-        vector<T> A(t), B(t);
-        for (int i = 0; i < t; i++) {
-            A[i] = P[i] * R[i];
-            B[i] = Q[i] * R[i];
+    int n = 2;
+    while (n < max((int)f.size(), (int)g.size())) n <<= 1;
+    f.resize(n, 0), g.resize(n, 0);
+    vector<T> h(n, 0);
+    h[1] = 1;
+    NTT_::ntt(h);
+    while (k > 0) {
+        vector<T> fe(n, 0), fo(n, 0), ge(n, 0), go(n, 0);
+        for (int i = 0; i < n; i += 2) {
+            fe[i >> 1] = f[i];
+            ge[i >> 1] = g[i];
         }
-        NTT_::intt(A), NTT_::intt(B);
-        Q.resize(n);
-        for (int i = 0; i < n; i++) Q[i] = B[2 * i];
-        P.resize(n);
+        for (int i = 1; i < n; i += 2) {
+            fo[i >> 1] = f[i];
+            go[i >> 1] = g[i];
+        }
+        NTT_::ntt(fe), NTT_::ntt(fo), NTT_::ntt(ge), NTT_::ntt(go);
         if (k & 1) {
-            for (int i = 0; i < n - 1; i++) P[i] = A[2 * i + 1];
-            P[n - 1] = 0;
+            for (int i = 0; i < n; i++) {
+                f[i] = fo[i] * ge[i] - fe[i] * go[i];
+                g[i] = ge[i] * ge[i] - go[i] * go[i] * h[i];
+            }
         } else {
-            for (int i = 0; i < n; i++) P[i] = A[2 * i];
+            for (int i = 0; i < n; i++) {
+                f[i] = fe[i] * ge[i] - fo[i] * go[i] * h[i];
+                g[i] = ge[i] * ge[i] - go[i] * go[i] * h[i];
+            }
         }
+        NTT_::intt(f), NTT_::intt(g);
+        k >>= 1;
     }
-    return P[0] / Q[0];
+    return f[0] / g[0];
 }
 
-// d 項間線形漸化式 a[n] = c[1]*a[n-1]+c[2]*a[n-2]+...+c[d]*a[n-d] の第 k 項 (0-indexed)
+// d 項間漸化式 a_n = ∑[1<=i<=d]c_i * a_{n-i} を満たす数列
+// a_0,...,a_{d-1} を与えたときに、a_k を計算する
 template <typename T>
 T linear_recurrence(const vector<T> &a, const vector<T> &c, long long k) {
-    using NTT_ = Number_Theoretic_Transform<T>;
     int d = a.size();
-    vector<T> Q(d + 1, 0);
-    Q[0] = 1;
-    for (int i = 1; i <= d; i++) Q[i] = -c[i];
-    vector<T> P = NTT_::convolve(a, Q);
-    P.resize(d);
-    return Bostan_Mori(P, Q, k);
+    assert((int)c.size() == d + 1);
+    using NTT_ = Number_Theoretic_Transform<T>;
+    vector<T> g(d + 1, 0);
+    g[0] = 1;
+    for (int i = 1; i <= d; i++) g[i] = -c[i];
+    vector<T> f = NTT_::convolve(a, g);
+    f.resize(d, 0);
+    return Bostan_Mori(f, g, k);
 }
