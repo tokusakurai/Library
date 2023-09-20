@@ -78,9 +78,11 @@
 
 - [Primal-Dual 法 3](Primal-Dual-3.hpp)（密グラフに対して高速に動作する）
 
-### 2 部グラフの最大マッチング
+### 最大マッチング
 
-- [Hopcroft-Karp 法](Hopcroft-Karp.hpp)
+- [Hopcroft-Karp 法](Hopcroft-Karp.hpp) (二部グラフの最大マッチング)
+
+- [Edmonds の花アルゴリズム](Edmonds_Blossom.hpp) (一般グラフの最大マッチング)
 
 ### 割り当て問題
 
