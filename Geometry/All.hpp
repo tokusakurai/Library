@@ -125,14 +125,11 @@ bool intersect(const Circle &c, const Line &l) { return sgn(c.r - distance(l, c.
 
 bool intersect(const Circle &c, const Point &p) { return eq(abs(p - c.p), c.r); }
 
-// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_7_A&lang=ja
-// 共通接線の本数
-int intersect(Circle c1, Circle c2) {
-    if (c1.r < c2.r) swap(c1, c2);
+bool intersect(const Circle &c1, const Circle &c2) {
     Real d = abs(c1.p - c2.p);
-    int a = sgn(d - c1.r - c2.r);
-    if (a >= 0) return 3 + a;
-    return 1 + sgn(d - c1.r + c2.r);
+    if (sgn(d - c1.r - c2.r) == 1) return false;
+    if (sgn(d - abs(c1.r - c2.r)) == -1) return false;
+    return true;
 }
 
 Real distance(const Point &p, const Point &q) { return abs(q - p); }
@@ -318,6 +315,16 @@ vector<Line> tangent(Circle c1, Circle c2) {
         }
     }
     return ret;
+}
+
+// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_7_A&lang=ja
+// 共通接線の本数
+int tangent_num(Circle c1, Circle c2) {
+    if (c1.r < c2.r) swap(c1, c2);
+    Real d = abs(c1.p - c2.p);
+    int a = sgn(d - c1.r - c2.r);
+    if (a >= 0) return 3 + a;
+    return 1 + sgn(d - c1.r + c2.r);
 }
 
 // 下側凸包

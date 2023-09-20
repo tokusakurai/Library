@@ -35,3 +35,12 @@ vector<Line> tangent(Circle c1, Circle c2) {
     }
     return ret;
 }
+
+// 共通接線の本数
+int tangent_num(Circle c1, Circle c2) {
+    if (c1.r < c2.r) swap(c1, c2);
+    Real d = abs(c1.p - c2.p);
+    int a = sgn(d - c1.r - c2.r);
+    if (a >= 0) return 3 + a;
+    return 1 + sgn(d - c1.r + c2.r);
+}
