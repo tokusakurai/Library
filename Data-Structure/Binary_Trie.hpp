@@ -69,7 +69,9 @@ struct Binary_Trie {
         return p == -1 ? 0 : nodes[p].count;
     }
 
+    // 含まれている要素 i のうち i ^ xor_val が最小になるような i (存在しなければ -1)
     T max_element(const T &xor_val = 0) const {
+        if (nodes[0].count == 0) return -1;
         int now = 0;
         T ret = 0;
         for (int i = MAX_LOG - 1; i >= 0; i--) {
@@ -86,7 +88,9 @@ struct Binary_Trie {
         return ret;
     }
 
+    // 含まれている要素 i のうち i ^ xor_val が最大になるような i (存在しなければ -1)
     T min_element(const T &xor_val = 0) const {
+        if (nodes[0].count == 0) return -1;
         int now = 0;
         T ret = 0;
         for (int i = MAX_LOG - 1; i >= 0; i--) {

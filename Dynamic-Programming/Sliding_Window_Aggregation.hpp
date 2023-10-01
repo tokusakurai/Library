@@ -35,7 +35,7 @@ struct Sliding_Window_Aggregation {
     }
 
     void pop_front() {
-        if (left_prod.size() == 1) {
+        if ((int)left_prod.size() == 1) {
             assert(!right.empty());
             reverse(begin(right), end(right));
             right.pop_back();

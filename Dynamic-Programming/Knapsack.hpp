@@ -21,7 +21,7 @@ using namespace std;
 template <typename T>
 T knapsack_01_1(vector<T> v, vector<int> w, int W) {
     int n = v.size();
-    assert(w.size() == n);
+    assert((int)w.size() == n);
     vector<T> dp(W + 1, 0);
     for (int i = 0; i < n; i++) {
         for (int j = W; j >= w[i]; j--) dp[j] = max(dp[j], dp[j - w[i]] + v[i])
@@ -32,7 +32,7 @@ T knapsack_01_1(vector<T> v, vector<int> w, int W) {
 template <typename T>
 int knapsack_01_2(vector<int> v, vector<T> w, T W) {
     int n = v.size();
-    assert(w.size() == n);
+    assert((int)w.size() == n);
     int V = accumulate(begin(v), end(v), 0);
     vector<T> dp(V + 1, W + 1);
     dp[0] = T(0);
@@ -49,7 +49,7 @@ int knapsack_01_2(vector<int> v, vector<T> w, T W) {
 template <typename T>
 T knapsack(vector<T> v, vector<int> w, int W) {
     int n = v.size();
-    assert(w.size() == n);
+    assert((int)w.size() == n);
     vector<T> dp(W + 1, 0);
     for (int i = 0; i <= W; i++) {
         for (int j = 0; j < n; j++) {
@@ -62,7 +62,7 @@ T knapsack(vector<T> v, vector<int> w, int W) {
 template <typename T>
 T knapsack_limitation(vector<T> v, vector<int> w, vector<int> m, int W) {
     int n = v.size();
-    assert(w.size() == n && m.size() == n);
+    assert((int)w.size() == n && m.size() == n);
     vector<T> dp(W + 1, 0);
     for (int i = 0; i < n; i++) {
         if (m[i] == 0) continue;

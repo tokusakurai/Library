@@ -21,7 +21,7 @@ using namespace std;
 template <typename T>
 Formal_Power_Series<T> polynomial_interpolation(const vector<T> &xs, const vector<T> &ys) {
     int n = xs.size();
-    assert(ys.size() == n);
+    assert((int)ys.size() == n);
     vector<Formal_Power_Series<T>> g = subproduct_tree(xs);
     int k = g.size() / 2;
     vector<Formal_Power_Series<T>> f(2 * k);

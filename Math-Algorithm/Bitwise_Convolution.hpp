@@ -23,7 +23,7 @@ using namespace std;
 template <typename T>
 vector<T> bitwise_and_convolve(vector<T> a, vector<T> b) {
     int n = a.size();
-    assert(b.size() == n && (n & (n - 1)) == 0);
+    assert((int)b.size() == n && (n & (n - 1)) == 0);
     fast_zeta_transform(a, true), fast_zeta_transform(b, true);
     for (int i = 0; i < n; i++) a[i] *= b[i];
     fast_mobius_transform(a, true);
@@ -33,7 +33,7 @@ vector<T> bitwise_and_convolve(vector<T> a, vector<T> b) {
 template <typename T>
 vector<T> bitwise_or_convolve(vector<T> a, vector<T> b) {
     int n = a.size();
-    assert(b.size() == n && (n & (n - 1)) == 0);
+    assert((int)b.size() == n && (n & (n - 1)) == 0);
     fast_zeta_transform(a, false), fast_zeta_transform(b, false);
     for (int i = 0; i < n; i++) a[i] *= b[i];
     fast_mobius_transform(a, false);
@@ -43,7 +43,7 @@ vector<T> bitwise_or_convolve(vector<T> a, vector<T> b) {
 template <typename T>
 vector<T> bitwise_xor_convolve(vector<T> a, vector<T> b) {
     int n = a.size();
-    assert(b.size() == n && (n & (n - 1)) == 0);
+    assert((int)b.size() == n && (n & (n - 1)) == 0);
     fast_hadamard_transform(a), fast_hadamard_transform(b);
     for (int i = 0; i < n; i++) a[i] *= b[i];
     fast_hadamard_transform(a, true);
@@ -53,7 +53,7 @@ vector<T> bitwise_xor_convolve(vector<T> a, vector<T> b) {
 template <typename T>
 vector<T> subset_convolve(const vector<T> &a, const vector<T> &b) {
     int n = a.size();
-    assert(b.size() == n && (n & (n - 1)) == 0);
+    assert((int)b.size() == n && (n & (n - 1)) == 0);
     int k = __builtin_ctz(n);
     vector<vector<T>> A(k + 1, vector<T>(n, 0)), B(k + 1, vector<T>(n, 0)), C(k + 1, vector<T>(n, 0));
     for (int i = 0; i < n; i++) {
