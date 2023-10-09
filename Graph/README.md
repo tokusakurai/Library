@@ -131,3 +131,5 @@
 - [最大安定集合](Maximum_Independent_Set.hpp)（どの 2 点も元のグラフで隣接しないような点集合でサイズが最大のものを求める）
 
 - [三角形列挙](Triangle_Enumerate.hpp)（グラフの長さ 3 のサイクルを列挙する）
+
+- [functional graph のサイクル分解](Functional_Graph_Decomposition.hpp)
