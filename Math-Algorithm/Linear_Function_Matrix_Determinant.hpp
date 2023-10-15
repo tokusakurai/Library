@@ -7,7 +7,8 @@
 // A_1 に基本変形を繰り返し、固有多項式の形に帰着する。
 
 // verified with
-// https://judge.yosupo.jp/problem/characteristic_polynomial
+// https://yukicoder.me/problems/no/1907
+// https://atcoder.jp/contests/abc323/tasks/abc323_g
 
 #pragma once
 #include <bits/stdc++.h>
