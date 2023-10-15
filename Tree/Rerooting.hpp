@@ -24,7 +24,7 @@ struct Rerooting {
     struct edge {
         int to;
         key_t data;
-        sum_t dp, ndp; // to 側の部分木 dp（辺も含む）、from 側の部分木 dp（辺は含まない）
+        sum_t dp, ndp; // to 側の部分木 dp (辺も含む)、from 側の部分木 dp (辺は含まない)
         edge(int to, const key_t &data, const sum_t &dp, const sum_t &ndp) : to(to), data(data), dp(dp), ndp(ndp) {}
     };
 

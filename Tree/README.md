@@ -4,25 +4,25 @@
 
 木上の任意の 2 点間の単純パスは一意に定まることから、DFS を用いて様々な操作を扱うことができる。
 
-- [DFS（重みなし木）](DFS_Tree.hpp)（根からの距離・部分木のサイズ・直径・パス検出）
+- [DFS (重みなし木)](DFS_Tree.hpp) (根からの距離・部分木のサイズ・直径・パス検出)
 
-- [DFS（重み付き木）](DFS_Tree_Weighted.hpp)（根からの距離・部分木のサイズ・直径・パス検出）
+- [DFS (重み付き木)](DFS_Tree_Weighted.hpp) (根からの距離・部分木のサイズ・直径・パス検出)
 
 ## オイラーツアー
 
 根付き木の頂点や辺を DFS で訪問した順に列として並べ、Segment Tree などのデータ構造と合わせて用いることで更新や求値クエリを高速に扱える。
 
-- [オイラーツアー（部分木）](Euler-Tour_Subtree.hpp)（部分木に対するクエリを扱える）
+- [オイラーツアー (部分木)](Euler-Tour_Subtree.hpp) (部分木に対するクエリを扱える)
 
-- [オイラーツアー（パス）](Euler-Tour_Path.hpp)（逆向きの辺が打ち消されるようにすることで、LCA と組み合わせてパスに対するクエリを扱える）
+- [オイラーツアー (パス)](Euler-Tour_Path.hpp) (逆向きの辺が打ち消されるようにすることで、LCA と組み合わせてパスに対するクエリを扱える)
 
 ## 最近共通祖先
 
 根付き木の 2 点の共通の祖先で最も根から深いものをダブリンぐを用いて求めるアルゴリズム。
 
-- [最近共通祖先（重みなし木）](Lowest_Common_Ancestor.hpp)
+- [最近共通祖先 (重みなし木)](Lowest_Common_Ancestor.hpp)
 
-- [最近共通祖先（重み付き木）](Lowest_Common_Ancestor_Weighted.hpp)
+- [最近共通祖先 (重み付き木)](Lowest_Common_Ancestor_Weighted.hpp)
 
 ## 全方位木 DP
 
@@ -48,7 +48,7 @@
 
 辺の追加・削除によって、木構造そのものが変化するときに効率的にパスクエリを扱うことができる。
 
-- [Link-Cut Tree](Link_Cut_Tree.hpp)（パスをスプレー木で管理することで辺の追加・削除とパスクエリを扱える）
+- [Link-Cut Tree](Link_Cut_Tree.hpp) (パスをスプレー木で管理することで辺の追加・削除とパスクエリを扱える)
 
 ## Cartesian tree
 
@@ -62,7 +62,7 @@
 
 - [木上の最小シュタイナー木](Dynamic_Steiner_Tree.hpp)
 
-- [Auxiliary Tree](Auxiliary_Tree.hpp) （最小シュタイナー木のパスを圧縮して得られる木を構築する）
+- [Auxiliary Tree](Auxiliary_Tree.hpp)  (最小シュタイナー木のパスを圧縮して得られる木を構築する)
 
 ## 根付き木の同型性判定
 

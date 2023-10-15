@@ -14,7 +14,7 @@
 // SA-IS の概要
 // 1. 文字列の各文字を L 型と S 型に分類する。
 // 2. LMS(left most S) をビンに入れて、induced sort をする。(結果、LMS 部分文字列は昇順に並ぶ)
-// 3. LMS から始まる suffix をソートするために、lms 部分文字列の rank を順に並べた文字列の sa を再帰的に求める。（lms の個数は n/2 個以下）
+// 3. LMS から始まる suffix をソートするために、lms 部分文字列の rank を順に並べた文字列の sa を再帰的に求める。 (lms の個数は n/2 個以下)
 // 4. LMS を、suffix の順にビンに入れて induced sort する。
 
 // verified with

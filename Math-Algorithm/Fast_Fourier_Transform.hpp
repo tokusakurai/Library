@@ -4,8 +4,8 @@
 
 // 概要
 // Stockham の FFT を用いる。
-// 通常の FFT（Cooley Turkey）ではビットを反転して並べ替えているが、その部分を省略している。
-// そのため、DFT した後の配列は順番が入れ替わったもの（ビット反転したときの昇順）となっている。
+// 通常の FFT (Cooley Turkey)ではビットを反転して並べ替えているが、その部分を省略している。
+// そのため、DFT した後の配列は順番が入れ替わったもの (ビット反転したときの昇順)となっている。
 
 // verified with
 // https://atcoder.jp/contests/atc001/tasks/fft_c
