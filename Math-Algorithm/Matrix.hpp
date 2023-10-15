@@ -1,26 +1,30 @@
 
 // 行列計算
-// 計算量 積：O(nmk)、k 乗：O(n^3 log(k))、簡約化・ガウスの消去法：O(nm^2)、逆行列：O(n^3)
+// 計算量 積：O(nmk)、k 乗：O(n^3 log(k))、行簡約化：O(nm^2)、逆行列：O(n^3)
 
 // 累乗：ダブリング
-// ガウスの消去法：行基本変形を繰り返すことで連立一次方程式の解を求める。
 
 // verified with
 // https://judge.yosupo.jp/problem/matrix_product
 // https://judge.yosupo.jp/problem/matrix_det
 // https://judge.yosupo.jp/problem/inverse_matrix
-// https://judge.yosupo.jp/problem/system_of_linear_equations
 
 #pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
-template <typename T>
+template <typename T, bool is_float = false>
 struct Matrix {
     vector<vector<T>> A;
     int n, m;
 
+    Matrix() = default;
+
+    Matrix(int n) : A(n, vector<T>(n, 0)), n(n), m(n) {}
+
     Matrix(int n, int m) : A(n, vector<T>(m, 0)), n(n), m(m) {}
+
+    Matrix(const vector<vector<T>> &A) : A(A), n((int)A.size()), m(A.empty() ? 0 : (int)A[0].size()) {}
 
     inline const vector<T> &operator[](int k) const { return A[k]; }
 
@@ -30,6 +34,22 @@ struct Matrix {
         Matrix ret(l, l);
         for (int i = 0; i < l; i++) ret[i][i] = 1;
         return ret;
+    }
+
+    Matrix &operator+=(const Matrix &B) {
+        assert(n == B.n && m == B.m);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) A[i][j] += B[i][j];
+        }
+        return *this;
+    }
+
+    Matrix &operator-=(const Matrix &B) {
+        assert(n == B.n && m == B.m);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) A[i][j] -= B[i][j];
+        }
+        return *this;
     }
 
     Matrix &operator*=(const Matrix &B) {
@@ -45,7 +65,30 @@ struct Matrix {
         return *this;
     }
 
+    Matrix &operator/=(const Matrix &B) {
+        *this *= B.inverse();
+        return *this;
+    }
+
+    Matrix operator-() const {
+        Matrix ret(n, m);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) ret[i][j] = -A[i][j];
+        }
+        return ret;
+    }
+
+    Matrix operator+(const Matrix &B) const { return Matrix(*this) += B; }
+
+    Matrix operator-(const Matrix &B) const { return Matrix(*this) -= B; }
+
     Matrix operator*(const Matrix &B) const { return Matrix(*this) *= B; }
+
+    Matrix operator/(const Matrix &B) const { return Matrix(*this) /= B; }
+
+    bool operator==(const Matrix &B) const { return A == B.A; }
+
+    bool operator!=(const Matrix &B) const { return A != B.A; }
 
     Matrix pow(long long k) const {
         assert(n == m);
@@ -56,9 +99,49 @@ struct Matrix {
         return ret;
     }
 
-    bool eq(const T &a, const T &b) const {
+    Matrix transpose() const {
+        Matrix ret(m, n);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) ret[j][i] = A[i][j];
+        }
+        return ret;
+    }
+
+    Matrix submatrix(vector<int> rs, vector<int> cs) {
+        int sub_n = rs.size(), sub_m = cs.size();
+        Matrix ret(sub_n, sub_m);
+        for (int i = 0; i < sub_n; i++) {
+            for (int j = 0; j < sub_m; j++) ret[i][j] = A[rs[i]][cs[j]];
+        }
+        return ret;
+    }
+
+    Matrix submatrix(int lr, int rr, int lc, int rc) {
+        assert(0 <= lr && lr <= rr && rr <= n);
+        assert(0 <= lc && lc <= rc && rc <= m);
+        int sub_n = rr - lr, sub_m = rc - lc;
+        Matrix ret(sub_n, sub_m);
+        for (int i = 0; i < sub_n; i++) {
+            for (int j = 0; j < sub_m; j++) ret[i][j] = A[lr + i][lc + j];
+        }
+        return ret;
+    }
+
+    static bool eq(const T &a, const T &b) {
+        if constexpr (is_float) return abs(a - b) <= 1e-6;
         return a == b;
-        // return abs(a-b) <= EPS;
+    }
+
+    int get_pivot(int j, int i) {
+        int pivot = i;
+        for (int k = i + 1; k < n; k++) {
+            if constexpr (is_float) {
+                if (abs(A[k][j]) > abs(A[pivot][j])) pivot = k;
+            } else {
+                if (A[k][j] != 0) pivot = k;
+            }
+        }
+        return pivot;
     }
 
     // 行基本変形を用いて簡約化を行い、(rank, det) の組を返す
@@ -68,12 +151,8 @@ struct Matrix {
         int check = 0, rank = 0;
         T det = (n == m ? 1 : 0);
         for (int j = 0; j < m; j++) {
-            int pivot = check;
-            for (int i = check; i < n; i++) {
-                if (A[i][j] != 0) pivot = i;
-                // if(abs(A[i][j]) > abs(A[pivot][j])) pivot = i; // T が小数の場合はこちら
-            }
-            if (check != pivot) det *= T(-1);
+            int pivot = get_pivot(j, check);
+            if (check != pivot) det = -det;
             swap(A[check], A[pivot]), swap(b[check], b[pivot]);
             if (eq(A[check][j], T(0))) {
                 det = T(0);
@@ -103,17 +182,20 @@ struct Matrix {
         return row_reduction(b);
     }
 
-    // 行基本変形を行い、逆行列を求める
+    int rank() const { return Matrix(*this).row_reduction().first; }
+
+    T determinant() const {
+        assert(n == m);
+        return Matrix(*this).row_reduction().second;
+    }
+
     pair<bool, Matrix> inverse() {
         if (n != m) return make_pair(false, Matrix(0, 0));
         if (n == 0) return make_pair(true, Matrix(0, 0));
+        vector<vector<T>> A_cpy = A;
         Matrix ret = I(n);
         for (int j = 0; j < n; j++) {
-            int pivot = j;
-            for (int i = j; i < n; i++) {
-                if (A[i][j] != 0) pivot = i;
-                // if(abs(A[i][j]) > abs(A[pivot][j])) pivot = i; // T が小数の場合はこちら
-            }
+            int pivot = get_pivot(j, j);
             swap(A[j], A[pivot]), swap(ret[j], ret[pivot]);
             if (eq(A[j][j], T(0))) return make_pair(false, Matrix(0, 0));
             T r = T(1) / A[j][j];
@@ -129,42 +211,7 @@ struct Matrix {
                 A[i][j] = T(0);
             }
         }
+        A = A_cpy;
         return make_pair(true, ret);
-    }
-
-    // Ax = b の解の 1 つと解空間の基底の組を返す
-    vector<vector<T>> Gaussian_elimination(vector<T> b) {
-        row_reduction(b);
-        vector<vector<T>> ret;
-        vector<int> p(n, m);
-        vector<bool> is_zero(m, true);
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (!eq(A[i][j], T(0))) {
-                    p[i] = j;
-                    break;
-                }
-            }
-            if (p[i] < m) {
-                is_zero[p[i]] = false;
-            } else if (!eq(b[i], T(0))) {
-                return {};
-            }
-        }
-        vector<T> x(m, T(0));
-        for (int i = 0; i < n; i++) {
-            if (p[i] < m) x[p[i]] = b[i];
-        }
-        ret.push_back(x);
-        for (int j = 0; j < m; j++) {
-            if (!is_zero[j]) continue;
-            x[j] = T(1);
-            for (int i = 0; i < n; i++) {
-                if (p[i] < m) x[p[i]] = -A[i][j];
-            }
-            ret.push_back(x);
-            x[j] = T(0);
-        }
-        return ret;
     }
 };

@@ -4,13 +4,13 @@
 
 ユークリッド互除法を用いるアルゴリズム。
 
-- [ユークリッドの互除法](Euclid.hpp)（gcd、lcm、extgcd、mod 逆数、floor sum、中国剰余定理、Garner のアルゴリズム）
+- [ユークリッドの互除法](Euclid.hpp) (gcd、lcm、extgcd、mod 逆数、floor sum、中国剰余定理、Garner のアルゴリズム)
 
 ## 素数・約数
 
 素数・約数に関するアルゴリズム。
 
-- [素数・約数](Prime.hpp)（約数列挙、素因数分解、素数判定、エラトステネスの篩、素数え上げ）
+- [素数・約数](Prime.hpp) (約数列挙、素因数分解、素数判定、エラトステネスの篩、素数え上げ)
 
 - [高速素因数分解](Fast_Prime_Factorization.hpp)
 
@@ -18,7 +18,7 @@
 
 有理整数環の剰余環 $\mathbb{Z}/n\mathbb{Z}$ における演算に関するアルゴリズム。
 
-- [剰余環における演算](Factor_Ring.hpp)（累乗、オイラーの φ 関数、離散対数、位数、原始根）
+- [剰余環における演算](Factor_Ring.hpp) (累乗、オイラーの φ 関数、離散対数、位数、原始根)
 
 - [原子根](Primitive_Root.hpp)
 
@@ -38,25 +38,25 @@
 
 前計算をすることによって、二項係数を効率的に求めることができる。
 
-- [組み合わせ](Combination.hpp)（二項係数、第 2 種スターリング数、ベル数）
+- [組み合わせ](Combination.hpp) (二項係数、第 2 種スターリング数、ベル数)
 
 ## 数列
 
 各種数列のテーブルを計算するアルゴリズム。
 
-- [スターリング数](Stirling_Number.hpp)（第 1 種スターリング数、第 2 種スターリング数のテーブル）
+- [スターリング数](Stirling_Number.hpp) (第 1 種スターリング数、第 2 種スターリング数のテーブル)
 
-- [モンモール数](Montmort_Number.hpp)（完全順列の個数のテーブル）
+- [モンモール数](Montmort_Number.hpp) (完全順列の個数のテーブル)
 
-- [分割数](Partition_Function.hpp)（分割数のテーブル）
+- [分割数](Partition_Function.hpp) (分割数のテーブル)
 
 ## K 乗根
 
 体において K 乗根を求めるアルゴリズム。
 
-- [K 乗根（整数）](Kth_Root_Integer.hpp)（非負整数の K 乗根以下の最小の整数を求める）
+- [K 乗根 (整数)](Kth_Root_Integer.hpp) (非負整数の K 乗根以下の最小の整数を求める)
 
-- [K 乗根 (mod)](Kth_Root_Mod.hpp)（素数 $p$ について $\mathbb{Z}/p\mathbb{Z}$ における K 乗根を求める）
+- [K 乗根 (mod)](Kth_Root_Mod.hpp) (素数 $p$ について $\mathbb{Z}/p\mathbb{Z}$ における K 乗根を求める)
 
 ## 2-SAT
 
@@ -68,17 +68,21 @@
 
 行列を用いた計算に関するアルゴリズム。加法と乗法の2つの二項演算を備えた集合が半環であるとき、行列積の演算を行うことができる。
 
-- [行列](Matrix.hpp)（積、累乗、簡約化、ガウスの消去法）
+- [行列](Matrix.hpp) (積、累乗、簡約化)
 
-- [二元体行列](F2_Matrix.hpp)（bitset を用いた二元体での簡約化の定数倍高速化）
+- [線形方程式](Linear_Equation.hpp)
 
-- [抽象化行列](Abstract_Matrix.hpp)（半環に対して行列積の演算を行うことができる）
+- [二元体行列](F2_Matrix.hpp) (bitset を用いた二元体での簡約化の定数倍高速化)
 
-- [任意 mod 行列式](Arbitrary_Mod_Determinant.hpp)（素数とは限らない自然数 $m$ に対する $\mathbb{Z}/m\mathbb{Z}$ での行列式）
+- [抽象化行列](Abstract_Matrix.hpp) (半環に対して行列積の演算を行うことができる)
 
-- [疎行列の行列式](Sparse_Matrix_Determinant.hpp)（black box in linear algebra の適用例）
+- [任意 mod 行列式](Arbitrary_Mod_Determinant.hpp) (素数とは限らない自然数 $m$ に対する $\mathbb{Z}/m\mathbb{Z}$ での行列式)
 
-- [固有多項式](Characteristic_Polynomial.hpp)
+- [疎行列の行列式](Sparse_Matrix_Determinant.hpp) (black box in linear algebra の適用例)
+
+- [特性多項式](Characteristic_Polynomial.hpp)
+
+- [一次関数行列の行列式](Linear_Function_Matrix_Determinant.hpp)
 
 ## 線形漸化式
 
@@ -86,11 +90,11 @@
 
 - [Kitamasa 法](Kitamasa.hpp)
 
-- [高速 Kitamasa 法](Fast_Kitamasa.hpp)（Kitamasa 法を FPS を用いて高速化）
+- [高速 Kitamasa 法](Fast_Kitamasa.hpp) (Kitamasa 法を FPS を用いて高速化)
 
 - [Bostan-Mori のアルゴリズム](Bostan_Mori.hpp)
 
-- [線形回帰数列の各項列挙](Linear_Recursive_Sequence_Enumeration.hpp)（線形漸化式に従う初項 1 の数列を求める）
+- [線形回帰数列の各項列挙](Linear_Recursive_Sequence_Enumeration.hpp) (線形漸化式に従う初項 1 の数列を求める)
 
 線形漸化式で得られる数列の先頭の有限項が与えられたとき、それを与える階数最小の線形漸化式を求めることもできる。
 
@@ -98,7 +102,7 @@
 
 ## 畳み込み
 
-畳み込み（ここでは多項式の乗算）を行うアルゴリズム。
+畳み込み (ここでは多項式の乗算)を行うアルゴリズム。
 
 ### 高速フーリエ変換 (FFT)
 
@@ -114,11 +118,11 @@ NTT 素数を、自身から 1 引いたものが (配列の長さより) 十分
 
 いくつかの NTT 素数を用意して Garner のアルゴリズムで復元することによって、任意 mod で畳み込みを行うことができる。
 
-- [任意 mod 数論変換 (NTT)](Arbitrary_Mod_Number_Theoretic_Transform.hpp)（任意 mod における畳込み）
+- [任意 mod 数論変換 (NTT)](Arbitrary_Mod_Number_Theoretic_Transform.hpp) (任意 mod における畳込み)
 
-- [高速フーリエ変換（64 ビット符号付き整数）](Fast_Fourier_Transform_Integer.hpp)（結果が 64 ビット符号付き整数に収まる場合の畳み込み）
+- [高速フーリエ変換 (64 ビット符号付き整数)](Fast_Fourier_Transform_Integer.hpp) (結果が 64 ビット符号付き整数に収まる場合の畳み込み)
 
-- [オンライン畳み込み](Relaxed_Convolution.hpp)（項が逐次的に与えられるときの畳み込み）
+- [オンライン畳み込み](Relaxed_Convolution.hpp) (項が逐次的に与えられるときの畳み込み)
 
 ### 多変数畳み込み
 
@@ -138,7 +142,7 @@ FFT (NTT) を用いることで、多変数多項式の積を次数が大きく�
 
 - [高速ゼータ・メビウス・アダマール変換](Zeta_Mobius_Hadamard.hpp)
 
-- [ビット演算による添字畳み込み](Bitwise_Convolution.hpp)（添字 AND・OR・XOR 畳み込み、subset 畳み込み）
+- [ビット演算による添字畳み込み](Bitwise_Convolution.hpp) (添字 AND・OR・XOR 畳み込み、subset 畳み込み)
 
 ## 約数系ゼータ・メビウス変換
 
@@ -152,25 +156,25 @@ FFT (NTT) を用いることで、多変数多項式の積を次数が大きく�
 
 形式的冪級数 (項の数が有限とは限らない多項式) の基本的な計算を行うアルゴリズム。
 
-- [形式的冪級数 (FPS)](Formal_Power_Series.hpp)（NTT 素数 mod における形式的冪級数）
+- [形式的冪級数 (FPS)](Formal_Power_Series.hpp) (NTT 素数 mod における形式的冪級数)
 
-- [任意 mod 形式的冪級数 (FPS)](Arbitrary_Mod_Formal_Power_Series.hpp)（任意 mod における形式的羃級数）
+- [任意 mod 形式的冪級数 (FPS)](Arbitrary_Mod_Formal_Power_Series.hpp) (任意 mod における形式的羃級数)
 
 ## 多項式
 
 多項式補間や、与えられた点での評価を行うアルゴリズム。
 
-- [Subproduct Tree](Subproduct_Tree.hpp)（多項式の積についてのセグメント木）
+- [Subproduct Tree](Subproduct_Tree.hpp) (多項式の積についてのセグメント木)
 
-- [ラグランジュ補間（1 点）](Single_Point_Interpolation.hpp)（連続した多点での値から 1 点での値を復元する）
+- [ラグランジュ補間 (1 点)](Single_Point_Interpolation.hpp) (連続した多点での値から 1 点での値を復元する)
 
-- [ラグランジュ補間（多点）](Multipoint_Interpolation.hpp)（連続した多点での値から連続した多点での値を復元する）
+- [ラグランジュ補間 (多点)](Multipoint_Interpolation.hpp) (連続した多点での値から連続した多点での値を復元する)
 
-- [ラグランジュ補間（多項式）](Polynomial_Interpolation.hpp)（多点での値から多項式そのものを復元する）
+- [ラグランジュ補間 (多項式)](Polynomial_Interpolation.hpp) (多点での値から多項式そのものを復元する)
 
-- [多点評価](Multipoint_Evaluation.hpp)（多項式が与えられたときに多点での値を求める）
+- [多点評価](Multipoint_Evaluation.hpp) (多項式が与えられたときに多点での値を求める)
 
-- [多点評価（幾何級数）](Multipoint_Evaluation_Geometric_Series.hpp)（評価点が幾何級数のときの多点評価）
+- [多点評価 (幾何級数)](Multipoint_Evaluation_Geometric_Series.hpp) (評価点が幾何級数のときの多点評価)
 
 ## 多項式とべき乗の積和
 
