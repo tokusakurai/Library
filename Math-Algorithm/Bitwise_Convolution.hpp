@@ -8,11 +8,14 @@
 // OR 畳み込み：a,b を下位集合で高速ゼータ変換 -> 両者の各項の積を取る -> 下位集合で高速メビウス変換
 // XOR 畳み込み：a,b を高速アダマール変換 -> 両者の各項の積を取る -> 高速逆アダマール変換
 // subset 畳み込み：A(S) = a(S)*x^|S| とした多項式を考えると、A と B の OR 畳み込みを求めれば良い。
+// multiple subset 畳み込み：S の全ての分割 (S_1,...,S_k) について a(S_1)*...*a(S_k) の総和を求める。
 
 // verified with
 // https://judge.yosupo.jp/problem/bitwise_and_convolution
 // https://judge.yosupo.jp/problem/bitwise_xor_convolution
 // https://judge.yosupo.jp/problem/subset_convolution
+// https://judge.yosupo.jp/problem/exp_of_set_power_series
+// https://yukicoder.me/problems/no/2507
 
 #pragma once
 #include <bits/stdc++.h>
@@ -70,4 +73,18 @@ vector<T> subset_convolve(const vector<T> &a, const vector<T> &b) {
     vector<T> c(n);
     for (int i = 0; i < n; i++) c[i] = C[__builtin_popcount(i)][i];
     return c;
+}
+
+template <typename T>
+vector<T> multiple_subset_convolve(const vector<T> &a) {
+    int n = a.size();
+    assert((n & (n - 1)) == 0);
+    assert(a[0] == T(0));
+    vector<T> b(1, 1);
+    for (int k = 1; k < n; k <<= 1) {
+        vector<T> a_sub(begin(a) + k, begin(a) + k * 2);
+        vector<T> b_sub = subset_convolve(a_sub, b);
+        b.insert(end(b), begin(b_sub), end(b_sub));
+    }
+    return b;
 }
