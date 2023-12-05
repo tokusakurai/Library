@@ -6,11 +6,11 @@
 
 - [Z algorithm](Z_Algorithm.hpp)
 
-## Manachar
+## 回文
 
-文字列の各文字を中心とした最長回分の半径を求めるアルゴリズム。
+- [Manachar](Manachar.hpp) (文字列の各文字を中心とした最長回分の半径を求める)
 
-- [Manachar](Manachar.hpp)
+- [回文木](Palindrome_Tree.hpp) (文字列に含まれる回文全体からなる Trie 木)
 
 ## MP 法・KMP 法
 
