@@ -7,6 +7,7 @@
 // sa[i], sa[i+1] の片方が S 由来でもう片方が T 由来であるような i の中で、lcp[i] の最大値が最長共通部分文字列の長さに相当する。
 
 // verified with
+// https://judge.yosupo.jp/problem/longest_common_substring
 // https://atcoder.jp/contests/arc151/tasks/arc151_e
 
 #pragma once
@@ -32,8 +33,9 @@ tuple<int, int, int> longest_common_substring(const T &s, const T &t) {
         if (x > y) swap(x, y);
         if (x < n && n < y) len = max(len, lcp[i]);
     }
+    if (len == 0) return make_tuple(0, 0, 0);
     int ls = -1, lt = -1;
-    for (int i = 0; i < n + m - 1; i++) {
+    for (int i = 0; i < n + m; i++) {
         int x = sa[i], y = sa[i + 1];
         if (x > y) swap(x, y);
         if (x < n && n < y && len == lcp[i]) {
