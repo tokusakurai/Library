@@ -19,77 +19,77 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// T: 木 DP のデータ型、E: 辺のデータ型、V: 頂点のデータ
-template <typename T, typename V, typename E>
+template <typename Tree_DP, bool store_subtree = false>
 struct Rerooting {
+    using T = typename Tree_DP::T;
+    using V = typename Tree_DP::V;
+    using E = typename Tree_DP::E;
+
     struct edge {
         int to;
         E data;
         T dp_this;     // from 側の部分木 dp (辺は含まない)
         T dp_opposite; // to 側の部分木 dp (辺も含む)
 
-        edge(int to, const E &data, const T &dp_this, const T &dp_opposite) : to(to), data(data), dp_this(dp_this), dp_opposite(dp_opposite) {}
+        edge(int to, const E &data) : to(to), data(data), dp_this(Tree_DP::id), dp_opposite(Tree_DP::id) {}
     };
-
-    using Func_TT = function<T(T, T)>;
-    using Func_TV = function<T(T, V)>;
-    using Func_TE = function<T(T, E)>;
 
     vector<vector<edge>> es;
     const int n;
     vector<T> subdp, dp; // 部分木の dp、全方位の dp
     unordered_map<long long, T> mp;
-    const Func_TT merge;       // 根なし木のマージ
-    const Func_TV attach_root; // 根なし木に根を追加して根付き木にする
-    const Func_TE attach_edge; // 根付き木に辺を追加して根なし木にする
-    const T e1;                // merge, attach_root の単位元
-    const vector<V> base;      // 1 頂点の場合の dp の値
+    const vector<V> base; // 1 頂点の場合の dp の値
 
-    Rerooting(int n, const Func_TT &merge, const Func_TV &attach_root, const Func_TE &attach_edge, const T &e1, const vector<V> &base) : es(n), n(n), subdp(n, e1), dp(n), merge(merge), attach_root(attach_root), attach_edge(attach_edge), e1(e1), base(base) {}
+    Rerooting(int n, const vector<V> &base) : es(n), n(n), subdp(n, Tree_DP::id), dp(n), base(base) {}
 
     void add_edge(int from, int to, const E &data) {
-        es[from].emplace_back(to, data, e1, e1);
-        es[to].emplace_back(from, data, e1, e1);
+        es[from].emplace_back(to, data);
+        es[to].emplace_back(from, data);
     }
 
     void dfs_sub(int now, int pre = -1) {
         for (auto &e : es[now]) {
             if (e.to == pre) continue;
             dfs_sub(e.to, now);
-            subdp[now] = merge(subdp[now], attach_edge(subdp[e.to], e.data));
+            subdp[now] = Tree_DP::merge(subdp[now], Tree_DP::attach_edge(subdp[e.to], e.data));
         }
-        subdp[now] = attach_root(subdp[now], base[now]);
+        subdp[now] = Tree_DP::attach_root(subdp[now], base[now]);
     }
 
     void dfs_all(int now, const T &top, int pre = -1) {
-        T s = e1;
+        T s = Tree_DP::id;
         for (int i = 0; i < (int)es[now].size(); i++) {
             auto &e = es[now][i];
             e.dp_this = s;
-            e.dp_opposite = attach_edge(e.to == pre ? top : subdp[e.to], e.data);
-            s = merge(s, e.dp_opposite);
+            e.dp_opposite = Tree_DP::attach_edge(e.to == pre ? top : subdp[e.to], e.data);
+            s = Tree_DP::merge(s, e.dp_opposite);
         }
-        dp[now] = attach_root(s, base[now]);
-        s = e1;
+        dp[now] = Tree_DP::attach_root(s, base[now]);
+        s = Tree_DP::id;
         for (int i = (int)es[now].size() - 1; i >= 0; i--) {
             auto &e = es[now][i];
-            e.dp_this = merge(e.dp_this, s);
-            e.dp_this = attach_root(e.dp_this, base[now]);
+            e.dp_this = Tree_DP::merge(e.dp_this, s);
+            e.dp_this = Tree_DP::attach_root(e.dp_this, base[now]);
             if (e.to != pre) {
-                mp[1LL * n * now + e.to] = e.dp_this;
-                mp[1LL * n * e.to + now] = subdp[e.to];
+                if (store_subtree) {
+                    mp[1LL * n * now + e.to] = e.dp_this;
+                    mp[1LL * n * e.to + now] = subdp[e.to];
+                }
                 dfs_all(e.to, e.dp_this, now);
             }
-            s = merge(s, e.dp_opposite);
+            s = Tree_DP::merge(s, e.dp_opposite);
         }
     }
 
     vector<T> solve() {
         dfs_sub(0);
-        dfs_all(0, e1);
+        dfs_all(0, Tree_DP::id);
         return dp;
     }
 
     // 辺 {u,v} で切った後の u 側の部分木 dp
-    T get_subtree(int u, int v) { return mp[1LL * n * u + v]; }
+    T get_subtree(int u, int v) {
+        assert(store_subtree);
+        return mp[1LL * n * u + v];
+    }
 };
