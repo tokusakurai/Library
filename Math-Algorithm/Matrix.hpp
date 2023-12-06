@@ -8,6 +8,7 @@
 // https://judge.yosupo.jp/problem/matrix_product
 // https://judge.yosupo.jp/problem/matrix_det
 // https://judge.yosupo.jp/problem/inverse_matrix
+// https://judge.yosupo.jp/problem/pow_of_matrix
 
 #pragma once
 #include <bits/stdc++.h>
