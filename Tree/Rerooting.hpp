@@ -19,69 +19,77 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template <typename sum_t, typename key_t>
+// T: 木 DP のデータ型、E: 辺のデータ型、V: 頂点のデータ
+template <typename T, typename V, typename E>
 struct Rerooting {
     struct edge {
         int to;
-        key_t data;
-        sum_t dp, ndp; // to 側の部分木 dp (辺も含む)、from 側の部分木 dp (辺は含まない)
-        edge(int to, const key_t &data, const sum_t &dp, const sum_t &ndp) : to(to), data(data), dp(dp), ndp(ndp) {}
+        E data;
+        T dp_this;     // from 側の部分木 dp (辺は含まない)
+        T dp_opposite; // to 側の部分木 dp (辺も含む)
+
+        edge(int to, const E &data, const T &dp_this, const T &dp_opposite) : to(to), data(data), dp_this(dp_this), dp_opposite(dp_opposite) {}
     };
 
-    using F = function<sum_t(sum_t, sum_t)>;
-    using G = function<sum_t(sum_t, key_t)>;
+    using Func_TT = function<T(T, T)>;
+    using Func_TV = function<T(T, V)>;
+    using Func_TE = function<T(T, E)>;
+
     vector<vector<edge>> es;
     const int n;
-    vector<sum_t> subdp, dp; // 部分木の dp、全方位の dp
-    unordered_map<long long, sum_t> mp;
-    const F f;                // 1 頂点を間に挟んで隣り合う 2 つの部分木の情報をマージ
-    const G g;                // 部分木の根に 1 本辺を足す
-    const sum_t e1;           // f の単位元
-    const vector<sum_t> base; // 1 頂点の場合の dp の値
+    vector<T> subdp, dp; // 部分木の dp、全方位の dp
+    unordered_map<long long, T> mp;
+    const Func_TT merge;       // 根なし木のマージ
+    const Func_TV attach_root; // 根なし木に根を追加して根付き木にする
+    const Func_TE attach_edge; // 根付き木に辺を追加して根なし木にする
+    const T e1;                // merge, attach_root の単位元
+    const vector<V> base;      // 1 頂点の場合の dp の値
 
-    Rerooting(int n, const F &f, const G &g, const sum_t &e1, const vector<sum_t> &base) : es(n), n(n), subdp(base), dp(n), f(f), g(g), e1(e1), base(base) {}
+    Rerooting(int n, const Func_TT &merge, const Func_TV &attach_root, const Func_TE &attach_edge, const T &e1, const vector<V> &base) : es(n), n(n), subdp(n, e1), dp(n), merge(merge), attach_root(attach_root), attach_edge(attach_edge), e1(e1), base(base) {}
 
-    void add_edge(int from, int to, const key_t &data) {
-        es[from].emplace_back(to, data, e1, base[from]);
-        es[to].emplace_back(from, data, e1, base[to]);
+    void add_edge(int from, int to, const E &data) {
+        es[from].emplace_back(to, data, e1, e1);
+        es[to].emplace_back(from, data, e1, e1);
     }
 
     void dfs_sub(int now, int pre = -1) {
         for (auto &e : es[now]) {
             if (e.to == pre) continue;
             dfs_sub(e.to, now);
-            subdp[now] = f(subdp[now], g(subdp[e.to], e.data));
+            subdp[now] = merge(subdp[now], attach_edge(subdp[e.to], e.data));
         }
+        subdp[now] = attach_root(subdp[now], base[now]);
     }
 
-    void dfs_all(int now, const sum_t &top, int pre = -1) {
-        sum_t S = e1;
+    void dfs_all(int now, const T &top, int pre = -1) {
+        T s = e1;
         for (int i = 0; i < (int)es[now].size(); i++) {
             auto &e = es[now][i];
-            e.ndp = f(e.ndp, S);
-            e.dp = g(e.to == pre ? top : subdp[e.to], e.data);
-            S = f(S, e.dp);
+            e.dp_this = s;
+            e.dp_opposite = attach_edge(e.to == pre ? top : subdp[e.to], e.data);
+            s = merge(s, e.dp_opposite);
         }
-        dp[now] = f(base[now], S);
-        S = e1;
+        dp[now] = attach_root(s, base[now]);
+        s = e1;
         for (int i = (int)es[now].size() - 1; i >= 0; i--) {
             auto &e = es[now][i];
-            e.ndp = f(e.ndp, S);
+            e.dp_this = merge(e.dp_this, s);
+            e.dp_this = attach_root(e.dp_this, base[now]);
             if (e.to != pre) {
-                mp[1LL * n * now + e.to] = e.ndp;
+                mp[1LL * n * now + e.to] = e.dp_this;
                 mp[1LL * n * e.to + now] = subdp[e.to];
-                dfs_all(e.to, e.ndp, now);
+                dfs_all(e.to, e.dp_this, now);
             }
-            S = f(S, e.dp);
+            s = merge(s, e.dp_opposite);
         }
     }
 
-    vector<sum_t> solve() {
+    vector<T> solve() {
         dfs_sub(0);
         dfs_all(0, e1);
         return dp;
     }
 
     // 辺 {u,v} で切った後の u 側の部分木 dp
-    sum_t get_subtree(int u, int v) { return mp[1LL * n * u + v]; }
+    T get_subtree(int u, int v) { return mp[1LL * n * u + v]; }
 };
