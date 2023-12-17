@@ -17,13 +17,14 @@ using namespace std;
 template <typename T>
 vector<int> longest_increasing_subsequence(const vector<T> &a, bool strict) {
     int n = a.size();
+    if (n == 0) return {};
     vector<int> dp, pre(n, -1);
     dp.reserve(n);
     auto comp = [&](int x, int y) { return a[x] < a[y]; };
     for (int i = 0; i < n; i++) {
         int t = (strict ? lower_bound(begin(dp), end(dp), i, comp) : upper_bound(begin(dp), end(dp), i, comp)) - begin(dp);
         if (t >= 1) pre[i] = dp[t - 1];
-        if (t == dp.size()) {
+        if (t == (int)dp.size()) {
             dp.push_back(i);
         } else {
             dp[t] = i;
