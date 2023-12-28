@@ -198,7 +198,10 @@ struct Matrix {
         for (int j = 0; j < n; j++) {
             int pivot = get_pivot(j, j);
             swap(A[j], A[pivot]), swap(ret[j], ret[pivot]);
-            if (eq(A[j][j], T(0))) return make_pair(false, Matrix(0, 0));
+            if (eq(A[j][j], T(0))) {
+                A = A_cpy;
+                return make_pair(false, Matrix(0, 0));
+            }
             T r = T(1) / A[j][j];
             for (int k = j + 1; k < n; k++) A[j][k] *= r;
             for (int k = 0; k < n; k++) ret[j][k] *= r;
