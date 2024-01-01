@@ -94,6 +94,8 @@
 
 - [Bostan-Mori のアルゴリズム](Bostan_Mori.hpp)
 
+- [2 べき分割数の数え上げ](Power_of_Two_Partition.hpp) (非負整数を 2 べきの和に分割する場合の数を重み付きで求める)
+
 - [線形回帰数列の各項列挙](Linear_Recursive_Sequence_Enumeration.hpp) (線形漸化式に従う初項 1 の数列を求める)
 
 線形漸化式で得られる数列の先頭の有限項が与えられたとき、それを与える階数最小の線形漸化式を求めることもできる。
