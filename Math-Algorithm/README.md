@@ -6,6 +6,8 @@
 
 - [ユークリッドの互除法](Euclid.hpp) (gcd、lcm、extgcd、mod 逆数、floor sum、中国剰余定理、Garner のアルゴリズム)
 
+- [ガウス整数環の GCD](Gaussian_Integer_GCD.hpp)
+
 ## 素数・約数
 
 素数・約数に関するアルゴリズム。
