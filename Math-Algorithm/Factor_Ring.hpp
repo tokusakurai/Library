@@ -112,31 +112,52 @@ int modlog(int x, int y, int m, int max_ans = -1) {
 // x^k ≡ 1 (mod m) となる最小の正整数 k (x と m は互いに素)
 template <typename T>
 T order(T x, const T &m) {
-    T n = Euler_totient(m);
-    vector<T> ds;
-    for (T i = 1; i * i <= n; i++) {
-        if (n % i == 0) ds.push_back(i), ds.push_back(n / i);
+    T n = Euler_totient(m), n_memo = n;
+    vector<T> ps;
+    for (T i = 2; i * i <= n; i++) {
+        if (n % i == 0) {
+            ps.push_back(i);
+            while (n % i == 0) n /= i;
+        }
     }
-    sort(begin(ds), end(ds));
-    for (auto &e : ds) {
-        if (modpow(x, e, m) == 1) return e;
+    if (n > 1) ps.push_back(n);
+    n = n_memo;
+    if (modpow(x, n, m) != 1) return -1;
+    T d = n;
+    for (auto &p : ps) {
+        while (d % p == 0) {
+            T nd = d / p;
+            if (modpow(x, nd, m) != 1) break;
+            d = nd;
+        }
     }
-    return -1;
+    return d;
 }
 
 // 素数 p の原始根
 template <typename T>
 T primitive_root(const T &p) {
     vector<T> ds;
-    for (T i = 1; i * i <= p - 1; i++) {
-        if ((p - 1) % i == 0) ds.push_back(i), ds.push_back((p - 1) / i);
-    }
-    sort(begin(ds), end(ds));
-    while (true) {
-        T r = rng(1, p);
-        for (auto &e : ds) {
-            if (e == p - 1) return r;
-            if (modpow(r, e, p) == 1) break;
+    T n = p - 1;
+    vector<T> ps;
+    for (T i = 2; i * i <= n; i++) {
+        if (n % i == 0) {
+            ps.push_back(i);
+            while (n % i == 0) n /= i;
         }
     }
+    if (n > 1) ps.push_back(n);
+
+    auto is_primitive = [&](T r) {
+        for (auto &e : ps) {
+            if (modpow(r, (p - 1) / e, p) == 1) return false;
+        }
+        return true;
+    };
+
+    while (true) {
+        T r = rng(1, p);
+        if (is_primitive(r)) return r;
+    }
+    return -1;
 }
