@@ -18,46 +18,38 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template <bool directed = false>
+template <typename G>
 struct Lowest_Common_Ancestor {
-    struct edge {
-        int to, id;
-        edge(int to, int id) : to(to), id(id) {}
-    };
+    using L = typename G::L;
 
-    vector<vector<edge>> es;
     vector<vector<int>> par; // par[i][j] := 頂点 j の 2^i 個前の祖先
     vector<int> depth;
-    const int n;
-    int height, m;
+    vector<L> d;
+    int height;
 
-    Lowest_Common_Ancestor(int n) : es(n), depth(n), n(n), m(0) {
+    Lowest_Common_Ancestor(const G &g, int root = 0) : depth(g.n), d(g.n) {
         height = 1;
-        while ((1 << height) < n) height++;
-        par.assign(height, vector<int>(n));
+        while ((1 << height) < g.n) height++;
+        par.assign(height, vector<int>(g.n));
+        build(g, root);
     }
 
-    void add_edge(int from, int to) {
-        es[from].emplace_back(to, m);
-        if (!directed) es[to].emplace_back(from, m);
-        m++;
-    }
-
-    void prepare(int now, int pre = -1) {
+    void _dfs(const G &g, int now, int pre = -1) {
         if (pre == -1) depth[now] = 0;
         par[0][now] = pre;
-        for (auto &e : es[now]) {
+        for (auto &e : g[now]) {
             if (e.to != pre) {
                 depth[e.to] = depth[now] + 1;
-                prepare(e.to, now);
+                d[e.to] = d[now] + e.get_len();
+                _dfs(g, e.to, now);
             }
         }
     }
 
-    void build(int root = 0) {
-        prepare(root);
+    void build(const G &g, int root) {
+        _dfs(g, root);
         for (int j = 0; j < height - 1; j++) {
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < g.n; i++) {
                 if (par[j][i] == -1) {
                     par[j + 1][i] = -1;
                 } else {
@@ -77,7 +69,7 @@ struct Lowest_Common_Ancestor {
         return par[0][u];
     }
 
-    int dist(int u, int v) { return depth[u] + depth[v] - depth[lca(u, v)] * 2; }
+    L dist(int u, int v) { return d[u] + d[v] - d[lca(u, v)] * 2; }
 
     // u の k 個前の祖先
     int ancestor(int u, int k) {
