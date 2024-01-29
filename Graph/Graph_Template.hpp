@@ -8,9 +8,14 @@ using namespace std;
 
 template <bool directed = false>
 struct Graph {
+    using L = int;
+
     struct edge {
         int to, id;
+
         edge(int to, int id) : to(to), id(id) {}
+
+        L get_len() const { return 1; }
     };
 
     vector<vector<edge>> es;
@@ -19,76 +24,81 @@ struct Graph {
 
     Graph(int n) : es(n), n(n), m(0) {}
 
+    bool is_directed() { return directed; }
+
+    inline const vector<edge> &operator[](int k) const { return es[k]; }
+
+    inline vector<edge> &operator[](int k) { return es[k]; }
+
     void add_edge(int from, int to) {
         es[from].emplace_back(to, m);
         if (!directed) es[to].emplace_back(from, m);
         m++;
     }
+
+    void read(int m, int margin = -1) {
+        for (int i = 0; i < m; i++) {
+            int u, v;
+            cin >> u >> v;
+            add_edge(u + margin, v + margin);
+        }
+    }
+
+    void read_rooted_tree(int margin = -1) {
+        for (int i = 1; i < n; i++) {
+            int p;
+            cin >> p;
+            add_edge(p + margin, i);
+        }
+    }
 };
 
 template <typename T, bool directed = false>
 struct Weighted_Graph {
+    using L = T;
+
     struct edge {
-        int to;
-        T cost;
-        int id;
-        edge(int to, T cost, int id) : to(to), cost(cost), id(id) {}
+        int to, id;
+        T len;
+
+        edge(int to, int id, T len) : to(to), id(id), len(len) {}
+
+        L get_len() const { return len; }
     };
 
     vector<vector<edge>> es;
-    const T zero_T, INF_T;
     const int n;
     int m;
 
-    Weighted_Graph(int n, T zero_T = 0, T INF_T = numeric_limits<T>::max() / 2) : es(n), zero_T(zero_T), INF_T(INF_T), n(n), m(0) {}
+    Weighted_Graph(int n) : es(n), n(n), m(0) {}
 
-    void add_edge(int from, int to, T cost) {
-        es[from].emplace_back(to, cost, m);
-        if (!directed) es[to].emplace_back(from, cost, m);
+    bool is_directed() { return directed; }
+
+    inline const vector<edge> &operator[](int k) const { return es[k]; }
+
+    inline vector<edge> &operator[](int k) { return es[k]; }
+
+    void add_edge(int from, int to, T len) {
+        es[from].emplace_back(to, m, len);
+        if (!directed) es[to].emplace_back(from, m, len);
         m++;
     }
-};
 
-template <typename T, bool directed = false>
-struct Table {
-    vector<vector<T>> es;
-    const T zero_T, INF_T;
-    const int n;
-
-    inline const vector<T> &operator[](int k) const { return es[k]; }
-
-    inline vector<T> &operator[](int k) { return es[k]; }
-
-    Table(int n, T zero_T = 0, T INF_T = numeric_limits<T>::max() / 2) : es(n), n(n) {
-        for (int i = 0; i < n; i++) es[i].assign(n, INF_T);
-        for (int i = 0; i < n; i++) es[i][i] = 0;
+    void read(int m, int margin = -1) {
+        for (int i = 0; i < m; i++) {
+            int u, v;
+            T w;
+            cin >> u >> v >> w;
+            add_edge(u + margin, v + margin, w);
+        }
     }
 
-    void add_edge(int from, int to, T cost = 1) {
-        es[from][to] = min(es[from][to], cost);
-        if (!directed) es[to][from] = min(es[to][from], cost);
-    }
-};
-
-template <typename T, bool directed = false>
-struct Edges {
-    struct edge {
-        int from, to;
-        T cost;
-        int id;
-        edge(int from, int to, T cost, int id) : from(from), to(to), cost(cost), id(id) {}
-    };
-
-    vector<edge> es;
-    const T zero_T, INF_T;
-    const int n;
-    int m;
-
-    Edges(int n, T zero_T = 0, T INF_T = numeric_limits<T>::max() / 2) : zero_T(zero_T), INF_T(INF_T), n(n), m(0) {}
-
-    void add_edge(int from, int to, T cost) {
-        es.emplace_back(from, to, cost, m);
-        if (!directed) es.emplace_back(to, from, cost, m);
-        m++;
+    void read_rooted_tree(int margin = -1) {
+        for (int i = 1; i < n; i++) {
+            int p;
+            T w;
+            cin >> p >> w;
+            add_edge(p + margin, i, w);
+        }
     }
 };
