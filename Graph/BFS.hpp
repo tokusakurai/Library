@@ -14,37 +14,20 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template <bool directed = false>
+template <typename G>
 struct BFS {
-    struct edge {
-        int to, id;
-        edge(int to, int id) : to(to), id(id) {}
-    };
-
-    vector<vector<edge>> es;
     vector<int> d;
     vector<int> pre_v, pre_e;
-    const int INF_T = (1 << 30) - 1;
-    const int n;
-    int m;
+    const int s;
 
-    BFS(int n) : es(n), d(n), pre_v(n), pre_e(n), n(n), m(0) {}
-
-    void add_edge(int from, int to) {
-        es[from].emplace_back(to, m);
-        if (!directed) es[to].emplace_back(from, m);
-        m++;
-    }
-
-    int shortest_path(int s, int t = 0) {
-        fill(begin(d), end(d), INF_T);
+    BFS(const G &g, int s) : d(g.n, infty()), pre_v(g.n), pre_e(g.n), s(s) {
         queue<int> que;
         d[s] = 0;
-        que.emplace(s);
+        que.push(s);
         while (!que.empty()) {
             int i = que.front();
             que.pop();
-            for (auto &e : es[i]) {
+            for (auto &e : g[i]) {
                 if (d[i] + 1 < d[e.to]) {
                     d[e.to] = d[i] + 1;
                     pre_v[e.to] = i, pre_e[e.to] = e.id;
@@ -52,15 +35,23 @@ struct BFS {
                 }
             }
         }
-        return d[t];
     }
 
-    vector<int> restore_path(int s, int t, bool use_id = false) {
-        if (d[t] == INF_T) return {};
-        vector<int> ret;
-        for (int now = t; now != s; now = pre_v[now]) ret.push_back(use_id ? pre_e[now] : now);
-        if (!use_id) ret.push_back(s);
-        reverse(begin(ret), end(ret));
-        return ret;
+    inline int infty() { return (1 << 30) - 1; }
+
+    inline const int &operator[](int i) const { return d[i]; }
+
+    // s-t 最短路の (頂点、辺)
+    pair<vector<int>, vector<int>> shortest_path(int t) {
+        if (d[t] == infty()) return make_pair(vector<int>{}, vector<int>{});
+        vector<int> path_v, path_e;
+        for (int now = t; now != s; now = pre_v[now]) {
+            path_v.push_back(now);
+            path_e.push_back(pre_e[now]);
+        }
+        path_v.push_back(s);
+        reverse(begin(path_v), end(path_v));
+        reverse(begin(path_e), end(path_e));
+        return make_pair(path_v, path_e);
     }
 };

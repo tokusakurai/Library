@@ -13,17 +13,17 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+#include "../Graph/Graph_Template.hpp"
 #include "../Graph/BFS.hpp"
 
 template <typename Matroid_1, typename Matroid_2>
-int matroid_intersection(Matroid_1 M1, Matroid_2 M2) {
+pair<int, vector<int>> matroid_intersection(Matroid_1 M1, Matroid_2 M2) {
     assert(M1.size() == M2.size());
     const int m = M1.size();
     vector<bool> X(m, false);
     for (int i = 0;; i++) {
-        M2.d[i]++;
         M1.set(X), M2.set(X);
-        BFS<true> G(m + 2); // 最短路を求める
+        Graph<true> G(m + 2);
         int s = m, t = m + 1;
         for (int y = 0; y < m; y++) {
             if (X[y]) continue;
@@ -37,12 +37,16 @@ int matroid_intersection(Matroid_1 M1, Matroid_2 M2) {
                 if (x != y) G.add_edge(y, x);
             }
         }
-        G.shortest_path(s);
-        vector<int> path = G.restore_path(s, t);
-        if (path.empty()) return i;
+        BFS B(G, s); // 最短路を求める
+        vector<int> path = B.shortest_path(t).first;
+        if (path.empty()) break;
         for (auto &e : path) {
             if (e != s && e != t) X[e] = !X[e];
         }
     }
-    return -1;
+    vector<int> ret;
+    for (int i = 0; i < m; i++) {
+        if (X[i]) ret.push_back(i);
+    }
+    return make_pair((int)ret.size(), ret);
 };
