@@ -14,10 +14,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#include "../Graph/Bellman-Ford.hpp"
+#include "../Graph/Graph_Template.hpp"
+#include "../Graph/Shortest-Path-Faster-Algorithm.hpp"
 
 template <typename Matroid_1, typename Matroid_2, typename T>
-vector<T> weighted_matroid_intersection(Matroid_1 M1, Matroid_2 M2, vector<T> w) {
+vector<T> Weighted_Matroid_Intersection(Matroid_1 M1, Matroid_2 M2, vector<T> w) {
     assert(M1.size() == M2.size());
     const int m = M1.size();
     for (int i = 0; i < m; i++) w[i] *= m + 1;
@@ -26,7 +27,7 @@ vector<T> weighted_matroid_intersection(Matroid_1 M1, Matroid_2 M2, vector<T> w)
     ret[0] = 0;
     for (int i = 1; i <= m; i++) {
         M1.set(X), M2.set(X);
-        Bellman_Ford<T, true> G(m + 2);
+        Weighted_Graph<T, true> G(m + 2);
         int s = m, t = m + 1;
         for (int y = 0; y < m; y++) {
             if (X[y]) continue;
@@ -40,8 +41,8 @@ vector<T> weighted_matroid_intersection(Matroid_1 M1, Matroid_2 M2, vector<T> w)
                 if (x != y) G.add_edge(y, x, -w[y] + 1);
             }
         }
-        G.shortest_path(s);
-        vector<int> path = G.restore_path(s, t); // コスト最小のパスのうち通る辺数が最小のものを求める
+        Shortest_Path_Faster_Algorithm S(G, s); // コスト最大のパスのうち通る辺数が最小のものを求める
+        vector<int> path = S.shortest_path(t).first;
         if (path.empty()) break;
         for (auto &e : path) {
             if (e != s && e != t) X[e] = !X[e];

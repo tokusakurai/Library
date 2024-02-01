@@ -13,70 +13,66 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template <typename T, bool directed = false>
+template <typename G>
 struct Bellman_Ford {
-    struct edge {
-        int to;
-        T cost;
-        int id;
-        edge(int to, T cost, int id) : to(to), cost(cost), id(id) {}
-    };
+    using L = typename G::L;
 
-    vector<vector<edge>> es;
-    vector<T> d;
+    vector<L> d;
     vector<int> pre_v, pre_e;
-    const T zero_T, INF_T;
-    const int n;
-    int m;
+    const int s;
 
-    Bellman_Ford(int n, T zero_T = 0, T INF_T = numeric_limits<T>::max() / 2) : es(n), d(n), pre_v(n), pre_e(n), zero_T(zero_T), INF_T(INF_T), n(n), m(0) {}
-
-    void add_edge(int from, int to, T cost) {
-        es[from].emplace_back(to, cost, m);
-        if (!directed) es[to].emplace_back(from, cost, m);
-        m++;
-    }
-
-    // 到達不可能なら INF、コストをいくらでも小さくできるなら -INF
-    T shortest_path(int s, int t = 0) {
-        fill(begin(d), end(d), INF_T);
-        d[s] = zero_T;
-        for (int i = 0; i < 2 * n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (d[j] == INF_T) continue;
-                for (auto &e : es[j]) {
-                    if (d[j] + e.cost < d[e.to]) {
-                        d[e.to] = d[j] + e.cost;
+    Bellman_Ford(const G &g, int s) : d(g.n, infty()), pre_v(g.n, -1), pre_e(g.n, -1), s(s) {
+        d[s] = zero();
+        for (int i = 0; i < 2 * g.n; i++) {
+            for (int j = 0; j < g.n; j++) {
+                if (d[j] == infty()) continue;
+                for (auto &e : g[j]) {
+                    L nd = (d[j] == -infty() ? -infty() : d[j] + e.get_len());
+                    if (nd < d[e.to]) {
+                        d[e.to] = nd;
                         pre_v[e.to] = j, pre_e[e.to] = e.id;
-                        if (i >= n - 1) d[e.to] = -INF_T;
-                    }
-                }
-            }
-        }
-        return d[t];
-    }
-
-    // 全ての負閉路を検出
-    bool negative_loop() {
-        fill(begin(d), end(d), zero_T);
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                for (auto &e : es[j]) {
-                    if (d[j] + e.cost < d[e.to]) {
-                        d[e.to] = d[j] + e.cost;
-                        if (i == n - 1) return true;
+                        if (i >= g.n - 1) d[e.to] = -infty();
                     }
                 }
             }
         }
     }
 
-    vector<int> restore_path(int s, int t, bool use_id = false) {
-        if (abs(d[t]) == INF_T) return {};
-        vector<int> ret;
-        for (int now = t; now != s; now = pre_v[now]) ret.push_back(use_id ? pre_e[now] : now);
-        if (!use_id) ret.push_back(s);
-        reverse(begin(ret), end(ret));
-        return ret;
+    inline L infty() { return (L(1) << ((sizeof(L) >> 1) * 15)) - 1; }
+
+    inline L zero() { return L(0); }
+
+    inline const L &operator[](int i) const { return d[i]; }
+
+    // s-t 最短路の (頂点、辺)
+    pair<vector<int>, vector<int>> shortest_path(int t) {
+        if (d[t] == infty()) return make_pair(vector<int>{}, vector<int>{});
+        vector<int> path_v, path_e;
+        for (int now = t; now != s; now = pre_v[now]) {
+            path_v.push_back(now);
+            path_e.push_back(pre_e[now]);
+        }
+        path_v.push_back(s);
+        reverse(begin(path_v), end(path_v));
+        reverse(begin(path_e), end(path_e));
+        return make_pair(path_v, path_e);
     }
 };
+
+// グラフ全体に負閉路があるか
+template <typename G>
+bool negative_cycle(const G &g) {
+    using L = typename G::L;
+    vector<L> d(g.n, 0);
+    for (int i = 0; i < g.n; i++) {
+        for (int j = 0; j < g.n; j++) {
+            for (auto &e : g[j]) {
+                if (d[j] + e.get_len() < d[e.to]) {
+                    d[e.to] = d[j] + e.get_len();
+                    if (i == g.n - 1) return true;
+                }
+            }
+        }
+    }
+    return false;
+}

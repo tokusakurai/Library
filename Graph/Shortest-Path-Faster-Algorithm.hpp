@@ -14,65 +14,58 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template <typename T, bool directed = false>
+template <typename G>
 struct Shortest_Path_Faster_Algorithm {
-    struct edge {
-        int to;
-        T cost;
-        int id;
-        edge(int to, T cost, int id) : to(to), cost(cost), id(id) {}
-    };
+    using L = typename G::L;
 
-    vector<vector<edge>> es;
-    vector<T> d;
+    vector<L> d;
     vector<int> pre_v, pre_e;
-    const T zero_T, INF_T;
-    const int n;
-    int m;
+    const int s;
 
-    Shortest_Path_Faster_Algorithm(int n, T zero_T = 0, T INF_T = numeric_limits<T>::max() / 2) : es(n), d(n), pre_v(n), pre_e(n), zero_T(zero_T), INF_T(INF_T), n(n), m(0) {}
-
-    void add_edge(int from, int to, T cost) {
-        es[from].emplace_back(to, cost, m);
-        if (!directed) es[to].emplace_back(from, cost, m);
-        m++;
-    }
-
-    // s から到達可能な負閉路があれば -INF
-    T shortest_path(int s, int t = 0) {
-        fill(begin(d), end(d), INF_T);
+    Shortest_Path_Faster_Algorithm(const G &g, int s) : d(g.n, infty()), pre_v(g.n, -1), pre_e(g.n, -1), s(s) {
         queue<int> que;
-        vector<bool> inque(n, false);
-        vector<int> cnt(n, 0);
-        d[s] = zero_T;
-        que.emplace(s);
+        vector<bool> inque(g.n, false);
+        vector<int> cnt(g.n, 0);
+        d[s] = zero();
+        que.push(s);
         inque[s] = true;
         cnt[s]++;
         while (!que.empty()) {
             int i = que.front();
             que.pop();
             inque[i] = false;
-            for (auto &e : es[i]) {
-                if (d[i] + e.cost < d[e.to]) {
-                    d[e.to] = d[i] + e.cost;
+            for (auto &e : g[i]) {
+                L nd = (d[i] == -infty() ? -infty() : d[i] + e.get_len());
+                if (nd < d[e.to]) {
+                    d[e.to] = nd;
                     pre_v[e.to] = i, pre_e[e.to] = e.id;
                     if (!inque[e.to]) {
-                        if (++cnt[e.to] >= n) return -INF_T;
-                        que.emplace(e.to);
+                        if (++cnt[e.to] >= g.n) d[e.to] = -infty();
+                        que.push(e.to);
                         inque[e.to] = true;
                     }
                 }
             }
         }
-        return d[t];
     }
 
-    vector<int> restore_path(int s, int t, bool use_id = false) {
-        if (abs(d[t]) == INF_T) return {};
-        vector<int> ret;
-        for (int now = t; now != s; now = pre_v[now]) ret.push_back(use_id ? pre_e[now] : now);
-        if (!use_id) ret.push_back(s);
-        reverse(begin(ret), end(ret));
-        return ret;
+    inline L infty() { return (L(1) << ((sizeof(L) >> 1) * 15)) - 1; }
+
+    inline L zero() { return L(0); }
+
+    inline const L &operator[](int i) const { return d[i]; }
+
+    // s-t 最短路の (頂点、辺)
+    pair<vector<int>, vector<int>> shortest_path(int t) {
+        if (d[t] == infty()) return make_pair(vector<int>{}, vector<int>{});
+        vector<int> path_v, path_e;
+        for (int now = t; now != s; now = pre_v[now]) {
+            path_v.push_back(now);
+            path_e.push_back(pre_e[now]);
+        }
+        path_v.push_back(s);
+        reverse(begin(path_v), end(path_v));
+        reverse(begin(path_e), end(path_e));
+        return make_pair(path_v, path_e);
     }
 };
