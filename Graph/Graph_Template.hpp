@@ -24,7 +24,7 @@ struct Graph {
 
     Graph(int n) : es(n), n(n), m(0) {}
 
-    bool is_directed() { return directed; }
+    constexpr bool is_directed() { return directed; }
 
     inline const vector<edge> &operator[](int k) const { return es[k]; }
 
@@ -72,7 +72,7 @@ struct Weighted_Graph {
 
     Weighted_Graph(int n) : es(n), n(n), m(0) {}
 
-    bool is_directed() { return directed; }
+    constexpr bool is_directed() { return directed; }
 
     inline const vector<edge> &operator[](int k) const { return es[k]; }
 
