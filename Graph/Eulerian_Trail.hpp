@@ -1,6 +1,6 @@
 
 // オイラー閉路・オイラー路の検出
-// 計算量 オイラー閉路：O(n+m)、オイラー路：O((n+m)α(n))
+// 計算量 オイラー閉路、オイラー路：O(n+m)
 
 // 概要
 // オイラー路：全ての辺をちょうど一度通るパス
@@ -17,113 +17,137 @@
 // https://yukicoder.me/problems/no/583
 // https://atcoder.jp/contests/abc227/tasks/abc227_h
 // https://codeforces.com/contest/1610/problem/F
+// https://judge.yosupo.jp/problem/eulerian_trail_directed
+// https://judge.yosupo.jp/problem/eulerian_trail_undirected
 
 #pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
-#include "../Data-Structure/Union_Find_Tree.hpp"
-
-template <bool directed = false>
-struct Eulerian_Trail {
-    struct edge {
-        int to, id;
-        edge(int to, int id) : to(to), id(id) {}
-    };
-
-    vector<vector<edge>> es;
-    vector<bool> used_e, used_v;
-    vector<int> deg;
-    const int n;
-    int m;
-
-    Eulerian_Trail(int n) : es(n), used_v(n), deg(n, 0), n(n), m(0) {}
-
-    void add_edge(int from, int to) {
-        es[from].emplace_back(to, m++);
-        if (directed) {
-            deg[from]++, deg[to]--;
+template <typename G>
+pair<vector<int>, vector<int>> find_trail(const G &g, int s, vector<int> &ptr, vector<bool> &used_v, vector<bool> &used_e) {
+    stack<int> st_v, st_e;
+    vector<int> trail_v, trail_e;
+    st_v.push(s);
+    st_e.push(-1);
+    while (!st_v.empty()) {
+        int now = st_v.top();
+        used_v[now] = true;
+        if (ptr[now] == (int)g[now].size()) {
+            trail_v.push_back(now);
+            trail_e.push_back(st_e.top());
+            st_v.pop();
+            st_e.pop();
         } else {
-            es[to].emplace_back(from, m++);
-            deg[from]++, deg[to]++;
+            auto &e = g[now][ptr[now]++];
+            if (used_e[e.id]) continue;
+            used_e[e.id] = true;
+            st_v.push(e.to);
+            st_e.push(e.id);
         }
     }
+    trail_e.pop_back();
+    reverse(begin(trail_v), end(trail_v));
+    reverse(begin(trail_e), end(trail_e));
+    return make_pair(trail_v, trail_e);
+}
 
-    vector<int> trace(int s, bool use_id = false) {
-        stack<edge> st;
-        vector<int> ret;
-        st.emplace(s, -1);
-        while (!st.empty()) {
-            int now = st.top().to;
-            used_v[now] = true;
-            if (es[now].empty()) {
-                ret.push_back(use_id ? st.top().id : now);
-                st.pop();
+// 各連結成分に対してオイラー閉路を列挙
+template <typename G>
+vector<pair<vector<int>, vector<int>>> Eulerian_circuit(const G &g) {
+    vector<int> deg(g.n, 0);
+    for (int i = 0; i < g.n; i++) {
+        for (auto &e : g[i]) {
+            deg[i]++;
+            deg[e.to] += (g.is_directed() ? -1 : 1);
+        }
+    }
+    if (!g.is_directed()) {
+        for (int i = 0; i < g.n; i++) deg[i] >>= 1;
+    }
+    vector<pair<vector<int>, vector<int>>> ret;
+    if (g.is_directed()) {
+        for (auto &e : deg) {
+            if (e != 0) return {};
+        }
+    } else {
+        for (auto &e : deg) {
+            if (e & 1) return {};
+        }
+    }
+    vector<int> ptr(g.n, 0);
+    vector<bool> used_v(g.n, false), used_e(g.m, false);
+    for (int i = 0; i < g.n; i++) {
+        if (!used_v[i]) ret.push_back(find_trail(g, i, ptr, used_v, used_e));
+    }
+    return ret;
+}
+
+// 各連結成分に対してオイラー路を列挙
+template <typename G>
+vector<pair<vector<int>, vector<int>>> Eulerian_trail(const G &g) {
+    vector<int> deg(g.n, 0);
+    vector<vector<int>> rs(g.n);
+    for (int i = 0; i < g.n; i++) {
+        for (auto &e : g[i]) {
+            deg[i]++;
+            if (g.is_directed()) {
+                deg[e.to]--;
+                rs[e.to].push_back(i);
             } else {
-                auto &e = es[now].back();
-                es[now].pop_back();
-                int id = directed ? e.id : e.id / 2;
-                if (used_e[id]) continue;
-                used_e[id] = true;
-                st.push(e);
+                deg[e.to]++;
             }
         }
-        if (use_id) ret.pop_back();
-        reverse(begin(ret), end(ret));
-        return ret;
     }
+    if (!g.is_directed()) {
+        for (int i = 0; i < g.n; i++) deg[i] >>= 1;
+    }
+    vector<vector<int>> group;
+    vector<int> ptr(g.n, 0);
+    vector<bool> used_v(g.n, false), used_e(g.m, false);
+    for (int i = 0; i < g.n; i++) {
+        if (!used_v[i]) {
+            queue<int> que;
+            group.emplace_back();
 
-    // 各連結成分に対してオイラー閉路を列挙
-    vector<vector<int>> eulerian_trail(bool use_id = false) {
-        vector<vector<int>> ret;
-        fill(begin(used_v), end(used_v), false);
-        if (directed) {
-            for (auto &e : deg) {
-                if (e != 0) return {};
+            auto insert = [&](int v) {
+                if (used_v[v]) return;
+                used_v[v] = true;
+                que.push(v);
+                group.back().push_back(v);
+            };
+
+            insert(i);
+            while (!que.empty()) {
+                int v = que.front();
+                que.pop();
+                for (auto &e : g[v]) insert(e.to);
+                for (auto &e : rs[v]) insert(e);
+            }
+        }
+    }
+    vector<pair<vector<int>, vector<int>>> ret;
+    fill(begin(used_v), end(used_v), false);
+    for (auto &vs : group) {
+        int s = -1, t = -1;
+        if (g.is_directed()) {
+            for (auto &v : vs) {
+                if (abs(deg[v]) > 1) return {};
+                if (deg[v] == 1) {
+                    if (s != -1) return {};
+                    s = v;
+                }
             }
         } else {
-            for (auto &e : deg) {
-                if (e & 1) return {};
-            }
-        }
-        used_e.assign(directed ? m : m / 2, false);
-        for (int i = 0; i < n; i++) {
-            if (!used_v[i]) ret.push_back(trace(i, use_id));
-        }
-        return ret;
-    }
-
-    // 各連結成分に対してオイラー路を列挙
-    vector<vector<int>> semi_eulerian_trail(bool use_id = false) {
-        Union_Find_Tree uf(n);
-        for (int i = 0; i < n; i++) {
-            for (auto &e : es[i]) uf.unite(i, e.to);
-        }
-        vector<vector<int>> group(n);
-        for (int i = 0; i < n; i++) group[uf[i]].push_back(i);
-        vector<vector<int>> ret;
-        used_e.assign(directed ? m : m / 2, false);
-        for (auto &vs : group) {
-            if (vs.empty()) continue;
-            int s = -1, t = -1;
-            if (directed) {
-                for (auto &u : vs) {
-                    if (abs(deg[u]) > 1) return {};
-                    if (deg[u] == 1) {
-                        if (s != -1) return {};
-                        s = u;
-                    }
-                }
-            } else {
-                for (auto &u : vs) {
-                    if (deg[u] & 1) {
-                        if (s != -1 && t != -1) return {};
-                        (s == -1 ? s : t) = u;
-                    }
+            for (auto &v : vs) {
+                if (deg[v] & 1) {
+                    if (s != -1 && t != -1) return {};
+                    (s == -1 ? s : t) = v;
                 }
             }
-            ret.push_back(trace(s == -1 ? vs.front() : s, use_id));
         }
-        return ret;
+        if (s == -1) s = vs.front();
+        ret.push_back(find_trail(g, s, ptr, used_v, used_e));
     }
-};
+    return ret;
+}
