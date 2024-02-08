@@ -34,11 +34,21 @@
 
 - [2 次元累積和](Cumulative_Sum_2D.hpp)
 
+## Monotone Minima
+
+monotone な行列の各行最小値を求めるアルゴリズム。
+
+- [monotone minima](Monotone_Minima.hpp)
+
+- [SMAWK アルゴリズム](SMAWK.hpp) (totally monotone な場合を線形で)
+
 ## 凸数列の (min,+) 畳み込み
 
 2 つの凸数列に対する添え字加算・最小値畳み込み。
 
 - [凸数列の (min,+) 畳み込み](Concave_Min_Plus_Convolution.hpp)
+
+- [任意数列と凸数列の (min,+) 畳み込み](Min_Plus_Convolution.hpp)
 
 ## Convex-Hull-Trick
 
