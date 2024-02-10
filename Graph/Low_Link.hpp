@@ -1,3 +1,4 @@
+#pragma once
 
 // Low-Link
 // 計算量 O(n+m)
@@ -17,7 +18,6 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_3_A&lang=ja
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_3_B&lang=ja
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

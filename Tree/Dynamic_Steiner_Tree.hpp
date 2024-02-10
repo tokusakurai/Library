@@ -1,3 +1,4 @@
+#pragma once
 
 // 木上の最小シュタイナー木 (頂点集合の削除・追加ができる)
 // 計算量 前計算：O(n log(n))、追加・削除：O(log(n))
@@ -12,7 +13,6 @@
 // verified with
 // https://codeforces.com/contest/372/problem/D
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

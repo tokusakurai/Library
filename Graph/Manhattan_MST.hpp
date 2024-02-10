@@ -1,3 +1,4 @@
+#pragma once
 
 // Manhattan 最小全域木
 // 計算量 O(n log(n))
@@ -10,7 +11,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/manhattanmst
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

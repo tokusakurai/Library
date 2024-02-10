@@ -1,3 +1,4 @@
+#pragma once
 
 // Union-Find Tree
 // 計算量 構築：O(n)、併合・結合判定・サイズ：(ならし) O(α(n))
@@ -12,7 +13,6 @@
 // https://atcoder.jp/contests/atc001/tasks/unionfind_a
 // https://judge.yosupo.jp/problem/unionfind
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

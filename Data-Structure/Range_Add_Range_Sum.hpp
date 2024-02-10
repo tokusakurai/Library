@@ -1,3 +1,4 @@
+#pragma once
 
 // Range Add Range Sum
 // 計算量 構築：O(n)、区間加算・区間和取得：O(log(n))
@@ -10,7 +11,6 @@
 // verified with
 // https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_G&lang=ja
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

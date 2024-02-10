@@ -1,3 +1,4 @@
+#pragma once
 
 // 配列のスライド最小値
 // 計算量 O(n)
@@ -6,7 +7,6 @@
 // deque に入っている index は、前のものほどその index に対応する配列の値が小さい。
 // deque の先頭に残ったものが区間の最小値の index。
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

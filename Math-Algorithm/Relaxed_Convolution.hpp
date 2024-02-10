@@ -1,3 +1,4 @@
+#pragma once
 
 // オンライン畳み込み
 // 計算量 O(n log^2(n))
@@ -13,7 +14,6 @@
 // https://atcoder.jp/contests/abc230/tasks/abc230_h
 // https://atcoder.jp/contests/abc315/tasks/abc315_h
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

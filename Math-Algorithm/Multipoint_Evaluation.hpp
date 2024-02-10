@@ -1,3 +1,4 @@
+#pragma once
 
 // 多点評価
 // 計算量 O(n log(n) + m log^2(m))
@@ -11,7 +12,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/multipoint_evaluation
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

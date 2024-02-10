@@ -1,3 +1,4 @@
+#pragma once
 
 // Heavy-Light 分解
 // 計算量 HL 分解：O(n)、パス検出・パスが通る区間の個数：O(log(n))、lca・距離・level ancestor：O(log(n))
@@ -11,7 +12,6 @@
 // https://judge.yosupo.jp/problem/vertex_add_path_sum
 // https://judge.yosupo.jp/problem/vertex_set_path_composite
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

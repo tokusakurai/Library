@@ -1,3 +1,4 @@
+#pragma once
 
 // 最長増加部分列 (LIS)
 // 計算量 O(n log(n))
@@ -9,7 +10,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/longest_increasing_subsequence
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

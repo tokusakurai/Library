@@ -1,3 +1,4 @@
+#pragma once
 
 // 線形回帰数列の各項列挙
 // 計算量 O((d+n)log(d+n))
@@ -9,7 +10,6 @@
 // verified with
 // https://atcoder.jp/contests/typical90/tasks/typical90_cl
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

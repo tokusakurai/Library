@@ -1,3 +1,4 @@
+#pragma once
 
 // 有理数型
 

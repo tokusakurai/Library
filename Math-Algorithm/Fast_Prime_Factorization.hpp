@@ -1,3 +1,4 @@
+#pragma once
 
 // 高速素因数分解
 // 計算量 素数判定：O(log(n))、素因数分解：O(n^(1/4)log(n))
@@ -10,7 +11,6 @@
 // https://judge.yosupo.jp/problem/primarity_test
 // https://judge.yosupo.jp/problem/factorize
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

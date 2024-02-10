@@ -1,3 +1,4 @@
+#pragma once
 
 // オフライン dynamic connectivity (クエリがオフラインで与えられるとき、辺の削除にも対応できる union find)
 // 計算量 O(n + q log(q)log(n))
@@ -10,7 +11,6 @@
 // verified with
 // https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2235
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

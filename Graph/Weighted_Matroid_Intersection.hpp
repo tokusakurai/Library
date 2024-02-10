@@ -1,3 +1,4 @@
+#pragma once
 
 // 重み付きマトロイド交差
 // 計算量 O(f(s+m^2 c)) (m = |E|、c は circuit クエリ 1 回の計算量、s は set クエリ 1 回の計算量、f は共通独立集合の元数の最大値)
@@ -10,7 +11,6 @@
 // verified with
 // https://codeforces.com/gym/103373/problem/I
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

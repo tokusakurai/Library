@@ -1,3 +1,4 @@
+#pragma once
 
 // 最近点対
 // 計算量 O(n log(n))
@@ -8,7 +9,6 @@
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_5_A&lang=ja
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

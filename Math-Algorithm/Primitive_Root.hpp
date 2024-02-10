@@ -1,3 +1,4 @@
+#pragma once
 
 // 原子根
 // 計算量 O(p^(1/4)log(p))
@@ -10,7 +11,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/primitive_root
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

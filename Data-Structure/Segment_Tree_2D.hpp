@@ -1,3 +1,4 @@
+#pragma once
 
 // 2 次元 Segment Tree
 // 計算量 構築：O(n log^2(n))、1 点更新・矩形取得：O(log^2(n))
@@ -13,7 +14,6 @@
 // https://judge.yosupo.jp/problem/point_add_rectangle_sum
 // https://codeforces.com/gym/103443/problem/C
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

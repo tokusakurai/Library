@@ -1,3 +1,4 @@
+#pragma once
 
 // 永続 Segment Tree
 // 計算量 1 点更新・区間取得：O(log(n))
@@ -9,7 +10,6 @@
 // verified with
 // https://atcoder.jp/contests/abc253/tasks/abc253_f
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

@@ -1,3 +1,4 @@
+#pragma once
 
 // サイズ n の集合からからサイズ k の部分集合を全列挙する
 // 計算量 O(C(n,k))
@@ -8,7 +9,6 @@
 // verified with
 // https://atcoder.jp/contests/cpsco2019-s1/tasks/cpsco2019_s1_c
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

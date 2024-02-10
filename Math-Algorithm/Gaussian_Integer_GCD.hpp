@@ -1,3 +1,4 @@
+#pragma once
 
 // ガウス整数環の GCD
 // 計算量 O(log(max{||a||, ||b||}))
@@ -11,7 +12,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/gcd_of_gaussian_integers
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

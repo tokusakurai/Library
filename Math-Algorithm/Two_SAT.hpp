@@ -1,3 +1,4 @@
+#pragma once
 
 // 2-SAT (リテラル数が 2 のクロージャーの乗法標準形の充足可能性を判定する)
 // 計算量 O(n)
@@ -11,7 +12,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/two_sat
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

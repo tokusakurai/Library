@@ -1,8 +1,8 @@
+#pragma once
 
 // グラフテンプレート
 // 空間計算量 隣接リスト・隣接リスト (重み付き)：O(n+m)
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

@@ -1,3 +1,4 @@
+#pragma once
 
 // 双対 Segment Tree
 // 計算量 構築：O(n)、区間更新・1 点取得：O(log(n))
@@ -13,7 +14,6 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_D&lang=ja
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_E&lang=ja
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

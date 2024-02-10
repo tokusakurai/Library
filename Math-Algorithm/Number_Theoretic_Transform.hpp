@@ -1,3 +1,4 @@
+#pragma once
 
 // 数論変換 (高速剰余変換) (mod は x*(2^y)+1 で表されるもの (n+m<=2^y))
 // 計算量 O((n+m)log(n+m))
@@ -11,7 +12,6 @@
 // https://atcoder.jp/contests/practice2/tasks/practice2_f
 // https://judge.yosupo.jp/problem/convolution_mod
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

@@ -1,3 +1,4 @@
+#pragma once
 
 // 回文木
 // 計算量 O(|S|)
@@ -14,7 +15,6 @@
 // verified with
 // https://contest.ucup.ac/contest/1440/problem/7876
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

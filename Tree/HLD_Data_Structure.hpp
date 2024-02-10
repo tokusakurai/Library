@@ -1,3 +1,4 @@
+#pragma once
 
 // Heavy-Light 分解 + データ構造 (パスクエリを効率的に扱える)
 
@@ -7,7 +8,6 @@
 // https://atcoder.jp/contests/joisc2015/tasks/joisc2015_g
 // https://atcoder.jp/contests/joisp2023/tasks/joisp2023_a
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

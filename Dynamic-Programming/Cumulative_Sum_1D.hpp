@@ -1,3 +1,4 @@
+#pragma once
 
 // 1 次元累積和
 // 計算量 構築：O(n)、imos 法を用いた加算・区間和クエリ：O(1)
@@ -8,7 +9,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/static_range_sum
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

@@ -1,3 +1,4 @@
+#pragma once
 
 // s から t への流量 f の最小費用流を求める (最初のグラフに負の閉路が存在しない場合)
 // 計算量 O(nm+fm log(n))、初期状態でコストが負の辺が存在しないまたはグラフが DAG である場合：O(fm log(n))
@@ -12,7 +13,6 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_6_B&lang=ja
 // https://atcoder.jp/contests/abc214/tasks/abc214_h
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

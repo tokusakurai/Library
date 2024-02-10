@@ -1,3 +1,4 @@
+#pragma once
 
 // 階段状のグリッドにおける最短経路数え上げ
 // 計算量 O((n+m)log(n+m)log n) (m = max h_i)
@@ -10,7 +11,6 @@
 // verified with
 // https://codeforces.com/gym/102220
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

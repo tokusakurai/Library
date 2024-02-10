@@ -1,3 +1,4 @@
+#pragma once
 
 // Convex-Hull-Trick (追加する直線の傾きが、両方向について単調のときのみ)
 // 計算量 直線追加：O(1)、最小値 (最大値) クエリ：O(log(n))、単調な最小値(最大値)クエリ：(ならし) O(1)
@@ -10,7 +11,6 @@
 // verified with
 // https://atcoder.jp/contests/colopl2018-final/tasks/colopl2018_final_c
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

@@ -1,3 +1,4 @@
+#pragma once
 
 // 行列式 (任意 mod)
 // 計算量 O(n^2(n+log(m)))
@@ -8,7 +9,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/matrix_det_arbitrary_mod
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

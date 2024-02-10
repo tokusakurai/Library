@@ -1,3 +1,4 @@
+#pragma once
 
 // Berlekamp-Massey のアルゴリズム (線形漸化式で得られる数列の先頭 n 項が与えられたとき、それを与える階数最小の線形漸化式を求める)
 // 計算量 O(n^2)
@@ -10,7 +11,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/find_linear_recurrence
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

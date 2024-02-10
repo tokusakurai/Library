@@ -1,3 +1,4 @@
+#pragma once
 
 // Warshall-Floyd (負辺があっても動作する全点対最短路)
 // 計算量 O(n^3)
@@ -10,7 +11,6 @@
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_1_C&lang=ja
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

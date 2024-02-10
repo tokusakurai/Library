@@ -1,3 +1,4 @@
+#pragma once
 
 // 疎な形式的冪級数演算
 // 計算量 inv・log・exp：O(nd)、pow：O(nd + log(k))
@@ -16,7 +17,6 @@
 // https://judge.yosupo.jp/problem/pow_of_formal_power_series_sparse
 // https://atcoder.jp/contests/abc222/tasks/abc222_h
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

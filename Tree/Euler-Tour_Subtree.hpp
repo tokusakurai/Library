@@ -1,3 +1,4 @@
+#pragma once
 
 // 部分木に対するオイラーツアー
 // 計算量 O(n)
@@ -8,7 +9,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/vertex_add_subtree_sum
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

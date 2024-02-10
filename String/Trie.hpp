@@ -1,3 +1,4 @@
+#pragma once
 
 // トライ木
 // 計算量 文字列追加・検索：O(|S|)
@@ -10,7 +11,6 @@
 // verified with
 // https://atcoder.jp/contests/tenka1-2016-final/tasks/tenka1_2016_final_c
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

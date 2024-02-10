@@ -1,3 +1,4 @@
+#pragma once
 
 // 2 次元 Binary Indexed Tree
 // 計算量 構築：O(n log(n)^2)、1 点更新・矩形取得：O(log(n)^2)
@@ -12,7 +13,6 @@
 // https://judge.yosupo.jp/problem/rectangle_sum
 // https://judge.yosupo.jp/problem/point_add_rectangle_sum
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

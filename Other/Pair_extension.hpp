@@ -1,3 +1,4 @@
+#pragma once
 // std::pair に対する std::numeric_limits と各種演算子の拡張。
 // 計算量 O(1)
 
@@ -6,7 +7,6 @@
 // 同じテンプレートパラメータを持つ pair 同士については要素ごとの四則演算に対応。
 // 除算と乗算については first, second 両方に数を掛ける/割る演算にも対応している。
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

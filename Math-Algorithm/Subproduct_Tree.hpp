@@ -1,3 +1,4 @@
+#pragma once
 
 // Subproduct Tree
 // 計算量 O(n log(n)^2)
@@ -7,7 +8,6 @@
 // 数列 (x_1,x_2,...,x_n) が与えられたときに、x-x_i を最下段に並べて、多項式の積でセグメント木を作る。
 // 各ノードに対応する多項式の次数の総和は O(n log(n)) なので、FFT を用いて O(n log(n)^2) で構築できる。
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

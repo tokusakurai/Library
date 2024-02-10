@@ -1,3 +1,4 @@
+#pragma once
 
 // オイラー閉路・オイラー路の検出
 // 計算量 オイラー閉路、オイラー路：O(n+m)
@@ -20,7 +21,6 @@
 // https://judge.yosupo.jp/problem/eulerian_trail_directed
 // https://judge.yosupo.jp/problem/eulerian_trail_undirected
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

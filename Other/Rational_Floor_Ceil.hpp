@@ -1,3 +1,4 @@
+#pragma once
 
 // 有理数の floor・ceil
 // 計算量 O(1)
@@ -6,7 +7,6 @@
 // floor(x / y) = x / y (x >= 0), (x - y + 1) / y (x < 0)
 // ceil(x / y) = (x + y - 1) / y (x >= 0), x / y (x < 0)
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

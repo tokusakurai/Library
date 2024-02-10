@@ -1,3 +1,4 @@
+#pragma once
 
 // パス検出 (有向・無向 両対応)
 // 計算量 O(n + m)
@@ -5,7 +6,6 @@
 // verified with
 // https://atcoder.jp/contests/abc270/tasks/abc270_c
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

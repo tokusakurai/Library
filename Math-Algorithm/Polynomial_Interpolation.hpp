@@ -1,3 +1,4 @@
+#pragma once
 
 // ラグランジュ補間 (多項式)
 // 計算量 O(n log^2(n))
@@ -12,7 +13,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/polynomial_interpolation
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

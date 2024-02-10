@@ -1,3 +1,4 @@
+#pragma once
 
 // 転倒数
 // 計算量 O(n log(n))
@@ -8,7 +9,6 @@
 // verified with
 // https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_5_D&lang=jp
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

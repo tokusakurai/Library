@@ -1,3 +1,4 @@
+#pragma once
 
 // 直線に対する垂線の足と線対称な点
 // 計算量 O(1)
@@ -6,7 +7,6 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_1_A&lang=ja
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_1_B&lang=ja
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

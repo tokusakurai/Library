@@ -1,3 +1,4 @@
+#pragma once
 
 // 01-BFS (辺のコストが 0 か 1 のグラフにおける単一始点最短路)
 // 計算量 O(n+m)
@@ -10,7 +11,6 @@
 // verified with
 // https://atcoder.jp/contests/arc005/tasks/arc005_3
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

@@ -1,3 +1,4 @@
+#pragma once
 
 // Hopcroft-Karp 法 (2 部グラフの最大マッチング)
 // 計算量 O(e√(n+m)+n+m) (e は辺の総数)
@@ -12,7 +13,6 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_7_A&lang=ja
 // https://judge.yosupo.jp/problem/bipartitematching
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

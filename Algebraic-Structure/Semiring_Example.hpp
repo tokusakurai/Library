@@ -1,3 +1,4 @@
+#pragma once
 
 // 半環の例
 
@@ -13,7 +14,6 @@
 // 任意の a ∈ S について a*0 = 0*a = 0
 // を満たすことである。
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

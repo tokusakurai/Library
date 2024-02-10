@@ -1,3 +1,4 @@
+#pragma once
 
 // z-algorithm (文字列 S と S の i 文字目 (0-indexed) 以降の最長共通接頭辞の長さを記録した配列を求める)
 // 計算量 O(|S|)
@@ -10,7 +11,6 @@
 // https://atcoder.jp/contests/jag2013summer-day3/tasks/icpc2013summer_day3_h
 // https://judge.yosupo.jp/problem/zalgorithm
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

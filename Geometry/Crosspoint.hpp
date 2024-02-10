@@ -1,3 +1,4 @@
+#pragma once
 
 // 各図形の交点
 // 計算量 O(1)
@@ -7,7 +8,6 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_7_D&lang=ja
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_7_E&lang=ja
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

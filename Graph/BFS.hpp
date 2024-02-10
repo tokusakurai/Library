@@ -1,3 +1,4 @@
+#pragma once
 
 // BFS
 // 計算量 O(n+m)
@@ -10,7 +11,6 @@
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_11_C&lang=ja
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

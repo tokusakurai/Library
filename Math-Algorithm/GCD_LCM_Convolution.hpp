@@ -1,3 +1,4 @@
+#pragma once
 
 // 添字 GCD・LCM 畳み込み
 // 計算量 O(n log(log(n)))
@@ -11,7 +12,6 @@
 // https://judge.yosupo.jp/problem/gcd_convolution
 // https://judge.yosupo.jp/problem/lcm_convolution
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

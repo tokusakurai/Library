@@ -1,7 +1,7 @@
+#pragma once
 
 // モノイドテンプレート
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

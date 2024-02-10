@@ -1,3 +1,4 @@
+#pragma once
 
 // スパーステーブル
 // 計算量 構築：O(n log(n))、区間取得：O(1)
@@ -12,7 +13,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/staticrmq
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

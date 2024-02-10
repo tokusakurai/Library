@@ -1,3 +1,4 @@
+#pragma once
 
 // 2 乗根・K 乗根 (Z/pZ)
 // 計算量 2 乗根：O(log^2(p))、k 乗根：O(g^(1/4)log(g) + log^2(p)) (g = gcd(k, p-1))
@@ -8,7 +9,6 @@
 // p-1 = s*m^t (s と m は互いに素) とすると、x^q = a ⇔ qy ≡ b (mod s) かつ qy ≡ b (mod m^t) である。
 // x = a^((1+s(q-s'))/q) (s' は s の mod m^t における逆元) とすると 1 つ目の条件は満たされるので、 2 つ目の条件が満たされるように調整する。
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

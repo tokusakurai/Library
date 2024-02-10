@@ -1,3 +1,4 @@
+#pragma once
 
 // ヒストグラム中の最大長方形
 // 計算量 O(n)
@@ -10,7 +11,6 @@
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_3_C&lang=ja
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

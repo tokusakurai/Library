@@ -1,3 +1,4 @@
+#pragma once
 
 // サイクル検出 (有向・無向 両対応)
 // 計算量 O(n + m)
@@ -6,7 +7,6 @@
 // https://judge.yosupo.jp/problem/cycle_detection_undirected
 // https://judge.yosupo.jp/problem/cycle_detection
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

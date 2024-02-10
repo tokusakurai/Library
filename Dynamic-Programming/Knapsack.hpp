@@ -1,3 +1,4 @@
+#pragma once
 
 // 各種ナップザック問題
 // 計算量 01 ナップザック 1・個数制限なしナップザック・個数制限付きナップザック：O(nw), 01 ナップザック 2：O(nΣ[i]v_i)
@@ -14,7 +15,6 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_1_C&lang=ja
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_1_G&lang=ja
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

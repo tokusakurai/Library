@@ -1,3 +1,4 @@
+#pragma once
 
 // 各図形の距離
 // 計算量 O(1)
@@ -6,7 +7,6 @@
 // https://atcoder.jp/contests/arc042/tasks/arc042_b
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_2_D&lang=ja
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

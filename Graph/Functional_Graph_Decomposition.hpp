@@ -1,3 +1,4 @@
+#pragma once
 
 // functional graph のサイクル分解
 // 計算量 O(n)
@@ -5,7 +6,6 @@
 // 概要
 // functional graph の全てのサイクルと、サイクルを除いてできる森の隣接リストの組を返す
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

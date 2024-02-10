@@ -1,3 +1,4 @@
+#pragma once
 
 // 形式的冪級数 (任意 mod)
 // 計算量 加算・減算・微分・積分：O(n)、除算・inv・log・exp・sqrt・pow：O(n log(n))
@@ -12,7 +13,6 @@
 // https://judge.yosupo.jp/problem/pow_of_formal_power_series
 // https://judge.yosupo.jp/problem/division_of_polynomials
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

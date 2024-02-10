@@ -1,3 +1,4 @@
+#pragma once
 
 // Li-Chao Tree (オフライン)
 // 計算量 構築：O(N)、直線追加：O(log(Q))、線分追加：O(log^2(Q))　最小値 (最大値)クエリ：O(log(Q)) (Q は求値クエリの個数)
@@ -10,7 +11,6 @@
 // https://judge.yosupo.jp/problem/line_add_get_min
 // https://judge.yosupo.jp/problem/segment_add_get_min
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

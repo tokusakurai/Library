@@ -1,3 +1,4 @@
+#pragma once
 
 // 二部 Union-Find Tree
 // 計算量 構築：O(n)、併合・結合判定・サイズ：(ならし) O(α(n))
@@ -13,7 +14,6 @@
 // verified with
 // https://codeforces.com/contest/461/problem/D
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

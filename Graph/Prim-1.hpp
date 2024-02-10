@@ -1,3 +1,4 @@
+#pragma once
 
 // Prim 法 (最小全域木)
 // 計算量 O(m log(n))
@@ -11,7 +12,6 @@
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_2_A&lang=ja
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

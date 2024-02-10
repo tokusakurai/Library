@@ -1,3 +1,4 @@
+#pragma once
 
 // mod-int 構造体 (mod は素数)
 // 計算量 加減乗算：O(1)、除算：O(log(mod))、k 乗：O(log(k))
@@ -8,7 +9,6 @@
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_5_A&lang=ja
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

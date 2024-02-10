@@ -1,3 +1,4 @@
+#pragma once
 
 // 最大安定集合 (どの 2 点も隣接しない点集合で最大のもの)
 // 計算量 O((1.381^n)n)
@@ -9,7 +10,6 @@
 // https://atcoder.jp/contests/code-thanks-festival-2017-open/tasks/code_thanks_festival_2017_g
 // https://judge.yosupo.jp/problem/maximum_independent_set
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

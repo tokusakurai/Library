@@ -1,3 +1,4 @@
+#pragma once
 
 // Primal-Dual 法 (最小費用流)
 // 計算量 O(fnm)
@@ -9,7 +10,6 @@
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_6_B&lang=ja
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

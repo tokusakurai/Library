@@ -1,3 +1,4 @@
+#pragma once
 
 // DM 分解
 // 計算量 O((e√(n+m)+n+m) (e は辺の総数)
@@ -18,7 +19,6 @@
 // https://atcoder.jp/contests/abc223/tasks/abc223_g
 // https://domjudge.qoj.ac/team/problems/230/text
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

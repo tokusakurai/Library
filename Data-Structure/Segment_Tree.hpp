@@ -1,3 +1,4 @@
+#pragma once
 
 // Segment Tree
 // 計算量 構築：O(n)、1 点更新・区間取得・二分探索：O(log(n))
@@ -16,7 +17,6 @@
 // https://atcoder.jp/contests/practice2/tasks/practice2_j
 // https://codeforces.com/contest/1407/problem/D
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

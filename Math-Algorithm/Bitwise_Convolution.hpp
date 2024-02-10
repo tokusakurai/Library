@@ -1,3 +1,4 @@
+#pragma once
 
 // ビット演算による添字畳込み
 // 計算量 AND 畳み込み・OR 畳み込み・XOR 畳み込み：O(n log(n))、subset 畳み込み：O(n log(n)^2)
@@ -17,7 +18,6 @@
 // https://judge.yosupo.jp/problem/exp_of_set_power_series
 // https://yukicoder.me/problems/no/2507
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

@@ -1,3 +1,4 @@
+#pragma once
 
 // mex (数列に現れない最小の非負整数)
 // 計算量 O(n)
@@ -8,7 +9,6 @@
 // verified with
 // https://atcoder.jp/contests/abc272/tasks/abc272_e
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

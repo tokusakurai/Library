@@ -1,3 +1,4 @@
+#pragma once
 
 // 行列の特性多項式
 // 計算量 O(n^3)
@@ -12,7 +13,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/characteristic_polynomial
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

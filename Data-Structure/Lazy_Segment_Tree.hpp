@@ -1,3 +1,4 @@
+#pragma once
 
 // 遅延評価付き Segment Tree
 // 計算量 構築：O(n)、区間更新・区間取得・二分探索：O(log(n))
@@ -15,7 +16,6 @@
 // https://codeforces.com/contest/1404/problem/C
 // https://atcoder.jp/contests/abc292/tasks/abc292_h
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

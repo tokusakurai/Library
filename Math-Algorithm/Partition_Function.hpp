@@ -1,3 +1,4 @@
+#pragma once
 
 // 分割数のテーブル
 // 計算量 O(n log(n))
@@ -16,7 +17,6 @@
 
 #include "../Math-Algorithm/Formal_Power_Series.hpp"
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

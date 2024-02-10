@@ -1,3 +1,4 @@
+#pragma once
 
 // パスに対するオイラーツアー
 // 計算量 O(n log(n))
@@ -11,7 +12,6 @@
 // https://judge.yosupo.jp/problem/lca
 // https://atcoder.jp/contests/abc294/tasks/abc294_g
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

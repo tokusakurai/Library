@@ -1,3 +1,4 @@
+#pragma once
 
 // 疎行列の行列式
 // 計算量 O(n(n+k)) (k は行列の非零成分の個数)
@@ -11,7 +12,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/sparse_matrix_det
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

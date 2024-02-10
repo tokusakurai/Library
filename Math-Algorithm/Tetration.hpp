@@ -1,3 +1,4 @@
+#pragma once
 
 // テトレーション (mod)
 // 計算量 O(√m)
@@ -13,7 +14,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/tetration_mod
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

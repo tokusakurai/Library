@@ -1,3 +1,4 @@
+#pragma once
 
 // color matching (各頂点に色が与えられたときに、異色になる組数が最大になるようなマッチング)
 // 計算量 O(n log(n))
@@ -5,7 +6,6 @@
 // 概要
 // 色でソートして、 i 番目と i+n/2 番目をマッチングさせていく。
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

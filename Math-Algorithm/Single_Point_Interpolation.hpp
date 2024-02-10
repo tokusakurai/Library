@@ -1,3 +1,4 @@
+#pragma once
 
 // ラグランジュ補間 (1 点)
 // 計算量 O(n)
@@ -11,7 +12,6 @@
 // verified with
 // https://atcoder.jp/contests/arc033/tasks/arc033_4
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

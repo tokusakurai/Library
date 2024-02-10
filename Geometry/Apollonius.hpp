@@ -1,3 +1,4 @@
+#pragma once
 
 // 2 点からの距離の距離の比が等しくなるような点集合を表す図形
 // 計算量 O(1)
@@ -6,7 +7,6 @@
 // 2 点から等距離の場合は垂直二等分線
 // そうでないときはアポロニウスの円
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

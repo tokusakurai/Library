@@ -1,3 +1,4 @@
+#pragma once
 
 // Dijkstra 法 (負辺がないグラフにおける単一始点最短路)
 // 計算量 O(m log(n))
@@ -11,7 +12,6 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_1_A&lang=ja
 // https://judge.yosupo.jp/problem/shortest_path
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

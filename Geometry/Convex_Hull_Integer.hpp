@@ -1,3 +1,4 @@
+#pragma once
 
 // 凸包 (整数)
 // 計算量 O(n log(n))
@@ -9,7 +10,6 @@
 // https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_4_A&lang=ja
 // https://atcoder.jp/contests/ttpc2022/tasks/ttpc2022_f
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

@@ -1,3 +1,4 @@
+#pragma once
 
 // スプレー木
 // 計算量 挿入・削除・i 番目の値にアクセス・二分探索：(ならし) O(log(n))
@@ -9,7 +10,6 @@
 // https://atcoder.jp/contests/arc033/tasks/arc033_3
 // https://judge.yosupo.jp/problem/associative_array
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

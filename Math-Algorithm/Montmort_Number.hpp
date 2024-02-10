@@ -1,3 +1,4 @@
+#pragma once
 
 // モンモール数 (完全順列の個数)のテーブル
 // 計算量 O(n)
@@ -9,7 +10,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/montmort_number_mod
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

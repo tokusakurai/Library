@@ -1,3 +1,4 @@
+#pragma once
 
 // 円と点・円の接線
 // 計算量 O(1)
@@ -6,7 +7,6 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_7_F&lang=ja
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_7_G&lang=ja
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

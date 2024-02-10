@@ -1,3 +1,4 @@
+#pragma once
 
 // 2 次元累積和
 // 計算量 構築：O(nm)、imos 法を用いた加算・長方形和クエリ：O(1)
@@ -8,7 +9,6 @@
 // verified with
 // https://atcoder.jp/contests/typical90/tasks/typical90_ab
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

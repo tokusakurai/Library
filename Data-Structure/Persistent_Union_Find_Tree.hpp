@@ -1,3 +1,4 @@
+#pragma once
 
 // 永続 Union-Find Tree
 // 計算量 併合・結合判定・サイズ：O(log^2(n))、複製：O(1)
@@ -10,7 +11,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/persistent_unionfind
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
