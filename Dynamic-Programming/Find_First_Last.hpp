@@ -1,3 +1,4 @@
+#pragma once
 
 // find first, find last
 // 計算量 O(n)
@@ -10,7 +11,6 @@
 // verified with
 // https://codeforces.com/contest/1750/problem/E
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

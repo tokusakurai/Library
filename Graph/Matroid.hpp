@@ -1,3 +1,4 @@
+#pragma once
 
 // マトロイド (分割マトロイド、グラフ的マトロイド、横断マトロイド)
 // 計算量
@@ -14,7 +15,6 @@
 // verified with
 // https://codeforces.com/gym/103373/problem/I
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

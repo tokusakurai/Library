@@ -1,3 +1,4 @@
+#pragma once
 
 // 部分永続 Union-Find Tree (任意時刻でのクエリを扱える)
 // 計算量 構築：O(n)、(任意時刻 t における) 併合・結合判定・サイズ：O(log(n))
@@ -10,7 +11,6 @@
 // verified with
 // https://atcoder.jp/contests/agc002/tasks/agc002_d
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

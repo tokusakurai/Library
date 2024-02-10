@@ -1,3 +1,4 @@
+#pragma once
 
 // 各図形の交差判定
 // 計算量 O(1)
@@ -6,7 +7,6 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_2_B&lang=ja
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_7_A&lang=ja
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

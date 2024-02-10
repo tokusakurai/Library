@@ -1,3 +1,4 @@
+#pragma once
 
 // Dinic 法 (最大流)
 // 計算量 O(mn^2)
@@ -10,7 +11,6 @@
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_6_A&lang=ja
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

@@ -1,3 +1,4 @@
+#pragma once
 
 // Segment Tree Beats
 // 計算量：場合によるが、例えば range chmin, chmax, add, range sum クエリの場合はクエリ O(log(n)^2)
@@ -11,7 +12,6 @@
 // https://judge.yosupo.jp/problem/range_chmin_chmax_add_range_sum
 // https://atcoder.jp/contests/abc256/tasks/abc256_h
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

@@ -1,3 +1,4 @@
+#pragma once
 
 // 点・直線 (線分)・円に関する基本的な計算
 // 計算量 構築：O(1)、内積・行列式・CCW：O(1)
@@ -11,7 +12,6 @@
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_1_C&lang=ja
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

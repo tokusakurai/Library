@@ -1,3 +1,4 @@
+#pragma once
 
 // 二元体での行列
 // 計算量 簡約化・ガウスの消去法：O(nm^2/w) (w はワードサイズ)
@@ -9,7 +10,6 @@
 // https://yukicoder.me/problems/no/1421
 // https://atcoder.jp/contests/abc276/tasks/abc276_h
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

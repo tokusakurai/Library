@@ -1,3 +1,4 @@
+#pragma once
 
 // Link-Cut Tree
 // 計算量 辺の追加・削除・1 点更新・パスクエリ：(ならし) O(log(n))
@@ -13,7 +14,6 @@
 // https://judge.yosupo.jp/problem/dynamic_tree_vertex_add_path_sum
 // https://judge.yosupo.jp/problem/dynamic_tree_vertex_set_path_composite
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

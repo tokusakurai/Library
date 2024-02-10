@@ -1,3 +1,4 @@
+#pragma once
 
 // 二重連結成分分解
 // 計算量 O(n+m)
@@ -14,7 +15,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/biconnected_components
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

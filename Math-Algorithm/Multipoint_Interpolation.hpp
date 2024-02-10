@@ -1,3 +1,4 @@
+#pragma once
 
 // ラグランジュ補間 (多点)
 // 計算量 O((n+m)log(n+m))
@@ -11,7 +12,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/shift_of_sampling_points_of_polynomial
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

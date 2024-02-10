@@ -1,3 +1,4 @@
+#pragma once
 
 // SWAG(Sliding Window Aggregation)
 // 計算量：各クエリならし O(1)
@@ -11,7 +12,6 @@
 // https://judge.yosupo.jp/problem/queue_operate_all_composite
 // https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_3_D
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

@@ -1,3 +1,4 @@
+#pragma once
 
 // 強連結成分分解 (分解後は DAG になる)
 // 計算量 O(n+m)
@@ -9,7 +10,6 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_3_C&lang=ja
 // https://judge.yosupo.jp/problem/scc
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

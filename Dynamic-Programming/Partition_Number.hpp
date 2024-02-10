@@ -1,3 +1,4 @@
+#pragma once
 
 // 分割数テーブル
 // 計算量 O(nk)
@@ -8,7 +9,6 @@
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_5_J&lang=jp
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

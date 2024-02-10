@@ -1,3 +1,4 @@
+#pragma once
 
 // Undo 可能 Union-Find Tree
 // 計算量 構築：O(n)、併合・結合判定・サイズ：O(log(n))、undo：O(1)
@@ -10,7 +11,6 @@
 // verified with
 // https://codeforces.com/contest/1445/problem/E
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

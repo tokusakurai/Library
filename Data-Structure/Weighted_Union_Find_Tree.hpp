@@ -1,3 +1,4 @@
+#pragma once
 
 // 重み付き Union-Find Tree (等式差分制約を扱える)
 // 計算量 構築：O(n)、併合・結合判定・サイズ・ポテンシャル取得：(ならし) O(α(n))
@@ -9,7 +10,6 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_1_B&lang=ja
 // https://atcoder.jp/contests/arc090/tasks/arc090_b
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

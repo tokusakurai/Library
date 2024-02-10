@@ -1,3 +1,4 @@
+#pragma once
 
 // Edmonds の花アルゴリズム
 // 計算量 O(N^3)
@@ -9,7 +10,6 @@
 // verirfied with
 // https://judge.yosupo.jp/problem/general_matching
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

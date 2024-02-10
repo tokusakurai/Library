@@ -1,3 +1,4 @@
+#pragma once
 
 // 多点評価 (評価点が幾何級数の場合)
 // 計算量 O((m+n) log(m+n))
@@ -11,7 +12,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/multipoint_evaluation_on_geometric_sequence
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

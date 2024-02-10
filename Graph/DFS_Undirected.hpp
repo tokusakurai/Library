@@ -1,3 +1,4 @@
+#pragma once
 
 // 無向グラフでの基本的な DFS
 // 計算量 パス検出・閉路検出：O(n+m)
@@ -10,7 +11,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/cycle_detection_undirected
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

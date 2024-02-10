@@ -1,3 +1,4 @@
+#pragma once
 
 // ウェーブレット行列
 // 計算量 構築：O(n log(m))、rank・access・range_freq：O(log(m))、select：O(log(m)^2) (m は配列の要素の最大値)
@@ -11,7 +12,6 @@
 // https://judge.yosupo.jp/problem/range_kth_smallest
 // https://judge.yosupo.jp/problem/static_range_frequency
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

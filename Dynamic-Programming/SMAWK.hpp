@@ -1,3 +1,4 @@
+#pragma once
 
 // SMAWK アルゴリズム
 // 計算量 O(n+m)
@@ -17,7 +18,6 @@
 // 参考文献
 // http://web.cs.unlv.edu/larmore/Courses/CSC477/monge.pdf
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

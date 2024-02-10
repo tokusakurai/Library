@@ -1,7 +1,7 @@
+#pragma once
 
 // 幾何ライブラリ全体
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

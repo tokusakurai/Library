@@ -1,3 +1,4 @@
+#pragma once
 
 // ユークリッドの互除法を用いた種々の計算
 // 計算量 binary gcd・lcm・extgcd・modinv・floor_sum・linear_mod_min・中国剰余定理：O(log(max(a, b)))、Garner：O(n^2)
@@ -25,7 +26,6 @@
 // https://yukicoder.me/problems/no/186
 // https://yukicoder.me/problems/no/187
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

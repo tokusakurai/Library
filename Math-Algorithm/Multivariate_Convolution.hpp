@@ -1,3 +1,4 @@
+#pragma once
 
 // 多変数畳み込み (切り捨て)
 // 計算量 O(nk(log(n)+k)) (ただし、n = Σ[0<=i<k] n_i)
@@ -15,7 +16,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/multivariate_convolution
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

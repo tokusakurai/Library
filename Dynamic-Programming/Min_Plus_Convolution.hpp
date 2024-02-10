@@ -1,3 +1,4 @@
+#pragma once
 
 // 任意数列と凸数列の (min,+) 畳み込み
 // 計算量 O(n+m)
@@ -8,7 +9,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/min_plus_convolution_convex_arbitrary
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

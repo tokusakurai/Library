@@ -1,3 +1,4 @@
+#pragma once
 
 // 組み合わせ
 // 計算量 前計算：O(n)、二項係数：O(1)、逆数：O(1)、第 2 種スターリング数：O(k log(n))、ベル数：O(min(n,k)log(n))
@@ -20,7 +21,6 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_5_G&lang=ja
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_5_I&lang=ja
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

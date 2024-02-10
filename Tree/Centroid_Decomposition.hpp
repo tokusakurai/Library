@@ -1,3 +1,4 @@
+#pragma once
 
 // 木の重心分解 (雛形)
 // 計算量 O(n)
@@ -9,7 +10,6 @@
 // https://atcoder.jp/contests/yahoo-procon2018-final-open/tasks/yahoo_procon2018_final_c
 // https://judge.yosupo.jp/problem/frequency_table_of_tree_distance
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

@@ -1,3 +1,4 @@
+#pragma once
 
 // 凸数列の (min,+) 畳み込み
 // 計算量 O(n+m)
@@ -11,7 +12,6 @@
 // https://atcoder.jp/contests/abc218/tasks/abc218_h
 // https://judge.yosupo.jp/problem/min_plus_convolution_convex_convex
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

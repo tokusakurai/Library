@@ -1,3 +1,4 @@
+#pragma once
 
 // 無向グラフの長さ 3 の閉路列挙
 // 計算量 O(n+m√m)
@@ -10,7 +11,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/enumerate_triangles
 
-#pragma once
 using namespace std;
 #include <bits/stdc++.h>
 

@@ -1,3 +1,4 @@
+#pragma once
 
 // ローリングハッシュ、固定長ハッシュ (mod：(2^61)-1、基数：mod の原始根からランダムに取る)
 // 計算量 構築：O(n)、ハッシュクエリ：O(1)
@@ -10,7 +11,6 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_14_B&lang=ja
 // https://atcoder.jp/contests/arc024/tasks/arc024_3
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

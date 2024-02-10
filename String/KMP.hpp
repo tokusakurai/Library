@@ -1,3 +1,4 @@
+#pragma once
 
 // MP 法 (文字列 S の先頭 i 文字について最長の共通する接頭辞と接尾辞を記録した配列を返す)
 // KMP 法 (MP 法の条件に加えて、接頭辞と接尾辞の次の文字は相異なる)
@@ -13,7 +14,6 @@
 // verified with
 // https://atcoder.jp/contests/xmascontest2015/tasks/xmascontest2015_d
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

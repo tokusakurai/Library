@@ -1,3 +1,4 @@
+#pragma once
 
 // Shortest-Path-Faster-Algorithm (負辺があっても動作する単一始点最短路)
 // 計算量 O(nm)
@@ -10,7 +11,6 @@
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_1_B&lang=ja
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

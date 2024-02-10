@@ -1,3 +1,4 @@
+#pragma once
 
 // floor(n/i), ceil(n/i) (1<=i<=n) を列挙する
 // 計算量 O(√n)
@@ -13,7 +14,6 @@
 // https://atcoder.jp/contests/abc230/tasks/abc230_e
 // https://atcoder.jp/contests/arc150/tasks/arc150_b
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

@@ -1,3 +1,4 @@
+#pragma once
 
 // manachar (文字列 S の文字 i を中心とする奇数長の最長回分の半径を記録した配列を求める)
 // 計算量 O(|S|)
@@ -10,7 +11,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/enumerate_palindromes
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

@@ -1,3 +1,4 @@
+#pragma once
 
 // K 乗根 (整数)
 // 計算量 O(k log(a))
@@ -8,7 +9,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/kth_root_integer
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

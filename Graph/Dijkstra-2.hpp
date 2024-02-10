@@ -1,3 +1,4 @@
+#pragma once
 
 // Dijkstra 法 (負辺がないグラフにおける単一始点最短路)
 // 計算量 O(n^2+m)
@@ -6,7 +7,6 @@
 // 始点から近い順に最短路を確定させる。
 // ステップでまだ使われてない頂点で始点から最も近いものを調べる。
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

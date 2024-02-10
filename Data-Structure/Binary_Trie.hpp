@@ -1,3 +1,4 @@
+#pragma once
 
 // Binary Trie (非負整数値の Trie 木)
 // 計算量 挿入・削除・検索・最大 (最小) 値・k 番目の最小値・x 未満の個数 : O(b) (b は要素の 2 進数表記に必要な桁数)
@@ -10,7 +11,6 @@
 // https://codeforces.com/contest/1614/problem/E
 // https://atcoder.jp/contests/abc234/tasks/abc234_d
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

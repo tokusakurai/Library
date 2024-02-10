@@ -1,3 +1,4 @@
+#pragma once
 
 // kitamasa 法 (d 階の線形漸化式で与えられる数列の第 n 項を求める)
 // 計算量 O(d^2 log(n))
@@ -10,7 +11,6 @@
 // verified with
 // https://atcoder.jp/contests/tdpc/tasks/tdpc_fibonacci
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

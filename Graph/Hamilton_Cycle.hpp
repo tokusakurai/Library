@@ -1,3 +1,4 @@
+#pragma once
 
 // ハミルトンサイクルの検出
 // ハミルトンサイクルを持つ部分集合の列挙：O(n*2^n)、部分集合 S におけるハミルトンサイクルの復元：O(|S|*2^|S|)
@@ -8,7 +9,6 @@
 // verified with
 // https://codeforces.com/contest/1804/problem/E
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

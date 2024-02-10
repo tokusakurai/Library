@@ -1,3 +1,4 @@
+#pragma once
 
 // フィボナッチ探索
 // 計算量 O(log(R-L))
@@ -13,7 +14,6 @@
 // 3. f(b) = y かつ b = R
 // のいずれかが成立する。
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

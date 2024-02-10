@@ -1,3 +1,4 @@
+#pragma once
 
 // (ダブリング) 最近共通祖先 (LCA)
 // 計算量 構築：O(n log(n))、2 頂点の LCA・距離：O(log(n))、level ancestor：O(log(n))
@@ -8,7 +9,6 @@
 // https://judge.yosupo.jp/problem/lca
 // https://atcoder.jp/contests/abc014/tasks/abc014_4
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

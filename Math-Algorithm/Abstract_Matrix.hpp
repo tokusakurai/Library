@@ -1,3 +1,4 @@
+#pragma once
 
 // 抽象化された行列
 // 計算量 積：O(mnp)、k 乗：O(n^3 log(k))
@@ -11,7 +12,6 @@
 // https://atcoder.jp/contests/abc009/tasks/abc009_4
 // https://atcoder.jp/contests/abc236/tasks/abc236_g
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

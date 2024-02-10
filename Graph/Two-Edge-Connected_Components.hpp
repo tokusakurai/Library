@@ -1,3 +1,4 @@
+#pragma once
 
 // 二重辺連結成分分解 (分解後は森になる)
 // 計算量 O(n+m)
@@ -15,7 +16,6 @@
 // https://atcoder.jp/contests/arc039/tasks/arc039_d
 // https://judge.yosupo.jp/problem/two_edge_connected_components
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

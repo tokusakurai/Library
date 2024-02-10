@@ -1,3 +1,4 @@
+#pragma once
 
 // マトロイド交差
 // 計算量 O(f(s+mc)) (m = |E|、c は circuit クエリ 1 回の計算量、s は set クエリ 1 回の計算量、f は共通独立集合の元数の最大値)
@@ -9,7 +10,6 @@
 // verified with
 // https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_7_A&lang=ja
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

@@ -1,3 +1,4 @@
+#pragma once
 
 // run 列挙
 // 計算量 O(|S|log(|S|))
@@ -10,7 +11,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/runenumerate
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

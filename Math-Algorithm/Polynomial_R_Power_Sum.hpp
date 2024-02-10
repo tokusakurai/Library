@@ -1,3 +1,4 @@
+#pragma once
 
 // 多項式とべき乗の総和
 // 計算量 O(k+log(n))
@@ -14,7 +15,6 @@
 // https://judge.yosupo.jp/problem/sum_of_exponential_times_polynomial
 // https://judge.yosupo.jp/problem/sum_of_exponential_times_polynomial_limit
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

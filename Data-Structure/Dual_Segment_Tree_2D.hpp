@@ -1,3 +1,4 @@
+#pragma once
 
 // 2 次元双対 Segment Tree
 // 計算量 構築：O(n log^2(n)), 矩形更新・1 点取得：O(log^2(n))
@@ -11,7 +12,6 @@
 // verified with
 // https://atcoder.jp/contests/tkppc6-1/tasks/tkppc6_1_n
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

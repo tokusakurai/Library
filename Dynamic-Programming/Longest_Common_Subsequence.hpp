@@ -1,3 +1,4 @@
+#pragma once
 
 // 最長共通部分列 (LCS)
 // 計算量 O(nm)
@@ -8,7 +9,6 @@
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_10_C&lang=ja
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

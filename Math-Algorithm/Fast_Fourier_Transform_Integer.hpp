@@ -1,3 +1,4 @@
+#pragma once
 
 // 高速フーリエ変換 (64 ビット符号付き整数)
 // 計算量 O((n+m)log(n+m))
@@ -9,7 +10,6 @@
 // https://atcoder.jp/contests/atc001/tasks/fft_c
 // https://atcoder.jp/contests/utpc2021/tasks/utpc2021_c
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

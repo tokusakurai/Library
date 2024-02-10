@@ -1,3 +1,4 @@
+#pragma once
 
 // モノイドの例
 
@@ -7,7 +8,6 @@
 // 任意の a ∈ M について a*e = e*a = a
 // を満たすことである。
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

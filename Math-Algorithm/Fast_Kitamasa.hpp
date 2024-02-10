@@ -1,3 +1,4 @@
+#pragma once
 
 // 高速 kitamasa 法 (d 階の線形漸化式で与えられる数列の第 n 項を求める)
 // 計算量 O(d log(d)log(n))
@@ -8,7 +9,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/kth_term_of_linearly_recurrent_sequence
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

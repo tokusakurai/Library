@@ -1,3 +1,4 @@
+#pragma once
 
 // 彩色数 (隣接頂点が異なる色になるように彩色するのに必要な最小の色数)
 // 計算量 O((2^n)n)
@@ -12,7 +13,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/chromatic_number
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

@@ -1,3 +1,4 @@
+#pragma once
 
 // 多角形 (面積、内外判定)
 // 計算量 面積、多角形の内外判定：O(n)、凸多角形の内外判定：O(log(n))
@@ -12,7 +13,6 @@
 // https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_3_C&lang=ja
 // https://atcoder.jp/contests/abc296/tasks/abc296_g
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

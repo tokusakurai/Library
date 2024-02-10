@@ -1,3 +1,4 @@
+#pragma once
 
 // 接尾辞配列、高さ配列
 // 計算量 接尾辞配列構築：O(|S|)、二分探索：O(|T|log(|S|))、高さ配列構築：O(|S|)
@@ -23,7 +24,6 @@
 // https://judge.yosupo.jp/problem/suffixarray
 // https://judge.yosupo.jp/problem/number_of_substrings
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

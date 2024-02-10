@@ -1,3 +1,4 @@
+#pragma once
 
 // 編集距離 (挿入、削除、置換ができる)
 // 計算量 O(nm)
@@ -8,7 +9,6 @@
 // verified with
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_1_E&lang=ja
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

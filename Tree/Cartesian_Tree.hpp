@@ -1,3 +1,4 @@
+#pragma once
 
 // Cartesian tree
 // 計算量 O(n)
@@ -12,7 +13,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/cartesian_tree
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

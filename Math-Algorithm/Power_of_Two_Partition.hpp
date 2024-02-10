@@ -1,3 +1,4 @@
+#pragma once
 
 // 2 べき分割数の数え上げ (重み付き)
 // 計算量 O(n log(n)log(k))
@@ -13,7 +14,6 @@
 // verified with
 // https://codeforces.com/contest/1864/problem/H
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

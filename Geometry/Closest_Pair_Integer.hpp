@@ -1,3 +1,4 @@
+#pragma once
 
 // 最近点対 (整数)
 // 計算量 O(n log(n))
@@ -8,7 +9,6 @@
 // verified with
 // https://codeforces.com/contest/429/problem/D
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

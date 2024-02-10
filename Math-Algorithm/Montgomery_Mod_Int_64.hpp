@@ -1,3 +1,4 @@
+#pragma once
 
 // モンゴメリ乗算 mod-int 構造体 (64 ビット)
 // 計算量 加減乗算：O(1)、除算：O(log(mod))、k 乗：O(log(k))
@@ -10,7 +11,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/factorize
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

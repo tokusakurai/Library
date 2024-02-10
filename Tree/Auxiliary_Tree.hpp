@@ -1,3 +1,4 @@
+#pragma once
 
 // Auxiliary Tree
 // 計算量：O(k log(n))
@@ -10,7 +11,6 @@
 // verified with
 // https://atcoder.jp/contests/typical90/tasks/typical90_ai
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

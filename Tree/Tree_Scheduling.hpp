@@ -1,3 +1,4 @@
+#pragma once
 
 // 木上のスケジューリング問題 (仮)
 // 計算量 O(n log(n))
@@ -21,7 +22,6 @@
 // つまり、グラフ上で辺 {p_v, v} を縮約して、x_{p_v} ← x_{p_v} ● x_v とした問題を解けばよい。これを n - 1 ステップ繰り返すことで解ける。
 // priority queue に (x_i, i) を入れて v を取得し、union find で v と p_v をマージしていけばよい。
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

@@ -1,3 +1,4 @@
+#pragma once
 
 // 列の平方分割 (例)
 // 計算量 各種クエリ：O(√(n log(n)))
@@ -13,7 +14,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/range_chmin_chmax_add_range_sum
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

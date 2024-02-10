@@ -1,3 +1,4 @@
+#pragma once
 
 // monotone minima
 // 計算量 O(n + m log(n))
@@ -7,7 +8,6 @@
 // c_i = argmin{j | a_{ij}} (複数ある場合はその中で最小値) が c_0 <= c_1 <= ... <= c_{n-1} を満たすことである。
 // monotone な f に対して、行で分割統治することで各 c_i の計算を高速化できる。
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

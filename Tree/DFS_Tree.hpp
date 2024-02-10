@@ -1,3 +1,4 @@
+#pragma once
 
 // 重みなし木の基本的な DFS
 // 計算量 根からの距離・部分木のサイズ・直径・パス検出：O(n)
@@ -11,7 +12,6 @@
 // https://atcoder.jp/contests/abc270/tasks/abc270_c
 // https://codeforces.com/contest/455/problem/C
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

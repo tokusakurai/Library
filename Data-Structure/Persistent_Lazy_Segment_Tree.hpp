@@ -1,3 +1,4 @@
+#pragma once
 
 // 永続遅延評価付き Segment Tree
 // 計算量 区間更新・区間取得：O(log(n))
@@ -10,7 +11,6 @@
 // verified with
 // https://codeforces.com/gym/103438/problem/B
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

@@ -1,3 +1,4 @@
+#pragma once
 
 // 素数・約数に関する計算
 // 計算量 約数列挙・素因数分解・素数判定：O(√n)、1,2,...,n のうち k と互いに素な自然数の数え上げ：O(2^#{k の素因数})
@@ -16,7 +17,6 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_1_C
 // https://yukicoder.me/problems/no/2249
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

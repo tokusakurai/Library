@@ -1,3 +1,4 @@
+#pragma once
 
 // Binary Indexed Tree
 // 計算量 構築：O(n)、1 点加算・区間和取得・二分探索：O(log(n))
@@ -14,7 +15,6 @@
 // https://atcoder.jp/contests/practice2/tasks/practice2_b
 // https://judge.yosupo.jp/problem/point_add_range_sum
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

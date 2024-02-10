@@ -1,3 +1,4 @@
+#pragma once
 
 // 有理整数環の剰余環 Z/mZ における演算 (累乗、逆元、一次方程式、オイラーの φ 関数、離散対数、位数、原始根)
 // 計算量 k 乗：O(log(k))、逆元・一次方程式：O(log(m))、離散対数：(O√m+log(m))、オイラーの φ 関数・位数：O(√m)、原始根：O(φ(m-1)log(m))
@@ -14,7 +15,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/discrete_logarithm_mod
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

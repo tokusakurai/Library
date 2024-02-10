@@ -1,3 +1,4 @@
+#pragma once
 
 // 形式的冪級数
 // 計算量 加算・減算・微分・積分：O(n)、積・除算・inv・log・exp・pow・sqrt・Taylor Shift：O(n log(n))
@@ -26,7 +27,6 @@
 // https://judge.yosupo.jp/problem/division_of_polynomials
 // https://judge.yosupo.jp/problem/polynomial_taylor_shift
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

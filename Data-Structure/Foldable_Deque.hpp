@@ -1,3 +1,4 @@
+#pragma once
 
 // Forldable Queue ( SWAG の deque 版)
 // 計算量: push,pop amortized O(1), それ以外 O(1)
@@ -9,7 +10,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/deque_operate_all_composite
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

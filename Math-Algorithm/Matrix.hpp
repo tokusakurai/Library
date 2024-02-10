@@ -1,3 +1,4 @@
+#pragma once
 
 // 行列計算
 // 計算量 積：O(nmk)、k 乗：O(n^3 log(k))、行簡約化：O(nm^2)、逆行列：O(n^3)
@@ -10,7 +11,6 @@
 // https://judge.yosupo.jp/problem/inverse_matrix
 // https://judge.yosupo.jp/problem/pow_of_matrix
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

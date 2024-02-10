@@ -1,3 +1,4 @@
+#pragma once
 
 // 高速フーリエ変換を用いた多項式の畳み込み
 // 計算量 O((n+m)log(n+m))
@@ -10,7 +11,6 @@
 // verified with
 // https://atcoder.jp/contests/atc001/tasks/fft_c
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

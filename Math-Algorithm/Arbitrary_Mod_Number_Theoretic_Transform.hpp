@@ -1,3 +1,4 @@
+#pragma once
 
 // 数論変換 (高速剰余変換) (任意 mod)
 // 計算量 O((n+m)log(n+m))
@@ -14,7 +15,6 @@
 // https://atcoder.jp/contests/practice2/tasks/practice2_f
 // https://judge.yosupo.jp/problem/convolution_mod_1000000007
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

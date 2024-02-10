@@ -1,3 +1,4 @@
+#pragma once
 
 // Hungarian 法 (割り当て問題)
 // 計算量 O(n^2m)
@@ -11,7 +12,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/assignment
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

@@ -1,3 +1,4 @@
+#pragma once
 
 // 長方形の和集合の面積
 // 計算量 O(n log(n))
@@ -8,7 +9,6 @@
 // verified with
 // judge.yosupo.jp/problem/area_of_union_of_rectangles
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

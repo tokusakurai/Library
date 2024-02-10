@@ -1,3 +1,4 @@
+#pragma once
 
 // オイラー閉路・オイラー路の検出
 // 計算量 オイラー閉路：O(n+m)、オイラー路：O((n+m)α(n))
@@ -18,7 +19,6 @@
 // https://atcoder.jp/contests/abc227/tasks/abc227_h
 // https://codeforces.com/contest/1610/problem/F
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

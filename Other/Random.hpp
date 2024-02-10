@@ -1,8 +1,8 @@
+#pragma once
 
 // 乱数発生
 // 計算量 O(1)
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

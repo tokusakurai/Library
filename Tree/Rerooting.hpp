@@ -1,3 +1,4 @@
+#pragma once
 
 // 全方位木 DP
 // 計算量 O(nα) (α は部分木マージと辺追加にかかる計算量)
@@ -15,7 +16,6 @@
 // https://atcoder.jp/contests/abc220/tasks/abc220_f
 // https://atcoder.jp/contests/abc298/tasks/abc298_h
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

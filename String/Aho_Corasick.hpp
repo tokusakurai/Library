@@ -1,3 +1,4 @@
+#pragma once
 
 // Aho-Corasick 法 (複数文字列についてパターンマッチするオートマトンを構築する)
 // 計算量 構築 : O(Σ[i]|S_i|)、遷移 : O(1)
@@ -12,7 +13,6 @@
 // https://yukicoder.me/problems/no/1269
 // https://atcoder.jp/contests/jag2017autumn/tasks/jag2017autumn_h
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

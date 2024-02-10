@@ -1,3 +1,4 @@
+#pragma once
 
 // 根付き木の同型性判定
 // 計算量 O(n log(n))
@@ -9,7 +10,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/rooted_tree_isomorphism_classification
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

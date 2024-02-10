@@ -1,3 +1,4 @@
+#pragma once
 
 // スターリング数のテーブル
 // 計算量 第 1 種スターリング数・第 2 種スターリング数：O(n log(n))
@@ -14,7 +15,6 @@
 // https://judge.yosupo.jp/problem/stirling_number_of_the_first_kind
 // https://judge.yosupo.jp/problem/stirling_number_of_the_second_kind
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

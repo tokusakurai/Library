@@ -1,3 +1,4 @@
+#pragma once
 
 // 線形方程式の求解
 // 計算量 : O(nm^2)
@@ -8,7 +9,6 @@
 // verified with
 // https://judge.yosupo.jp/problem/system_of_linear_equations
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

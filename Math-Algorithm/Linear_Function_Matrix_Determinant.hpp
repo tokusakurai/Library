@@ -1,3 +1,4 @@
+#pragma once
 
 // 一次関数行列の行列式
 // 計算量 O(n^3)
@@ -10,7 +11,6 @@
 // https://yukicoder.me/problems/no/1907
 // https://atcoder.jp/contests/abc323/tasks/abc323_g
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

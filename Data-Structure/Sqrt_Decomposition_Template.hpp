@@ -1,3 +1,4 @@
+#pragma once
 
 // 平方分割 (雛形)
 // 計算量 クエリ O(√n) や O(√(n log(n))) になることが多い
@@ -5,7 +6,6 @@
 // 概要
 // 区間全体にクエリをかける操作が高速にできる場合、バケットサイズ O(√n) で区間を分割することでクエリを高速化出来る。
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

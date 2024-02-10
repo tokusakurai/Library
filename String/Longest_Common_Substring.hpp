@@ -1,3 +1,4 @@
+#pragma once
 
 // 最長共通 (連続) 部分文字列
 // 計算量 O(|S|+|T|)
@@ -10,7 +11,6 @@
 // https://judge.yosupo.jp/problem/longest_common_substring
 // https://atcoder.jp/contests/arc151/tasks/arc151_e
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 

@@ -1,3 +1,4 @@
+#pragma once
 
 // Mo のアルゴリズム (例)
 // 計算量 O((n+q)√n)
@@ -8,7 +9,6 @@
 // verified with
 // https://atcoder.jp/contests/abc174/tasks/abc174_f
 
-#pragma once
 #include <bits/stdc++.h>
 using namespace std;
 
