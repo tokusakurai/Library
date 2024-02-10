@@ -51,6 +51,7 @@ struct Tree_Compressor : Heavy_Light_Decomposition<directed> {
     Auxiliary_Tree<int, directed> compress(vector<int> x) {
         int k = x.size();
         sort(begin(x), end(x), [&](int i, int j) { return this->id_v[i] < this->id_v[j]; });
+        x.erase(unique(begin(v), end(v)), end(v));
         vector<int> used, st;
         int cnt = 0;
         used.push_back(x[0]), st.push_back(x[0]);
