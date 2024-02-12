@@ -10,47 +10,29 @@
 
 // verified with
 // https://atcoder.jp/contests/typical90/tasks/typical90_ai
+// https://atcoder.jp/contests/abc340/tasks/abc340_g
 
 #include <bits/stdc++.h>
 using namespace std;
 
+#include "../Graph/Graph_Template.hpp"
 #include "../Tree/Heavy-Light_Decomposition.hpp"
 
-template <typename T, bool directed = false>
-struct Auxiliary_Tree {
-    struct edge {
-        int to;
-        T cost;
-        int id;
-        edge(int to, int cost, int id) : to(to), cost(cost), id(id) {}
-    };
+template <typename G>
+struct Tree_Compressor : Heavy_Light_Decomposition<G> {
+    using H = Heavy_Light_Decomposition<G>;
+    using L = typename G::L;
 
-    vector<vector<edge>> es;
-    vector<int> id; // i 番目の頂点が圧縮する前のどの頂点に対応しているか
-    const int n;
-    int m;
-
-    Auxiliary_Tree(int n) : es(n), id(n), n(n), m(0) {}
-
-    void add_edge(int from, int to, T cost) {
-        es[from].emplace_back(to, cost, m);
-        if (!directed) es[to].emplace_back(from, cost, m);
-        m++;
-    }
-};
-
-template <bool directed = false>
-struct Tree_Compressor : Heavy_Light_Decomposition<directed> {
-    using H = Heavy_Light_Decomposition<directed>;
     vector<int> par, id;
 
-    Tree_Compressor(int n) : H(n), par(n, -1), id(n, -1) {}
+    Tree_Compressor(const G &g, int r = 0) : H(g, r), par(g.n, -1), id(g.n, -1) {}
 
-    void build() { this->decompose(); }
-
-    Auxiliary_Tree<int, directed> compress(vector<int> x) {
+    // 圧縮後のグラフと、圧縮後の i 番目の頂点が元のグラフで何番目だったかを格納する配列を返す
+    template <bool directed = false>
+    pair<Weighted_Graph<L, directed>, vector<int>> compress(vector<int> x) {
         int k = x.size();
         sort(begin(x), end(x), [&](int i, int j) { return this->id_v[i] < this->id_v[j]; });
+        x.erase(unique(begin(x), end(x)), end(x));
         vector<int> used, st;
         int cnt = 0;
         used.push_back(x[0]), st.push_back(x[0]);
@@ -75,12 +57,13 @@ struct Tree_Compressor : Heavy_Light_Decomposition<directed> {
             st.pop_back();
             par[u] = st.back();
         }
-        Auxiliary_Tree<int, directed> G(cnt);
+        Weighted_Graph<L, directed> g(cnt);
+        vector<int> vertex_id(cnt);
         for (auto v : used) {
-            if (par[v] != -1) G.add_edge(id[par[v]], id[v], this->depth[v] - this->depth[par[v]]);
-            G.id[id[v]] = v;
+            if (par[v] != -1) g.add_edge(id[par[v]], id[v], this->d[v] - this->d[par[v]]);
+            vertex_id[id[v]] = v;
         }
         for (auto v : used) par[v] = -1, id[v] = -1;
-        return G;
+        return make_pair(g, vertex_id);
     }
 };

@@ -9,61 +9,65 @@
 // 結果として木はいくつかの列に分割され、任意の 2 頂点間の単純パスについて通る列の個数は最大で O(log(n)) 個となる。
 
 // verified with
+// https://judge.yosupo.jp/problem/lca
+// https://judge.yosupo.jp/problem/jump_on_tree
+// https://contest.ucup.ac/contest/1516/problem/8235
 // https://judge.yosupo.jp/problem/vertex_add_path_sum
 // https://judge.yosupo.jp/problem/vertex_set_path_composite
 
 #include <bits/stdc++.h>
 using namespace std;
 
-template <bool directed = false>
+template <typename G>
 struct Heavy_Light_Decomposition {
-    struct edge {
-        int to, id;
-        edge(int to, int id) : to(to), id(id) {}
-    };
+    using L = typename G::L;
 
-    vector<vector<edge>> es;
     vector<int> par, si, depth;
+    vector<L> d;
     vector<int> root;       // 属する連結成分の根
     vector<int> id_v, id_e; // 各頂点、各辺が一列に並べたときに何番目に相当するか (辺の番号は 1,2,...,n-1 となることに注意)
     vector<int> vs;
-    const int n;
-    int m;
 
-    Heavy_Light_Decomposition(int n) : es(n), par(n), si(n, 1), depth(n, -1), root(n), id_v(n), id_e(n - 1), vs(n), n(n), m(0) {}
-
-    void add_edge(int from, int to) {
-        es[from].emplace_back(to, m);
-        if (!directed) es[to].emplace_back(from, m);
-        m++;
+    Heavy_Light_Decomposition(const G &g, int r = 0) : par(g.n), si(g.n, 1), depth(g.n, -1), d(g.n, 0), root(g.n), id_v(g.n), id_e(g.n - 1), vs(g.n) {
+        int s = 0;
+        for (int i = r, j = 0; j < g.n; i++, j++) {
+            if (i == g.n) i = 0;
+            if (depth[i] != -1) continue;
+            int t = bfs_sz(g, i, s);
+            bfs_hld(g, i, s);
+            s = t;
+        }
+        for (int i = 0; i < g.n; i++) vs[id_v[i]] = i;
     }
 
-    int bfs_sz(int r, int s) {
+    int bfs_sz(const G &g, int r, int s) {
         int t = s;
         queue<int> que;
         que.push(r);
         depth[r] = 0;
+        d[r] = 0;
         vs[t++] = r;
         while (!que.empty()) {
             int i = que.front();
             que.pop();
-            for (auto &e : es[i]) {
+            for (auto &e : g[i]) {
                 if (depth[e.to] != -1) continue;
                 par[e.to] = i;
                 depth[e.to] = depth[i] + 1;
+                d[e.to] = d[i] + e.get_len();
                 vs[t++] = e.to;
                 que.push(e.to);
             }
         }
         for (int i = t - 1; i >= s; i--) {
-            for (auto &e : es[vs[i]]) {
+            for (auto &e : g[vs[i]]) {
                 if (e.to != par[vs[i]]) si[vs[i]] += si[e.to];
             }
         }
         return t;
     }
 
-    void bfs_hld(int r, int s) {
+    void bfs_hld(const G &g, int r, int s) {
         id_v[r] = s;
         root[r] = r;
         queue<int> que;
@@ -71,40 +75,33 @@ struct Heavy_Light_Decomposition {
         while (!que.empty()) {
             int i = que.front();
             que.pop();
-            edge heavy = {-1, -1};
+            int heavy_id = -1, heavy_to = -1;
             int ma = 0;
-            for (auto &e : es[i]) {
+            for (auto &e : g[i]) {
                 if (e.to == par[i]) continue;
-                if (ma < si[e.to]) ma = si[e.to], heavy = e;
+                if (ma < si[e.to]) {
+                    heavy_id = e.id, heavy_to = e.to;
+                    ma = si[e.to];
+                }
             }
             int cnt = id_v[i] + 1;
-            if (heavy.id != -1) {
-                root[heavy.to] = root[i];
-                id_e[heavy.id] = cnt;
-                id_v[heavy.to] = cnt;
-                que.push(heavy.to);
-                cnt += si[heavy.to];
+            if (heavy_id != -1) {
+                root[heavy_to] = root[i];
+                id_e[heavy_id] = cnt;
+                id_v[heavy_to] = cnt;
+                que.push(heavy_to);
+                cnt += si[heavy_to];
             }
-            for (auto &e : es[i]) {
-                if (e.to == par[i] || e.id == heavy.id) continue;
-                root[e.to] = e.to;
-                id_e[e.id] = cnt;
-                id_v[e.to] = cnt;
-                que.push(e.to);
-                cnt += si[e.to];
+            for (auto &e : g[i]) {
+                if (e.to != par[i] && e.id != heavy_id) {
+                    root[e.to] = e.to;
+                    id_e[e.id] = cnt;
+                    id_v[e.to] = cnt;
+                    que.push(e.to);
+                    cnt += si[e.to];
+                }
             }
         }
-    }
-
-    void decompose() {
-        int s = 0;
-        for (int i = 0; i < n; i++) {
-            if (depth[i] != -1) continue;
-            int t = bfs_sz(i, s);
-            bfs_hld(i, s);
-            s = t;
-        }
-        for (int i = 0; i < n; i++) vs[id_v[i]] = i;
     }
 
     int lca(int u, int v) {
@@ -116,7 +113,7 @@ struct Heavy_Light_Decomposition {
         return u;
     }
 
-    int dist(int u, int v) { return depth[u] + depth[v] - depth[lca(u, v)] * 2; }
+    L dist(int u, int v) { return d[u] + d[v] - d[lca(u, v)] * 2; }
 
     // u の k 個前の祖先
     int ancestor(int u, int k) {
