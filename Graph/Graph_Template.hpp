@@ -18,21 +18,21 @@ struct Graph {
         L get_len() const { return 1; }
     };
 
-    vector<vector<edge>> es;
+    vector<vector<edge>> g;
     const int n;
     int m;
 
-    Graph(int n) : es(n), n(n), m(0) {}
+    Graph(int n) : g(n), n(n), m(0) {}
 
     constexpr bool is_directed() { return directed; }
 
-    inline const vector<edge> &operator[](int k) const { return es[k]; }
+    inline const vector<edge> &operator[](int k) const { return g[k]; }
 
-    inline vector<edge> &operator[](int k) { return es[k]; }
+    inline vector<edge> &operator[](int k) { return g[k]; }
 
     void add_edge(int from, int to) {
-        es[from].emplace_back(to, m);
-        if (!directed) es[to].emplace_back(from, m);
+        g[from].emplace_back(to, m);
+        if (!directed) g[to].emplace_back(from, m);
         m++;
     }
 
@@ -66,21 +66,21 @@ struct Weighted_Graph {
         L get_len() const { return len; }
     };
 
-    vector<vector<edge>> es;
+    vector<vector<edge>> g;
     const int n;
     int m;
 
-    Weighted_Graph(int n) : es(n), n(n), m(0) {}
+    Weighted_Graph(int n) : g(n), n(n), m(0) {}
 
     constexpr bool is_directed() { return directed; }
 
-    inline const vector<edge> &operator[](int k) const { return es[k]; }
+    inline const vector<edge> &operator[](int k) const { return g[k]; }
 
-    inline vector<edge> &operator[](int k) { return es[k]; }
+    inline vector<edge> &operator[](int k) { return g[k]; }
 
     void add_edge(int from, int to, T len) {
-        es[from].emplace_back(to, m, len);
-        if (!directed) es[to].emplace_back(from, m, len);
+        g[from].emplace_back(to, m, len);
+        if (!directed) g[to].emplace_back(from, m, len);
         m++;
     }
 
