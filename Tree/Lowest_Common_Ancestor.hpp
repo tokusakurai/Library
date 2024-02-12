@@ -27,27 +27,26 @@ struct Lowest_Common_Ancestor {
     vector<L> d;
     int height;
 
-    Lowest_Common_Ancestor(const G &g, int root = 0) : depth(g.n), d(g.n) {
+    Lowest_Common_Ancestor(const G &g, int root = 0) : depth(g.n, 0), d(g.n, 0) {
         height = 1;
         while ((1 << height) < g.n) height++;
         par.assign(height, vector<int>(g.n));
         build(g, root);
     }
 
-    void _dfs(const G &g, int now, int pre = -1) {
-        if (pre == -1) depth[now] = 0;
+    void dfs(const G &g, int now, int pre = -1) {
         par[0][now] = pre;
         for (auto &e : g[now]) {
             if (e.to != pre) {
                 depth[e.to] = depth[now] + 1;
                 d[e.to] = d[now] + e.get_len();
-                _dfs(g, e.to, now);
+                dfs(g, e.to, now);
             }
         }
     }
 
     void build(const G &g, int root) {
-        _dfs(g, root);
+        dfs(g, root);
         for (int j = 0; j < height - 1; j++) {
             for (int i = 0; i < g.n; i++) {
                 if (par[j][i] == -1) {
