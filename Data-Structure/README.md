@@ -26,6 +26,10 @@ BIT を 2 本持つことによって、区間加算・区間和クエリを行�
 
 - [区間加算・区間和](Range_Add_Range_Sum.hpp)
 
+より一般に、BIT を $k+2$ 本持つことによって、区間 $k$ 次関数加算・区間和クエリを行える。
+
+- [区間多項式加算・区間和](Range_Polynomial_Add_Range_Sum.hpp)
+
 Binary Indexed Tree に Binary Indexed Tree を乗せることで、2 次元平面上の 1 点加算と矩形和取得ができる。
 
 - [2 次元 Binary Indexed Tree](Binary_Indexed_Tree_2D.hpp)
