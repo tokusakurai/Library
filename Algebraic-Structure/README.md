@@ -13,3 +13,7 @@
 主に行列積を計算するときに載せられる代数構造。
 
 - [半環 (例)](Semiring_Example.hpp)
+
+## 木 DP
+
+全方位木 DP や Static Top Tree に載せる抽象化された木 DP

@@ -44,6 +44,12 @@
 
 - [Heavy-Light 分解 + データ構造](HLD_Data_Structure.hpp)
 
+## Static Top Tree
+
+木 DP の過程を深さ $\mathrm{O}(\log^2(n))$ の二分木で表現することで、頂点・辺に更新がある場合の DP 再計算を高速に行える。
+
+- [Static Top Tree](Static_Top_Tree.hpp)
+
 ## 動的木
 
 辺の追加・削除によって、木構造そのものが変化するときに効率的にパスクエリを扱うことができる。
