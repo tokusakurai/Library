@@ -76,6 +76,8 @@
 
 - [二元体行列](F2_Matrix.hpp) (bitset を用いた二元体での簡約化の定数倍高速化)
 
+- [二元体ベクトル空間の基底](F2_basis.hpp) (ベクトル空間、及びその交差の基底計算)
+
 - [抽象化行列](Abstract_Matrix.hpp) (半環に対して行列積の演算を行うことができる)
 
 - [任意 mod 行列式](Arbitrary_Mod_Determinant.hpp) (素数とは限らない自然数 $m$ に対する $\mathbb{Z}/m\mathbb{Z}$ での行列式)
