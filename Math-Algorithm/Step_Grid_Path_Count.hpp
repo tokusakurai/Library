@@ -40,7 +40,7 @@ vector<T> step_grid_path_count(vector<int> h, const vector<T> &a) {
     while (z < x + y - 1) z <<= 1;
     vector<T> c(x, 0), d(y, 0);
     vector<T> gg(z, 0);
-    for (int i = 0; i < x + y - 1; i++) gg[i] = comb::fac(i);
+    for (int i = 0; i < x + y - 1; i++) gg[i] = comb_::fac(i);
     NTT_::ntt(gg);
     //  a->c
     {
