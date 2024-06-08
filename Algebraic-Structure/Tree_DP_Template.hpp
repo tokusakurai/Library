@@ -5,8 +5,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-struct Tree_1 {
-    constexpr Tree_1() {}
+struct Tree_Root_1 {
+    constexpr Tree_Root_1() {}
+};
+
+struct Tree_Rootless_1 {
+    constexpr Tree_Rootless_1() {}
 };
 
 struct Path_1 {
@@ -27,24 +31,31 @@ struct Edge_1 {
 
 // 全方位木 DP 用
 struct Tree_DP_1 {
-    using T = Tree_1;   // 木 DP のデータ型
-    using V = Vertex_1; // 頂点のデータ型
-    using E = Edge_1;   // 辺のデータ型
+    using Tree_Root = Tree_Root_1;         // 根あり木の型
+    using Tree_Rootless = Tree_Rootless_1; // 根なし木の型
+    using Vertex = Vertex_1;               // 頂点のデータ型
+    using Edge = Edge_1;                   // 辺のデータ型
 
     // 根なし木と根なし木のマージ
-    static T merge(T a, T b) { return a; };
+    static Tree_Rootless merge(Tree_Rootless a, Tree_Rootless b) { return a; };
 
     // 根なし木に根を付けて根付き木にする
-    static T attach_root(T a, V v) { return a; };
+    static Tree_Root attach_root(Tree_Rootless a, Vertex b) {
+        Tree_Root c;
+        return c;
+    };
 
     // 根付き木に辺を付けて根なし木にする
-    static T attach_edge(T a, E e) { return a; };
+    static Tree_Rootless attach_edge(Tree_Root a, Edge b) {
+        Tree_Rootless c;
+        return c;
+    };
 
     // merge, attach_root の単位元
-    static const T id;
+    static const Tree_Rootless id;
 };
 
-const Tree_DP_1::T Tree_DP_1::id = Tree_1();
+const Tree_DP_1::Tree_Rootless Tree_DP_1::id = Tree_DP_1::Tree_Rootless();
 
 // static top tree 用
 struct Top_Tree_DP_1 {
