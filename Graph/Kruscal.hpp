@@ -9,6 +9,7 @@
 // 上から辺を見ていって、両端が別の連結成分に属していればその辺を採用し、そうでなければ棄却する。
 
 // verified with
+// https://judge.yosupo.jp/problem/minimum_spanning_tree
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_2_A&lang=jp
 
 #include <bits/stdc++.h>
@@ -16,36 +17,28 @@ using namespace std;
 
 #include "../Data-Structure/Union_Find_Tree.hpp"
 
-template <typename T, bool directed = false>
+template <typename G>
 struct Kruscal {
-    struct edge {
-        int from, to;
-        T cost;
-        int id;
-        edge(int from, int to, T cost, int id) : from(from), to(to), cost(cost), id(id) {}
-    };
+    using L = typename G::L;
+    vector<pair<int, int>> mst;
+    vector<int> mst_id;
+    L weight;
 
-    vector<edge> es;
-    const T zero_T, INF_T;
-    const int n;
-    int m;
-
-    Kruscal(int n, T zero_T = 0, T INF_T = numeric_limits<T>::max / 2) : zero_T(zero_T), INF_T(INF_T), n(n), m(0) {}
-
-    void add_edge(int from, int to, T cost) {
-        es.emplace_back(from, to, cost, m);
-        if (!directed) es.emplace_back(to, from, cost, m);
-        m++;
-    }
-
-    T min_spanning_tree() {
-        sort(begin(es), end(es), [](const edge &e1, const edge &e2) { return e1.cost < e2.cost; });
-        Union_Find_Tree uf(n);
-        T ret = zero_T;
-        for (auto &e : es) {
-            if (uf.unite(e.from, e.to)) ret += e.cost;
+    Kruscal(const G &g) : weight(0) {
+        vector<tuple<L, int, int, int>> edges;
+        for (int i = 0; i < g.n; i++) {
+            for (auto e : g[i]) {
+                if (i < e.to) edges.emplace_back(e.get_len(), i, e.to, e.id);
+            }
         }
-        if (uf.size(0) < n) return INF_T;
-        return ret;
+        sort(begin(edges), end(edges));
+        Union_Find_Tree uf(g.n);
+        for (auto [w, u, v, id] : edges) {
+            if (uf.unite(u, v)) {
+                weight += w;
+                mst.emplace_back(u, v);
+                mst_id.push_back(id);
+            }
+        }
     }
 };
