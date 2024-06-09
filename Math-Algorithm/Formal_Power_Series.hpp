@@ -79,7 +79,7 @@ struct Formal_Power_Series : vector<T> {
 
     Formal_Power_Series &operator-=(const T &t) {
         if (this->empty()) this->resize(1, 0);
-        *this[0] -= t;
+        (*this)[0] -= t;
         return *this;
     }
 
