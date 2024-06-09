@@ -22,42 +22,43 @@ using namespace std;
 #include "../Graph/Graph_Template.hpp"
 #include "../Graph/Low_Link.hpp"
 
-struct Two_Edge_Connected_Components : Low_Link {
-    using L = Low_Link;
+template <typename G>
+struct Two_Edge_Connected_Components : Low_Link<G> {
+    using L = Low_Link<G>;
     vector<int> comp;
-    const int n;
+    int components_number;
 
-    Two_Edge_Connected_Components(int n) : L(n), comp(n), n(n) {}
+    Two_Edge_Connected_Components(const G &g) : L(g), comp(g.n, -1) {
+        int k = 0;
+        for (int i = 0; i < g.n; i++) {
+            if (comp[i] == -1) k = _dfs(i, -1, k, g);
+        }
+        components_number = k;
+    }
 
-    int _dfs(int now, int pre, int k) {
+    int _dfs(int now, int pre, int k, const G &g) {
         if (pre != -1 && this->ord[pre] >= this->low[now]) {
             comp[now] = comp[pre];
         } else {
             comp[now] = k++;
         }
-        for (auto &e : this->es[now]) {
-            if (comp[e.to] == -1) k = _dfs(e.to, now, k);
+        for (auto &e : g[now]) {
+            if (comp[e.to] == -1) k = _dfs(e.to, now, k, g);
         }
         return k;
     }
 
-    Graph<false> decompose() {
-        this->build();
-        fill(begin(comp), end(comp), -1);
-        int k = 0;
-        for (int i = 0; i < n; i++) {
-            if (comp[i] == -1) k = _dfs(i, -1, k);
-        }
-        Graph<false> ret(k);
-        vector<int> is_bridge(this->m, 0);
+    Graph<false> make_graph(const G &g) {
+        Graph<false> g2(components_number);
+        vector<int> is_bridge(g.m, 0);
         for (auto &e : this->bridge) is_bridge[e]++;
-        for (int i = 0; i < n; i++) {
-            for (auto &e : this->es[i]) {
-                if (is_bridge[e.id]-- > 0) ret.add_edge(comp[i], comp[e.to]);
+        for (int i = 0; i < g.n; i++) {
+            for (auto &e : g[i]) {
+                if (is_bridge[e.id]-- > 0) g2.add_edge(comp[i], comp[e.to]);
             }
         }
-        return ret;
+        return g2;
     }
 
-    int operator[](int i) const { return comp[i]; }
+    int operator[](int k) const { return comp[k]; }
 };

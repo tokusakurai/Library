@@ -21,37 +21,29 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+template <typename G>
 struct Low_Link {
-    struct edge {
-        int to, id;
-        edge(int to, int id) : to(to), id(id) {}
-    };
-
-    vector<vector<edge>> es;
     vector<int> ord, low;
     vector<bool> used;
     vector<int> articulation, bridge;
-    const int n;
-    int m;
 
-    Low_Link(int n) : es(n), ord(n), low(n), used(n), n(n), m(0) {}
-
-    void add_edge(int from, int to) {
-        es[from].emplace_back(to, m);
-        es[to].emplace_back(from, m);
-        m++;
+    Low_Link(const G &g) : ord(g.n), low(g.n), used(g.n, false) {
+        int k = 0;
+        for (int i = 0; i < g.n; i++) {
+            if (!used[i]) k = _dfs(i, -1, k, g);
+        }
     }
 
-    int _dfs(int now, int pre, int k) {
+    int _dfs(int now, int pre, int k, const G &g) {
         used[now] = true;
         ord[now] = low[now] = k++;
         bool is_articulation = false;
         int cnt = 0;
-        for (auto &e : es[now]) {
+        for (auto &e : g[now]) {
             if (e.id == pre) continue;
             if (!used[e.to]) {
                 cnt++;
-                k = _dfs(e.to, e.id, k);
+                k = _dfs(e.to, e.id, k, g);
                 low[now] = min(low[now], low[e.to]);
                 if (pre != -1 && low[e.to] >= ord[now]) is_articulation = true;
                 if (ord[now] < low[e.to]) bridge.push_back(e.id);
@@ -62,13 +54,5 @@ struct Low_Link {
         if (pre == -1 && cnt >= 2) is_articulation = true;
         if (is_articulation) articulation.push_back(now);
         return k;
-    }
-
-    void build() {
-        fill(begin(used), end(used), false);
-        int k = 0;
-        for (int i = 0; i < n; i++) {
-            if (!used[i]) k = _dfs(i, -1, k);
-        }
     }
 };
