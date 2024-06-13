@@ -7,6 +7,7 @@
 // 全ての頂点の座標が整数の場合の凸包。
 
 // verified with
+// https://judge.yosupo.jp/problem/static_convex_hull
 // https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_4_A&lang=ja
 // https://atcoder.jp/contests/ttpc2022/tasks/ttpc2022_f
 
@@ -31,7 +32,7 @@ vector<pair<T, T>> lower_convex_hull(vector<pair<T, T>> p) {
     sort(begin(p), end(p));
     p.erase(unique(begin(p), end(p)), end(p));
     int n = p.size(), k = 0;
-    if (n == 1) return p;
+    if (n <= 1) return p;
     vector<pair<T, T>> ch(n);
     for (int i = 0; i < n; i++) {
         if (k == 1 && ch[0].first == p[i].first) {
@@ -46,13 +47,13 @@ vector<pair<T, T>> lower_convex_hull(vector<pair<T, T>> p) {
     return ch;
 }
 
-// 上側凸包 (左側)
+// 上側凸包 (左から)
 template <typename T>
 vector<pair<T, T>> upper_convex_hull(vector<pair<T, T>> p) {
     sort(begin(p), end(p));
     p.erase(unique(begin(p), end(p)), end(p));
     int n = p.size(), k = 0;
-    if (n == 1) return p;
+    if (n <= 1) return p;
     vector<pair<T, T>> ch(n);
     for (int i = 0; i < n; i++) {
         if (k == 1 && ch[0].first == p[i].first) {
@@ -72,7 +73,7 @@ vector<pair<T, T>> convex_hull(vector<pair<T, T>> p) {
     sort(begin(p), end(p));
     p.erase(unique(begin(p), end(p)), end(p));
     int n = p.size(), k = 0;
-    if (n == 1) return p;
+    if (n <= 1) return p;
     vector<pair<T, T>> ch(2 * n);
     for (int i = 0; i < n; ch[k++] = p[i++]) {
         while (k >= 2 && det_sgn(ch[k - 1] - ch[k - 2], p[i] - ch[k - 1]) <= 0) k--;

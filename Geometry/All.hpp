@@ -342,7 +342,7 @@ vector<Point> lower_convex_hull(vector<Point> p) {
     sort(begin(p), end(p), compare_x);
     p.erase(unique(begin(p), end(p)), end(p));
     int n = p.size(), k = 0;
-    if (n == 1) return p;
+    if (n <= 1) return p;
     vector<Point> ch(n);
     for (int i = 0; i < n; i++) {
         if (k == 1 && eq(real(ch[0]), real(p[i]))) {
@@ -362,7 +362,7 @@ vector<Point> upper_convex_hull(vector<Point> p) {
     sort(begin(p), end(p), compare_x);
     p.erase(unique(begin(p), end(p)), end(p));
     int n = p.size(), k = 0;
-    if (n == 1) return p;
+    if (n <= 1) return p;
     vector<Point> ch(n);
     for (int i = 0; i < n; i++) {
         if (k == 1 && eq(real(ch[0]), real(p[i]))) {
@@ -382,7 +382,7 @@ vector<Point> convex_hull(vector<Point> p) {
     sort(begin(p), end(p), compare_x);
     p.erase(unique(begin(p), end(p)), end(p));
     int n = p.size(), k = 0;
-    if (n == 1) return p;
+    if (n <= 1) return p;
     vector<Point> ch(2 * n);
     for (int i = 0; i < n; ch[k++] = p[i++]) {
         while (k >= 2 && sgn(det(ch[k - 1] - ch[k - 2], p[i] - ch[k - 1])) <= 0) k--;
