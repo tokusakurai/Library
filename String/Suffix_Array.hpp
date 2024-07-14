@@ -163,7 +163,7 @@ struct Suffix_Array {
         return si == n && ti < m;
     }
 
-    // 辞書順で t 以降となるもので最初の接尾辞
+    // 辞書順で t 以降となるもので最初の接尾辞 (SA において何番目の接尾辞か)
     int lower_bound(const T &t) const {
         int l = -1, r = n;
         while (r - l > 1) {
@@ -173,6 +173,7 @@ struct Suffix_Array {
         return r;
     }
 
+    // t を接頭辞とする接尾辞の範囲は、半開区間 [lower_bound(t), upper_bound(t)) となる
     int upper_bound(T t) const {
         t.back()++;
         return lower_bound(t);
