@@ -17,48 +17,38 @@ using namespace std;
 template <int char_size, char base>
 struct Trie {
     struct Node {
-        array<int, char_size> next;
-        vector<int> accept;
+        vector<int> next, accept;
         int count; // 子以下に追加された文字列の数
 
-        Node() : count(0) { fill(begin(next), end(next), -1); }
+        Node() : next(char_size, -1), count(0) {}
     };
 
     vector<Node> nodes;
 
     Trie() { nodes.emplace_back(); }
 
+    int count() const { return nodes.front().count; }
+
+    int size() const { return nodes.size(); }
+
     void insert(const string &s, int id) {
         int now = 0;
         for (int i = 0; i < (int)s.size(); i++) {
-            int t = s[i] - base;
-            int next = nodes[now].next[t];
-            if (next == -1) {
-                next = nodes.size();
-                nodes[now].next[t] = next;
-                nodes.emplace_back();
-            }
-            nodes[now].count++;
-            now = next;
+            int &next = nodes[now].next[s[i] - base];
+            if (next == -1) { next = size(), nodes.emplace_back(); }
+            nodes[now].count++, now = next;
         }
-        nodes[now].count++;
-        nodes[now].accept.push_back(id);
+        nodes[now].count++, nodes[now].accept.push_back(id);
     }
 
-    void insert(const string &s) { insert(s, nodes[0].count); }
+    void insert(const string &s) { insert(s, count()); }
 
-    int find(const string &s) const {
+    bool search(const string &s, bool prefix = false) const {
         int now = 0;
         for (int i = 0; i < s.size(); i++) {
-            int t = s[i] - base;
-            now = nodes[now].next[t];
-            if (now == -1) return -1;
+            now = nodes[now].next[s[i] - base];
+            if (now == -1) return false;
         }
-        return now;
-    }
-
-    int count(const string &s) const {
-        int p = find(s);
-        return p == -1 ? 0 : nodes[p].count;
+        return (prefix) ? true : !nodes[now].accept.empty();
     }
 };
