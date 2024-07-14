@@ -4,14 +4,17 @@
 // 計算量 構築 : O(Σ[i]|S_i|)、遷移 : O(1)
 
 // 概要
-// 既に構築されているトライ木に情報を加える。
-// トライ木では葉が存在したが、葉から出る後退辺を構築することによって遷移を繰り返すことができる。
-// 1 文字加えた際の suffix で該当する頂点があり、最も長いものに該当する頂点に移動する。
+// 文字列 S_1,...,S_n のトライ木に failure link を加える。
+// trie の各頂点に相当する文字列 X について、X_i の suffix で、trie に該当する頂点があるものの中で最長のものを Y_i とする。
+// failure link は X_i から Y_i への辺に相当する。
+// T に 1 文字加えた際の T の suffix で、trie に該当する頂点があり、最長のものに該当する頂点に移動する。
 
 // verified with
 // https://yukicoder.me/problems/no/430
 // https://yukicoder.me/problems/no/1269
 // https://atcoder.jp/contests/jag2017autumn/tasks/jag2017autumn_h
+// https://atcoder.jp/contests/abc268/tasks/abc268_h
+// https://atcoder.jp/contests/abc362/tasks/abc362_g
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -21,12 +24,12 @@ using namespace std;
 template <int char_size, char base>
 struct Aho_Corasick : Trie<char_size + 1, base> {
     const int FAIL = char_size;
-    vector<int> correct; // 接尾辞とマッチする文字列の種類数 (最大でも O(√Σ|S_i|))
+    vector<int> correct; // S_i が接尾辞となるような i の個数 (最大でも O(√Σ|S_i|))
 
-    // heavy : 接尾辞とマッチする文字列を全て持つかどうか
-    void build(bool heavy = true) {
+    // heavy : S_i が接尾辞となるような i を全て持つかどうか (持つ場合は accept に保管される)
+    void build(bool heavy = false) {
         correct.resize(this->size());
-        for (int i = 0; i < (int)this->size(); i++) { correct[i] = (this->nodes[i].accept).size(); }
+        for (int i = 0; i < (int)this->size(); i++) correct[i] = (this->nodes[i].accept).size();
         queue<int> que;
         for (int i = 0; i <= char_size; i++) {
             if (this->nodes[0].next[i] != -1) {
@@ -59,9 +62,9 @@ struct Aho_Corasick : Trie<char_size + 1, base> {
         }
     }
 
-    // now から s に沿って進めたときのマッチしたパターンの id と回数の組
-    map<int, int> match(int now, const string &s) const {
-        map<int, int> ret;
+    // now から s に沿って進めたときのマッチしたパターンの id と回数の組 (build 時に heavy = true にする必要あり)
+    unordered_map<int, int> match(int now, const string &s) const {
+        unordered_map<int, int> ret;
         for (auto &c : s) {
             now = this->nodes[now].next[c - base];
             for (auto &u : this->nodes[now].accept) ret[u]++;
@@ -69,7 +72,7 @@ struct Aho_Corasick : Trie<char_size + 1, base> {
         return ret;
     }
 
-    map<int, int> match(const string &s) const { return match(0, s); }
+    unordered_map<int, int> match(const string &s) const { return match(0, s); }
 
     // now から c の方向に進めたときのマッチしたパターン数と移動先のノードの組
     pair<long long, int> move(int now, const char &c) const {
