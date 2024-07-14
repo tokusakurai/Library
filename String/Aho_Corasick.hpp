@@ -25,16 +25,20 @@ template <int char_size, char base>
 struct Aho_Corasick : Trie<char_size + 1, base> {
     const int FAIL = char_size;
     vector<int> correct; // S_i が接尾辞となるような i の個数 (最大でも O(√Σ|S_i|))
+    vector<int> suffix;  // S_i が真の接尾辞となるような、最長の S_i に対応する頂点へのリンク
 
     // heavy : S_i が接尾辞となるような i を全て持つかどうか (持つ場合は accept に保管される)
-    void build(bool heavy = false) {
-        correct.resize(this->size());
+    void build() {
+        correct.resize(this->size(), 0);
+        suffix.resize(this->size(), -1);
         for (int i = 0; i < (int)this->size(); i++) correct[i] = (this->nodes[i].accept).size();
         queue<int> que;
         for (int i = 0; i <= char_size; i++) {
             if (this->nodes[0].next[i] != -1) {
-                this->nodes[this->nodes[0].next[i]].next[FAIL] = 0;
-                que.push(this->nodes[0].next[i]);
+                int v = this->nodes[0].next[i];
+                this->nodes[v].next[FAIL] = 0;
+                suffix[v] = 0;
+                que.push(v);
             } else {
                 this->nodes[0].next[i] = 0;
             }
@@ -42,19 +46,19 @@ struct Aho_Corasick : Trie<char_size + 1, base> {
         while (!que.empty()) {
             auto &now = this->nodes[que.front()];
             int fail = now.next[FAIL];
-            correct[que.front()] += correct[fail]; // 全ての頂点についての correct の和は最大でも O(Σ|S_i|)
+            correct[que.front()] += correct[fail];
             que.pop();
             for (int i = 0; i < char_size; i++) {
                 if (now.next[i] != -1) {
-                    this->nodes[now.next[i]].next[FAIL] = this->nodes[fail].next[i];
-                    if (heavy) {
-                        auto &u = this->nodes[now.next[i]].accept;
-                        auto &v = this->nodes[this->nodes[fail].next[i]].accept;
-                        vector<int> accept;
-                        set_union(begin(u), end(u), begin(v), end(v), back_inserter(accept));
-                        u = accept;
+                    int u = this->nodes[fail].next[i];
+                    int v = now.next[i];
+                    this->nodes[v].next[FAIL] = u;
+                    if (!this->nodes[u].accept.empty()) {
+                        suffix[v] = u;
+                    } else {
+                        suffix[v] = suffix[u];
                     }
-                    que.push(now.next[i]);
+                    que.push(v);
                 } else {
                     now.next[i] = this->nodes[fail].next[i];
                 }
@@ -62,17 +66,27 @@ struct Aho_Corasick : Trie<char_size + 1, base> {
         }
     }
 
-    // now から s に沿って進めたときのマッチしたパターンの id と回数の組 (build 時に heavy = true にする必要あり)
-    unordered_map<int, int> match(int now, const string &s) const {
-        unordered_map<int, int> ret;
-        for (auto &c : s) {
-            now = this->nodes[now].next[c - base];
-            for (auto &u : this->nodes[now].accept) ret[u]++;
+    // 頂点 v の接尾辞となる S_i を列挙する (S_i が相異なる場合 O(√∑|S_i|) 個)
+    vector<int> enumerate_suffix(int v) const {
+        vector<int> ret;
+        while (v != -1) {
+            ret.insert(end(ret), begin(this->nodes[v].accept), end(this->nodes[v].accept));
+            v = suffix[v];
         }
         return ret;
     }
 
-    unordered_map<int, int> match(const string &s) const { return match(0, s); }
+    // now から s に沿って進めたときのマッチしたパターンの id と回数の組 (build 時に heavy = true にする必要あり)
+    vector<int> match(int now, const string &s) const {
+        vector<int> ret(this->count(), 0);
+        for (auto &c : s) {
+            now = this->nodes[now].next[c - base];
+            for (auto &u : enumerate_suffix(now)) ret[u]++;
+        }
+        return ret;
+    }
+
+    vector<int> match(const string &s) const { return match(0, s); }
 
     // now から c の方向に進めたときのマッチしたパターン数と移動先のノードの組
     pair<long long, int> move(int now, const char &c) const {
