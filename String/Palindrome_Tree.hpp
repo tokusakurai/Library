@@ -14,6 +14,7 @@
 
 // verified with
 // https://contest.ucup.ac/contest/1440/problem/7876
+// https://judge.yosupo.jp/problem/eertree
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -30,7 +31,7 @@ struct Palindrome_Tree {
     vector<Node> nodes;
     string s;
     int n;
-    vector<int> longest_palindromes; // i 文字目を末尾とする最長回文の indes を格納
+    vector<int> longest_palindromes; // i 文字目を末尾とする最長回文の index を格納
 
     Palindrome_Tree() : n(0) {
         nodes.emplace_back(-1, -1); // 奇数長の空回文
