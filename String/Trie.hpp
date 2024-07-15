@@ -17,10 +17,11 @@ using namespace std;
 template <int char_size, char base>
 struct Trie {
     struct Node {
-        vector<int> next, accept;
+        array<int, char_size> next;
+        vector<int> accept;
         int count; // 子以下に追加された文字列の数
 
-        Node() : next(char_size, -1), count(0) {}
+        Node() : count(0) { fill(begin(next), end(next), -1); }
     };
 
     vector<Node> nodes;
@@ -34,21 +35,35 @@ struct Trie {
     void insert(const string &s, int id) {
         int now = 0;
         for (int i = 0; i < (int)s.size(); i++) {
-            int &next = nodes[now].next[s[i] - base];
-            if (next == -1) { next = size(), nodes.emplace_back(); }
-            nodes[now].count++, now = next;
+            int t = s[i] - base;
+            int next = nodes[now].next[t];
+            if (next == -1) {
+                next = nodes.size();
+                nodes[now].next[t] = next;
+                nodes.emplace_back();
+            }
+            nodes[now].count++;
+            now = next;
         }
-        nodes[now].count++, nodes[now].accept.push_back(id);
+        nodes[now].count++;
+        nodes[now].accept.push_back(id);
     }
 
-    void insert(const string &s) { insert(s, count()); }
+    void insert(const string &t) { insert(t, nodes[0].count); }
 
-    bool search(const string &s, bool prefix = false) const {
+    int find(const string &t) const {
         int now = 0;
-        for (int i = 0; i < s.size(); i++) {
-            now = nodes[now].next[s[i] - base];
-            if (now == -1) return false;
+        for (int i = 0; i < (int)t.size(); i++) {
+            int c = t[i] - base;
+            now = nodes[now].next[c];
+            if (now == -1) return -1;
         }
-        return (prefix) ? true : !nodes[now].accept.empty();
+        return now;
+    }
+
+    // T が S_i の接頭辞となるような i の個数
+    int count_prefix(const string &t) const {
+        int p = find(t);
+        return p == -1 ? 0 : nodes[p].count;
     }
 };
